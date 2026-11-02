@@ -136,29 +136,30 @@ async function insertCreatedMarks(opts: {
     }))
   );
 
+  const inserted = await prisma.$queryRaw<
+    Array<{
+      id: string;
+      studentId: string;
+      marks: number;
+      totalMarks: number;
+      grade: string | null;
+    }>
+  >`
+    INSERT INTO "Mark" (
+      id, subject, marks, "totalMarks", grade, "examType",
+      "studentId", "classId", "teacherId", "createdAt", "updatedAt"
+    )
+    SELECT
+      v.id, v.subject, v.marks, v.total_marks, v.grade, v.exam_type,
+      v.student_id, v.class_id, v.teacher_id, v.created_at, v.updated_at
+    FROM (VALUES ${values}) AS v(
+      id, subject, marks, total_marks, grade, exam_type,
+      student_id, class_id, teacher_id, created_at, updated_at
+    )
+    RETURNING id, "studentId", marks, "totalMarks", grade
+  `;
+
   if (componentRows.length === 0) {
-    const inserted = await prisma.$queryRaw<
-      Array<{
-        id: string;
-        studentId: string;
-        marks: number;
-        totalMarks: number;
-        grade: string | null;
-      }>
-    >`
-      INSERT INTO "Mark" (
-        id, subject, marks, "totalMarks", grade, "examType",
-        "studentId", "classId", "teacherId", "createdAt", "updatedAt"
-      )
-      SELECT
-        v.id, v.subject, v.marks, v.total_marks, v.grade, v.exam_type,
-        v.student_id, v.class_id, v.teacher_id, v.created_at, v.updated_at
-      FROM (VALUES ${values}) AS v(
-        id, subject, marks, total_marks, grade, exam_type,
-        student_id, class_id, teacher_id, created_at, updated_at
-      )
-      RETURNING id, "studentId", marks, "totalMarks", grade
-    `;
     return mapDbRows(inserted.map((row) => ({ ...row, components: [] })));
   }
 
@@ -176,62 +177,30 @@ async function insertCreatedMarks(opts: {
     )
   );
 
-  const inserted = await prisma.$queryRaw<
-    Array<{
-      id: string;
-      studentId: string;
-      marks: number;
-      totalMarks: number;
-      grade: string | null;
-      components: unknown;
-    }>
+  // Separate statement on purpose: MarkComponent's RLS WITH CHECK looks the parent up in
+  // "Mark", and a sibling CTE in the same statement can't see rows inserted above, so a
+  // single WITH ... INSERT ... INSERT fails the policy on the tenant connection.
+  const insertedComponents = await prisma.$queryRaw<
+    Array<{ markId: string; name: string; marks: number; totalMarks: number }>
   >`
-    WITH inserted AS (
-      INSERT INTO "Mark" (
-        id, subject, marks, "totalMarks", grade, "examType",
-        "studentId", "classId", "teacherId", "createdAt", "updatedAt"
-      )
-      SELECT
-        v.id, v.subject, v.marks, v.total_marks, v.grade, v.exam_type,
-        v.student_id, v.class_id, v.teacher_id, v.created_at, v.updated_at
-      FROM (VALUES ${values}) AS v(
-        id, subject, marks, total_marks, grade, exam_type,
-        student_id, class_id, teacher_id, created_at, updated_at
-      )
-      RETURNING id, "studentId", marks, "totalMarks", grade
-    ),
-    comps AS (
-      INSERT INTO "MarkComponent" (
-        id, "markId", name, marks, "totalMarks", "createdAt", "updatedAt"
-      )
-      SELECT c.id, c.mark_id, c.name, c.marks, c.total_marks, c.created_at, c.updated_at
-      FROM (VALUES ${compValues}) AS c(
-        id, mark_id, name, marks, total_marks, created_at, updated_at
-      )
-      WHERE c.mark_id IN (SELECT id FROM inserted)
-      RETURNING "markId", name, marks, "totalMarks"
+    INSERT INTO "MarkComponent" (
+      id, "markId", name, marks, "totalMarks", "createdAt", "updatedAt"
     )
-    SELECT
-      i.id,
-      i."studentId",
-      i.marks,
-      i."totalMarks",
-      i.grade,
-      COALESCE(
-        (
-          SELECT json_agg(json_build_object(
-            'name', c.name,
-            'marks', c.marks,
-            'totalMarks', c."totalMarks"
-          ))
-          FROM comps c
-          WHERE c."markId" = i.id
-        ),
-        '[]'::json
-      ) AS components
-    FROM inserted i
+    SELECT c.id, c.mark_id, c.name, c.marks, c.total_marks, c.created_at, c.updated_at
+    FROM (VALUES ${compValues}) AS c(
+      id, mark_id, name, marks, total_marks, created_at, updated_at
+    )
+    RETURNING "markId", name, marks, "totalMarks"
   `;
-  return mapDbRows(inserted);
+  const componentsByMark = new Map<string, DbComponent[]>();
+  for (const c of insertedComponents) {
+    const list = componentsByMark.get(c.markId) ?? [];
+    list.push({ name: c.name, marks: c.marks, totalMarks: c.totalMarks });
+    componentsByMark.set(c.markId, list);
+  }
+  return mapDbRows(
+    inserted.map((row) => ({ ...row, components: componentsByMark.get(row.id) ?? [] }))
+  );
 }
 
 async function updateExistingMarks(opts: {
