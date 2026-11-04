@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 import { POST } from "@/app/api/student/credentials/reset/route";
+import { dobDefaultPasswordCheck } from "@/lib/students/studentDefaultPassword";
 
 jest.mock("@/lib/db/tenantContext", () => ({
   runInTenantScope: (schoolId: string, fn: (id: string) => unknown) => fn(schoolId),
@@ -142,7 +143,7 @@ describe("POST /api/student/credentials/reset", () => {
   it("skips a student whose password hashing fails and continues with the rest", async () => {
     mockGetServerSession.mockResolvedValue(adminSession);
     mockStudentFindMany.mockResolvedValue([
-      { id: "stu1", dob: null, userId: "user1" },
+      { id: "stu1", dob: new Date("2011-01-01"), userId: "user1" },
       { id: "stu2", dob: new Date("2011-02-02"), userId: "user2" },
     ]);
     mockHashStudentPasswordFromDob
@@ -154,6 +155,46 @@ describe("POST /api/student/credentials/reset", () => {
     const json = await res.json();
     expect(json.resetCount).toBe(1);
     expect(mockUserUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  it("skips students with no usable DOB without trying to hash them", async () => {
+    mockGetServerSession.mockResolvedValue(adminSession);
+    mockStudentFindMany.mockResolvedValue([
+      { id: "stu1", dob: null, userId: "user1" },
+      { id: "stu2", dob: new Date("2011-02-02"), userId: "user2" },
+    ]);
+    const res = await POST(request());
+    const json = await res.json();
+    expect(json).toMatchObject({ resetCount: 1, remaining: 0 });
+    expect(mockHashStudentPasswordFromDob).toHaveBeenCalledTimes(1);
+  });
+
+  it("leaves students already on the DOB default alone in a bulk reset, but resets named ones", async () => {
+    mockGetServerSession.mockResolvedValue(adminSession);
+    const dob = new Date("2012-08-28T18:30:00.000Z");
+    const hash = "$2a$04$whatever";
+    const user = { password: hash, dobPasswordCheck: dobDefaultPasswordCheck(dob, hash) };
+    mockStudentFindMany.mockResolvedValue([{ id: "stu1", dob, userId: "user1", user }]);
+
+    expect((await (await POST(request())).json()).resetCount).toBe(0);
+    expect(mockUserUpdate).not.toHaveBeenCalled();
+
+    expect((await (await POST(request({ studentIds: ["stu1"] }))).json()).resetCount).toBe(1);
+    expect(mockUserUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  it("stops at the time budget and reports what is left, so the page can call again", async () => {
+    mockGetServerSession.mockResolvedValue(adminSession);
+    const students = Array.from({ length: 45 }, (_, i) => ({ id: `s${i}`, dob: new Date("2011-02-02"), userId: `u${i}` }));
+    mockStudentFindMany.mockResolvedValue(students);
+    const t = Date.now();
+    // 1st call sets the deadline; the 2nd chunk check already finds it spent (20-student chunks).
+    jest.spyOn(Date, "now").mockReturnValueOnce(t).mockReturnValueOnce(t).mockReturnValue(t + 10 * 60_000);
+
+    const json = await (await POST(request())).json();
+    expect(json).toMatchObject({ resetCount: 20, remaining: 25 });
+    expect(json.message).toMatch(/20 student passwords so far, 25 to go/);
+    jest.restoreAllMocks();
   });
 
   it("filters by classId when provided and valid", async () => {

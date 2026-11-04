@@ -4,13 +4,26 @@ import type { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { tenantDb as prisma, runInTenantScope } from "@/lib/db/tenantContext";
-import { dobDefaultPasswordCheck, hashStudentPasswordFromDob } from "@/lib/students/studentDefaultPassword";
+import {
+  canonicalStudentPasswordFromDob,
+  decodeDobPasswordCheck,
+  dobDefaultPasswordCheck,
+  hashStudentPasswordFromDob,
+} from "@/lib/students/studentDefaultPassword";
 import { invalidateStudentListCaches } from "@/lib/students/invalidateStudentListCaches";
 import { logger } from "@/lib/logger";
 import { schoolIdViaAdminRelation } from "@/lib/auth/tenant";
 import { toClientErrorMessage } from "@/lib/errors/errorInfo";
 
 const MAX_RESET = 5000;
+
+/**
+ * Time one request may spend hashing (the route's limit is 60 s; a bcrypt hash is ~0.1 s). What does not fit
+ * is reported as `remaining`, and the page calls again: students already on the DOB default are skipped,
+ * so each call carries on where the last stopped.
+ */
+const RESET_BUDGET_MS = 40_000;
+const RESET_CHUNK = 20;
 
 const resetCredentialsBodySchema = z.object({
   classId: z.string().optional(),
@@ -114,29 +127,60 @@ export async function POST(req: Request) {
         id: true,
         dob: true,
         userId: true,
+        user: { select: { password: true, dobPasswordCheck: true } },
       },
     });
 
+    // A bulk reset leaves students already on the DOB default alone (a no-op, and it is what lets a
+    // repeated call resume). Resetting named students always runs.
+    const todo = students.filter((student) => {
+      const canonical = canonicalStudentPasswordFromDob(student.dob);
+      if (!canonical) return false; // no usable DOB: nothing to reset to
+      if (studentIds.length > 0) return true;
+      const hash = student.user?.password;
+      return !hash || decodeDobPasswordCheck(student.user?.dobPasswordCheck, student.dob, hash) !== canonical;
+    });
+
+    const deadline = Date.now() + RESET_BUDGET_MS;
     let resetCount = 0;
-    for (const student of students) {
-      try {
-        const hashed = await hashStudentPasswordFromDob(student.dob);
-        await prisma.user.update({
-          where: { id: student.userId },
-          data: { password: hashed, dobPasswordCheck: dobDefaultPasswordCheck(student.dob, hashed) },
-        });
-        resetCount++;
-      } catch {
-        /* skip invalid DOB */
+    let processed = 0;
+    for (let i = 0; i < todo.length && Date.now() < deadline; i += RESET_CHUNK) {
+      const chunk = todo.slice(i, i + RESET_CHUNK);
+      processed += chunk.length;
+      // Hashing is CPU-bound, so it runs one after another; the database writes go in together.
+      const hashes: Array<string | null> = [];
+      for (const student of chunk) {
+        try {
+          hashes.push(await hashStudentPasswordFromDob(student.dob));
+        } catch {
+          hashes.push(null); /* invalid DOB */
+        }
       }
+      const done = await Promise.all(
+        chunk.map(async (student, j) => {
+          const hashed = hashes[j];
+          if (!hashed) return false;
+          await prisma.user.update({
+            where: { id: student.userId },
+            data: { password: hashed, dobPasswordCheck: dobDefaultPasswordCheck(student.dob, hashed) },
+          });
+          return true;
+        })
+      );
+      resetCount += done.filter(Boolean).length;
     }
+    const remaining = todo.length - processed;
 
     invalidateStudentListCaches(schoolId);
 
     return NextResponse.json(
       {
-        message: `Reset ${resetCount} student password${resetCount === 1 ? "" : "s"} to DOB (YYYYMMDD).`,
+        message:
+          remaining > 0
+            ? `Reset ${resetCount} student password${resetCount === 1 ? "" : "s"} so far, ${remaining} to go.`
+            : `Reset ${resetCount} student password${resetCount === 1 ? "" : "s"} to DOB (YYYYMMDD).`,
         resetCount,
+        remaining,
       },
       { status: 200 }
     );
