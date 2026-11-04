@@ -345,22 +345,39 @@ export function useStudentCredentialsPage() {
     if (!ok) return;
 
     setResetting(true);
+    const toastId = toast.loading("Resetting passwords…");
     try {
-      const { ok, data } = await resetStudentCredentials(
-        buildFilterBody(selectedClassId, selectedClass, selectedSection)
-      );
-      if (!ok) {
-        toast.error(data.message || "Reset failed");
-        return;
+      // The server resets as many as fit in one request and reports how many are left, so a big school
+      // takes a few calls. Stop if a call makes no progress.
+      let total = 0;
+      let failed = "";
+      for (;;) {
+        const { ok, data } = await resetStudentCredentials(
+          buildFilterBody(selectedClassId, selectedClass, selectedSection)
+        );
+        if (!ok) {
+          failed = data.message || "Reset failed";
+          break;
+        }
+        const done = data.resetCount ?? 0;
+        total += done;
+        const remaining = data.remaining ?? 0;
+        if (remaining <= 0 || done === 0) break;
+        toast.loading(`Resetting passwords… ${total} done, ${remaining} to go`, { id: toastId });
       }
-      toast.success(data.message || "Passwords reset");
+      if (failed) {
+        toast.error(total > 0 ? `${failed} (${total} were reset; run it again to finish)` : failed, { id: toastId });
+        if (total === 0) return;
+      } else {
+        toast.success(`Reset ${total} student password${total === 1 ? "" : "s"} to DOB`, { id: toastId });
+      }
       if (schoolId !== "anon") {
         invalidateStudentCredentialsCache(schoolId);
       }
       const payload = await fetchStudentCredentials(filterKey, { revalidate: true });
       applyPayload(payload);
     } catch {
-      toast.error("Reset failed");
+      toast.error("Reset failed", { id: toastId });
     } finally {
       setResetting(false);
     }
