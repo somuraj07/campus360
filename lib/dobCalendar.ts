@@ -73,6 +73,13 @@ export function parseDobToDate(raw: string | Date | null | undefined): Date | nu
   const trimmed = String(raw).trim();
   if (!trimmed) return null;
 
+  // Full ISO timestamp (e.g. a stored DOB sent back as toISOString()): take the India calendar date, as
+  // the screens do. Its UTC prefix is the day before for a DOB stored as India midnight.
+  if (/^\d{4}-\d{2}-\d{2}T/.test(trimmed)) {
+    const ts = new Date(trimmed);
+    if (!Number.isNaN(ts.getTime())) return parseDobToDate(formatDobYmd(ts));
+  }
+
   // YYYY-MM-DD (HTML date input / ISO prefix)
   let m = trimmed.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (m) {

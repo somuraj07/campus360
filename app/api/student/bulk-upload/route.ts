@@ -46,6 +46,7 @@ function parseOptionalNumber(value: unknown) {
 }
 
 import { parseDobToDate } from "@/lib/dobCalendar";
+import { canonicalStudentPasswordFromDob } from "@/lib/students/studentDefaultPassword";
 
 function parseDob(rawDob: unknown): Date {
   if (!rawDob) {
@@ -309,10 +310,7 @@ export async function POST(req: Request) {
           // If no match, leave classId null (unassigned) instead of throwing
         }
 
-        const password = dobDate
-          .toISOString()
-          .split("T")[0]
-          .replace(/-/g, "");
+        const password = canonicalStudentPasswordFromDob(dobDate);
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Each student is created in its own short transaction

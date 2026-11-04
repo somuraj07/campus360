@@ -26,34 +26,30 @@ export function formatDobPasswordIst(date: Date): string {
 }
 
 /**
- * All plausible default passwords for a stored DOB. UTC, server-local and India dates can differ by a day
- * for a DOB that was saved as local midnight; the India one is what the screens show, so a password
- * typed or generated from the displayed DOB is recognised too.
+ * All plausible default passwords for a stored DOB, the India date (what the screens show) first. UTC,
+ * server-local and India dates can differ by a day for a DOB that was saved as India midnight, and older
+ * code hashed the UTC one, so those are still recognised for logins created before the fix.
  */
 export function passwordCandidatesFromDob(
   dob: Date | string | null | undefined
 ): string[] {
   const date = toDate(dob);
   if (!date) return [];
-  return [...new Set([formatDobPasswordUtc(date), formatDobPasswordLocal(date), formatDobPasswordIst(date)])];
+  return [...new Set([formatDobPasswordIst(date), formatDobPasswordUtc(date), formatDobPasswordLocal(date)])];
 }
 
-/** Legacy alias used at student creation time (UTC). */
-export function studentDefaultPasswordFromDob(
-  dob: Date | string | null | undefined
-): string {
-  const date = toDate(dob);
-  if (!date) return "";
-  return formatDobPasswordUtc(date);
-}
-
-/** Password set on admin reset — local calendar DOB (what students expect). */
+/**
+ * The default password for a student: the DOB exactly as the app shows it (India calendar date), as
+ * YYYYMMDD. Every place that sets a DOB password must use this (or hashStudentPasswordFromDob). Not the
+ * UTC or server-local date: the server runs in UTC, so either gives the day before for a DOB stored as
+ * India midnight.
+ */
 export function canonicalStudentPasswordFromDob(
   dob: Date | string | null | undefined
 ): string {
   const date = toDate(dob);
   if (!date) return "";
-  return formatDobPasswordLocal(date);
+  return formatDobPasswordIst(date);
 }
 
 /**
