@@ -16,6 +16,7 @@ import { studentApplicationForStudentCreateSelect } from "@/lib/admission/studen
 import { canonicalizeResidencyType } from "@/lib/students/residencyDisplay";
 import { invalidateStudentListCaches } from "@/lib/students/invalidateStudentListCaches";
 import { parseDobToDate } from "@/lib/dobCalendar";
+import { canonicalStudentPasswordFromDob } from "@/lib/students/studentDefaultPassword";
 import { logger } from "@/lib/logger";
 
 function normalizeResidencyType(value: unknown) {
@@ -334,7 +335,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const password = dobDate.toISOString().split("T")[0].replace(/-/g, "");
+    const password = canonicalStudentPasswordFromDob(dobDate);
     const hashedPassword =
       effectiveStatus === "Inactive" ? null : await bcrypt.hash(password, 10);
 

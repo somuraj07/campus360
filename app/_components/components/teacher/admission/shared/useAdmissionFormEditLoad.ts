@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { formatDobYmd } from "@/lib/dobCalendar";
 import { normalizeResidencyType } from "./utils";
 import type { FormState } from "./types";
 
@@ -40,7 +41,7 @@ export function useAdmissionFormEditLoad({
           admissionFee: a.admissionFee === null || a.admissionFee === undefined ? "" : String(a.admissionFee),
           studentName: [a.firstName, a.middleName, a.lastName].filter(Boolean).join(" "),
           gender: a.gender,
-          dateOfBirth: a.dateOfBirth ? String(a.dateOfBirth).slice(0, 10) : "",
+          dateOfBirth: formatDobYmd(a.dateOfBirth),
           aadharNo: a.aadharNo ?? "",
           firstLanguage: a.firstLanguage ?? "",
           nationality: a.nationality ?? "Indian",

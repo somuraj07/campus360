@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import { tenantDb as prisma, runInTenantScope } from "@/lib/db/tenantContext";
 import { assertCanManageAdmissions, getSessionSchoolId } from "../_utils";
 import { randomUUID } from "crypto";
+import { parseDobToDate } from "@/lib/dobCalendar";
 import type { Gender, BoardingType, Grade } from "@prisma/client";
 import { HttpError, getErrorMessage, getErrorCode, getErrorMeta, getErrorStatusCode } from "@/lib/errors/errorInfo";
 
@@ -125,8 +126,8 @@ export async function POST(req: Request) {
     }
 
     const dateOfBirthRaw = requiredString(body.dateOfBirth, "dateOfBirth");
-    const dob = new Date(dateOfBirthRaw);
-    if (Number.isNaN(dob.getTime())) {
+    const dob = parseDobToDate(dateOfBirthRaw);
+    if (!dob) {
       return NextResponse.json({ message: "Invalid dateOfBirth" }, { status: 400 });
     }
 

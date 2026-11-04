@@ -8,6 +8,7 @@ import { withTenantScopedClient } from "@/lib/db/tenantClient";
 import { getApplicationGateRow } from "@/lib/admission/admissionsListQuery";
 import { studentApplicationDetailSelect } from "@/lib/admission/studentApplicationSafeSelect";
 import { assertCanManageAdmissions, getSessionSchoolId } from "../_utils";
+import { parseDobToDate } from "@/lib/dobCalendar";
 import { HttpError, getErrorMessage, getErrorCode, getErrorMeta, getErrorStatusCode } from "@/lib/errors/errorInfo";
 
 function optionalString(value: unknown) {
@@ -109,8 +110,8 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
     }
 
     const dateOfBirthRaw = requiredString(body.dateOfBirth, "dateOfBirth");
-    const dob = new Date(dateOfBirthRaw);
-    if (Number.isNaN(dob.getTime())) {
+    const dob = parseDobToDate(dateOfBirthRaw);
+    if (!dob) {
       return NextResponse.json({ message: "Invalid dateOfBirth" }, { status: 400 });
     }
 
