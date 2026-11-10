@@ -71,7 +71,7 @@
     "eslint-config-next": "16.4.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "prisma": "^6.19.3",
+    "prisma": "^7.10.1",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.14",
     "tsx": "^4.23.15",
