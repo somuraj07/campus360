@@ -7,7 +7,7 @@ type Props = {
 
 export default function ChatTabs({ activeTab, onChange }: Props) {
   return (
-    <div className="p-3 flex gap-2 overflow-x-auto border-b border-white/10">
+    <div className="p-3 flex gap-2 overflow-x-auto border-b border-line">
       {(["all", "approved", "pending", "rejected"] as const).map(tab => (
         <button
           key={tab}
@@ -15,8 +15,8 @@ export default function ChatTabs({ activeTab, onChange }: Props) {
           className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition
             ${
               activeTab === tab
-                ? "bg-lime-500 text-black"
-                : "bg-white/5 text-gray-400 hover:text-white hover:bg-white/10"
+                ? "bg-primary text-on-primary"
+                : "bg-elev-1 text-fg-muted hover:text-fg hover:bg-elev-3"
             }`}
         >
           {tab}

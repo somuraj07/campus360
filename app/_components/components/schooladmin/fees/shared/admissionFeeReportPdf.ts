@@ -102,7 +102,7 @@ export async function exportAdmissionFeeReportPdf(
     doc.setFontSize(7.5);
     doc.setTextColor(...muted);
     doc.setFont("helvetica", "normal");
-    doc.text("Timelly · Confidential school report. Amounts in INR.", m, H - 6);
+    doc.text("RS Solutions · Confidential school report. Amounts in INR.", m, H - 6);
     doc.text(`Page ${page}`, W - m, H - 6, { align: "right" });
   };
 

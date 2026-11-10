@@ -19,7 +19,7 @@ export default function SelectField({
 }: SelectFieldProps) {
   return (
     <div className="space-y-2">
-      <label className="text-sm text-black">{label}</label>
+      <label className="text-sm text-on-primary">{label}</label>
 
       <div className="relative">
         <select
@@ -30,10 +30,10 @@ export default function SelectField({
             w-full
             bg-white
             border
-            border-gray-300
-            disabled:bg-gray-100
+            border-line-strong
+            disabled:bg-elev-3
             disabled:cursor-not-allowed
-            border-black
+            border-line
             rounded-xl
             px-4 py-3
             pr-10
@@ -41,7 +41,7 @@ export default function SelectField({
             focus:outline-none
             focus:ring-0
             appearance-none
-            ${value === "" ? "text-gray-500" : "text-black"}
+            ${value === "" ? "text-fg-subtle" : "text-on-primary"}
           `}
         >
           <option value="">{placeholder}</option>
@@ -53,7 +53,7 @@ export default function SelectField({
           ))}
         </select>
 
-        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-black">
+        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-on-primary">
           ▾
         </span>
       </div>

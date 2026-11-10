@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Search, History, Trash2 } from "lucide-react";
 import { formatRupee } from "@/lib/formatRupee";
 import { schoolAdminStudentDetailsFeesUrl } from "./studentDetailsNav";
+import { fieldClass } from "../../common/ui";
 
 type HistoryEvent = {
   id: string;
@@ -61,9 +62,9 @@ const ACTION_LABEL: Record<string, string> = {
 
 function statusClass(status: string): string {
   const s = status.toUpperCase();
-  if (s === "SUCCESS" || s === "COMPLETED") return "border-emerald-400/40 bg-emerald-400/10 text-emerald-300";
-  if (s === "FAILED") return "border-red-400/40 bg-red-400/10 text-red-300";
-  return "border-amber-400/40 bg-amber-400/10 text-amber-300";
+  if (s === "SUCCESS" || s === "COMPLETED") return "border-emerald-400/40 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300";
+  if (s === "FAILED") return "border-red-400/40 bg-red-400/10 text-red-700 dark:text-red-300";
+  return "border-amber-400/40 bg-amber-400/10 text-amber-700 dark:text-amber-300";
 }
 
 function fmtDate(value: string | null): string {
@@ -80,8 +81,7 @@ function fmtDay(value: string | null): string {
   return Number.isNaN(d.getTime()) ? "-" : d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-const inputClass =
-  "w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-lime-400/50 focus:outline-none";
+const inputClass = fieldClass;
 
 export default function ReceiptLookup() {
   const router = useRouter();
@@ -137,16 +137,16 @@ export default function ReceiptLookup() {
   const nothingFound = result && result.payments.length === 0 && result.deleted.length === 0;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold">Receipt lookup &amp; payment history</h3>
-      <p className="mt-1 text-sm text-gray-400">
+      <p className="mt-1 text-sm text-fg-muted">
         Find a payment from a receipt the parent is holding. This search shows every payment, including pending and
         failed ones, and payments that were deleted. Search by the receipt number (for example R-000123 or 123) or by the UTR / reference number. Receipt
         numbers are printed in the day reports; payments recorded before numbering was introduced were numbered in date order.
       </p>
 
       <form onSubmit={search} className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        <label className="block text-xs text-gray-400 lg:col-span-2">
+        <label className="block text-xs text-fg-muted lg:col-span-2">
           Receipt no., reference / UTR, student name, admission no. or payment id
           <input
             className={`${inputClass} mt-1`}
@@ -156,7 +156,7 @@ export default function ReceiptLookup() {
             maxLength={100}
           />
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           Amount (₹)
           <input
             className={`${inputClass} mt-1`}
@@ -166,11 +166,11 @@ export default function ReceiptLookup() {
             placeholder="e.g. 12550"
           />
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           From date
           <input type="date" className={`${inputClass} mt-1`} value={from} onChange={(e) => setFrom(e.target.value)} />
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           To date
           <input type="date" className={`${inputClass} mt-1`} value={to} onChange={(e) => setTo(e.target.value)} />
         </label>
@@ -178,7 +178,7 @@ export default function ReceiptLookup() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl border border-lime-400/40 bg-lime-400/10 px-4 py-2 text-sm font-medium text-lime-300 hover:bg-lime-400/20 disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
           >
             <Search size={16} />
             {loading ? "Searching…" : "Search"}
@@ -186,7 +186,7 @@ export default function ReceiptLookup() {
           <button
             type="button"
             onClick={clear}
-            className="rounded-xl border border-white/10 px-4 py-2 text-sm text-gray-300 hover:bg-white/5"
+            className="rounded-xl border border-line px-4 py-2 text-sm text-fg-muted hover:bg-elev-2"
           >
             Clear
           </button>
@@ -194,13 +194,13 @@ export default function ReceiptLookup() {
       </form>
 
       {error && (
-        <div role="alert" className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-200">
+        <div role="alert" className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-800 dark:text-red-200">
           {error}
         </div>
       )}
 
       {nothingFound && (
-        <div className="mt-4 rounded-xl border border-white/10 bg-black/10 p-4 text-sm text-gray-300">
+        <div className="mt-4 rounded-xl border border-line bg-well p-4 text-sm text-fg-muted">
           No payment, including deleted ones, matches this search. Check the reference number for typos, or try the
           amount and date on their own. If the parent paid online or by bank transfer, the money may not have reached
           the school account yet.
@@ -209,73 +209,73 @@ export default function ReceiptLookup() {
 
       {result && result.payments.length > 0 && (
         <div className="mt-5 space-y-3">
-          <p className="text-sm font-medium text-white">
+          <p className="text-sm font-medium text-fg">
             {result.payments.length} payment{result.payments.length === 1 ? "" : "s"} found
             {result.truncated ? " (showing the most recent; narrow the search to see others)" : ""}
           </p>
           {result.payments.map((p) => {
             const open = Boolean(openHistory[p.id]);
             return (
-              <article key={p.id} className="rounded-xl border border-white/10 bg-black/10 p-4">
+              <article key={p.id} className="rounded-xl border border-line bg-well p-4">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div className="min-w-0">
                     <button
                       type="button"
                       onClick={() => router.push(schoolAdminStudentDetailsFeesUrl(p.student.id))}
-                      className="text-left text-sm font-semibold text-white underline-offset-2 hover:underline"
+                      className="text-left text-sm font-semibold text-fg underline-offset-2 hover:underline"
                     >
                       {p.student.name ?? "Student"}
                     </button>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-fg-muted">
                       {p.student.admissionNumber}
                       {p.student.class ? ` · ${p.student.class}` : ""}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-base font-semibold text-white">₹{formatRupee(p.amount)}</p>
+                    <p className="text-base font-semibold text-fg">₹{formatRupee(p.amount)}</p>
                     <span className={`inline-block rounded-full border px-2 py-0.5 text-xs ${statusClass(p.status)}`}>
                       {p.status}
                     </span>
                   </div>
                 </div>
 
-                <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-xs text-gray-300 sm:grid-cols-2">
+                <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-xs text-fg-muted sm:grid-cols-2">
                   <div className="flex gap-2">
-                    <dt className="text-gray-500">Receipt no</dt>
+                    <dt className="text-fg-subtle">Receipt no</dt>
                     <dd>{formatReceiptNo(p.receiptNo)}</dd>
                   </div>
                   <div className="flex gap-2">
-                    <dt className="text-gray-500">Date</dt>
+                    <dt className="text-fg-subtle">Date</dt>
                     <dd>{fmtDay(p.createdAt)}</dd>
                   </div>
                   <div className="flex gap-2">
-                    <dt className="text-gray-500">Mode</dt>
+                    <dt className="text-fg-subtle">Mode</dt>
                     <dd>{p.gateway ?? "-"}</dd>
                   </div>
                   <div className="flex gap-2">
-                    <dt className="text-gray-500">Reference</dt>
+                    <dt className="text-fg-subtle">Reference</dt>
                     <dd className="break-all">{p.transactionId ?? "-"}</dd>
                   </div>
                   <div className="flex gap-2">
-                    <dt className="text-gray-500">Collected by</dt>
+                    <dt className="text-fg-subtle">Collected by</dt>
                     <dd>{p.collectedByName ?? "-"}</dd>
                   </div>
                   {p.purpose !== "FEES" && (
                     <div className="flex gap-2">
-                      <dt className="text-gray-500">Purpose</dt>
+                      <dt className="text-fg-subtle">Purpose</dt>
                       <dd>{p.purpose}</dd>
                     </div>
                   )}
                   {p.refundedTotal > 0 && (
                     <div className="flex gap-2">
-                      <dt className="text-gray-500">Refunded</dt>
+                      <dt className="text-fg-subtle">Refunded</dt>
                       <dd>₹{formatRupee(p.refundedTotal)}</dd>
                     </div>
                   )}
                 </dl>
 
                 {p.heads.length > 0 && (
-                  <p className="mt-2 text-xs text-gray-400">
+                  <p className="mt-2 text-xs text-fg-muted">
                     Paid towards: {p.heads.map((h) => `${h.name} ₹${formatRupee(h.amount)}`).join(", ")}
                   </p>
                 )}
@@ -284,24 +284,24 @@ export default function ReceiptLookup() {
                   type="button"
                   onClick={() => setOpenHistory((prev) => ({ ...prev, [p.id]: !open }))}
                   aria-expanded={open}
-                  className="mt-3 inline-flex items-center gap-1.5 text-xs text-lime-300 hover:underline"
+                  className="mt-3 inline-flex items-center gap-1.5 text-xs text-primary hover:underline"
                 >
                   <History size={14} />
                   {open ? "Hide history" : `History (${p.history.length})`}
                 </button>
                 {open && (
-                  <ol className="mt-2 space-y-1.5 border-l border-white/10 pl-3 text-xs text-gray-300">
+                  <ol className="mt-2 space-y-1.5 border-l border-line pl-3 text-xs text-fg-muted">
                     {p.history.length === 0 && (
-                      <li className="text-gray-500">
+                      <li className="text-fg-subtle">
                         No history recorded. Payments made before the audit trail was added have no history.
                       </li>
                     )}
                     {p.history.map((h) => (
                       <li key={h.id}>
-                        <span className="font-medium text-white">{ACTION_LABEL[h.action] ?? h.action}</span>{" "}
+                        <span className="font-medium text-fg">{ACTION_LABEL[h.action] ?? h.action}</span>{" "}
                         by {h.actorName ?? "unknown"}
                         {h.actorRole ? ` (${h.actorRole.toLowerCase()})` : ""} · {fmtDate(h.createdAt)}
-                        {h.summary && <span className="block text-gray-400">{h.summary}</span>}
+                        {h.summary && <span className="block text-fg-muted">{h.summary}</span>}
                       </li>
                     ))}
                   </ol>
@@ -314,18 +314,18 @@ export default function ReceiptLookup() {
 
       {result && result.deleted.length > 0 && (
         <div className="mt-5 space-y-3">
-          <p className="flex items-center gap-2 text-sm font-medium text-red-300">
+          <p className="flex items-center gap-2 text-sm font-medium text-red-700 dark:text-red-300">
             <Trash2 size={15} />
             Deleted payments that match
           </p>
           {result.deleted.map((d) => (
-            <article key={d.auditId} className="rounded-xl border border-red-500/25 bg-red-500/5 p-4 text-xs text-gray-300">
-              <p className="text-sm font-semibold text-white">
+            <article key={d.auditId} className="rounded-xl border border-red-500/25 bg-red-500/5 p-4 text-xs text-fg-muted">
+              <p className="text-sm font-semibold text-fg">
                 ₹{d.amount !== null ? formatRupee(d.amount) : "?"}
                 {d.student ? ` · ${d.student.name ?? "Student"} (${d.student.admissionNumber})` : ""}
               </p>
               <p className="mt-1">
-                Deleted by <span className="text-white">{d.deletedBy ?? "unknown"}</span>
+                Deleted by <span className="text-fg">{d.deletedBy ?? "unknown"}</span>
                 {d.deletedByRole ? ` (${d.deletedByRole.toLowerCase()})` : ""} on {fmtDate(d.deletedAt)}
               </p>
               <p className="mt-1">
@@ -334,7 +334,7 @@ export default function ReceiptLookup() {
                 {d.transactionId ? ` · Reference ${d.transactionId}` : ""}
               </p>
               {d.heads.length > 0 && (
-                <p className="mt-1 text-gray-400">
+                <p className="mt-1 text-fg-muted">
                   It covered: {d.heads.map((h) => `${h.name ?? "Fee"} ₹${h.amount !== null ? formatRupee(h.amount) : "?"}`).join(", ")}
                 </p>
               )}

@@ -22,59 +22,39 @@ export default function ClassDetailsPanel({
 }: ClassDetailsPanelProps) {
   const shortSection = row.section.replace("Section ", "");
 
+  const cards = [
+    { label: "Class Teacher", value: row.teacher, strong: true },
+    { label: "Total Students", value: String(row.students) },
+    { label: "Subject Focus", value: row.subject || "—" },
+  ];
   return (
-    <div className="bg-[#0F172A] p-4 shadow-inner animate-fadeIn border-y border-white/10">
-      <div className="p-4 sm:p-5">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 text-white">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 border border-white/10">
-              <Eye size={16} className="text-white/80" />
-            </span>
-            <h3 className="text-base sm:text-lg font-semibold">
-              Class Details: {row.name} - {shortSection}
-            </h3>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="h-8 w-8 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-            aria-label="Close class details"
-          >
-            <X size={16} className="mx-auto" />
-          </button>
+    <div className="animate-fadeIn px-5 py-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <Eye size={16} />
+          </span>
+          <h3 className="text-sm font-semibold text-fg">
+            Class Details: {row.name} - {shortSection}
+          </h3>
         </div>
-
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="text-[11px] uppercase tracking-wide text-white/50">
-              Class Teacher
-            </div>
-            <div className="text-sm font-bold text-lime-400 mt-1">{row.teacher}</div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="text-[11px] uppercase tracking-wide text-white/50">
-              Total Students
-            </div>
-            <div className="mt-1 text-white font-semibold text-sm">{row.students}</div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="text-[11px] uppercase tracking-wide text-white/50">
-              Subject Focus
-            </div>
-            <div className="mt-1 text-white font-semibold text-sm">{row.subject}</div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-            <div className="text-[11px] uppercase tracking-wide text-white/50">
-              Performance
-            </div>
-            <div className="mt-1 text-white font-semibold text-sm">Top 10%</div>
-          </div>
-        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-fg-subtle transition hover:bg-elev-3 hover:text-fg"
+          aria-label="Close class details"
+        >
+          <X size={16} />
+        </button>
       </div>
+      <dl className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {cards.map((c) => (
+          <div key={c.label} className="rounded-xl border border-line bg-surface p-3.5">
+            <dt className="text-xs text-fg-subtle">{c.label}</dt>
+            <dd className={`mt-1 truncate text-sm font-semibold ${c.strong ? "text-primary" : "text-fg"}`}>{c.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }

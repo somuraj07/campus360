@@ -14,8 +14,8 @@ export function leaveTypeLabel(t: string) {
 }
 
 export function statusStyle(s: string) {
-  if (s === "APPROVED") return "bg-[#b4f03d]/10 text-[#b4f03d] border-[#b4f03d]/30";
-  if (s === "CONDITIONALLY_APPROVED") return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
-  if (s === "REJECTED") return "bg-red-500/10 text-red-400 border-red-500/30";
-  return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
+  if (s === "APPROVED") return "bg-primary/10 text-primary border-primary/30";
+  if (s === "CONDITIONALLY_APPROVED") return "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/30";
+  if (s === "REJECTED") return "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30";
+  return "bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/30";
 }

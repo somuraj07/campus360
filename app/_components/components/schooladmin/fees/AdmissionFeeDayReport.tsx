@@ -51,11 +51,11 @@ export default function AdmissionFeeDayReport() {
   };
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-white">Admission fee day report</h3>
-          <p className="mt-1 text-sm text-gray-400">
+          <h3 className="text-lg font-semibold text-fg">Admission fee day report</h3>
+          <p className="mt-1 text-sm text-fg-muted">
             Paid admission fees recorded on applications (by paid date). Use date-wise or month-wise totals, then
             export to Excel or PDF.
           </p>
@@ -65,7 +65,7 @@ export default function AdmissionFeeDayReport() {
             type="button"
             disabled={!data || loading}
             onClick={exportExcel}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-500/35 bg-emerald-500/15 px-3 py-2 text-sm font-semibold text-emerald-100 hover:bg-emerald-500/25 disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
           >
             <FileSpreadsheet className="h-4 w-4" />
             Excel
@@ -74,7 +74,7 @@ export default function AdmissionFeeDayReport() {
             type="button"
             disabled={!data || loading}
             onClick={() => void exportPdf()}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-sky-500/35 bg-sky-500/15 px-3 py-2 text-sm font-semibold text-sky-100 hover:bg-sky-500/25 disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
           >
             <FileText className="h-4 w-4" />
             PDF
@@ -85,39 +85,39 @@ export default function AdmissionFeeDayReport() {
       <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div className="flex flex-wrap items-end gap-3">
           <div>
-            <label className="mb-1 block text-xs font-medium text-gray-400">From</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">From</label>
             <input
               type="date"
               value={from}
               onChange={(e) => setRange((r) => ({ ...r, from: e.target.value }))}
-              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white"
+              className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-gray-400">To</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">To</label>
             <input
               type="date"
               value={to}
               onChange={(e) => setRange((r) => ({ ...r, to: e.target.value }))}
-              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white"
+              className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
           </div>
           <button
             type="button"
             onClick={() => void load()}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/15 disabled:opacity-50"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
           >
             <CalendarDays className="h-4 w-4" />
             {loading ? "Loading…" : "Apply range"}
           </button>
         </div>
-        <div className="flex rounded-xl border border-white/10 p-1">
+        <div className="flex rounded-xl border border-line p-1">
           <button
             type="button"
             onClick={() => setGroupMode("day")}
             className={`rounded-lg px-3 py-1.5 text-sm font-semibold ${
-              groupMode === "day" ? "bg-lime-500/25 text-lime-100" : "text-gray-400 hover:text-white"
+              groupMode === "day" ? "bg-primary/25 text-primary" : "text-fg-muted hover:text-fg"
             }`}
           >
             Date-wise
@@ -126,7 +126,7 @@ export default function AdmissionFeeDayReport() {
             type="button"
             onClick={() => setGroupMode("month")}
             className={`rounded-lg px-3 py-1.5 text-sm font-semibold ${
-              groupMode === "month" ? "bg-lime-500/25 text-lime-100" : "text-gray-400 hover:text-white"
+              groupMode === "month" ? "bg-primary/25 text-primary" : "text-fg-muted hover:text-fg"
             }`}
           >
             Month-wise
@@ -135,7 +135,7 @@ export default function AdmissionFeeDayReport() {
       </div>
 
       {error ? (
-        <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200">{error}</div>
+        <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-800 dark:text-red-200">{error}</div>
       ) : null}
 
       {data && !loading ? (
@@ -144,39 +144,39 @@ export default function AdmissionFeeDayReport() {
             channelTotals?.cash && channelTotals?.online ? "lg:grid-cols-4" : "lg:grid-cols-3"
           }`}
         >
-          <div className="rounded-xl border border-white/10 bg-black/20 px-4 py-3">
-            <p className="text-xs text-gray-400">Applications (paid in range)</p>
-            <p className="text-xl font-bold text-white">{data.totals.count}</p>
+          <div className="rounded-xl border border-line bg-well px-4 py-3">
+            <p className="text-xs text-fg-muted">Applications (paid in range)</p>
+            <p className="text-xl font-bold text-fg">{data.totals.count}</p>
           </div>
-          <div className="rounded-xl border border-white/10 bg-black/20 px-4 py-3">
-            <p className="text-xs text-gray-400">Total admission fee collected</p>
-            <p className="text-xl font-bold text-emerald-300">₹{data.totals.amount.toLocaleString("en-IN")}</p>
+          <div className="rounded-xl border border-line bg-well px-4 py-3">
+            <p className="text-xs text-fg-muted">Total admission fee collected</p>
+            <p className="text-xl font-bold text-emerald-700 dark:text-emerald-300">₹{data.totals.amount.toLocaleString("en-IN")}</p>
           </div>
           {channelTotals?.cash ? (
             <div className="rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-3">
-              <p className="text-xs text-amber-200/80">Cash collected</p>
-              <p className="text-xl font-bold text-amber-100">
+              <p className="text-xs text-amber-800 dark:text-amber-200">Cash collected</p>
+              <p className="text-xl font-bold text-amber-800 dark:text-amber-100">
                 ₹{channelTotals.cash.amount.toLocaleString("en-IN")}
               </p>
-              <p className="mt-0.5 text-xs text-amber-200/60">{channelTotals.cash.count} application(s)</p>
+              <p className="mt-0.5 text-xs text-amber-800 dark:text-amber-200">{channelTotals.cash.count} application(s)</p>
             </div>
           ) : null}
           {channelTotals?.online ? (
             <div className="rounded-xl border border-sky-500/25 bg-sky-500/10 px-4 py-3">
-              <p className="text-xs text-sky-200/80">Online collected</p>
-              <p className="text-xl font-bold text-sky-100">
+              <p className="text-xs text-sky-800 dark:text-sky-200">Online collected</p>
+              <p className="text-xl font-bold text-sky-800 dark:text-sky-100">
                 ₹{channelTotals.online.amount.toLocaleString("en-IN")}
               </p>
-              <p className="mt-0.5 text-xs text-sky-200/60">{channelTotals.online.count} application(s)</p>
+              <p className="mt-0.5 text-xs text-sky-800 dark:text-sky-200">{channelTotals.online.count} application(s)</p>
             </div>
           ) : null}
         </div>
       ) : null}
 
-      <div className="overflow-x-auto rounded-xl border border-white/10">
+      <div className="overflow-x-auto rounded-xl border border-line">
         <table className="w-full min-w-[480px] text-left text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-xs uppercase tracking-wide text-gray-400">
+            <tr className="border-b border-line text-xs uppercase tracking-wide text-fg-muted">
               <th className="px-3 py-3 font-medium">{groupMode === "day" ? "Date" : "Month"}</th>
               <th className="px-3 py-3 font-medium text-right">Applications</th>
               <th className="px-3 py-3 font-medium text-right">Amount (₹)</th>
@@ -185,22 +185,22 @@ export default function AdmissionFeeDayReport() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={3} className="px-3 py-8 text-center text-gray-400">
+                <td colSpan={3} className="px-3 py-8 text-center text-fg-muted">
                   Loading…
                 </td>
               </tr>
             ) : buckets.length === 0 ? (
               <tr>
-                <td colSpan={3} className="px-3 py-8 text-center text-gray-400">
+                <td colSpan={3} className="px-3 py-8 text-center text-fg-muted">
                   No paid admission fees in this range.
                 </td>
               </tr>
             ) : (
               buckets.map((b) => (
-                <tr key={b.period} className="border-b border-white/5 last:border-0 hover:bg-white/[0.03]">
-                  <td className="px-3 py-2.5 font-mono text-white/90">{b.period}</td>
-                  <td className="px-3 py-2.5 text-right tabular-nums text-gray-200">{b.count}</td>
-                  <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-emerald-300">
+                <tr key={b.period} className="border-b border-line-subtle last:border-0 hover:bg-elev-2">
+                  <td className="px-3 py-2.5 font-mono text-fg">{b.period}</td>
+                  <td className="px-3 py-2.5 text-right tabular-nums text-fg">{b.count}</td>
+                  <td className="px-3 py-2.5 text-right tabular-nums font-semibold text-emerald-700 dark:text-emerald-300">
                     ₹{b.amount.toLocaleString("en-IN")}
                   </td>
                 </tr>
@@ -212,11 +212,11 @@ export default function AdmissionFeeDayReport() {
 
       {data && data.applications.length > 0 ? (
         <div className="mt-6">
-          <h4 className="mb-2 text-sm font-semibold text-gray-200">Application detail (paid in range)</h4>
-          <div className="max-h-72 overflow-auto rounded-xl border border-white/10">
+          <h4 className="mb-2 text-sm font-semibold text-fg">Application detail (paid in range)</h4>
+          <div className="max-h-72 overflow-auto rounded-xl border border-line">
             <table className="w-full min-w-[640px] text-left text-xs sm:text-sm">
-              <thead className="sticky top-0 bg-[#0f172a]/95 backdrop-blur">
-                <tr className="border-b border-white/10 text-[11px] uppercase tracking-wide text-gray-400">
+              <thead className="sticky top-0 bg-surface ">
+                <tr className="border-b border-line text-[11px] uppercase tracking-wide text-fg-muted">
                   <th className="px-2 py-2 font-medium">App. no.</th>
                   <th className="px-2 py-2 font-medium">Applicant</th>
                   <th className="px-2 py-2 font-medium">Class / grade</th>
@@ -227,15 +227,15 @@ export default function AdmissionFeeDayReport() {
               </thead>
               <tbody>
                 {data.applications.map((a) => (
-                  <tr key={`${a.applicationNo}-${a.paidAtIso}`} className="border-b border-white/5 hover:bg-white/[0.03]">
-                    <td className="px-2 py-2 font-mono text-white/85">{a.applicationNo}</td>
-                    <td className="px-2 py-2 text-gray-200">{a.applicantName}</td>
-                    <td className="px-2 py-2 text-gray-400">{a.classOrGrade}</td>
-                    <td className="px-2 py-2 text-right font-semibold text-emerald-300">
+                  <tr key={`${a.applicationNo}-${a.paidAtIso}`} className="border-b border-line-subtle hover:bg-elev-2">
+                    <td className="px-2 py-2 font-mono text-fg">{a.applicationNo}</td>
+                    <td className="px-2 py-2 text-fg">{a.applicantName}</td>
+                    <td className="px-2 py-2 text-fg-muted">{a.classOrGrade}</td>
+                    <td className="px-2 py-2 text-right font-semibold text-emerald-700 dark:text-emerald-300">
                       ₹{a.admissionFee.toLocaleString("en-IN")}
                     </td>
-                    <td className="px-2 py-2 text-gray-300">{new Date(a.paidAtIso).toLocaleString("en-IN")}</td>
-                    <td className="px-2 py-2 text-gray-400">{a.paymentMode || "—"}</td>
+                    <td className="px-2 py-2 text-fg-muted">{new Date(a.paidAtIso).toLocaleString("en-IN")}</td>
+                    <td className="px-2 py-2 text-fg-muted">{a.paymentMode || "—"}</td>
                   </tr>
                 ))}
               </tbody>

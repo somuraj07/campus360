@@ -123,7 +123,7 @@ function SuperAdminContent() {
 
 export default function SuperAdminDashboard() {
   return (
-    <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center text-white/70">Loading...</div>}>
+    <Suspense fallback={<div className="flex min-h-[40vh] items-center justify-center text-fg-muted">Loading...</div>}>
       <SuperAdminContent />
     </Suspense>
   );

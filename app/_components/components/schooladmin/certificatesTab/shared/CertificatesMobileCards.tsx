@@ -26,66 +26,66 @@ export function CertificatesMobileCards({
   return (
     <div className="md:hidden p-4 space-y-4">
       {filtered.length === 0 ? (
-        <p className="text-sm text-white/60 py-6 text-center">
+        <p className="text-sm text-fg-muted py-6 text-center">
           No {activeTab} requests
         </p>
       ) : (
         filtered.map((row) => (
           <div
             key={row.id}
-            className="rounded-xl bg-white/5 border border-white/10 p-4 space-y-3"
+            className="rounded-xl bg-elev-1 border border-line p-4 space-y-3"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-sm font-semibold">
                   {row.student?.user?.name ?? "—"}
                 </div>
-                <div className="text-xs text-white/70">
+                <div className="text-xs text-fg-muted">
                   {getCertificateTypeLabel(row.certificateType)}
                 </div>
               </div>
-              <span className="px-2.5 py-1 rounded-full bg-white/10 text-[11px]">
+              <span className="px-2.5 py-1 rounded-full bg-elev-2 text-[11px]">
                 {classNameDisplay(row)}
               </span>
             </div>
-            <div className="text-xs text-white/70 space-y-1">
+            <div className="text-xs text-fg-muted space-y-1">
               <div>
-                <span className="text-white/50">Request ID: </span>
+                <span className="text-fg-subtle">Request ID: </span>
                 {`CR${row.id.slice(-6).toUpperCase()}`}
               </div>
               <div>
-                <span className="text-white/50">Certificate Type: </span>
+                <span className="text-fg-subtle">Certificate Type: </span>
                 {getCertificateTypeLabel(row.certificateType)}
               </div>
               <div>
-                <span className="text-white/50">Purpose: </span>
+                <span className="text-fg-subtle">Purpose: </span>
                 {row.reason || "—"}
               </div>
               <div>
-                <span className="text-white/50">Requested: </span>
+                <span className="text-fg-subtle">Requested: </span>
                 {formatDate(row.createdAt)}
               </div>
               {row.issuedDate && (
                 <div>
-                  <span className="text-white/50">Issued: </span>
+                  <span className="text-fg-subtle">Issued: </span>
                   {formatDate(row.issuedDate)}
                 </div>
               )}
               {row.issuedDate && (
                 <div>
-                  <span className="text-white/50">Days Elapsed: </span>
+                  <span className="text-fg-subtle">Days Elapsed: </span>
                   {daysSince(row.issuedDate, now)} days
                 </div>
               )}
               {!row.issuedDate && row.status === "PENDING" && (
                 <div>
-                  <span className="text-white/50">Days Since Request: </span>
+                  <span className="text-fg-subtle">Days Since Request: </span>
                   {daysSince(row.createdAt, now)} days
                 </div>
               )}
               {row.student?.user?.email && (
                 <div>
-                  <span className="text-white/50">Email: </span>
+                  <span className="text-fg-subtle">Email: </span>
                   {row.student.user.email}
                 </div>
               )}
@@ -95,7 +95,7 @@ export function CertificatesMobileCards({
                 <button
                   disabled={!!actingId}
                   onClick={() => onOpenApproveModal(row.id)}
-                  className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-lime-400 text-black text-xs font-semibold disabled:opacity-50"
+                  className="flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-primary text-on-primary text-xs font-semibold disabled:opacity-50"
                 >
                   {actingId === row.id && approvingId === row.id ? (
                     <Loader2 size={14} className="animate-spin" />
@@ -120,20 +120,20 @@ export function CertificatesMobileCards({
                   href={row.tcDocumentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-white/10 hover:bg-white/15 text-xs"
+                  className="w-full flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-elev-2 hover:bg-elev-3 text-xs"
                 >
                   <Download size={14} />
                   Download
                 </a>
               ) : (
-                <span className="w-full flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-white/5 text-white/50 text-xs cursor-default">
+                <span className="w-full flex items-center justify-center gap-1 px-3 py-2 rounded-full bg-elev-1 text-fg-subtle text-xs cursor-default">
                   <Download size={14} />
                   N/A
                 </span>
               )
             )}
             {STATUS_MAP[row.status] === "rejected" && (
-              <span className="text-red-400 font-medium text-xs">
+              <span className="text-red-700 dark:text-red-400 font-medium text-xs">
                 Rejected
               </span>
             )}

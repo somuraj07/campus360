@@ -2,11 +2,11 @@ import { StudentFormErrors, StudentFormState } from "../types";
 
 export const formatStudentMessage = (message: string) => {
   const normalized = message.toLowerCase();
-  if (normalized.includes("student name and timelly id already exist")) {
-    return "Student with same name and Timelly ID already exists.";
+  if ((normalized.includes("student name and rs solutions id already exist") || normalized.includes("student name and timelly id already exist"))) {
+    return "Student with same name and RS Solutions ID already exists.";
   }
-  if (normalized.includes("timelly id already exists")) {
-    return "Timelly ID already exists.";
+  if ((normalized.includes("rs solutions id already exists") || normalized.includes("timelly id already exists"))) {
+    return "RS Solutions ID already exists.";
   }
   if (normalized.includes("aadhaar number already exists in another school")) {
     return "Aadhaar number already exists in another school.";

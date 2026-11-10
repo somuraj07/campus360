@@ -1,11 +1,27 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { Building2, Mail, Phone, User, Lock } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Building2, Mail, Phone, User, Lock, UserCheck, UserX, RefreshCw, UserPlus, Users } from "lucide-react";
 import { createChairman, fetchChairmenSchools, type ChairmanSchoolOption } from "@/lib/api/chairmen";
-import PageHeader from "../common/PageHeader";
-import SearchInput from "../common/SearchInput";
-import { PRIMARY_COLOR } from "../../constants/colors";
+import {
+  SaPage,
+  SaPageHeader,
+  Panel,
+  Field,
+  TextInput,
+  SelectInput,
+  Alert,
+  Badge,
+  SearchBox,
+  DataTable,
+  Th,
+  Td,
+  InitialsAvatar,
+  EmptyState,
+  LoadingBlock,
+  Segmented,
+  btnClass,
+} from "./shared/ui";
 
 type SchoolOption = ChairmanSchoolOption;
 
@@ -25,6 +41,8 @@ const emptyForm: FormState = {
   mobile: "",
 };
 
+type Filter = "all" | "with" | "without";
+
 export default function AddChairman() {
   const [schools, setSchools] = useState<SchoolOption[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
@@ -32,6 +50,8 @@ export default function AddChairman() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
 
   const fetchSchools = useCallback(async () => {
     setLoadingSchools(true);
@@ -87,160 +107,229 @@ export default function AddChairman() {
     }
   };
 
+  const withChairman = schools.filter((s) => (s.users?.length ?? 0) > 0).length;
+  const withoutChairman = schools.length - withChairman;
+  const coverage = schools.length ? Math.round((withChairman / schools.length) * 100) : 0;
+
+  const visible = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return schools.filter((s) => {
+      const has = (s.users?.length ?? 0) > 0;
+      if (filter === "with" && !has) return false;
+      if (filter === "without" && has) return false;
+      if (!q) return true;
+      return (
+        s.name.toLowerCase().includes(q) ||
+        (s.location ?? "").toLowerCase().includes(q) ||
+        (s.users ?? []).some((u) => `${u.name ?? ""} ${u.email ?? ""}`.toLowerCase().includes(q))
+      );
+    });
+  }, [schools, query, filter]);
+
   return (
-    <main className="flex-1 overflow-y-auto">
-      <div className="w-full space-y-6">
-        <PageHeader
-          title="Add Chairman"
-          subtitle="Create a chairman login for a selected school. Chairman accounts use the normal login page."
-          className="w-full mb-0"
-        />
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Accounts"
+        title="Add Chairman"
+        description="Create a chairman login for a selected school. Chairman accounts use the normal login page."
+      />
 
-        <form
-          onSubmit={handleSubmit}
-          className="w-full rounded-2xl border border-gray-500/20 p-4 shadow-sm sm:p-6 lg:p-8"
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-        >
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-xl font-semibold text-white sm:text-2xl">Chairman Account</h1>
-            <button
-              type="submit"
-              disabled={saving || loadingSchools}
-              style={{ backgroundColor: PRIMARY_COLOR }}
-              className="w-full rounded-lg px-6 py-2 font-medium text-black hover:opacity-90 disabled:opacity-60 sm:w-auto"
-            >
-              {saving ? "Creating..." : "Create Chairman"}
-            </button>
-          </div>
+      <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <form onSubmit={handleSubmit} noValidate>
+          <Panel
+            icon={UserPlus}
+            title="Chairman Account"
+            description="All fields marked * are required."
+            bodyClassName="p-5 sm:p-6"
+          >
+            <div className="space-y-5">
+              {error ? <Alert tone="error">{error}</Alert> : null}
+              {success ? <Alert tone="success">{success}</Alert> : null}
 
-          {error ? <p className="mb-4 rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p> : null}
-          {success ? <p className="mb-4 rounded-xl bg-lime-500/10 p-3 text-sm text-lime-300">{success}</p> : null}
+              <Field label="School" required>
+                <SelectInput
+                  icon={Building2}
+                  value={form.schoolId}
+                  onChange={(event) => handleChange("schoolId")(event.target.value)}
+                  disabled={loadingSchools}
+                >
+                  <option value="">{loadingSchools ? "Loading schools..." : "Select school"}</option>
+                  {schools.map((school) => (
+                    <option key={school.id} value={school.id}>
+                      {school.name}
+                      {school.location ? ` - ${school.location}` : ""}
+                    </option>
+                  ))}
+                </SelectInput>
+              </Field>
 
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
-            <div>
-              <label className="mb-2 flex items-center gap-2 text-sm font-medium text-white">
-                <Building2 className="h-4 w-4 text-white/50" />
-                School *
-              </label>
-              <select
-                value={form.schoolId}
-                onChange={(event) => handleChange("schoolId")(event.target.value)}
-                disabled={loadingSchools}
-                className="w-full rounded-lg border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70 disabled:opacity-60"
-              >
-                <option value="">{loadingSchools ? "Loading schools..." : "Select school"}</option>
-                {schools.map((school) => (
-                  <option key={school.id} value={school.id}>
-                    {school.name}
-                    {school.location ? ` - ${school.location}` : ""}
-                  </option>
-                ))}
-              </select>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <Field label="Chairman Name" required>
+                  <TextInput icon={User} placeholder="Chairman name" value={form.name} onChange={(e) => handleChange("name")(e.target.value)} />
+                </Field>
+                <Field label="Mobile">
+                  <TextInput
+                    icon={Phone}
+                    inputMode="tel"
+                    placeholder="10 digit mobile number"
+                    value={form.mobile}
+                    onChange={(e) => handleChange("mobile")(e.target.value)}
+                  />
+                </Field>
+                <Field label="Chairman Email" required hint="Used to sign in.">
+                  <TextInput
+                    icon={Mail}
+                    type="email"
+                    placeholder="chairman@example.com"
+                    value={form.email}
+                    onChange={(e) => handleChange("email")(e.target.value)}
+                  />
+                </Field>
+                <Field label="Password" required>
+                  <TextInput
+                    icon={Lock}
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={(e) => handleChange("password")(e.target.value)}
+                  />
+                </Field>
+              </div>
+
+              <div className="flex flex-col-reverse gap-2 border-t border-line pt-5 sm:flex-row sm:justify-end">
+                <button type="button" onClick={() => setForm(emptyForm)} className={btnClass("secondary")}>
+                  Clear
+                </button>
+                <button type="submit" disabled={saving || loadingSchools} className={btnClass("primary")}>
+                  <UserCheck size={16} />
+                  {saving ? "Creating..." : "Create Chairman"}
+                </button>
+              </div>
             </div>
-
-            <SearchInput
-              label="Chairman Name *"
-              placeholder="Chairman name"
-              value={form.name}
-              onChange={handleChange("name")}
-              icon={User}
-            />
-
-            <SearchInput
-              label="Chairman Email *"
-              type="email"
-              placeholder="chairman@example.com"
-              value={form.email}
-              onChange={handleChange("email")}
-              icon={Mail}
-            />
-
-            <SearchInput
-              label="Password *"
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange("password")}
-              icon={Lock}
-            />
-
-            <SearchInput
-              label="Mobile"
-              placeholder="10 digit mobile number"
-              value={form.mobile}
-              onChange={handleChange("mobile")}
-              icon={Phone}
-            />
-          </div>
+          </Panel>
         </form>
 
-        <section className="rounded-2xl border border-gray-500/20 bg-white/5 p-4 sm:p-6">
-          <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-lg font-semibold text-white">School-wise Chairman List</h2>
-              <p className="text-sm text-white/60">Shows every school and the chairman accounts created for it.</p>
+        {/* Coverage */}
+        <aside className="space-y-4 xl:sticky xl:top-4">
+          <div className="rounded-2xl border border-line bg-elev-1 p-5">
+            <p className="text-sm font-semibold text-fg">Chairman coverage</p>
+            <p className="mt-0.5 text-xs text-fg-subtle">Schools that already have a chairman login</p>
+            <div className="mt-4 flex items-end gap-2">
+              <span className="text-4xl font-semibold tracking-tight text-fg tabular-nums">{coverage}%</span>
+              <span className="pb-1 text-xs text-fg-subtle">
+                {withChairman} of {schools.length}
+              </span>
             </div>
+            <div className="mt-3 h-2 overflow-hidden rounded-full bg-elev-3">
+              <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${coverage}%` }} />
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="rounded-xl bg-emerald-500/10 p-3">
+                <UserCheck size={16} className="text-emerald-700 dark:text-emerald-300" />
+                <p className="mt-2 text-xl font-semibold text-fg tabular-nums">{withChairman}</p>
+                <p className="text-xs text-fg-subtle">With chairman</p>
+              </div>
+              <div className="rounded-xl bg-amber-500/10 p-3">
+                <UserX size={16} className="text-amber-700 dark:text-amber-300" />
+                <p className="mt-2 text-xl font-semibold text-fg tabular-nums">{withoutChairman}</p>
+                <p className="text-xs text-fg-subtle">Not created</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <Panel
+        icon={Users}
+        title="School-wise Chairman List"
+        description="Shows every school and the chairman accounts created for it."
+        actions={
+          <>
+            <Segmented<Filter>
+              value={filter}
+              onChange={setFilter}
+              options={[
+                { value: "all", label: "All" },
+                { value: "with", label: "Assigned" },
+                { value: "without", label: "Not created" },
+              ]}
+            />
+            <SearchBox value={query} onChange={setQuery} placeholder="Search school or chairman…" className="w-full sm:w-64" />
             <button
               type="button"
               onClick={() => void fetchSchools()}
               disabled={loadingSchools}
-              className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/10 disabled:opacity-60"
+              className={btnClass("secondary")}
+              aria-label="Refresh"
+              title="Refresh"
             >
-              {loadingSchools ? "Refreshing..." : "Refresh"}
+              <RefreshCw size={15} className={loadingSchools ? "animate-spin" : ""} />
             </button>
-          </div>
-
-          {loadingSchools ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-6 text-center text-sm text-white/60">
-              Loading chairman list...
-            </div>
-          ) : schools.length === 0 ? (
-            <div className="rounded-xl border border-white/10 bg-black/20 p-6 text-center text-sm text-white/60">
-              No schools found.
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-left text-sm">
-                <thead className="text-xs uppercase tracking-wider text-white/50">
-                  <tr className="border-b border-white/10">
-                    <th className="px-3 py-3">School</th>
-                    <th className="px-3 py-3">Location</th>
-                    <th className="px-3 py-3">Chairman</th>
-                    <th className="px-3 py-3">Email</th>
-                    <th className="px-3 py-3">Mobile</th>
+          </>
+        }
+        bodyClassName="p-0"
+      >
+        {loadingSchools ? (
+          <LoadingBlock label="Loading chairman list..." />
+        ) : visible.length === 0 ? (
+          <EmptyState title={schools.length === 0 ? "No schools found." : "Nothing matches these filters"} />
+        ) : (
+          <DataTable
+            minWidth={760}
+            head={
+              <tr>
+                <Th>School</Th>
+                <Th>Chairman</Th>
+                <Th>Contact</Th>
+                <Th align="right">Status</Th>
+              </tr>
+            }
+          >
+            {visible.map((school) => {
+              const chairmen = Array.isArray(school.users) ? school.users : [];
+              const schoolCell = (
+                <div className="flex items-center gap-3">
+                  <InitialsAvatar name={school.name} size="sm" />
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-fg">{school.name}</p>
+                    <p className="truncate text-xs text-fg-subtle">{school.location || "—"}</p>
+                  </div>
+                </div>
+              );
+              if (chairmen.length === 0) {
+                return (
+                  <tr key={school.id} className="hover:bg-elev-2">
+                    <Td>{schoolCell}</Td>
+                    <Td className="text-fg-faint">—</Td>
+                    <Td className="text-fg-faint">—</Td>
+                    <Td align="right">
+                      <Badge tone="gold" dot>
+                        Not created
+                      </Badge>
+                    </Td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-white/10 text-white/80">
-                  {schools.map((school) => {
-                    const chairmen = Array.isArray(school.users) ? school.users : [];
-                    if (chairmen.length === 0) {
-                      return (
-                        <tr key={school.id}>
-                          <td className="px-3 py-3 font-medium text-white">{school.name}</td>
-                          <td className="px-3 py-3">{school.location || "-"}</td>
-                          <td className="px-3 py-3 text-amber-300">Not created</td>
-                          <td className="px-3 py-3">-</td>
-                          <td className="px-3 py-3">-</td>
-                        </tr>
-                      );
-                    }
-
-                    return chairmen.map((chairman, index) => (
-                      <tr key={`${school.id}-${chairman.id}`}>
-                        <td className="px-3 py-3 font-medium text-white">{index === 0 ? school.name : ""}</td>
-                        <td className="px-3 py-3">{index === 0 ? school.location || "-" : ""}</td>
-                        <td className="px-3 py-3">{chairman.name || "-"}</td>
-                        <td className="px-3 py-3">{chairman.email || "-"}</td>
-                        <td className="px-3 py-3">{chairman.mobile || "-"}</td>
-                      </tr>
-                    ));
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
-      </div>
-    </main>
+                );
+              }
+              return chairmen.map((chairman, index) => (
+                <tr key={`${school.id}-${chairman.id}`} className="hover:bg-elev-2">
+                  <Td>{index === 0 ? schoolCell : null}</Td>
+                  <Td className="font-medium text-fg">{chairman.name || "—"}</Td>
+                  <Td>
+                    <p className="text-fg-muted">{chairman.email || "—"}</p>
+                    {chairman.mobile && <p className="text-xs text-fg-subtle tabular-nums">{chairman.mobile}</p>}
+                  </Td>
+                  <Td align="right">
+                    <Badge tone="green" dot>
+                      Assigned
+                    </Badge>
+                  </Td>
+                </tr>
+              ));
+            })}
+          </DataTable>
+        )}
+      </Panel>
+    </SaPage>
   );
 }

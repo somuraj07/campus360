@@ -12,16 +12,16 @@ export function StatCard({
   accent?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 flex items-center gap-4">
+    <div className="rounded-2xl border border-line bg-elev-1 p-4 flex items-center gap-4">
       <div
-        className={`w-11 h-11 rounded-xl flex items-center justify-center ${accent ?? "bg-lime-400/10"}`}
+        className={`w-11 h-11 rounded-xl flex items-center justify-center ${accent ?? "bg-primary/10"}`}
       >
-        <Icon size={20} className={accent ? "text-white" : "text-lime-400"} />
+        <Icon size={20} className={accent ? "text-fg" : "text-primary"} />
       </div>
       <div>
-        <p className="text-xs text-white/50 uppercase tracking-wider">{label}</p>
-        <p className="text-xl font-bold text-white">{value}</p>
-        {sub ? <p className="text-[11px] text-white/40">{sub}</p> : null}
+        <p className="text-xs text-fg-subtle uppercase tracking-wider">{label}</p>
+        <p className="text-xl font-bold text-fg">{value}</p>
+        {sub ? <p className="text-[11px] text-fg-subtle">{sub}</p> : null}
       </div>
     </div>
   );

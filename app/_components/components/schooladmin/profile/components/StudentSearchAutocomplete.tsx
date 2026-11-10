@@ -261,7 +261,7 @@ export const StudentSearchAutocomplete = ({
             width: dropdownRect.width,
             zIndex: 200,
           }}
-          className="bg-[#0F172A] border border-white/10 rounded-xl shadow-2xl max-h-80 overflow-y-auto"
+          className="bg-surface border border-line rounded-xl shadow-card max-h-80 overflow-y-auto"
         >
           {filteredStudents.map((student, index) => (
             <button
@@ -272,24 +272,24 @@ export const StudentSearchAutocomplete = ({
                 setHighlightedIndex(index);
                 warmStudentDetailsBundle(student.id);
               }}
-              className={`w-full px-4 py-3 text-left text-sm border-b border-white/5 last:border-0 transition-colors ${
+              className={`w-full px-4 py-3 text-left text-sm border-b border-line-subtle last:border-0 transition-colors ${
                 index === highlightedIndex
-                  ? "bg-blue-500/20 text-white"
+                  ? "bg-blue-500/20 text-fg"
                   : selectedId === student.id
-                    ? "bg-lime-400/10 text-lime-300"
-                    : "text-gray-300 hover:bg-white/5"
+                    ? "bg-primary/10 text-primary"
+                    : "text-fg-muted hover:bg-elev-2"
               }`}
             >
-              <div className="font-semibold text-white wrap-break-word">
+              <div className="font-semibold text-fg wrap-break-word">
                 {`${student.name} -${student.admissionNumber || "-"} | ${student.classDisplay || "-"} | ${student.parentName || "-"}`}
                 {(student.status ?? "Active").trim().toLowerCase() === "inactive" ? (
-                  <span className="ml-2 text-[11px] font-bold uppercase tracking-wide text-red-300">
+                  <span className="ml-2 text-[11px] font-bold uppercase tracking-wide text-red-700 dark:text-red-300">
                     Inactive
                   </span>
                 ) : null}
               </div>
               {student.rollNo || student.penNumber || student.apaarId ? (
-                <div className="mt-1 text-[11px] text-white/45">
+                <div className="mt-1 text-[11px] text-fg-subtle">
                   {[
                     student.rollNo ? `Roll: ${student.rollNo}` : "",
                     student.penNumber ? `PEN: ${student.penNumber}` : "",
@@ -312,7 +312,7 @@ export const StudentSearchAutocomplete = ({
             width: dropdownRect.width,
             zIndex: 200,
           }}
-          className="bg-[#0F172A] border border-white/10 rounded-xl p-3 text-sm text-gray-400 text-center shadow-2xl"
+          className="bg-surface border border-line rounded-xl p-3 text-sm text-fg-muted text-center shadow-card"
         >
           {searching ? "Searching…" : `No students found matching "${searchQuery}"`}
         </div>
@@ -321,7 +321,7 @@ export const StudentSearchAutocomplete = ({
 
   return (
     <div ref={containerRef} className="relative z-60">
-      <label className="text-xs text-gray-500 mb-2 block">Search Student</label>
+      <label className="mb-1.5 block text-[13px] font-medium text-fg">Search Student</label>
       <div className="relative">
         <input
           ref={inputRef}
@@ -339,7 +339,7 @@ export const StudentSearchAutocomplete = ({
             }
           }}
           onKeyDown={handleKeyDown}
-          className="w-full bg-[#0F172A]/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none text-gray-200 min-h-11 touch-manipulation focus:ring-1 focus:ring-blue-400/50 focus:border-transparent"
+          className="h-11 w-full touch-manipulation rounded-lg border border-line-strong bg-surface px-3.5 text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
           autoComplete="off"
         />
         {mounted && dropdownPanel ? createPortal(dropdownPanel, document.body) : null}

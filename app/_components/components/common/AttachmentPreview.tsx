@@ -40,10 +40,10 @@ export default function AttachmentPreview({ url, label, className = "" }: Attach
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 hover:bg-white/10 transition-colors group ${className}`}
+      className={`inline-flex items-center gap-3 rounded-xl border border-line bg-elev-1 p-3 hover:bg-elev-3 transition-colors group ${className}`}
     >
       {showThumb ? (
-        <span className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black/20">
+        <span className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-line bg-well">
           <img
             src={url}
             alt=""
@@ -52,15 +52,15 @@ export default function AttachmentPreview({ url, label, className = "" }: Attach
           />
         </span>
       ) : (
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/60 group-hover:text-lime-400 transition-colors">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-elev-2 text-fg-muted group-hover:text-primary transition-colors">
           <FileText size={22} />
         </span>
       )}
       <span className="min-w-0 flex-1">
-        <span className="block text-sm font-medium text-white/90 truncate" title={name}>
+        <span className="block text-sm font-medium text-fg truncate" title={name}>
           {label ?? name}
         </span>
-        <span className="flex items-center gap-1 text-xs text-white/50 group-hover:text-lime-400/80 transition-colors">
+        <span className="flex items-center gap-1 text-xs text-fg-subtle group-hover:text-primary transition-colors">
           <ExternalLink size={12} /> Open
         </span>
       </span>

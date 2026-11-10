@@ -50,7 +50,7 @@ export function FeeReceiptPrintLayout({
   return (
     <div ref={contentRef} className="hidden">
       <div className="p-8 bg-white text-black" style={{ width: "210mm", minHeight: "297mm" }}>
-        {/* Header with school + Timelly branding */}
+        {/* Header with school + RS Solutions branding */}
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold">{displaySchoolName}</h1>
@@ -58,7 +58,7 @@ export function FeeReceiptPrintLayout({
           </div>
           <div className="text-right flex flex-col items-end">
             <p className="text-xs font-semibold text-gray-500 mb-1">Powered by</p>
-            <img src="/timelylogo.webp" alt="Timelly Logo" className="h-6 object-contain" crossOrigin="anonymous" />
+            <img src="/rs-logo.webp" alt="RS Solutions Logo" className="h-6 object-contain" crossOrigin="anonymous" />
           </div>
         </div>
 
@@ -198,7 +198,7 @@ export function FeeReceiptPrintLayout({
           </p>
           <div className="flex justify-center items-center gap-2 mt-3">
             <p className="text-gray-500 text-xs">Powered by</p>
-            <img src="/timelylogo.webp" alt="Timelly Logo" className="h-4 object-contain" crossOrigin="anonymous" />
+            <img src="/rs-logo.webp" alt="RS Solutions Logo" className="h-4 object-contain" crossOrigin="anonymous" />
           </div>
         </div>
       </div>

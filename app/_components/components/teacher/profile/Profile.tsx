@@ -147,14 +147,14 @@ export default function TeacherProfileTab() {
 
   if (loading && !profileData.name) {
     return (
-      <div className="w-full min-h-screen text-white px-3 sm:px-6 lg:px-8 2xl:px-12 py-4">
+      <div className="mx-auto w-full max-w-[1400px] text-fg">
         <TimellyLoader title="Loading profile" steps={["Account", "Classes", "Stats"]} />
       </div>
     );
   }
 
   return (
-    <div className="w-full min-h-screen text-white px-3 sm:px-6 lg:px-8 2xl:px-12 py-4 space-y-6">
+    <div className="mx-auto w-full max-w-[1400px] space-y-6 pb-10 text-fg">
       <div className="w-full space-y-5">
         <ProfileBanner isEditMode={isEditMode} onToggleEdit={handleToggleEdit} />
 

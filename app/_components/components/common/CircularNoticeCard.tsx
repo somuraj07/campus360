@@ -36,7 +36,7 @@ export default function CircularNoticeCard({
   issuedBy,
   issuedByPhoto,
   attachments = [],
-  accentClassName = "bg-lime-400",
+  accentClassName = "bg-primary",
   className = "",
 }: CircularNoticeCardProps) {
   const issuer = issuedBy?.trim() || "School Admin";
@@ -44,27 +44,27 @@ export default function CircularNoticeCard({
 
   return (
     <article
-      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 backdrop-blur-xl flex flex-col ${className}`}
+      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border border-line bg-elev-1 p-4 sm:p-5 flex flex-col ${className}`}
     >
       <div className={`absolute top-0 left-0 h-1 w-full ${accentClassName}`} />
 
-      <div className="flex items-center justify-between text-xs text-white/60">
+      <div className="flex items-center justify-between text-xs text-fg-muted">
         <span>{referenceNumber || "CIR/NA"}</span>
         <span
           className={`px-2 py-1 rounded-full font-semibold border ${
             isPublished
-              ? "bg-lime-400/10 text-lime-400 border-lime-400/20"
-              : "bg-white/10 text-white/70 border-white/20"
+              ? "bg-primary/10 text-primary border-primary/20"
+              : "bg-elev-2 text-fg-muted border-line-strong"
           }`}
         >
           {publishStatus || "DRAFT"}
         </span>
       </div>
 
-      <h4 className="mt-3 sm:mt-4 text-lg sm:text-2xl font-bold text-white leading-tight line-clamp-2">{subject}</h4>
+      <h4 className="mt-3 sm:mt-4 text-lg sm:text-2xl font-bold text-fg leading-tight line-clamp-2">{subject}</h4>
 
-      <div className="mt-3 sm:mt-4 bg-black/20 rounded-lg sm:rounded-xl p-3 sm:p-5 border border-white/5 flex-1">
-        <p className="text-sm sm:text-base text-white/60 italic leading-relaxed line-clamp-4 sm:line-clamp-6">{content}</p>
+      <div className="mt-3 sm:mt-4 bg-well rounded-lg sm:rounded-xl p-3 sm:p-5 border border-line-subtle flex-1">
+        <p className="text-sm sm:text-base text-fg-muted italic leading-relaxed line-clamp-4 sm:line-clamp-6">{content}</p>
       </div>
 
       {attachments.length > 0 && (
@@ -76,21 +76,21 @@ export default function CircularNoticeCard({
                 href={file}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 hover:bg-white/10 transition-colors"
+                className="flex items-center justify-between rounded-xl border border-line bg-elev-1 px-3 py-2.5 hover:bg-elev-3 transition-colors"
               >
-                <span className="flex items-center gap-2 text-sm text-white/80 truncate">
-                  <FileText className="h-4 w-4 text-lime-400 shrink-0" />
+                <span className="flex items-center gap-2 text-sm text-fg truncate">
+                  <FileText className="h-4 w-4 text-primary shrink-0" />
                   <span className="truncate">{fileLabel(file)}</span>
                 </span>
-                <Download className="h-4 w-4 text-white/50 shrink-0" />
+                <Download className="h-4 w-4 text-fg-subtle shrink-0" />
               </a>
             ) : (
               <div
                 key={file}
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3 py-2.5"
+                className="flex items-center justify-between rounded-xl border border-line bg-elev-1 px-3 py-2.5"
               >
-                <span className="flex items-center gap-2 text-sm text-white/80 truncate">
-                  <FileText className="h-4 w-4 text-lime-400 shrink-0" />
+                <span className="flex items-center gap-2 text-sm text-fg truncate">
+                  <FileText className="h-4 w-4 text-primary shrink-0" />
                   <span className="truncate">{fileLabel(file)}</span>
                 </span>
               </div>
@@ -99,9 +99,9 @@ export default function CircularNoticeCard({
         </div>
       )}
 
-      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 flex items-center justify-between text-xs sm:text-sm text-white/60 gap-2">
+      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-line flex items-center justify-between text-xs sm:text-sm text-fg-muted gap-2">
         <div className="flex items-center gap-2">
-          <span className="h-7 w-7 rounded-full bg-lime-400/20 text-lime-300 flex items-center justify-center text-xs font-bold overflow-hidden">
+          <span className="h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold overflow-hidden">
             {issuedByPhoto ? (
                
               <img src={issuedByPhoto} alt={issuer} className="h-full w-full object-cover" />

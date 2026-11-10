@@ -465,7 +465,7 @@ export async function POST(req: Request) {
       customer_phone: phone,
       first_name: firstName,
       last_name: lastName,
-      description: eventRegistrationId ? "Workshop payment - Timelly" : "Fee payment - Timelly",
+      description: eventRegistrationId ? "Workshop payment - RS Solutions" : "Fee payment - RS Solutions",
       customer_id: customerId,
       order_id: orderId,
       return_url: returnUrl,

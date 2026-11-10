@@ -40,7 +40,7 @@ export function useMarksEntryColumns({
       render: (row: StudentRow) => (
         <div className="flex items-center gap-3">
           <img src={row.avatar} alt={row.name} className="w-9 h-9 rounded-full" />
-          <span className="whitespace-nowrap font-medium text-white">{row.name}</span>
+          <span className="whitespace-nowrap font-medium text-fg">{row.name}</span>
         </div>
       ),
     },
@@ -53,7 +53,7 @@ export function useMarksEntryColumns({
             return (
               <div className="flex items-center justify-center">
                 {val === "AB" || row.marks === "AB" ? (
-                  <span className="w-16 text-center text-red-400 font-semibold text-sm">AB</span>
+                  <span className="w-16 text-center text-red-700 dark:text-red-400 font-semibold text-sm">AB</span>
                 ) : (
                   <input
                     type="number"
@@ -61,7 +61,7 @@ export function useMarksEntryColumns({
                     max={sec.maxMarks}
                     value={val === undefined || val === "" ? "" : val}
                     onChange={(e) => updateComponentScore(row.id, sec.name, e.target.value)}
-                    className="w-16 text-center rounded-lg bg-white/5 border border-white/10 px-2 py-1 text-white outline-none"
+                    className="w-16 text-center rounded-lg bg-elev-1 border border-line px-2 py-1 text-fg outline-none"
                   />
                 )}
               </div>
@@ -75,13 +75,13 @@ export function useMarksEntryColumns({
             render: (row: StudentRow) => (
               <div className="flex items-center justify-center gap-1.5">
                 {row.marks === "AB" ? (
-                  <span className="w-20 text-center text-red-400 font-semibold text-sm">Absent</span>
+                  <span className="w-20 text-center text-red-700 dark:text-red-400 font-semibold text-sm">Absent</span>
                 ) : (
                   <input
                     type="number"
                     value={row.marks}
                     onChange={(e) => updateMarks(row.id, e.target.value)}
-                    className="w-20 text-center rounded-lg bg-white/5 border border-white/10 px-2 py-1 text-white outline-none"
+                    className="w-20 text-center rounded-lg bg-elev-1 border border-line px-2 py-1 text-fg outline-none"
                   />
                 )}
                 <button
@@ -90,8 +90,8 @@ export function useMarksEntryColumns({
                   title={row.marks === "AB" ? "Remove absent" : "Mark as absent"}
                   className={`px-2 py-1 rounded-lg text-[10px] font-bold border transition ${
                     row.marks === "AB"
-                      ? "bg-red-500/20 text-red-400 border-red-500/30 hover:bg-red-500/30"
-                      : "bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:text-white/60"
+                      ? "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30 hover:bg-red-500/30"
+                      : "bg-elev-1 text-fg-subtle border-line hover:bg-elev-3 hover:text-fg-muted"
                   }`}
                 >
                   AB
@@ -106,7 +106,7 @@ export function useMarksEntryColumns({
             header: "TOTAL",
             align: "center" as const,
             render: (row: StudentRow) => (
-              <span className="font-medium text-white">
+              <span className="font-medium text-fg">
                 {row.marks === "AB" ? "AB" : row.marks === "" ? "—" : row.marks}
               </span>
             ),
@@ -121,8 +121,8 @@ export function useMarksEntryColumns({
                 title={row.marks === "AB" ? "Remove absent" : "Mark as absent"}
                 className={`px-2 py-1 rounded-lg text-[10px] font-bold border transition ${
                   row.marks === "AB"
-                    ? "bg-red-500/20 text-red-400 border-red-500/30"
-                    : "bg-white/5 text-white/40 border-white/10"
+                    ? "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30"
+                    : "bg-elev-1 text-fg-subtle border-line"
                 }`}
               >
                 AB
@@ -154,14 +154,14 @@ export function useMarksEntryColumns({
                 setEditingMaxValue("");
               }
             }}
-            className="w-20 text-center rounded-lg bg-white/10 border border-lime-400/50 px-2 py-1 text-white outline-none focus:ring-1 focus:ring-lime-400/50"
+            className="w-20 text-center rounded-lg bg-elev-2 border border-primary/50 px-2 py-1 text-fg outline-none focus:ring-1 focus:ring-primary/50"
           />
         ) : (
           <button
             type="button"
             title={maxMarksLocked ? "Locked by school admin" : "Double-click to edit max marks"}
             onDoubleClick={() => startEditMaxMarks(row.id, row.maxMarks)}
-            className="min-w-16 px-3 py-1 rounded-lg text-white font-medium hover:bg-white/10 border border-transparent hover:border-white/10 transition cursor-text"
+            className="min-w-16 px-3 py-1 rounded-lg text-fg font-medium hover:bg-elev-3 border border-transparent hover:border-line transition cursor-text"
           >
             {row.maxMarks === "" ? "—" : row.maxMarks}
           </button>
@@ -171,7 +171,7 @@ export function useMarksEntryColumns({
       header: "PERCENTAGE",
       align: "center",
       render: (row: StudentRow) => (
-        <span className="font-medium text-white">{getPercentage(row.marks, row.maxMarks)}</span>
+        <span className="font-medium text-fg">{getPercentage(row.marks, row.maxMarks)}</span>
       ),
     },
     {
@@ -183,10 +183,10 @@ export function useMarksEntryColumns({
           <span
             className={`px-3 py-1 rounded-full text-xs border ${
               g === "AB"
-                ? "bg-red-500/10 text-red-400 border-red-500/30"
+                ? "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/30"
                 : g === "A+"
-                  ? "bg-lime-400/10 text-lime-400 border-lime-400/30"
-                  : "bg-white/5 text-gray-200 border-white/20"
+                  ? "bg-primary/10 text-primary border-primary/30"
+                  : "bg-elev-1 text-fg border-line-strong"
             }`}
           >
             {g === "AB" ? "Absent" : g}

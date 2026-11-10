@@ -3,7 +3,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CalendarDays, CheckCircle, List, Search, Users } from "lucide-react";
+import { CalendarDays, CheckCircle, List, Users } from "lucide-react";
+import { KpiCard, KpiGrid, SearchBox } from "../../common/ui";
 import PageHeader from "../../common/PageHeader";
 import EventCard from "../../schooladmin/workshops/EventCard";
 import EventDetailsModal from "../../schooladmin/workshops/EventDetailsModal";
@@ -33,34 +34,6 @@ interface EventItem {
 
 /* ================= STAT TILE ================= */
 
-function StatTile({
-  title,
-  value,
-  icon,
-}: {
-  title: string;
-  value: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow p-3 sm:p-4">
-      <div className="flex items-center gap-3">
-        <div className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-lime-300">
-          {icon}
-        </div>
-
-        <div className="min-w-0">
-          <div className="text-[10px] sm:text-[11px] uppercase tracking-wide text-white/60">
-            {title}
-          </div>
-          <div className="text-base sm:text-lg font-semibold text-white truncate">
-            {value}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 /* ================= MAIN ================= */
 
@@ -224,36 +197,26 @@ export default function ParentWorkshopsTab() {
       <div
         className="
           w-full max-w-none
-         space-y-6 text-white
+         space-y-6 text-fg
         "
       >
         {/* HEADER */}
         <PageHeader
+          eyebrow="Your child"
           title="Workshops & Events"
-          subtitle="Manage and conduct workshops for students"
+          subtitle="Workshops and events your child can join"
           rightSlot={
-            <div className="relative w-full max-w-[clamp(220px,30vw,360px)]">
-              <Search
-                size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40"
-              />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search..."
-                className="w-full h-11 pl-11 pr-4 rounded-xl bg-black/40 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-lime-400/40"
-              />
-            </div>
+            <SearchBox value={query} onChange={setQuery} placeholder="Search events..." className="w-full md:w-72" />
           }
         />
 
         {/* STATS GRID */}
-        <div className="grid gap-3 grid-cols-[repeat(auto-fit,minmax(180px,1fr))]">
-          <StatTile title="TOTAL" value={`${stats.total}`} icon={<List size={20} />} />
-          <StatTile title="UPCOMING" value={`${stats.upcoming}`} icon={<CalendarDays size={20} />} />
-          <StatTile title="PARTICIPANTS" value={`${stats.participants}`} icon={<Users size={20} />} />
-          <StatTile title="COMPLETED" value={`${stats.completed}`} icon={<CheckCircle size={20} />} />
-        </div>
+        <KpiGrid>
+          <KpiCard label="Total Events" value={stats.total} icon={List} hint="Workshops and events" />
+          <KpiCard label="Upcoming" value={stats.upcoming} icon={CalendarDays} tone="sky" hint="Scheduled ahead" />
+          <KpiCard label="Participants" value={stats.participants} icon={Users} tone="gold" hint="Total registrations" />
+          <KpiCard label="Completed" value={stats.completed} icon={CheckCircle} tone="green" hint="Already held" />
+        </KpiGrid>
 
         {/* STATES */}
         {loadingEvents && (
@@ -261,13 +224,13 @@ export default function ParentWorkshopsTab() {
         )}
 
         {eventsError && (
-          <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
             {eventsError}
           </div>
         )}
 
         {!loadingEvents && !eventsError && filteredEvents.length === 0 && (
-          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-sm text-white/50">
+          <div className="rounded-2xl border border-line bg-elev-1 px-4 py-6 text-sm text-fg-subtle">
             No workshops found.
           </div>
         )}
@@ -312,8 +275,8 @@ export default function ParentWorkshopsTab() {
         </div>
 
         {!loadingEvents && !eventsError && filteredEvents.length > 0 && totalPages > 1 && (
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-            <span className="text-xs text-white/60">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-line bg-elev-1 px-4 py-3">
+            <span className="text-xs text-fg-muted">
               Page {page} of {totalPages}
             </span>
             <div className="flex items-center gap-2">
@@ -321,7 +284,7 @@ export default function ParentWorkshopsTab() {
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
-                className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-full px-4 py-2 text-xs font-semibold border border-line bg-elev-1 text-fg-muted hover:bg-elev-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
@@ -329,7 +292,7 @@ export default function ParentWorkshopsTab() {
                 type="button"
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
-                className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="rounded-full px-4 py-2 text-xs font-semibold border border-line bg-elev-1 text-fg-muted hover:bg-elev-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>

@@ -9,7 +9,7 @@ type DataTableProps<T> = {
   columns: Column<T>[];
   data: T[];
   loading?: boolean;
-  /** Use Timelly branded loader inside the table body instead of spinner. */
+  /** Use RS Solutions branded loader inside the table body instead of spinner. */
   timellyLoader?: boolean;
   emptyText?: string;
   rowKey?: (row: T, index: number) => string | number;
@@ -61,14 +61,14 @@ function stickyColumnClass(
   if (!scrollableWide) return "";
   const z = header ? "z-20" : "z-10";
   const bg = header
-    ? "bg-[#12101c] backdrop-blur-xl"
-    : "bg-[#16141f] group-hover:bg-[#1c1a28]";
+    ? "bg-well"
+    : "bg-surface group-hover:bg-elev-2";
   if (stickyFirstColumn && index < stickyLeadingCount) {
     const left = index === 0 ? "left-0 min-w-[7.5rem]" : "left-[7.5rem]";
-    return `sticky ${left} ${z} border-r border-white/10 ${bg}`;
+    return `sticky ${left} ${z} border-r border-line ${bg}`;
   }
   if (stickyLastColumn && index === lastIndex) {
-    return `sticky right-0 ${z} border-l border-white/10 ${bg}`;
+    return `sticky right-0 ${z} border-l border-line ${bg}`;
   }
   return "";
 }
@@ -112,7 +112,7 @@ function DataTable<T>({
   const scrollViewportClass = scrollAreaClassName.trim()
     ? scrollAreaClassName
     : scrollableWide
-      ? "relative z-0 scroll-smooth overflow-x-scroll overflow-y-hidden overscroll-x-contain pb-3 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.35)_rgba(255,255,255,0.08)] [&::-webkit-scrollbar]:h-2.5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-white/[0.08] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/30 hover:[&::-webkit-scrollbar-thumb]:bg-white/45"
+      ? "relative z-0 scroll-smooth overflow-x-scroll overflow-y-hidden overscroll-x-contain pb-3 [scrollbar-width:thin] [scrollbar-color:var(--line-strong)_transparent] [&::-webkit-scrollbar]:h-2.5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-elev-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-elev-3 hover:[&::-webkit-scrollbar-thumb]:bg-elev-3"
       : "overflow-x-auto overflow-y-hidden overscroll-x-contain";
   const stickyHeader = Boolean(scrollAreaClassName.trim());
   const canPaginate =
@@ -152,21 +152,21 @@ function DataTable<T>({
             ? `
               ${rounded ? "rounded-3xl" : "rounded-none"}
               overflow-hidden
-              border border-white/10
-              bg-transparent backdrop-blur-xl shadow-2xl
+              border border-line
+              bg-transparent shadow-card
             `
             : "w-full"
         } ${containerClassName}`}
       >
         {tableTitle && (
-          <div className="p-4 lg:p-5 border-b border-white/10">
+          <div className="px-5 py-4 border-b border-line">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div className="text-base lg:text-lg font-semibold text-white">
+                <div className="text-[15px] font-semibold text-fg">
                   {tableTitle}
                 </div>
                 {tableSubtitle && (
-                  <div className="text-xs text-white/60 mt-1">
+                  <div className="mt-0.5 text-xs text-fg-subtle">
                     {tableSubtitle}
                   </div>
                 )}
@@ -190,8 +190,8 @@ function DataTable<T>({
             {caption && <caption className="sr-only">{caption}</caption>}
 
             <thead
-              className={`bg-white/5 border-b border-white/10 ${
-                stickyHeader ? "sticky top-0 z-30 backdrop-blur-md" : ""
+              className={`bg-well border-b border-line ${
+                stickyHeader ? "sticky top-0 z-30 " : ""
               } ${theadClassName}`}
             >
               <tr>
@@ -199,7 +199,7 @@ function DataTable<T>({
                   <th
                     key={i}
                     scope="col"
-                    className={`px-3 md:px-4 lg:px-6 py-3 md:py-4 text-[11px] md:text-xs font-semibold text-gray-400 uppercase tracking-wider ${
+                    className={`px-3 md:px-5 py-3 text-[11px] font-semibold text-fg-subtle uppercase tracking-wider ${
                       ALIGN_CLASS[col.align ?? "left"]
                     } ${stickyColumnClass(i, lastColIndex, {
                       scrollableWide,
@@ -216,13 +216,13 @@ function DataTable<T>({
             </thead>
 
             <tbody
-              className={`divide-y divide-white/10 ${tbodyClassName}`}
+              className={`divide-y divide-line-subtle ${tbodyClassName}`}
             >
               {loading && (
                 <tr>
                   <td
                     colSpan={columns.length}
-                    className="p-6 sm:p-10 text-center text-white/60"
+                    className="p-6 sm:p-10 text-center text-fg-muted"
                   >
                     {timellyLoader ? (
                       <ParentTimellyLoader preset="students" compact bare className="mx-auto w-full max-w-sm" />
@@ -237,7 +237,7 @@ function DataTable<T>({
                 <tr>
                   <td
                     colSpan={columns.length}
-                    className="p-8 text-center text-white/60"
+                    className="p-8 text-center text-fg-muted"
                   >
                     {emptyText}
                   </td>
@@ -248,12 +248,12 @@ function DataTable<T>({
                 data.map((row, rowIndex) => (
                   <tr
                     key={getKey(row, rowIndex)}
-                    className={`group hover:bg-white/5 transition-colors duration-200 ${rowClassName}`}
+                    className={`group hover:bg-elev-2 transition-colors duration-200 ${rowClassName}`}
                   >
                     {columns.map((col, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-3 md:px-4 lg:px-6 py-3 md:py-4 text-sm text-white ${
+                        className={`px-3 md:px-5 py-3.5 text-sm text-fg ${
                           scrollableWide ? "align-top whitespace-normal" : "truncate"
                         } ${ALIGN_CLASS[col.align ?? "left"]} ${stickyColumnClass(colIndex, lastColIndex, {
                           scrollableWide,
@@ -277,11 +277,11 @@ function DataTable<T>({
         <div
           className={
             paginationInline
-              ? "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-white/10 bg-white/[0.03] px-4 py-3"
-              : "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3"
+              ? "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-line bg-elev-1 px-4 py-3"
+              : "flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-line bg-elev-1 px-4 py-3"
           }
         >
-          <span className="text-xs text-white/60">
+          <span className="text-xs text-fg-muted">
             Page {pagination.page} of {pagination.totalPages}
           </span>
           <div className="flex items-center gap-2">
@@ -289,7 +289,7 @@ function DataTable<T>({
               type="button"
               onClick={handlePrev}
               disabled={pagination.page <= 1}
-              className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex h-8 items-center rounded-lg border border-line-strong bg-surface px-3 text-xs font-semibold text-fg transition hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Previous
             </button>
@@ -297,7 +297,7 @@ function DataTable<T>({
               type="button"
               onClick={handleNext}
               disabled={pagination.page >= pagination.totalPages}
-              className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex h-8 items-center rounded-lg border border-line-strong bg-surface px-3 text-xs font-semibold text-fg transition hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Next
             </button>

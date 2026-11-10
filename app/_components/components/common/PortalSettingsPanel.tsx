@@ -7,8 +7,10 @@ import TeacherSettingsView from "../settings/TeacherSettingsView";
 import type { CommonSettingsProps, PortalVariant } from "../settings/portalSettingsTypes";
 import ParentTimellyLoader from "../parent/ParentTimellyLoader";
 import PageHeader from "./PageHeader";
+import { btnClass } from "./ui";
 import TimellyLoader from "./TimellyLoader";
 import { usePortalSettingsState, getSettingsSubtitle } from "./shared/portal-settings";
+import { ThemeSegmentedControl } from "./ThemeToggle";
 
 export default function PortalSettingsPanel({ portal }: { portal: PortalVariant }) {
   const {
@@ -59,11 +61,15 @@ export default function PortalSettingsPanel({ portal }: { portal: PortalVariant 
   };
 
   return (
-    <div className="pb-8">
-      <PageHeader
-        title="Settings"
-        subtitle={getSettingsSubtitle(portal)}
-      />
+    <div className="mx-auto w-full max-w-[1400px] pb-10">
+      <PageHeader eyebrow="Account" title="Settings" subtitle={getSettingsSubtitle(portal)} />
+      <section className="mb-5 flex flex-col gap-3 rounded-2xl border border-line bg-elev-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-[15px] font-semibold text-fg">Appearance</h2>
+          <p className="mt-0.5 text-xs text-fg-subtle">Light, dark, or follow your device setting.</p>
+        </div>
+        <ThemeSegmentedControl />
+      </section>
       {portal === "teacher" && <TeacherSettingsView {...viewProps} />}
       {portal === "schooladmin" && <SchoolAdminSettingsView {...viewProps} />}
       {portal === "parent" && <ParentSettingsView {...viewProps} />}
@@ -73,7 +79,7 @@ export default function PortalSettingsPanel({ portal }: { portal: PortalVariant 
           <button
             type="button"
             onClick={handleCancel}
-            className="px-6 py-3 rounded-2xl border border-white/20 bg-white/10 text-white/90 hover:bg-white/15 transition"
+            className={btnClass("secondary")}
           >
             Cancel
           </button>
@@ -82,9 +88,9 @@ export default function PortalSettingsPanel({ portal }: { portal: PortalVariant 
           type="button"
           onClick={handleSaveAll}
           disabled={!canSave || saving || passwordSaving}
-          className="px-7 py-3 rounded-2xl bg-lime-400 text-slate-950 font-semibold hover:bg-lime-300 disabled:opacity-55 disabled:cursor-not-allowed flex items-center gap-2 shadow-[0_12px_35px_rgba(163,230,53,0.35)]"
+          className={btnClass("primary")}
         >
-          <Save size={18} />
+          <Save size={16} />
           {saving || passwordSaving ? "Saving..." : portal === "teacher" ? "Save All Settings" : "Save Changes"}
         </button>
       </div>

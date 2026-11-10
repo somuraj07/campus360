@@ -27,7 +27,7 @@ type Props = {
 
 const renderError = (errors: StudentFormErrors, key: keyof StudentFormState) =>
   errors[key] ? (
-    <p className="text-xs text-red-400 mt-1">{errors[key]}</p>
+    <p className="text-xs text-red-700 dark:text-red-400 mt-1">{errors[key]}</p>
   ) : null;
 
 /** Digits only, capped length (Aadhaar, phone, PIN, etc.). */
@@ -57,18 +57,18 @@ export default function AddStudentForm({
   const [showAdmissionSection, setShowAdmissionSection] = useState(!editMode);
 
   return (
-    <div className="bg-[#0F172A]/50 rounded-2xl p-6 border border-white/10">
+    <div className="bg-surface rounded-2xl p-6 border border-line">
       <div className="flex items-center justify-between gap-3 mb-4">
         <div>
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <h3 className="text-lg font-bold text-gray-100">{title}</h3>
+            <h3 className="text-lg font-bold text-fg">{title}</h3>
             {editMode ? (
-              <span className="rounded-full border border-lime-500/40 bg-lime-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-lime-200">
+              <span className="rounded-full border border-primary/40 bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
                 Edit Mode
               </span>
             ) : null}
           </div>
-          {subtitle ? <p className="text-xs text-white/55">{subtitle}</p> : null}
+          {subtitle ? <p className="text-xs text-fg-muted">{subtitle}</p> : null}
         </div>
       </div>
 
@@ -85,7 +85,7 @@ export default function AddStudentForm({
         </div>
         <div>
           <InputField
-            label="Timelly ID"
+            label="RS Solutions ID"
             value={form.rollNo}
             onChange={(value) => onFieldChange("rollNo", value.slice(0, 40))}
             placeholder="e.g. STU001"
@@ -153,10 +153,10 @@ export default function AddStudentForm({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">
             Age
           </label>
-          <div className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-gray-200">
+          <div className="w-full rounded-xl bg-elev-1 border border-line px-4 py-3 text-sm text-fg">
             {ageLabel}
           </div>
         </div>
@@ -212,16 +212,16 @@ export default function AddStudentForm({
         />
       </div>
 
-      <p className="text-xs text-white/50 mt-2 mb-4">
+      <p className="text-xs text-fg-subtle mt-2 mb-4">
         Tuition is set from{" "}
-        <span className="text-white/70">Fees → Global fee breakdown</span> for the student&apos;s class (plus any extra fees). It is not entered here.
+        <span className="text-fg-muted">Fees → Global fee breakdown</span> for the student&apos;s class (plus any extra fees). It is not entered here.
       </p>
 
       <div className="mt-6">
         <button
           type="button"
           onClick={() => setShowParentSection((prev) => !prev)}
-          className="mb-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white/80 hover:bg-white/10"
+          className="mb-3 inline-flex items-center gap-2 rounded-lg border border-line bg-elev-1 px-3 py-1.5 text-sm font-semibold text-fg hover:bg-elev-3"
         >
           {showParentSection ? "Hide" : "Show"} Parent Information
         </button>
@@ -286,7 +286,7 @@ export default function AddStudentForm({
               autoComplete="email"
               bgColor="white"
             />
-            <p className="mt-1.5 text-[11px] text-white/50 leading-snug">
+            <p className="mt-1.5 text-[11px] text-fg-subtle leading-snug">
               Used for parent contact on the admission record only. The student&apos;s login email is created automatically as their name @ your school domain.
             </p>
             {renderError(errors, "email")}
@@ -331,7 +331,7 @@ export default function AddStudentForm({
         <button
           type="button"
           onClick={() => setShowAdmissionSection((prev) => !prev)}
-          className="mb-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-semibold text-white/80 hover:bg-white/10"
+          className="mb-3 inline-flex items-center gap-2 rounded-lg border border-line bg-elev-1 px-3 py-1.5 text-sm font-semibold text-fg hover:bg-elev-3"
         >
           {showAdmissionSection ? "Hide" : "Show"} Admission Details
         </button>
@@ -359,14 +359,14 @@ export default function AddStudentForm({
         <button
           type="button"
           onClick={onReset}
-          className="rounded-xl border border-white/10 bg-white/5 px-5 py-2 text-sm font-semibold text-white/70 hover:bg-white/10"
+          className="rounded-xl border border-line bg-elev-1 px-5 py-2 text-sm font-semibold text-fg-muted hover:bg-elev-3"
         >
           Reset
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-xl border border-white/10 bg-white/5 px-5 py-2 text-sm font-semibold text-white/70 hover:bg-white/10"
+          className="rounded-xl border border-line bg-elev-1 px-5 py-2 text-sm font-semibold text-fg-muted hover:bg-elev-3"
         >
           Cancel
         </button>
@@ -374,8 +374,8 @@ export default function AddStudentForm({
           type="button"
           onClick={onSave}
           disabled={saving}
-          className="inline-flex items-center gap-2 rounded-xl bg-lime-400
-           px-5 py-2 text-sm font-semibold text-black hover:bg-lime-300 disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-xl bg-primary
+           px-5 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
         >
           <Plus size={16} /> {saving ? "Saving..." : submitLabel}
         </button>

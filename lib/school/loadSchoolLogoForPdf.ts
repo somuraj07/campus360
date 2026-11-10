@@ -5,7 +5,7 @@ export type SchoolLogoSource = {
   admins?: Array<{ photoUrl?: string | null }> | null;
 };
 
-const DEFAULT_LOGO = "/timelylogo.webp";
+const DEFAULT_LOGO = "/icon.png";
 
 export function pickSchoolLogoUrl(school?: SchoolLogoSource | null): string {
   const logo = school?.logoUrl?.trim();

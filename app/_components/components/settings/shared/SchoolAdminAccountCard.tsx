@@ -19,7 +19,7 @@ export function SchoolAdminAccountCard({
   return (
     <div className={CARD_CLASS}>
       <div className={CARD_HEADER_CLASS}>
-        <CardTitle icon={<User className="text-lime-300" size={22} />} title="School Admin Account Information" subtitle="Update your personal details" />
+        <CardTitle icon={<User className="text-primary" size={22} />} title="School Admin Account Information" subtitle="Update your personal details" />
       </div>
       <div className={CARD_BODY_CLASS}>
         <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ export function SchoolAdminAccountCard({
             <img
               src={form.photoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(form.name || "Admin")}&size=80&background=4ade80&color=fff`}
               alt={form.name || "Admin"}
-              className="w-20 h-20 rounded-2xl object-cover border-2 border-white/[0.1]"
+              className="w-20 h-20 rounded-2xl object-cover border-2 border-line"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(form.name || "Admin")}&size=80&background=4ade80&color=fff`;
@@ -35,14 +35,14 @@ export function SchoolAdminAccountCard({
               key={form.photoUrl}
             />
             {uploading && (
-              <div className="absolute inset-0 bg-black/50 rounded-2xl flex items-center justify-center">
-                <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+              <div className="absolute inset-0 bg-overlay rounded-2xl flex items-center justify-center">
+                <div className="w-6 h-6 border-2 border-line border-t-primary rounded-full animate-spin" />
               </div>
             )}
           </div>
           <div>
-            <h3 className="font-bold text-white">Admin Profile Photo</h3>
-            <p className="text-sm text-gray-400">JPG, PNG or GIF. Max 2MB</p>
+            <h3 className="font-bold text-fg">Admin Profile Photo</h3>
+            <p className="text-sm text-fg-muted">JPG, PNG or GIF. Max 2MB</p>
             <input
               ref={fileInputRef}
               type="file"
@@ -54,8 +54,8 @@ export function SchoolAdminAccountCard({
               type="button"
               onClick={() => fileInputRef?.current?.click()}
               disabled={uploading}
-              className="mt-2 px-4 py-2 bg-[#A3E635]/20 text-[#A3E635] border border-[#A3E635]/30
-               rounded-xl text-sm font-medium hover:bg-[#A3E635]/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+              className="mt-2 px-4 py-2 bg-primary/20 text-primary border border-primary/30
+               rounded-xl text-sm font-medium hover:bg-primary/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
               {uploading ? "Uploading..." : "Edit Photo"}
             </button>
           </div>

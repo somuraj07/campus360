@@ -211,24 +211,24 @@ export default function DownloadClassPdf() {
   };
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 space-y-4">
+    <div className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-5 space-y-4">
       <div>
-        <h3 className="text-sm font-bold text-white">Download Class PDF</h3>
-        <p className="text-xs text-white/50 mt-0.5">
+        <h3 className="text-sm font-bold text-fg">Download Class PDF</h3>
+        <p className="text-xs text-fg-subtle mt-0.5">
           Two students per A4 page. Filter by exam type and subject.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div>
-          <label className="block text-[10px] uppercase tracking-wide text-white/50 mb-1">
+          <label className="block text-[10px] uppercase tracking-wide text-fg-subtle mb-1">
             Class
           </label>
           <select
             value={classId}
             disabled={classesLoading || downloading}
             onChange={(e) => setClassId(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm outline-none focus:border-lime-400/50"
+            className="w-full px-3 py-2.5 rounded-xl bg-well border border-line text-fg text-sm outline-none focus:border-primary/50"
           >
             {classes.length === 0 ? (
               <option value="">No classes</option>
@@ -242,14 +242,14 @@ export default function DownloadClassPdf() {
           </select>
         </div>
         <div>
-          <label className="block text-[10px] uppercase tracking-wide text-white/50 mb-1">
+          <label className="block text-[10px] uppercase tracking-wide text-fg-subtle mb-1">
             Exam type
           </label>
           <select
             value={examType}
             disabled={downloading}
             onChange={(e) => setExamType(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm outline-none focus:border-lime-400/50"
+            className="w-full px-3 py-2.5 rounded-xl bg-well border border-line text-fg text-sm outline-none focus:border-primary/50"
           >
             {examTypeOptions.map((t) => (
               <option key={t} value={t}>
@@ -259,14 +259,14 @@ export default function DownloadClassPdf() {
           </select>
         </div>
         <div>
-          <label className="block text-[10px] uppercase tracking-wide text-white/50 mb-1">
+          <label className="block text-[10px] uppercase tracking-wide text-fg-subtle mb-1">
             Subject
           </label>
           <select
             value={subject}
             disabled={downloading}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-sm outline-none focus:border-lime-400/50"
+            className="w-full px-3 py-2.5 rounded-xl bg-well border border-line text-fg text-sm outline-none focus:border-primary/50"
           >
             <option value="ALL">ALL</option>
             {subjectOptions.map((s) => (
@@ -278,14 +278,14 @@ export default function DownloadClassPdf() {
         </div>
       </div>
 
-      {error && <p className="text-xs text-red-400 font-medium">{error}</p>}
-      {progress && <p className="text-xs text-white/50">{progress}</p>}
+      {error && <p className="text-xs text-red-700 dark:text-red-400 font-medium">{error}</p>}
+      {progress && <p className="text-xs text-fg-subtle">{progress}</p>}
 
       <button
         type="button"
         disabled={downloading || !classId}
         onClick={handleDownload}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-lime-400 text-black text-sm font-bold disabled:opacity-60"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-on-primary text-sm font-bold disabled:opacity-60"
       >
         {downloading ? (
           <Loader2 size={16} className="animate-spin" />

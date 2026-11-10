@@ -39,8 +39,8 @@ export function CardTitle({
         {icon}
       </div>
       <div>
-        <h2 className={["font-bold text-white text-lg flex items-center gap-2", titleClassName || ""].join(" ")}>{title}</h2>
-        <p className={["text-sm text-gray-400 mt-1", subtitleClassName || ""].join(" ")}>{subtitle}</p>
+        <h2 className={["font-bold text-fg text-lg flex items-center gap-2", titleClassName || ""].join(" ")}>{title}</h2>
+        <p className={["text-sm text-fg-muted mt-1", subtitleClassName || ""].join(" ")}>{subtitle}</p>
       </div>
     </div>
   );

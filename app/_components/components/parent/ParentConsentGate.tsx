@@ -44,18 +44,18 @@ export default function ParentConsentGate() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4">
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="consent-title"
-        className="w-full max-w-md rounded-2xl bg-white p-6 text-zinc-800 shadow-2xl"
+        className="w-full max-w-md rounded-2xl bg-white p-6 text-fg shadow-card"
       >
-        <h2 id="consent-title" className="text-lg font-semibold text-zinc-950">
+        <h2 id="consent-title" className="text-lg font-semibold text-fg">
           Privacy &amp; parental consent
         </h2>
         <p className="mt-3 text-sm leading-relaxed">
-          Your child&apos;s school uses Timelly to manage attendance, marks, fees and
+          Your child&apos;s school uses RS Solutions to manage attendance, marks, fees and
           communication. This includes personal information about your child. Please
           read our{" "}
           <Link

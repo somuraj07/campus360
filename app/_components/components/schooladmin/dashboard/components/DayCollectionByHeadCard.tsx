@@ -45,105 +45,98 @@ export function DayCollectionByHeadCard({
     }
   };
 
+  const maxAmount = rows.reduce((m, r) => Math.max(m, r.amount || 0), 0);
+
   return (
-    <div
-      className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 transition-opacity ${loading ? "opacity-60" : ""}`}
-    >
-      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-        <div className="min-w-0">
-          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">Day-wise Collection</h3>
-          <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">
-            By fee head for {dateLabel}
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 sm:justify-end">
-          <div className="flex flex-wrap items-end gap-1.5">
-            <label
-              className="inline-flex flex-col gap-1 rounded-xl border border-white/15 bg-white/5 px-2.5 py-1.5 cursor-pointer hover:bg-white/10"
-              title="Select from date"
-            >
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">
-                <CalendarDays className="w-3.5 h-3.5 text-lime-400 shrink-0" />
-                From
-              </span>
-              <input
-                type="date"
-                value={fromDate}
-                onChange={(e) => onDateRangeChange({ from: e.target.value, to: toDate })}
-                className="w-34 bg-transparent text-xs font-medium text-white outline-none scheme-dark sm:w-36 sm:text-sm"
-                aria-label="Select collection from date"
-              />
-            </label>
-            <label
-              className="inline-flex flex-col gap-1 rounded-xl border border-white/15 bg-white/5 px-2.5 py-1.5 cursor-pointer hover:bg-white/10"
-              title="Select to date"
-            >
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">
-                <CalendarDays className="w-3.5 h-3.5 text-lime-400 shrink-0" />
-                To
-              </span>
-              <input
-                type="date"
-                value={toDate}
-                onChange={(e) => onDateRangeChange({ from: fromDate, to: e.target.value })}
-                className="w-34 bg-transparent text-xs font-medium text-white outline-none scheme-dark sm:w-36 sm:text-sm"
-                aria-label="Select collection to date"
-              />
-            </label>
-            <button
-              type="button"
-              onClick={() => void handleDownload()}
-              disabled={downloading || loading}
-              title="Download day report (Excel)"
-              aria-label="Download day report Excel"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-lime-400 hover:bg-white/10 hover:text-lime-300 disabled:opacity-40 disabled:pointer-events-none transition-colors"
-            >
-              <Download className="w-3.5 h-3.5" strokeWidth={2.25} />
-            </button>
+    <section className={`overflow-hidden rounded-2xl border border-line bg-elev-1 transition-opacity ${loading ? "opacity-60" : ""}`}>
+      <div className="flex flex-col gap-4 border-b border-line px-5 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-start gap-3">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <CalendarDays size={16} />
+          </span>
+          <div>
+            <h3 className="text-[15px] font-semibold text-fg">Day-wise Collection</h3>
+            <p className="mt-0.5 text-xs text-fg-subtle">By fee head for {dateLabel}</p>
           </div>
-          <div className="text-right">
-            <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">Total</p>
-            <p className="text-xl sm:text-2xl font-bold text-lime-400">₹{formattedTotal}</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="inline-flex h-10 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-xs text-fg-subtle">
+            From
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => onDateRangeChange({ from: e.target.value, to: toDate })}
+              className="bg-transparent text-sm font-medium text-fg outline-none"
+              aria-label="Select collection from date"
+            />
+          </label>
+          <label className="inline-flex h-10 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-xs text-fg-subtle">
+            To
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => onDateRangeChange({ from: fromDate, to: e.target.value })}
+              className="bg-transparent text-sm font-medium text-fg outline-none"
+              aria-label="Select collection to date"
+            />
+          </label>
+          <button
+            type="button"
+            onClick={() => void handleDownload()}
+            disabled={downloading || loading}
+            title="Download day report (Excel)"
+            aria-label="Download day report Excel"
+            className="inline-flex h-10 items-center gap-2 rounded-lg border border-line-strong bg-surface px-3 text-sm font-semibold text-fg transition hover:bg-elev-2 disabled:pointer-events-none disabled:opacity-40"
+          >
+            <Download size={15} />
+            Excel
+          </button>
+          <div className="ml-1 rounded-lg bg-emerald-500/10 px-3 py-1.5 text-right">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">Total</p>
+            <p className="text-lg font-semibold leading-tight text-fg tabular-nums">₹{formattedTotal}</p>
           </div>
         </div>
       </div>
 
       {loading ? (
-        <p className="text-sm text-gray-500 py-6 text-center">Loading collection breakdown…</p>
+        <p className="py-10 text-center text-sm text-fg-subtle">Loading collection breakdown…</p>
       ) : rows.length === 0 ? (
-        <p className="text-sm text-gray-500 py-6 text-center">No collections recorded for this date.</p>
+        <p className="py-10 text-center text-sm text-fg-subtle">No collections recorded for this date.</p>
       ) : (
-        <div className="overflow-x-auto -mx-1 px-1">
-          <table className="w-full min-w-[280px] text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-2.5 pr-4 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">
-                  Fee Head
-                </th>
-                <th className="text-right py-2.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">
-                  Amount
-                </th>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[420px] text-sm">
+            <thead className="border-b border-line bg-well text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
+              <tr>
+                <th className="px-5 py-3 text-left">Fee Head</th>
+                <th className="hidden w-[40%] px-5 py-3 text-left sm:table-cell">Share</th>
+                <th className="px-5 py-3 text-right">Amount</th>
               </tr>
             </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.key} className="border-b border-white/5 last:border-0">
-                  <td className="py-2.5 pr-4 text-white/90 font-medium">{row.label}</td>
-                  <td className="py-2.5 text-right text-white font-semibold tabular-nums">
-                    ₹{row.formattedAmount}
-                  </td>
-                </tr>
-              ))}
-              <tr className="border-t border-white/15">
-                <td className="pt-3 pb-1 pr-4 text-white font-bold">Total</td>
-                <td className="pt-3 pb-1 text-right text-lime-400 font-bold tabular-nums">
-                  ₹{formattedTotal}
-                </td>
+            <tbody className="divide-y divide-line-subtle">
+              {rows.map((row) => {
+                const amt = row.amount || 0;
+                const pct = maxAmount > 0 ? Math.max(2, (amt / maxAmount) * 100) : 0;
+                return (
+                  <tr key={row.key} className="hover:bg-elev-2">
+                    <td className="px-5 py-3 font-medium text-fg">{row.label}</td>
+                    <td className="hidden px-5 py-3 sm:table-cell">
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-elev-3">
+                        <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
+                      </div>
+                    </td>
+                    <td className="px-5 py-3 text-right font-semibold text-fg tabular-nums">₹{row.formattedAmount}</td>
+                  </tr>
+                );
+              })}
+              <tr className="bg-well">
+                <td className="px-5 py-3 font-semibold text-fg">Total</td>
+                <td className="hidden sm:table-cell" />
+                <td className="px-5 py-3 text-right font-semibold text-fg tabular-nums">₹{formattedTotal}</td>
               </tr>
             </tbody>
           </table>
         </div>
       )}
-    </div>
+    </section>
   );
 }

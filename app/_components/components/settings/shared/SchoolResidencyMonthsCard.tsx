@@ -65,15 +65,15 @@ export function SchoolResidencyMonthsCard() {
     <div className={CARD_CLASS}>
       <div className={CARD_HEADER_CLASS}>
         <CardTitle
-          icon={<CalendarDays className="text-lime-300" size={22} />}
+          icon={<CalendarDays className="text-primary" size={22} />}
           title="Hostel and day-scholar billing"
           subtitle="Months your school bills in a year when a student moves between hostel and day scholar"
         />
       </div>
       <div className={CARD_BODY_CLASS}>
         {loading ? (
-          <div className="flex items-center gap-2 text-white/60">
-            <div className="w-4 h-4 border-2 border-white/20 border-t-lime-400 rounded-full animate-spin" />
+          <div className="flex items-center gap-2 text-fg-muted">
+            <div className="w-4 h-4 border-2 border-line-strong border-t-primary rounded-full animate-spin" />
             Loading…
           </div>
         ) : (
@@ -86,16 +86,16 @@ export function SchoolResidencyMonthsCard() {
                 step={1}
                 value={months}
                 onChange={(e) => setMonths(e.target.value)}
-                className="mt-2 w-32 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white outline-none focus:border-lime-400/50"
+                className="mt-2 w-32 rounded-xl border border-line bg-elev-1 px-3 py-2 text-fg outline-none focus:border-primary/50"
               />
-              <p className="mt-2 text-xs text-white/50">
+              <p className="mt-2 text-xs text-fg-subtle">
                 12 counts June to May. Enter 10 if your school bills June to March: each month is then the annual fee
                 divided by 10, so a student who moves on 1 October is billed 4 months in one and 6 in the other. This
                 applies to conversions made from now on; fees already set are not changed.
               </p>
             </Field>
             {message && (
-              <p className={`mt-3 text-sm ${message.type === "success" ? "text-lime-400" : "text-red-400"}`}>
+              <p className={`mt-3 text-sm ${message.type === "success" ? "text-primary" : "text-red-700 dark:text-red-400"}`}>
                 {message.text}
               </p>
             )}
@@ -103,7 +103,7 @@ export function SchoolResidencyMonthsCard() {
               type="button"
               onClick={handleSave}
               disabled={saving || !valid}
-              className="mt-4 px-5 py-2.5 rounded-xl bg-lime-400/20 text-lime-400 border border-lime-400/30 font-medium hover:bg-lime-400/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-4 px-5 py-2.5 rounded-xl bg-primary/20 text-primary border border-primary/30 font-medium hover:bg-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? "Saving…" : "Save billing months"}
             </button>

@@ -166,12 +166,12 @@ describe("POST /api/student/bulk-upload", () => {
   it("records a failed row when the transaction throws", async () => {
     mockGetServerSession.mockResolvedValue({ user: { id: "u1", schoolId: "s1" } });
     mockReadFirstSheetRows.mockResolvedValue([validRow]);
-    mockTransaction.mockRejectedValue(new Error("Timelly number already used"));
+    mockTransaction.mockRejectedValue(new Error("RS Solutions number already used"));
     const res = await POST(makeRequest(makeFile()));
     expect(res.status).toBe(200);
     const json = await res.json();
     expect(json.failedCount).toBe(1);
-    expect(json.failed[0].error).toMatch(/Timelly number/);
+    expect(json.failed[0].error).toMatch(/RS Solutions number/);
   });
 
   it("returns 500 for an unexpected top-level error", async () => {

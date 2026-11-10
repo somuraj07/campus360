@@ -57,7 +57,7 @@ function buildReceiptLayout(data: FeeReceiptGeneratorInput): FeeReceiptLayout {
     const margin = 15;
     const contentWidth = pageWidth - margin * 2;
 
-    const schoolName = data.schoolName || "Timelly School";
+    const schoolName = data.schoolName || "RS Solutions";
     const schoolAddress = data.schoolAddress || "-";
     const schoolLocation = data.schoolLocation || "-";
     const classInfo = data.className
@@ -122,7 +122,7 @@ function appendFeeReceiptPage(doc: jsPDF, copyType: FeeReceiptCopy, L: FeeReceip
     doc.text(L.schoolName, margin, 12);
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("Fee Receipt • Powered by Timelly", margin, 18);
+    doc.text("Fee Receipt • Powered by RS Solutions", margin, 18);
     doc.setFont("helvetica", "bold");
     doc.text(copyType === "admin" ? "ADMIN COPY" : "PARENT COPY", pageWidth - margin - 40, 12);
     doc.text("FEE RECEIPT", pageWidth - margin - 40, 20);
@@ -160,7 +160,7 @@ function appendFeeReceiptPage(doc: jsPDF, copyType: FeeReceiptCopy, L: FeeReceip
     sectionHeader("STUDENT INFORMATION");
     keyValue("Student Name:", L.studentName);
     keyValue("Admission #:", L.admissionNumber);
-    keyValue("Timelly ID / Year:", `${L.timellyId} / ${L.admissionYear}`);
+    keyValue("RS Solutions ID / Year:", `${L.timellyId} / ${L.admissionYear}`);
 
     y += 5;
     sectionHeader("PAYMENT INFORMATION");
@@ -199,7 +199,7 @@ function appendFeeReceiptPage(doc: jsPDF, copyType: FeeReceiptCopy, L: FeeReceip
             ? "This is an official record for school administration. Please retain for accounting purposes."
             : "This is your official receipt for fees paid. Please keep it safely for future reference.";
     doc.text(footerLine, pageWidth / 2, footerY - 3, { align: "center" });
-    doc.text(`Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by Timelly`, pageWidth / 2, footerY + 3, {
+    doc.text(`Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by RS Solutions`, pageWidth / 2, footerY + 3, {
         align: "center",
     });
 }

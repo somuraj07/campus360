@@ -95,10 +95,10 @@ const SubjectPerformance = ({ marks }: SubjectPerformanceProps) => {
 
       {/* HEADER */}
       <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white">
+        <h2 className="text-2xl sm:text-3xl font-bold text-fg">
           Subject-wise Performance
         </h2>
-        <p className="text-gray-400 mt-1 text-sm sm:text-base">
+        <p className="text-fg-muted mt-1 text-sm sm:text-base">
           Detailed analysis of each subject
         </p>
       </div>
@@ -119,9 +119,8 @@ const SubjectPerformance = ({ marks }: SubjectPerformanceProps) => {
                   rounded-2xl
                   bg-gradient-to-br
                  
-                  border border-white/10
-                  backdrop-blur-xl
-                  shadow-lg
+                  border border-line
+                                    shadow-card
                   hover:shadow-xl
                   transition-all duration-300
                 "
@@ -129,36 +128,36 @@ const SubjectPerformance = ({ marks }: SubjectPerformanceProps) => {
                 {/* TOP ROW */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-lime-400/10 text-lime-400 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                       {subject.icon}
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white capitalize">
+                      <h3 className="text-lg font-semibold text-fg capitalize">
                         {subject.name}
                       </h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-fg-muted">
                         Marks: {Math.round(subject.marks)}/{Math.round(subject.total)}
                       </p>
                     </div>
                   </div>
 
-                  <span className="px-3 py-1 text-xs font-bold rounded-full bg-lime-400/10 text-lime-400 border border-lime-400/20">
+                  <span className="px-3 py-1 text-xs font-bold rounded-full bg-primary/10 text-primary border border-primary/20">
                     {subject.grade}
                   </span>
                 </div>
 
                 {/* PROGRESS */}
                 <div className="mb-4">
-                  <div className="flex justify-between text-sm text-gray-400 mb-2">
+                  <div className="flex justify-between text-sm text-fg-muted mb-2">
                     <span>Your Score</span>
-                    <span className="text-lime-400 font-semibold">
+                    <span className="text-primary font-semibold">
                       {percentage}%
                     </span>
                   </div>
 
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2 bg-elev-2 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-lime-400 rounded-full transition-all duration-700"
+                      className="h-full bg-primary rounded-full transition-all duration-700"
                       style={{ width: `${Math.min(percentage, 100)}%` }}
                     />
                   </div>
@@ -167,21 +166,21 @@ const SubjectPerformance = ({ marks }: SubjectPerformanceProps) => {
                 {/* CLASS AVG */}
                 {subject.classAvg > 0 ? (
                   <div className="flex items-center justify-between text-sm mt-4">
-                    <span className="text-gray-400">
+                    <span className="text-fg-muted">
                       Class Avg:{" "}
-                      <span className="text-white font-medium">
+                      <span className="text-fg font-medium">
                         {subject.classAvg}%
                       </span>
                     </span>
 
-                    <span className="flex items-center gap-1 px-3 py-1 bg-lime-400/10 text-lime-400 rounded-full text-xs font-semibold border border-lime-400/20">
+                    <span className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold border border-primary/20">
                       <TrendingUp className="w-3 h-3" />
                       +{Math.round(subject.marks - subject.classAvg)}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center justify-between text-sm mt-4">
-                    <span className="text-gray-400">
+                    <span className="text-fg-muted">
                       Class average not available
                     </span>
                   </div>
@@ -190,7 +189,7 @@ const SubjectPerformance = ({ marks }: SubjectPerformanceProps) => {
             );
           })
         ) : (
-          <div className="col-span-full text-center py-12 text-white/40 text-sm">
+          <div className="col-span-full text-center py-12 text-fg-subtle text-sm">
             No marks available
           </div>
         )}

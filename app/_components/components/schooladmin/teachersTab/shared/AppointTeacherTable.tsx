@@ -16,7 +16,7 @@ export function AppointTeacherTable({
     <div className="hidden md:block overflow-x-auto">
       <div className="min-w-[600px] p-4 sm:p-6">
         <table className="w-full text-sm">
-          <thead className="text-gray-400">
+          <thead className="text-fg-muted">
             <tr>
               <th className="text-left py-2">Class</th>
               <th className="text-left py-2">Teacher</th>
@@ -27,7 +27,7 @@ export function AppointTeacherTable({
 
           <tbody>
             {appointments.map((item) => (
-              <tr key={item.classId} className="border-t border-white/10">
+              <tr key={item.classId} className="border-t border-line">
                 <td className="py-3">{item.className}</td>
 
                 <td className="py-3 flex items-center gap-2">
@@ -41,7 +41,7 @@ export function AppointTeacherTable({
                   {item.teacherName}
                 </td>
 
-                <td className="py-3 text-white/60">
+                <td className="py-3 text-fg-muted">
                   {item.teacherEmail}
                 </td>
 
@@ -50,7 +50,7 @@ export function AppointTeacherTable({
                     <button onClick={() => onEdit(item)}>
                       <Pencil
                         size={16}
-                        className="text-lime-400 hover:text-lime-300"
+                        className="text-primary hover:text-primary"
                       />
                     </button>
 
@@ -58,7 +58,7 @@ export function AppointTeacherTable({
                       disabled={removingId === item.classId}
                       onClick={() => onRemove(item.classId)}
                     >
-                      <Trash2 size={16} className="text-red-400" />
+                      <Trash2 size={16} className="text-red-700 dark:text-red-400" />
                     </button>
                   </div>
                 </td>

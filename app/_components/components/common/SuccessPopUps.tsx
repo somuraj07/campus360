@@ -16,8 +16,8 @@ export default function SuccessPopups({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="rounded-2xl px-6 sm:px-8 py-6 sm:py-7 w-[92vw] max-w-[360px] text-center shadow-lg relative bg-white/10 border border-gray-300/20">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay ">
+      <div className="rounded-2xl px-6 sm:px-8 py-6 sm:py-7 w-[92vw] max-w-[360px] text-center shadow-card relative bg-elev-2 border border-line-strong">
         {/* Check Icon */}
         <div className="flex justify-center mb-4">
           <div className="w-14 h-14 rounded-full border-2 flex items-center justify-center" style={{ borderColor: PRIMARY_COLOR }}>
@@ -39,18 +39,18 @@ export default function SuccessPopups({
         </div>
 
         {/* Text */}
-        <h2 className="text-base sm:text-lg font-semibold text-white mb-1">
+        <h2 className="text-base sm:text-lg font-semibold text-fg mb-1">
           {title}
         </h2>
 
         {description && (
-          <p className="text-xs sm:text-sm text-white/70">{description}</p>
+          <p className="text-xs sm:text-sm text-fg-muted">{description}</p>
         )}
 
         {/* Button */}
         <button
           onClick={onClose}
-          className="mt-6 w-full py-2.5 rounded-lg text-white font-medium bg-white/10 border border-gray-300/20 hover:bg-white/20 transition-colors cursor-pointer"
+          className="mt-6 w-full py-2.5 rounded-lg text-fg font-medium bg-elev-2 border border-line-strong hover:bg-elev-3 transition-colors cursor-pointer"
         >
           OK
         </button>

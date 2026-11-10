@@ -77,22 +77,22 @@ export default function NewExamTermModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 ">
+    <div className="fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4 ">
       <div
-        className="bg-[#0F172A] border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl"
+        className="bg-surface border border-line rounded-2xl w-full max-w-md p-6 shadow-pop"
         style={{
           background: "linear-gradient(180deg, rgba(10,27,57,0.98) 0%, rgba(9,22,47,0.96) 100%)",
         }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-6 flex items-start justify-between gap-3">
-          <h2 className="text-xl font-bold text-white mb-6">
+          <h2 className="text-xl font-bold text-fg mb-6">
             {isEdit ? "Edit Exam Term" : "New Exam Term"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="min-h-[40px] min-w-[40px] rounded-xl border border-white/15 p-2.5 text-white/80 hover:bg-white/10"
+            className="min-h-[40px] min-w-[40px] rounded-xl border border-line p-2.5 text-fg hover:bg-elev-3"
           >
             <X size={18} />
           </button>
@@ -100,35 +100,35 @@ export default function NewExamTermModal({
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/60">Term Name</label>
+            <label className="mb-1 block text-sm font-medium text-fg-muted">Term Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Term 2 Examination"
-              className="w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-3.5 text-base text-white placeholder:text-white/45"
+              className="w-full rounded-2xl border border-line bg-elev-2 px-4 py-3.5 text-base text-fg placeholder:text-fg-subtle"
               required
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-white/60">Description</label>
+            <label className="mb-1 block text-sm font-medium text-fg-muted">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Brief description..."
               rows={4}
-              className="w-full resize-none rounded-2xl border border-white/15 bg-white/8 px-4 py-3.5 text-base text-white placeholder:text-white/45"
+              className="w-full resize-none rounded-2xl border border-line bg-elev-2 px-4 py-3.5 text-base text-fg placeholder:text-fg-subtle"
             />
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/60">Class</label>
+              <label className="mb-1 block text-sm font-medium text-fg-muted">Class</label>
               <select
                 value={classId}
                 onChange={(e) => setClassId(e.target.value)}
-                className="w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-3.5 text-base text-white"
+                className="w-full rounded-2xl border border-line bg-elev-2 px-4 py-3.5 text-base text-fg"
                 required
               >
                 <option value="">Select class</option>
@@ -141,11 +141,11 @@ export default function NewExamTermModal({
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-white/60">Status</label>
+              <label className="mb-1 block text-sm font-medium text-fg-muted">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as ExamTermStatus)}
-                className="w-full rounded-2xl border border-white/15 bg-white/8 px-4 py-3.5 text-base text-white"
+                className="w-full rounded-2xl border border-line bg-elev-2 px-4 py-3.5 text-base text-fg"
               >
                 {EXAM_TERM_STATUS.map((s: { value: string; label: string }) => (
                   <option key={s.value} value={s.value}>
@@ -160,16 +160,16 @@ export default function NewExamTermModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2.5 rounded-xl border border-white/10 text-gray-400
-               hover:bg-white/5"
+              className="flex-1 py-2.5 rounded-xl border border-line text-fg-muted
+               hover:bg-elev-2"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className=" flex-1 py-2.5 rounded-xl bg-lime-400 text-black font-bold 
-              hover:bg-lime-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className=" flex-1 py-2.5 rounded-xl bg-primary text-on-primary font-bold 
+              hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? (
                 <>

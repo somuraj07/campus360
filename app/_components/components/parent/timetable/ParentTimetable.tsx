@@ -99,17 +99,17 @@ export default function ParentTimetableTab() {
 
   if (!timetable || (timetable.entries ?? []).length === 0) {
     return (
-      <main className="min-h-screen space-y-5 text-white">
-        <PageHeader title="Timetable" subtitle="Your child's class timetable will appear here." />
+      <main className="min-h-screen space-y-5 text-fg">
+        <PageHeader eyebrow="Your child" title="Timetable" subtitle="Your child's class timetable will appear here." />
         {error ? (
-          <div className="rounded-2xl border border-red-400/25 bg-red-500/10 p-4 text-sm text-red-100">
+          <div className="rounded-2xl border border-red-400/25 bg-red-500/10 p-4 text-sm text-red-800 dark:text-red-100">
             {error}
           </div>
         ) : null}
-        <div className="rounded-4xl border border-dashed border-white/15 bg-white/5 p-8 text-center">
-          <CalendarDays className="mx-auto mb-3 h-10 w-10 text-lime-300" />
+        <div className="rounded-2xl border border-dashed border-line bg-elev-1 p-8 text-center">
+          <CalendarDays className="mx-auto mb-3 h-10 w-10 text-primary" />
           <h3 className="text-lg font-semibold">No timetable published yet</h3>
-          <p className="mx-auto mt-2 max-w-md text-sm text-white/60">
+          <p className="mx-auto mt-2 max-w-md text-sm text-fg-muted">
             Once the school publishes the timetable for {classLabel(timetable)}, it will show here automatically.
           </p>
         </div>
@@ -118,44 +118,45 @@ export default function ParentTimetableTab() {
   }
 
   return (
-    <main className="min-h-screen space-y-5 pb-6 text-white sm:space-y-6">
+    <main className="min-h-screen space-y-5 pb-6 text-fg sm:space-y-6">
       <PageHeader
+        eyebrow="Your child"
         title="Timetable"
         subtitle={`Showing only ${classLabel(timetable)} timetable for your child.`}
       />
       {error ? (
-        <div className="rounded-2xl border border-red-400/25 bg-red-500/10 p-4 text-sm text-red-100">
+        <div className="rounded-2xl border border-red-400/25 bg-red-500/10 p-4 text-sm text-red-800 dark:text-red-100">
           {error}
         </div>
       ) : null}
 
-      <section className="overflow-hidden rounded-4xl border border-lime-300/15 bg-linear-to-br from-lime-300/15 via-white/5 to-cyan-300/10 p-5 shadow-2xl shadow-black/20 sm:p-6">
+      <section className="overflow-hidden rounded-2xl border border-primary/15 bg-linear-to-br from-primary/15 via-white/5 to-cyan-300/10 p-5 shadow-card shadow-black/20 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-lime-300/20 bg-black/20 px-3 py-1 text-xs font-semibold text-lime-100">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-well px-3 py-1 text-xs font-semibold text-primary">
               <GraduationCap className="h-3.5 w-3.5" />
               {classLabel(timetable)}
             </div>
             <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
               Weekly Class Timetable
             </h2>
-            <p className="mt-2 max-w-2xl text-sm text-white/65">
+            <p className="mt-2 max-w-2xl text-sm text-fg-muted">
               Periods, breaks, teachers and timings are arranged day-wise for quick parent view.
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center sm:min-w-[360px]">
-            <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-              <div className="text-xl font-bold text-white">{activeDays.length}</div>
-              <div className="text-[11px] uppercase tracking-wide text-white/45">Days</div>
+            <div className="rounded-2xl border border-line bg-well p-3">
+              <div className="text-xl font-bold text-fg">{activeDays.length}</div>
+              <div className="text-[11px] uppercase tracking-wide text-fg-subtle">Days</div>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-              <div className="text-xl font-bold text-lime-200">{totalPeriods}</div>
-              <div className="text-[11px] uppercase tracking-wide text-white/45">Periods</div>
+            <div className="rounded-2xl border border-line bg-well p-3">
+              <div className="text-xl font-bold text-primary">{totalPeriods}</div>
+              <div className="text-[11px] uppercase tracking-wide text-fg-subtle">Periods</div>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-              <div className="text-xl font-bold text-amber-200">{totalBreaks}</div>
-              <div className="text-[11px] uppercase tracking-wide text-white/45">Breaks</div>
+            <div className="rounded-2xl border border-line bg-well p-3">
+              <div className="text-xl font-bold text-amber-800 dark:text-amber-200">{totalBreaks}</div>
+              <div className="text-[11px] uppercase tracking-wide text-fg-subtle">Breaks</div>
             </div>
           </div>
         </div>
@@ -170,12 +171,12 @@ export default function ParentTimetableTab() {
               key={day}
               className={`rounded-2xl border p-4 ${
                 hasClass
-                  ? "border-lime-300/20 bg-lime-300/10"
-                  : "border-white/10 bg-white/5"
+                  ? "border-primary/20 bg-primary/10"
+                  : "border-line bg-elev-1"
               }`}
             >
               <div className="text-sm font-semibold">{DAY_LABELS[day]}</div>
-              <div className="mt-1 text-xs text-white/50">
+              <div className="mt-1 text-xs text-fg-subtle">
                 {hasClass ? `${count} item${count === 1 ? "" : "s"}` : "No class"}
               </div>
             </div>
@@ -187,13 +188,13 @@ export default function ParentTimetableTab() {
         {activeDays.map((day) => {
           const dayEntries = entriesByDay.get(day) ?? [];
           return (
-            <div key={day} className="overflow-hidden rounded-4xl border border-white/10 bg-black/20">
-              <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-5 py-4">
+            <div key={day} className="overflow-hidden rounded-2xl border border-line bg-well">
+              <div className="flex items-center justify-between border-b border-line bg-elev-1 px-5 py-4">
                 <div>
                   <h3 className="text-lg font-semibold">{DAY_LABELS[day]}</h3>
-                  <p className="text-xs text-white/45">{dayEntries.length} scheduled item{dayEntries.length === 1 ? "" : "s"}</p>
+                  <p className="text-xs text-fg-subtle">{dayEntries.length} scheduled item{dayEntries.length === 1 ? "" : "s"}</p>
                 </div>
-                <CalendarDays className="h-5 w-5 text-lime-300" />
+                <CalendarDays className="h-5 w-5 text-primary" />
               </div>
 
               <div className="space-y-3 p-4">
@@ -205,7 +206,7 @@ export default function ParentTimetableTab() {
                       className={`rounded-2xl border p-4 ${
                         isBreak
                           ? "border-amber-300/20 bg-amber-300/10"
-                          : "border-lime-300/15 bg-white/5"
+                          : "border-primary/15 bg-elev-1"
                       }`}
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -213,30 +214,30 @@ export default function ParentTimetableTab() {
                           <div className="flex items-center gap-2">
                             <span
                               className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl ${
-                                isBreak ? "bg-amber-300/15 text-amber-100" : "bg-lime-300/15 text-lime-200"
+                                isBreak ? "bg-amber-300/15 text-amber-800 dark:text-amber-100" : "bg-primary/15 text-primary"
                               }`}
                             >
                               {isBreak ? <Coffee className="h-4 w-4" /> : <BookOpen className="h-4 w-4" />}
                             </span>
                             <div className="min-w-0">
                               <h4 className="truncate text-base font-semibold">{entry.title}</h4>
-                              <p className="text-xs text-white/45">{isBreak ? "Break" : entry.subject || "Period"}</p>
+                              <p className="text-xs text-fg-subtle">{isBreak ? "Break" : entry.subject || "Period"}</p>
                             </div>
                           </div>
                         </div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-black/25 px-3 py-1.5 text-xs text-white/75">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-well px-3 py-1.5 text-xs text-fg-muted">
                           <Clock className="h-3.5 w-3.5" />
                           {entry.startTime} - {entry.endTime}
                         </div>
                       </div>
 
-                      <div className="mt-4 grid gap-2 text-xs text-white/55 sm:grid-cols-2">
-                        <div className="inline-flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                          <UserRound className="h-3.5 w-3.5 text-white/40" />
+                      <div className="mt-4 grid gap-2 text-xs text-fg-muted sm:grid-cols-2">
+                        <div className="inline-flex items-center gap-2 rounded-xl bg-elev-1 px-3 py-2">
+                          <UserRound className="h-3.5 w-3.5 text-fg-subtle" />
                           {entry.teacher?.name || "Teacher not assigned"}
                         </div>
-                        <div className="inline-flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2">
-                          <GraduationCap className="h-3.5 w-3.5 text-white/40" />
+                        <div className="inline-flex items-center gap-2 rounded-xl bg-elev-1 px-3 py-2">
+                          <GraduationCap className="h-3.5 w-3.5 text-fg-subtle" />
                           {entry.room || classLabel(timetable)}
                         </div>
                       </div>

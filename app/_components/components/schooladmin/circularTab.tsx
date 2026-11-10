@@ -1,13 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import PageHeader from "../common/PageHeader";
+import { SaPage, SaPageHeader, KpiGrid, KpiCard, btnClass } from "../common/ui";
 
 import CircularFilters from "./circularTab/CircularFilters";
 import CircularList from "./circularTab/CircularList";
 import CircularForm from "./circularTab/CircularForm";
 import { CircularRow } from "./circularTab/types";
-import { Plus, Scroll, X } from "lucide-react";
+import { AlertTriangle, Plus, Scroll, Users, X } from "lucide-react";
 import TimellyLoader from "../common/TimellyLoader";
 import {
   invalidateCirculars,
@@ -62,80 +62,70 @@ export default function SchoolAdminCircularsTab() {
     });
   }, [circulars, search, importance]);
 
+  const urgentCount = circulars.filter((c) => /high|urgent|critical/i.test(String(c.importanceLevel ?? ""))).length;
+
   return (
-    <div className="min-h-screen text-white w-full min-w-0 overflow-x-hidden pb-20 lg:pb-0">
-      {/* HEADER */}
-      <PageHeader
-        compact
-        className=""
-        icon={<Scroll className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />}
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Communication"
         title="Circulars & Notices"
-        subtitle="Create and manage school-wide circulars"
-        transparent={true}
-        rightSlot={
+        description="Create and manage school-wide circulars"
+        actions={
           <button
+            type="button"
             onClick={() => setShowForm((prev) => !prev)}
-            className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-lime-400 text-black font-semibold hover:bg-lime-300 transition w-full sm:w-auto text-sm sm:text-base shrink-0"
+            aria-expanded={showForm}
+            className={btnClass(showForm ? "secondary" : "primary")}
           >
-            {showForm ? (
-              <>
-                <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Cancel</span>
-              </>
-            ) : (
-              <>
-                <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Create Circular</span>
-              </>
-            )}
+            {showForm ? <X size={16} /> : <Plus size={16} />}
+            {showForm ? "Cancel" : "Create Circular"}
           </button>
         }
       />
 
-      {/* CONTENT */}
-      <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 mt-3 sm:mt-6 space-y-4 sm:space-y-6 pb-6 sm:pb-8">
-        {/* FORM (pushes content down) */}
-        {showForm && (
-          <div className="w-full">
-            <CircularForm
-              onClose={() => setShowForm(false)}
-              onSuccess={async () => {
-                setShowForm(false);
-                invalidateCirculars();
-                await fetchCirculars(true);
-              }}
-            />
-          </div>
-        )}
+      {showForm && (
+        <CircularForm
+          onClose={() => setShowForm(false)}
+          onSuccess={async () => {
+            setShowForm(false);
+            invalidateCirculars();
+            await fetchCirculars(true);
+          }}
+        />
+      )}
 
-        {/* FILTER CARD */}
-        <div className="w-full min-w-0 px-2 sm:px-0">
-          <CircularFilters
-            search={search}
-            onSearch={setSearch}
-            importance={importance}
-            onImportance={setImportance}
-            recipient={recipient}
-            onRecipient={setRecipient}
-            classId={classId}
-            onClassId={setClassId}
-          />
-        </div>
+      <KpiGrid>
+        <KpiCard label="Total Circulars" value={circulars.length} icon={Scroll} hint="For the selected audience" />
+        <KpiCard label="Showing" value={filteredCirculars.length} icon={Users} tone="sky" hint="After filters" />
+        <KpiCard label="High Importance" value={urgentCount} icon={AlertTriangle} tone="red" hint="Marked high or urgent" />
+        <KpiCard
+          label="Audience"
+          value={recipient === "all" ? "All" : recipient.charAt(0).toUpperCase() + recipient.slice(1).toLowerCase()}
+          icon={Users}
+          tone="gold"
+          hint={classId ? "Single class" : "All classes"}
+        />
+      </KpiGrid>
 
-        {/* LIST / LOADER */}
-        {loading && circulars.length === 0 ? (
-          <TimellyLoader
-            compact
-            title="Loading circulars"
-            steps={["Notices", "Recipients", "Attachments"]}
-          />
-        ) : (
-          <>
-            {loading && <div className="text-xs text-white/50 px-2">Refreshing circulars...</div>}
-            <CircularList circulars={filteredCirculars} />
-          </>
-        )}
-      </div>
-    </div>
+      <CircularFilters
+        search={search}
+        onSearch={setSearch}
+        importance={importance}
+        onImportance={setImportance}
+        recipient={recipient}
+        onRecipient={setRecipient}
+        classId={classId}
+        onClassId={setClassId}
+      />
+
+      {loading && circulars.length === 0 ? (
+        <TimellyLoader compact title="Loading circulars" steps={["Notices", "Recipients", "Attachments"]} />
+      ) : (
+        <>
+          {loading && <p className="text-xs text-fg-subtle">Refreshing circulars...</p>}
+          <CircularList circulars={filteredCirculars} />
+        </>
+      )}
+    </SaPage>
   );
 }

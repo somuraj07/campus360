@@ -34,19 +34,19 @@ export function RecordHeadPaymentDialog({
 }) {
   if (!payingHead) return null;
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 p-4">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0B1220] p-5 shadow-xl">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-overlay p-4">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-surface p-5 shadow-pop">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h4 className="text-lg font-semibold text-white">Record Payment</h4>
-            <p className="text-xs text-white/60 mt-1">
+            <h4 className="text-lg font-semibold text-fg">Record Payment</h4>
+            <p className="text-xs text-fg-muted mt-1">
               {payingHead.label} • Due: ₹{payingHead.due.toLocaleString("en-IN")}
             </p>
           </div>
           <button
             type="button"
             onClick={() => !paymentSaving && onCancel()}
-            className="rounded-lg p-1 text-white/60 hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-1 text-fg-muted hover:bg-elev-3 hover:text-fg"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -55,7 +55,7 @@ export function RecordHeadPaymentDialog({
 
         <div className="space-y-3 text-sm">
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/60">Amount (₹)</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">Amount (₹)</label>
             <input
               type="number"
               min="0"
@@ -68,11 +68,11 @@ export function RecordHeadPaymentDialog({
                 }))
               }
               placeholder="Enter amount"
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/60">Payment mode</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">Payment mode</label>
             <select
               value={paymentForm.mode}
               onChange={(e) =>
@@ -81,7 +81,7 @@ export function RecordHeadPaymentDialog({
                   mode: e.target.value as HeadPaymentForm["mode"],
                 }))
               }
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             >
               <option value="CASH">Cash</option>
               <option value="ONLINE">Online</option>
@@ -91,7 +91,7 @@ export function RecordHeadPaymentDialog({
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/60">Payment date</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">Payment date</label>
             <input
               type="date"
               value={paymentForm.paymentDate}
@@ -101,11 +101,11 @@ export function RecordHeadPaymentDialog({
                   paymentDate: e.target.value,
                 }))
               }
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/60">UTR / Reference number</label>
+            <label className="mb-1 block text-xs font-medium text-fg-muted">UTR / Reference number</label>
             <input
               value={paymentForm.referenceNo}
               onChange={(e) =>
@@ -115,13 +115,13 @@ export function RecordHeadPaymentDialog({
                 }))
               }
               placeholder="Optional for cash, required for non-cash"
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
         </div>
 
         {paymentError ? (
-          <div className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">
+          <div className="mt-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-300">
             {paymentError}
           </div>
         ) : null}
@@ -131,7 +131,7 @@ export function RecordHeadPaymentDialog({
             type="button"
             onClick={() => !paymentSaving && onCancel()}
             disabled={paymentSaving}
-            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/80 hover:bg-white/5 disabled:opacity-50"
+            className="rounded-xl border border-line px-4 py-2 text-sm text-fg hover:bg-elev-2 disabled:opacity-50"
           >
             Cancel
           </button>
@@ -139,7 +139,7 @@ export function RecordHeadPaymentDialog({
             type="button"
             onClick={onSubmit}
             disabled={paymentSaving}
-            className="rounded-xl bg-blue-500/90 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-400 disabled:opacity-50"
+            className="rounded-xl bg-blue-500/90 px-4 py-2 text-sm font-semibold text-fg hover:bg-blue-400 disabled:opacity-50"
           >
             {paymentSaving ? "Recording..." : "Record Payment"}
           </button>

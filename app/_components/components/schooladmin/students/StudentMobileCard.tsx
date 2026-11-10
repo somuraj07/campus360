@@ -45,20 +45,20 @@ export default function StudentMobileCard({
         <img
           src={photoUrl}
           alt={name}
-          className="h-12 w-12 rounded-xl object-cover border border-white/10 shrink-0"
+          className="h-12 w-12 rounded-xl object-cover border border-line shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-lime-300 truncate">{classLabel}</p>
-          <h3 className="text-lg font-semibold text-white truncate">{name}</h3>
-          <p className="text-sm text-white/70 truncate">
+          <p className="text-sm text-primary truncate">{classLabel}</p>
+          <h3 className="text-lg font-semibold text-fg truncate">{name}</h3>
+          <p className="text-sm text-fg-muted truncate">
             ID {studentId} · {getResidencyLabel(student.residencyType)}
           </p>
         </div>
         <span
           className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold border ${
             isInactive
-              ? "border-red-400/30 bg-red-400/10 text-red-300"
-              : "border-lime-400/30 bg-lime-400/10 text-lime-300"
+              ? "border-red-400/30 bg-red-400/10 text-red-700 dark:text-red-300"
+              : "border-primary/30 bg-primary/10 text-primary"
           }`}
         >
           {student.status || "Active"}
@@ -66,13 +66,13 @@ export default function StudentMobileCard({
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-        <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-          <p className="text-[11px] text-white/50">Gender</p>
-          <p className="font-semibold text-white">{student.gender || "—"}</p>
+        <div className="rounded-xl border border-line bg-well px-3 py-2">
+          <p className="text-[11px] text-fg-subtle">Gender</p>
+          <p className="font-semibold text-fg">{student.gender || "—"}</p>
         </div>
-        <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-          <p className="text-[11px] text-white/50">Age</p>
-          <p className="font-semibold text-white">{getAge(student.dob)}</p>
+        <div className="rounded-xl border border-line bg-well px-3 py-2">
+          <p className="text-[11px] text-fg-subtle">Age</p>
+          <p className="font-semibold text-fg">{getAge(student.dob)}</p>
         </div>
       </div>
 
@@ -80,21 +80,21 @@ export default function StudentMobileCard({
         <button
           type="button"
           onClick={() => onView(student)}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 py-2.5 text-xs font-semibold text-white/80 hover:bg-white/5 transition"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-line-strong py-2.5 text-xs font-semibold text-fg hover:bg-elev-2 transition"
         >
           <Eye size={14} /> View
         </button>
         <button
           type="button"
           onClick={() => onEdit(student)}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-lime-400/40 py-2.5 text-xs font-semibold text-lime-300 hover:bg-lime-400/10 transition"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-primary/40 py-2.5 text-xs font-semibold text-primary hover:bg-primary/10 transition"
         >
           <Pencil size={14} /> Edit
         </button>
         <button
           type="button"
           onClick={() => onDelete(student)}
-          className="inline-flex items-center justify-center rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2.5 text-red-300 hover:bg-red-500/20 transition"
+          className="inline-flex items-center justify-center rounded-xl border border-red-400/30 bg-red-500/10 px-3 py-2.5 text-red-700 dark:text-red-300 hover:bg-red-500/20 transition"
           aria-label="Delete student"
         >
           <Trash2 size={14} />

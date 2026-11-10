@@ -41,7 +41,7 @@ export function ClassesActionButton({
               if (!disabled) onClick();
             }}
             disabled={disabled}
-            className={`h-10 w-10 flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 ${
+            className={`h-10 w-10 flex items-center justify-center rounded-xl border border-line bg-elev-1 text-fg-muted hover:bg-elev-3 ${
               disabled ? "opacity-60 cursor-not-allowed" : ""
             }`}
           >

@@ -54,20 +54,20 @@ export function EditStudentModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/80 p-4"
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-overlay p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="edit-student-sidebar-title"
     >
-      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 bg-zinc-950 p-5 shadow-2xl">
+      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border border-line bg-surface p-5 shadow-pop">
         <div className="mb-4 flex items-start justify-between gap-3">
-          <h4 id="edit-student-sidebar-title" className="text-lg font-semibold text-white">
+          <h4 id="edit-student-sidebar-title" className="text-lg font-semibold text-fg">
             Edit student details
           </h4>
           <button
             type="button"
             onClick={() => !saving && onClose()}
-            className="rounded-lg p-1 text-white/60 hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-1 text-fg-muted hover:bg-elev-3 hover:text-fg"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -75,49 +75,49 @@ export function EditStudentModal({
         </div>
         <div className="space-y-3 text-sm">
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Full name</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Full name</label>
             <input
               value={sName}
               onChange={(e) => onSNameChange(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Email (login)</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Email (login)</label>
             <input
               type="email"
               value={sEmail}
               onChange={(e) => onSEmailChange(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Phone</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Phone</label>
             <input
               value={sPhone}
               onChange={(e) => onSPhoneChange(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Address</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Address</label>
             <textarea
               value={sAddress}
               onChange={(e) => onSAddressChange(e.target.value)}
               rows={3}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white resize-y min-h-[4rem]"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg resize-y min-h-[4rem]"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Roll number</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Roll number</label>
             <input
               value={sRoll}
               onChange={(e) => onSRollChange(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Class</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Class</label>
             <SelectInput
               value={sClassId}
               onChange={onSClassIdChange}
@@ -126,32 +126,32 @@ export function EditStudentModal({
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Date of birth</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Date of birth</label>
             <input
               type="date"
               value={sDob}
               onChange={(e) => onSDobChange(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Gender</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Gender</label>
             <input
               value={sGender}
               onChange={(e) => onSGenderChange(e.target.value)}
               placeholder="e.g. Male, Female"
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+              className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-white/50">Residency</label>
+            <label className="mb-1 block text-xs font-medium text-fg-subtle">Residency</label>
             <SelectInput
               value={sResidency}
               onChange={onSResidencyChange}
               options={[...RESIDENCY_OPTIONS]}
               bgColor="black"
             />
-            <p className="mt-1 text-[11px] leading-snug text-white/45">
+            <p className="mt-1 text-[11px] leading-snug text-fg-subtle">
               Hostel and Day Scholar changes apply to this student only. Fees for the months already spent stay, and a transport kilometre choice opens if they become a day scholar.
             </p>
           </div>
@@ -161,7 +161,7 @@ export function EditStudentModal({
             type="button"
             onClick={() => !saving && onClose()}
             disabled={saving}
-            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/80 hover:bg-white/5 disabled:opacity-50"
+            className="rounded-xl border border-line px-4 py-2 text-sm text-fg hover:bg-elev-2 disabled:opacity-50"
           >
             Cancel
           </button>
@@ -169,7 +169,7 @@ export function EditStudentModal({
             type="button"
             onClick={onSave}
             disabled={saving}
-            className="rounded-xl bg-lime-500/90 px-4 py-2 text-sm font-semibold text-black hover:bg-lime-400 disabled:opacity-50"
+            className="rounded-xl bg-primary/90 px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save"}
           </button>

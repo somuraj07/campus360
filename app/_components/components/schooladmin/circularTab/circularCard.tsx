@@ -14,28 +14,28 @@ export default function CircularCard({ c }: { c: CircularRow }) {
   const attachments = c.attachments ?? [];
 
   return (
-    <div className="rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 border border-white/10 w-full min-w-0 break-words">
+    <div className="rounded-xl sm:rounded-2xl overflow-hidden bg-elev-1 border border-line w-full min-w-0 break-words">
       <div
         className="h-1"
         style={{ background: getImportanceBorderColor(c.importanceLevel) }}
       />
 
       <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-        <span className="text-xs text-white/50 font-mono block truncate">
+        <span className="text-xs text-fg-subtle font-mono block truncate">
           {c.referenceNumber}
         </span>
 
-        <h3 className="text-base sm:text-lg font-bold text-white">
+        <h3 className="text-base sm:text-lg font-bold text-fg">
           {c.subject}
         </h3>
 
-        <p className="text-sm text-white/70 whitespace-pre-wrap break-words">
+        <p className="text-sm text-fg-muted whitespace-pre-wrap break-words">
           {expanded ? c.content : contentPreview}
           {hasMoreContent && (
             <button
               type="button"
               onClick={() => setExpanded(!expanded)}
-              className="ml-1 text-lime-400 hover:text-lime-300 text-sm font-medium"
+              className="ml-1 text-primary hover:text-primary text-sm font-medium"
             >
               {expanded ? "Show less" : "Show more"}
             </button>
@@ -44,7 +44,7 @@ export default function CircularCard({ c }: { c: CircularRow }) {
 
         {attachments.length > 0 && (
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-medium text-white/60 flex items-center gap-1">
+            <span className="text-xs font-medium text-fg-muted flex items-center gap-1">
               <FileText size={14} /> Attachments
             </span>
             <div className="flex flex-wrap gap-2">
@@ -54,7 +54,7 @@ export default function CircularCard({ c }: { c: CircularRow }) {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-lime-400/10 text-lime-400 text-sm border border-lime-400/30 hover:bg-lime-400/20 transition"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary text-sm border border-primary/30 hover:bg-primary/20 transition"
                 >
                   <ExternalLink size={14} className="shrink-0" />
                   <span className="truncate max-w-[140px] sm:max-w-[200px]">
@@ -69,19 +69,19 @@ export default function CircularCard({ c }: { c: CircularRow }) {
         {(c.recipients?.length > 0 || c.targetClass) && (
           <div className="flex flex-wrap gap-1.5 text-xs">
             {c.targetClass && (
-              <span className="px-2 py-0.5 rounded-lg bg-lime-400/20 text-lime-400">
+              <span className="px-2 py-0.5 rounded-lg bg-primary/20 text-primary">
                 {c.targetClass.name}{c.targetClass.section ? ` ${c.targetClass.section}` : ""}
               </span>
             )}
             {(c.recipients ?? []).filter((r) => r !== "all").map((r) => (
-              <span key={r} className="px-2 py-0.5 rounded-lg bg-white/10 text-white/80 capitalize">
+              <span key={r} className="px-2 py-0.5 rounded-lg bg-elev-2 text-fg capitalize">
                 {r}
               </span>
             ))}
           </div>
         )}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 pt-3 border-t border-white/10">
-          <div className="flex items-center gap-2 text-sm text-white min-w-0">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 pt-3 border-t border-line">
+          <div className="flex items-center gap-2 text-sm text-fg min-w-0">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold"
               style={{ background: CIRCULAR_PUBLISHED_GREEN }}
@@ -91,7 +91,7 @@ export default function CircularCard({ c }: { c: CircularRow }) {
             <span className="truncate">{c.issuedBy?.name}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-white/70 text-sm shrink-0">
+          <div className="flex items-center gap-1 text-fg-muted text-sm shrink-0">
             <Calendar size={14} />
             {formatDate(c.date)}
           </div>

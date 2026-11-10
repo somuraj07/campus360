@@ -41,26 +41,26 @@ export default function SchoolAdminDownloadReports() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 sm:p-6 space-y-5">
+      <div className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6 space-y-5">
         <div>
-          <h3 className="text-lg font-bold text-white">Consolidated Marks Download</h3>
-          <p className="text-sm text-white/50 mt-1">
-            Choose <span className="text-white/80">By class</span> to combine all sections
+          <h3 className="text-lg font-bold text-fg">Consolidated Marks Download</h3>
+          <p className="text-sm text-fg-subtle mt-1">
+            Choose <span className="text-fg">By class</span> to combine all sections
             (e.g. Class 10 A+B+C → one sheet), or{" "}
-            <span className="text-white/80">By section</span> for separate sheets (10-A, 10-B).
+            <span className="text-fg">By section</span> for separate sheets (10-A, 10-B).
           </p>
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/60 mb-1.5">DOWNLOAD MODE</label>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">DOWNLOAD MODE</label>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => changeMode("class")}
               className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition ${
                 selectMode === "class"
-                  ? "bg-lime-400/20 border-lime-400/40 text-lime-300"
-                  : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
+                  ? "bg-primary/20 border-primary/40 text-primary"
+                  : "bg-elev-1 border-line text-fg-muted hover:bg-elev-3"
               }`}
             >
               By class (combine sections)
@@ -70,8 +70,8 @@ export default function SchoolAdminDownloadReports() {
               onClick={() => changeMode("section")}
               className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition ${
                 selectMode === "section"
-                  ? "bg-lime-400/20 border-lime-400/40 text-lime-300"
-                  : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"
+                  ? "bg-primary/20 border-primary/40 text-primary"
+                  : "bg-elev-1 border-line text-fg-muted hover:bg-elev-3"
               }`}
             >
               By section (separate sheets)
@@ -80,8 +80,8 @@ export default function SchoolAdminDownloadReports() {
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/60 mb-1.5">
-            EXAM TYPE <span className="text-white/35">(select one or more, then download)</span>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">
+            EXAM TYPE <span className="text-fg-subtle">(select one or more, then download)</span>
           </label>
           <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto no-scrollbar">
             {examTypeOptions.map((name) => {
@@ -93,8 +93,8 @@ export default function SchoolAdminDownloadReports() {
                   onClick={() => toggleExamType(name)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition ${
                     on
-                      ? "bg-lime-400/20 border-lime-400/40 text-lime-300"
-                      : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"
+                      ? "bg-primary/20 border-primary/40 text-primary"
+                      : "bg-elev-1 border-line text-fg-muted hover:bg-elev-3"
                   }`}
                 >
                   {on ? <Check size={12} strokeWidth={3} /> : null}
@@ -103,7 +103,7 @@ export default function SchoolAdminDownloadReports() {
               );
             })}
           </div>
-          <p className="mt-2 text-[11px] text-white/40">
+          <p className="mt-2 text-[11px] text-fg-subtle">
             {chosenExamTypes().includes("ALL")
               ? "Download includes every exam type."
               : `Download includes ${chosenExamTypes().join(", ")}. Each exam type is a separate sheet.`}
@@ -112,20 +112,20 @@ export default function SchoolAdminDownloadReports() {
 
         <div>
           <div className="flex items-center justify-between gap-3 mb-2">
-            <label className="text-xs font-medium text-white/60">
-              SUBJECTS <span className="text-white/35">(optional — leave empty for all)</span>
+            <label className="text-xs font-medium text-fg-muted">
+              SUBJECTS <span className="text-fg-subtle">(optional — leave empty for all)</span>
             </label>
             <button
               type="button"
               onClick={selectAllSubjects}
-              className="text-xs text-lime-400 hover:underline"
+              className="text-xs text-primary hover:underline"
             >
               {selectedSubjects.size === subjectOptions.length ? "Clear subjects" : "Select all subjects"}
             </button>
           </div>
           <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto no-scrollbar">
             {subjectOptions.length === 0 ? (
-              <span className="text-xs text-white/40">No subjects configured</span>
+              <span className="text-xs text-fg-subtle">No subjects configured</span>
             ) : (
               subjectOptions.map((s) => {
                 const on = selectedSubjects.has(s);
@@ -136,8 +136,8 @@ export default function SchoolAdminDownloadReports() {
                     onClick={() => toggleSubject(s)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
                       on
-                        ? "bg-lime-400/20 border-lime-400/40 text-lime-300"
-                        : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                        ? "bg-primary/20 border-primary/40 text-primary"
+                        : "bg-elev-1 border-line text-fg-muted hover:border-line-strong"
                     }`}
                   >
                     {s}
@@ -167,8 +167,8 @@ export default function SchoolAdminDownloadReports() {
             onClick={() => void handleDownloadExcel()}
             className={`w-full sm:w-auto justify-center px-5 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition ${
               !downloading && selectedKeys.size > 0
-                ? "bg-lime-400 text-black hover:bg-lime-300"
-                : "bg-white/5 text-white/40 border border-white/10 cursor-not-allowed"
+                ? "bg-primary text-on-primary hover:bg-primary-hover"
+                : "bg-elev-1 text-fg-subtle border border-line cursor-not-allowed"
             }`}
           >
             {downloading && downloadType === "excel" ? (
@@ -185,7 +185,7 @@ export default function SchoolAdminDownloadReports() {
             className={`w-full sm:w-auto justify-center px-5 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition ${
               !downloading && selectedKeys.size > 0
                 ? "bg-blue-500 text-white hover:bg-blue-400"
-                : "bg-white/5 text-white/40 border border-white/10 cursor-not-allowed"
+                : "bg-elev-1 text-fg-subtle border border-line cursor-not-allowed"
             }`}
           >
             {downloading && downloadType === "pdf" ? (
@@ -199,13 +199,13 @@ export default function SchoolAdminDownloadReports() {
             <button
               type="button"
               onClick={() => setSelectedKeys(new Set())}
-              className="px-4 py-3 rounded-xl text-sm text-white/50 hover:text-white/80 flex items-center gap-1"
+              className="px-4 py-3 rounded-xl text-sm text-fg-subtle hover:text-fg flex items-center gap-1"
             >
               <X size={14} /> Clear selection
             </button>
           )}
           {progress ? (
-            <span className="text-sm text-white/60 flex items-center gap-2">
+            <span className="text-sm text-fg-muted flex items-center gap-2">
               <Download size={14} /> {progress}
             </span>
           ) : null}

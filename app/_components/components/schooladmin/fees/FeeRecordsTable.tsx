@@ -120,7 +120,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
   });
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold mb-4">
         {`Fee Records (${filteredFees.length}${
           filteredFees.length > PAGE_SIZE
@@ -128,11 +128,11 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
             : ""
         })`}
       </h3>
-      <div className="mb-4 rounded-xl border border-white/10 bg-black/10 p-3 sm:p-4">
-        <div className="mb-4 flex flex-col gap-1 border-b border-white/10 pb-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mb-4 rounded-xl border border-line bg-well p-3 sm:p-4">
+        <div className="mb-4 flex flex-col gap-1 border-b border-line pb-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold text-white">Day report</p>
-            <p className="mt-0.5 text-xs text-gray-400">
+            <p className="text-sm font-semibold text-fg">Day report</p>
+            <p className="mt-0.5 text-xs text-fg-muted">
               Choose a from date and a to date, then download the collections for that range.
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
           {reportPeriod === "DAY_WISE" && (
             <>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-gray-400">From date</label>
+                <label className="text-xs font-medium text-fg-muted">From date</label>
                 <input
                   type="date"
                   value={reportDateFrom}
@@ -163,11 +163,11 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
                     setReportDateFrom(next);
                     if (reportDateTo && next > reportDateTo) setReportDateTo(next);
                   }}
-                  className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 text-white"
+                  className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-xs font-medium text-gray-400">To date</label>
+                <label className="text-xs font-medium text-fg-muted">To date</label>
                 <input
                   type="date"
                   value={reportDateTo}
@@ -177,44 +177,44 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
                     setReportDateTo(next);
                     if (reportDateFrom && next < reportDateFrom) setReportDateFrom(next);
                   }}
-                  className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 text-white"
+                  className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                 />
               </div>
             </>
           )}
           {reportPeriod === "MONTH_WISE" && (
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-400">Month</label>
+              <label className="text-xs font-medium text-fg-muted">Month</label>
               <input
                 type="month"
                 value={reportMonth}
                 onChange={(e) => setReportMonth(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 text-white"
+                className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               />
             </div>
           )}
           {reportPeriod === "YEAR_WISE" && (
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-400">Year</label>
+              <label className="text-xs font-medium text-fg-muted">Year</label>
               <input
                 type="number"
                 min={2000}
                 max={2100}
                 value={reportYear}
                 onChange={(e) => setReportYear(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 text-white"
+                className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                 placeholder="e.g. 2026"
               />
             </div>
           )}
           {reportPeriod === "ACADEMIC_YEAR_WISE" && (
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-400">Academic year</label>
+              <label className="text-xs font-medium text-fg-muted">Academic year</label>
               <input
                 type="text"
                 value={academicYear}
                 onChange={(e) => setAcademicYear(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 text-white"
+                className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                 placeholder="e.g. 2025-2026"
               />
             </div>
@@ -236,7 +236,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
             type="button"
             onClick={() => void exportFinalTemplate()}
             disabled={feeDueExporting}
-            className="inline-flex h-[42px] w-full items-center justify-center gap-2 self-end rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-300 hover:bg-amber-500/20 disabled:opacity-50 sm:h-auto sm:min-h-[42px]"
+            className="inline-flex h-[42px] w-full items-center justify-center gap-2 self-end rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 disabled:opacity-50 sm:h-auto sm:min-h-[42px]"
           >
             <Download size={16} />
             {feeDueExporting ? "Preparing…" : "Export Fee Report"}
@@ -245,13 +245,13 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
       </div>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <div className="relative min-w-0 flex-1 sm:min-w-[180px]">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-subtle" size={18} />
           <input
             type="text"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
             placeholder="Name or ID..."
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-black/20 border border-white/10 text-white"
+            className="h-10 w-full rounded-lg border pl-10 pr-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
           />
         </div>
         <div className="w-full sm:w-auto sm:min-w-[220px]">
@@ -292,7 +292,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
           type="button"
           onClick={() => void exportFeeDueReport()}
           disabled={feeDueExporting}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-500/40 bg-violet-500/10 px-3 py-2 text-sm text-violet-200 hover:bg-violet-500/20 disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
         >
           <Download size={16} />
           {feeDueExporting ? "Exporting…" : "Fee Due Report (Excel)"}
@@ -301,7 +301,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
           type="button"
           onClick={() => void exportAllClasses()}
           disabled={feeDueExporting}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-lime-500/40 bg-lime-500/10 px-3 py-2 text-sm text-lime-300 hover:bg-lime-500/20 disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
         >
           <Download size={16} />
           Export All Classes
@@ -310,7 +310,7 @@ export default function FeeRecordsTable({ fees, classes }: FeeRecordsTableProps)
           type="button"
           onClick={() => void exportSelectedClass()}
           disabled={feeDueExporting}
-          className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-500/40 bg-blue-500/10 px-3 py-2 text-sm text-blue-300 hover:bg-blue-500/20 disabled:opacity-50"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
         >
           <Download size={16} />
           Export Class-wise

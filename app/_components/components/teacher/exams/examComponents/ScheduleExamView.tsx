@@ -54,7 +54,7 @@ export default function ScheduleExamView({
     }
 
     return (
-        <div className="min-h-screen text-white pb-10">
+        <div className="min-h-screen text-fg pb-10">
             <PageHeader
                 title={isEdit ? "Edit Exam" : "Schedule Exam"}
                 subtitle="Manage schedules and track syllabus coverage"
@@ -86,24 +86,23 @@ export default function ScheduleExamView({
                     />
 
                     {submitError && (
-                        <p className="text-red-400 text-sm py-2">{submitError}</p>
+                        <p className="text-red-700 dark:text-red-400 text-sm py-2">{submitError}</p>
                     )}
                     <div className="flex gap-4">
                         <button
                             type="button"
                             onClick={onCancel}
                             disabled={submitLoading}
-                            className="flex-1 px-4 py-3 border border-white/10 rounded-xl text-gray-300
-                             font-bold hover:bg-white/5 transition-all flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-3 border border-line rounded-xl text-fg-muted
+                             font-bold hover:bg-elev-2 transition-all flex items-center justify-center gap-2"
                         >
                             <X /> Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={submitLoading}
-                            className="flex-1 px-4 py-3 bg-lime-400 hover:bg-lime-500 text-black rounded-xl
-                            font-bold transition-all shadow-[0_0_15px_rgba(163,230,53,0.3)]
-                             hover:shadow-[0_0_20px_rgba(163,230,53,0.4)] flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-3 bg-primary hover:bg-primary-hover text-on-primary rounded-xl
+                            font-bold transition-all                              flex items-center justify-center gap-2"
                         >
                             {submitLoading ? "Saving…" : <><Save size={20} /> Save Exam</>}
                         </button>

@@ -6,11 +6,11 @@ import PrimaryButton from "../../common/PrimaryButton";
 import SecondaryButton from "../../common/SecondaryButton";
 import type { Class, Student } from "./types";
 import { createExtraFee } from "@/lib/api/hostelMessFees";
+import { fieldClass, fieldLabelClass } from "../../common/ui";
 
-const inputClass =
-  "w-full min-h-[44px] rounded-xl border border-white/10 bg-[#0F172A]/50 px-4 py-2.5 text-sm text-gray-200 placeholder:text-white/35 focus:border-lime-400/60 focus:outline-none focus:ring-1 focus:ring-lime-400/30";
+const inputClass = fieldClass;
 
-const labelClass = "block text-xs font-medium text-gray-400 mb-2";
+const labelClass = fieldLabelClass;
 
 interface AddExtraFeeFormProps {
   classes: Class[];
@@ -73,11 +73,11 @@ export default function AddExtraFeeForm({ classes, students, onSuccess }: AddExt
   const sections = Array.from(new Set(classes.map((c) => c.section).filter(Boolean))) as string[];
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur sm:p-6">
-      <div className="mb-6 flex flex-col gap-3 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <section className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
+      <div className="mb-6 flex flex-col gap-3 border-b border-line pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h3 className="text-lg font-semibold tracking-tight text-white">Other extra fees</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/55">
+          <h3 className="text-lg font-semibold tracking-tight text-fg">Other extra fees</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-fg-muted">
             Add uniform, bus, library, or custom heads. Use residency to limit who is charged.
           </p>
         </div>
@@ -131,16 +131,16 @@ export default function AddExtraFeeForm({ classes, students, onSuccess }: AddExt
             </div>
           </div>
 
-          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-white/80">
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-well px-3 py-3 text-xs text-fg">
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 text-lime-500 focus:ring-lime-500/40"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-line-strong bg-well text-primary focus:ring-primary/40"
               checked={splitIntoTwoInstallments}
               onChange={(e) => setSplitIntoTwoInstallments(e.target.checked)}
             />
             <span>
-              <span className="font-medium text-white/90">Two installments (50% + 50%)</span>
-              <span className="mt-0.5 block text-[11px] text-white/45">
+              <span className="font-medium text-fg">Two installments (50% + 50%)</span>
+              <span className="mt-0.5 block text-[11px] text-fg-subtle">
                 Student fee breakdown shows 1st and 2nd installment cards for this head.
               </span>
             </span>
@@ -224,11 +224,11 @@ export default function AddExtraFeeForm({ classes, students, onSuccess }: AddExt
             />
           )}
 
-          <div className="flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-end">
+          <div className="flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-end">
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="min-h-[44px] w-full rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-white/90 transition hover:bg-white/5 sm:w-auto sm:min-w-[7.5rem]"
+              className="min-h-[44px] w-full rounded-xl border border-line-strong px-4 py-2.5 text-sm font-medium text-fg transition hover:bg-elev-2 sm:w-auto sm:min-w-[7.5rem]"
             >
               Cancel
             </button>

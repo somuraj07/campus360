@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import ParentTimellyLoader from "../ParentTimellyLoader";
 import ProfileReportTemplate from "../../pdf/ProfileReportTemplate";
+import { btnClass } from "../../common/ui";
 import PageHeader from "../../common/PageHeader";
 import { useParentProfileState } from "./shared";
 import { AcademicPerformanceChart } from "./shared";
@@ -45,8 +46,8 @@ export default function ParentProfile() {
   } else if (error && !profile) {
     content = (
       <div className="min-h-screen p-4 sm:p-6 md:p-8">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-          <p className="text-red-300">{error}</p>
+        <div className="rounded-2xl border border-line bg-elev-1 p-8 text-center">
+          <p className="text-red-700 dark:text-red-300">{error}</p>
         </div>
       </div>
     );
@@ -67,22 +68,19 @@ export default function ParentProfile() {
     })();
 
     content = (
-    <div className="min-h-screen p-3 sm:p-5 md:p-6 pb-20 sm:pb-6 overflow-x-hidden">
-      <main className="max-w-6xl mx-auto space-y-5 md:space-y-7">
+    <div className="pb-10">
+      <main className="mx-auto w-full max-w-[1400px] space-y-5 md:space-y-6">
         {/* Header: student name + overview */}
         <PageHeader
+  eyebrow="Your child"
   title="Student Profile"
   subtitle="Manage student records and information"
   rightSlot={
     <button
       onClick={() => void generatePdf()}
       disabled={pdfLoading}
-      className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl
-                 bg-lime-400/10 border border-lime-400/40
-                 text-lime-300 text-sm font-medium
-                 hover:bg-lime-400/20 hover:shadow-lg
-                 transition-all duration-200
-                 disabled:opacity-50 disabled:cursor-not-allowed"
+      type="button"
+      className={btnClass("secondary")}
     >
       <Download className="w-4 h-4" />
       {pdfLoading ? "Generating..." : "Download Report"}
@@ -91,51 +89,51 @@ export default function ParentProfile() {
 
 />
         {/* Profile card: image + name + tags */}
-        <section className="rounded-xl sm:rounded-2xl md:rounded-3xl  somu p-3 sm:p-4 md:p-6 lg:p-8 transition-all duration-200 hover:border-white/20">
+        <section className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 sm:gap-6">
             <div className="flex flex-col gap-6 min-w-0 flex-1">
               {/* Name and Subtitle Section */}
               <div className="flex items-center gap-4 min-w-0">
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 shrink-0">
-                  <GraduationCap className="w-8 h-8 md:w-10 md:h-10 text-lime-400" />
+                <div className="p-4 rounded-2xl bg-elev-1 border border-line shrink-0">
+                  <GraduationCap className="w-8 h-8 md:w-10 md:h-10 text-primary" />
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+                  <h2 className="text-3xl md:text-5xl font-bold text-fg tracking-tight">
                     {s.name || "Student"}
                   </h2>
-                  <p className="text-white/50 text-lg mt-1">Student Profile Overview</p>
+                  <p className="text-fg-subtle text-lg mt-1">Student Profile Overview</p>
                 </div>
               </div>
 
               {/* Tags Row 1: Class and Roll */}
               <div className="flex flex-wrap gap-3">
                 {s.class?.displayName && (
-                  <div className="inline-flex items-center gap-2 bg-white/10 border border-white/10 px-6 py-3 rounded-3xl text-white font-medium">
-                    <User className="w-5 h-5 text-lime-400" />
+                  <div className="inline-flex items-center gap-2 bg-elev-2 border border-line px-6 py-3 rounded-2xl text-fg font-medium">
+                    <User className="w-5 h-5 text-primary" />
                     <span className="text-lg">Class {s.class.displayName}</span>
                   </div>
                 )}
                 {s.rollNo && (
-                  <div className="inline-flex items-center gap-2 bg-white/10 border border-white/10 px-6 py-3 rounded-3xl text-white font-medium">
-                    <span className="text-lg text-white/90">Roll: {s.rollNo}</span>
+                  <div className="inline-flex items-center gap-2 bg-elev-2 border border-line px-6 py-3 rounded-2xl text-fg font-medium">
+                    <span className="text-lg text-fg">Roll: {s.rollNo}</span>
                   </div>
                 )}
               </div>
 
               {/* Tags Row 2: Admission and Academic Year */}
               <div className="flex flex-wrap gap-3">
-                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2 rounded-2xl text-white/60">
+                <div className="inline-flex items-center gap-2 bg-elev-1 border border-line px-5 py-2 rounded-2xl text-fg-muted">
                   <span className="text-sm font-medium uppercase tracking-wider">{s.admissionNumber}</span>
                 </div>
-                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2 rounded-2xl text-white/60">
-                  <Calendar className="w-4 h-4 text-lime-400" />
+                <div className="inline-flex items-center gap-2 bg-elev-1 border border-line px-5 py-2 rounded-2xl text-fg-muted">
+                  <Calendar className="w-4 h-4 text-primary" />
                   <span className="text-sm font-medium">{academicYear}</span>
                 </div>
               </div>
             </div>
             <div className="shrink-0 flex flex-col items-stretch gap-4 md:items-end md:justify-between">
               {/* Avatar */}
-              <div className="relative h-24 w-24 sm:h-32 sm:w-32 md:h-44 md:w-44 lg:h-52 lg:w-52 rounded-xl sm:rounded-2xl overflow-hidden border-2 border-white/20 bg-white/5 transition-all duration-200 hover:border-lime-400/40 hover:shadow-lg">
+              <div className="relative h-24 w-24 sm:h-32 sm:w-32 md:h-44 md:w-44 lg:h-52 lg:w-52 rounded-xl sm:rounded-2xl overflow-hidden border-2 border-line-strong bg-elev-1 transition-all duration-200 hover:border-primary/40 hover:shadow-lg">
                 {photoUrl ? (
                    
                   <img
@@ -144,8 +142,8 @@ export default function ParentProfile() {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center bg-white/5">
-                    <User className="w-16 h-16 sm:w-20 sm:h-20 text-white/40" />
+                  <div className="h-full w-full flex items-center justify-center bg-elev-1">
+                    <User className="w-16 h-16 sm:w-20 sm:h-20 text-fg-subtle" />
                   </div>
                 )}
               </div>
@@ -164,11 +162,11 @@ export default function ParentProfile() {
             {stats.map((item) => (
               <div
                 key={item.label}
-                className="rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 p-3 sm:p-4 md:p-6 text-center transition-all duration-200 hover:border-white/20 hover:shadow-lg hover:scale-[1.02]"
+                className="rounded-xl sm:rounded-2xl bg-elev-1 border border-line p-3 sm:p-4 md:p-6 text-center transition-all duration-200 hover:border-line-strong hover:shadow-lg hover:scale-[1.02]"
               >
-                <item.icon className="mx-auto w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-lime-400 mb-1.5 sm:mb-2 md:mb-3" />
-                <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-white truncate">{item.value}</h3>
-                <p className="text-white/60 text-xs sm:text-sm uppercase tracking-wide mt-1">
+                <item.icon className="mx-auto w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-primary mb-1.5 sm:mb-2 md:mb-3" />
+                <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-fg truncate">{item.value}</h3>
+                <p className="text-fg-muted text-xs sm:text-sm uppercase tracking-wide mt-1">
                   {item.label}
                 </p>
               </div>

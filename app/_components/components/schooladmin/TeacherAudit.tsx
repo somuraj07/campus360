@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { TeacherRow, AuditRecord } from "./teacheraudit/types";
 import TeacherAuditHeader from "./teacheraudit/TeacherAuditHeader";
+import { SaPage, Panel, EmptyState } from "../common/ui";
 import TeacherAuditCard from "./teacheraudit/TeacherAuditCard";
 
 import TimellyLoader from "../common/TimellyLoader";
@@ -180,7 +181,7 @@ export default function TeacherAuditTab() {
 
 
   return (
-    <div className="space-y-4 sm:space-y-6 px-3 md:px-0 overflow-x-hidden">
+    <SaPage>
       <TeacherAuditHeader
         searchValue={q}
         onSearchChange={setQ}
@@ -199,10 +200,6 @@ export default function TeacherAuditTab() {
         placeholder="Search teacher..."
       />
 
-      <div className="">
-        <div className=" mx-auto space-y-4 sm:space-y-6">
-
-
           {loading && teachers.length === 0 ? (
             <TimellyLoader
               title="Loading teacher audit"
@@ -211,12 +208,12 @@ export default function TeacherAuditTab() {
           ) : (
             <div className="space-y-4">
               {loading && (
-                <div className="text-xs text-white/50">Refreshing teacher audit data...</div>
+                <div className="text-xs text-fg-subtle">Refreshing teacher audit data...</div>
               )}
               {teachers.length === 0 ? (
-                <div className="rounded-2xl border  border-white/10 backdrop-blur-xl p-6 sm:p-8 text-center text-white/60 text-sm sm:text-base">
-                  No teachers found. Try a different search.
-                </div>
+                <Panel bodyClassName="p-0">
+                  <EmptyState title="No teachers found" description="Try a different search." />
+                </Panel>
               ) : (
                 teachers.map((t) => (
                   <TeacherAuditCard
@@ -245,8 +242,6 @@ export default function TeacherAuditTab() {
               )}
             </div>
           )}
-        </div>
-      </div>
-    </div>
+    </SaPage>
   );
 }

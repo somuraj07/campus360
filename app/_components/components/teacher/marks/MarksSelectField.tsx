@@ -15,7 +15,7 @@ export function SelectField({
 }: Props) {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <label className="text-xs uppercase tracking-widest text-white/60">
+      <label className="text-xs uppercase tracking-widest text-fg-muted">
         {label}
       </label>
 
@@ -24,18 +24,17 @@ export function SelectField({
         onChange={(e) => onChange(e.target.value)}
         className={`
           h-9 w-full
-          bg-black/30 backdrop-blur-md
-          border border-white/10
-          px-4 text-sm text-white
+          bg-well           border border-line
+          px-4 text-sm text-fg
           outline-none
-          focus:border-white/30
+          focus:border-line-strong
           transition
           rounded-full
           ${className}
         `}
       >
         {options.map((opt) => (
-          <option key={opt} value={opt} className="bg-[#0f0f0f]">
+          <option key={opt} value={opt} className="bg-surface">
             {opt}
           </option>
         ))}

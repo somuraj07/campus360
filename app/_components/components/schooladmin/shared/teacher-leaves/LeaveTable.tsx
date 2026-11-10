@@ -19,7 +19,7 @@ export function LeaveTable({
 }) {
   return (
     <table className="w-full text-sm border-collapse">
-      <thead className="text-gray-400 border-b border-gray-600">
+      <thead className="text-fg-muted border-b border-line">
         <tr>
           <th className="text-left py-3 px-3">Teacher Name</th>
           <th className="py-3 px-3">Leave Type</th>
@@ -40,7 +40,7 @@ export function LeaveTable({
             1;
 
           return (
-            <tr key={l.id} className="border-b border-gray-700 text-white">
+            <tr key={l.id} className="border-b border-line text-fg">
               <td className="py-4 font-medium">{l.teacher.name}</td>
               <td className="text-center">{l.leaveType}</td>
               <td className="text-center">
@@ -49,11 +49,11 @@ export function LeaveTable({
               </td>
               <td className="text-center">{days}</td>
 
-              <td className="px-3 py-4 text-gray-300 whitespace-normal wrap-break-word text-left">
+              <td className="px-3 py-4 text-fg-muted whitespace-normal wrap-break-word text-left">
                 {l.reason ?? "—"}
 
                 {l.status === "CONDITIONALLY_APPROVED" && l.remarks && (
-                  <div className="mt-2 flex items-start gap-2 text-yellow-400 text-xs">
+                  <div className="mt-2 flex items-start gap-2 text-yellow-700 dark:text-yellow-400 text-xs">
                     <AlertTriangle size={14} className="mt-[2px]" />
                     <span>Condition: {l.remarks}</span>
                   </div>
@@ -64,8 +64,8 @@ export function LeaveTable({
                 <td className="text-center">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${l.status === "CONDITIONALLY_APPROVED"
-                      ? "bg-yellow-500/20 text-yellow-400"
-                      : "bg-lime-500/20 text-lime-400"
+                      ? "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400"
+                      : "bg-primary/20 text-primary"
                       }`}
                   >
                     {l.status === "CONDITIONALLY_APPROVED"

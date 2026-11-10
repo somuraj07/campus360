@@ -12,17 +12,17 @@ export function AttendanceMobileList({
   return (
     <div className="md:hidden px-4 pb-4 space-y-3 max-h-[50vh] overflow-y-auto no-scrollbar">
       {students.length === 0 && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-white/60">
+        <div className="rounded-2xl border border-line bg-elev-1 px-4 py-6 text-center text-sm text-fg-muted">
           No students found
         </div>
       )}
       {students.map((student) => (
         <div
           key={student.id}
-          className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3"
+          className="rounded-2xl border border-line bg-elev-1 p-4 space-y-3"
         >
           <div className="flex items-center gap-3">
-            <div className="h-11 w-11 rounded-full overflow-hidden border border-white/10">
+            <div className="h-11 w-11 rounded-full overflow-hidden border border-line">
               <img
                 src={student.avatar}
                 alt={student.name}
@@ -30,12 +30,12 @@ export function AttendanceMobileList({
               />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-white truncate">{student.name}</p>
-              <p className="text-xs text-white/60">Roll: {student.roll}</p>
+              <p className="text-sm font-semibold text-fg truncate">{student.name}</p>
+              <p className="text-xs text-fg-muted">Roll: {student.roll}</p>
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/20 p-2 flex gap-2">
+          <div className="rounded-xl border border-line bg-well p-2 flex gap-2">
             <AttendanceButton
               size="sm"
               variant={student.status === "present" ? "success" : "ghost"}

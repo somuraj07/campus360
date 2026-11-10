@@ -45,17 +45,17 @@ export default function CreateHub({ events }: CreateHubProps) {
   } = useCreateHubState({ events });
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-5 md:p-6 lg:p-8 backdrop-blur-xl shadow-lg">
+    <section className="rounded-3xl border border-line bg-elev-1 p-4 sm:p-5 md:p-6 lg:p-8 shadow-card">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div className="flex items-start gap-3">
-          <div className="h-11 w-11 rounded-xl bg-white/10 flex items-center justify-center text-lime-400 shrink-0">
+          <div className="h-11 w-11 rounded-xl bg-elev-2 flex items-center justify-center text-primary shrink-0">
             <Award size={24} />
           </div>
           <div className="min-w-0">
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white">
+            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-fg">
               Certificate Hub
             </h3>
-            <p className="text-xs sm:text-sm text-white/60 mt-0.5">
+            <p className="text-xs sm:text-sm text-fg-muted mt-0.5">
               Select a workshop, attach certificate, choose name position, then
               assign to enrolled students
             </p>
@@ -64,7 +64,7 @@ export default function CreateHub({ events }: CreateHubProps) {
       </div>
 
       {error && (
-        <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
           {error}
         </div>
       )}

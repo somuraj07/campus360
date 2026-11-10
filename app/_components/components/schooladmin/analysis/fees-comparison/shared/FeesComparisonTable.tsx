@@ -12,12 +12,12 @@ export function DateField({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium text-white/50">{label}</span>
+      <span className="mb-1 block text-xs font-medium text-fg-subtle">{label}</span>
       <input
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white scheme-dark"
+        className="w-full rounded-xl border border-line bg-well px-3 py-2 text-sm text-fg scheme-dark"
       />
     </label>
   );
@@ -33,10 +33,10 @@ export function SummaryCard({
   tone?: "neutral" | "positive" | "negative";
 }) {
   const valueColor =
-    tone === "positive" ? "text-lime-300" : tone === "negative" ? "text-rose-300" : "text-white";
+    tone === "positive" ? "text-primary" : tone === "negative" ? "text-rose-700 dark:text-rose-300" : "text-fg";
   return (
-    <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-3">
-      <p className="text-xs font-semibold uppercase tracking-wider text-white/45">{label}</p>
+    <div className="rounded-xl border border-line bg-well px-3 py-3">
+      <p className="text-xs font-semibold uppercase tracking-wider text-fg-subtle">{label}</p>
       <p className={`mt-1 text-lg font-bold ${valueColor}`}>{value}</p>
     </div>
   );
@@ -74,7 +74,7 @@ export function FeesComparisonTable({
       <div className="-mx-1 overflow-x-auto pb-1 sm:mx-0">
         <table className="w-full min-w-[760px] text-left text-sm">
           <thead>
-            <tr className="border-b border-white/10 text-[11px] font-bold uppercase tracking-wider text-white/45">
+            <tr className="border-b border-line text-[11px] font-bold uppercase tracking-wider text-fg-subtle">
               <th className="py-3 pr-3 font-medium">Type</th>
               <th className="px-2 py-3 font-medium">Head</th>
               <th className="px-2 py-3 text-right font-medium">Range 1</th>
@@ -83,57 +83,57 @@ export function FeesComparisonTable({
               <th className="py-3 pl-2 text-right font-medium">Count</th>
             </tr>
           </thead>
-          <tbody className="text-white/90">
+          <tbody className="text-fg">
             {!hasRows ? (
               <tr>
-                <td colSpan={6} className="py-10 text-center text-white/40">
+                <td colSpan={6} className="py-10 text-center text-fg-subtle">
                   No fee or petty cash data found for these ranges.
                 </td>
               </tr>
             ) : (
               report?.rows.map((row) => (
-                <tr key={row.key} className="border-b border-white/5 last:border-0 hover:bg-white/3">
-                  <td className="py-3 pr-3 text-xs font-semibold uppercase tracking-wide text-white/45">
+                <tr key={row.key} className="border-b border-line-subtle last:border-0 hover:bg-elev-2">
+                  <td className="py-3 pr-3 text-xs font-semibold uppercase tracking-wide text-fg-subtle">
                     {row.category === "PETTY_CASH" ? "Petty cash" : "Fees"}
                   </td>
-                  <td className="px-2 py-3 font-semibold text-white">{row.head}</td>
-                  <td className="px-2 py-3 text-right tabular-nums text-sky-200">
+                  <td className="px-2 py-3 font-semibold text-fg">{row.head}</td>
+                  <td className="px-2 py-3 text-right tabular-nums text-sky-800 dark:text-sky-200">
                     {formatInr(row.rangeAAmount)}
                   </td>
-                  <td className="px-2 py-3 text-right tabular-nums text-lime-200">
+                  <td className="px-2 py-3 text-right tabular-nums text-primary">
                     {formatInr(row.rangeBAmount)}
                   </td>
                   <td
                     className={`px-2 py-3 text-right tabular-nums font-semibold ${
-                      row.difference >= 0 ? "text-lime-300" : "text-rose-300"
+                      row.difference >= 0 ? "text-primary" : "text-rose-700 dark:text-rose-300"
                     }`}
                   >
                     {formatInr(row.difference)}
                   </td>
-                  <td className="py-3 pl-2 text-right tabular-nums text-white/55">
+                  <td className="py-3 pl-2 text-right tabular-nums text-fg-muted">
                     {row.rangeACount} / {row.rangeBCount}
                   </td>
                 </tr>
               ))
             )}
             {hasRows && report ? (
-              <tr className="border-t border-white/20 bg-white/6 font-bold">
-                <td className="py-3 pr-3 text-white">Total</td>
-                <td className="px-2 py-3 text-white">All heads</td>
-                <td className="px-2 py-3 text-right tabular-nums text-sky-200">
+              <tr className="border-t border-line-strong bg-elev-1 font-bold">
+                <td className="py-3 pr-3 text-fg">Total</td>
+                <td className="px-2 py-3 text-fg">All heads</td>
+                <td className="px-2 py-3 text-right tabular-nums text-sky-800 dark:text-sky-200">
                   {formatInr(report.totals.rangeAAmount)}
                 </td>
-                <td className="px-2 py-3 text-right tabular-nums text-lime-200">
+                <td className="px-2 py-3 text-right tabular-nums text-primary">
                   {formatInr(report.totals.rangeBAmount)}
                 </td>
                 <td
                   className={`px-2 py-3 text-right tabular-nums ${
-                    report.totals.difference >= 0 ? "text-lime-300" : "text-rose-300"
+                    report.totals.difference >= 0 ? "text-primary" : "text-rose-700 dark:text-rose-300"
                   }`}
                 >
                   {formatInr(report.totals.difference)}
                 </td>
-                <td className="py-3 pl-2 text-right text-white/40">-</td>
+                <td className="py-3 pl-2 text-right text-fg-subtle">-</td>
               </tr>
             ) : null}
           </tbody>

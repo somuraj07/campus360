@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Search } from "lucide-react";
-import PageHeader from "../../common/PageHeader";
-import SearchInput from "../../common/SearchInput";
+import { SaPageHeader, SearchBox, InitialsAvatar, EmptyState } from "../../common/ui";
 import TimellyLoader from "../../common/TimellyLoader";
 import ChatWindow from "./ChatWindow";
 import { Chat, Status } from "./ChatList";
@@ -48,6 +46,7 @@ function mapAppointmentToChat(a: TeacherChatAppointment): Chat {
 export default function TeacherParentChatTab() {
   const initial = peekTeacherChats();
   const [activeTab, setActiveTab] = useState<"all" | Status>("all");
+  const [search, setSearch] = useState("");
   const [appointments, setAppointments] = useState<TeacherChatAppointment[]>(
     () => initial ?? []
   );
@@ -98,8 +97,14 @@ export default function TeacherParentChatTab() {
 
   const activeChat = chats.find((c) => c.id === activeChatId) ?? null;
 
-  const filteredChats =
-    activeTab === "all" ? chats : chats.filter((c) => c.status === activeTab);
+  const searchTerm = search.trim().toLowerCase();
+  const filteredChats = chats.filter(
+    (c) =>
+      (activeTab === "all" || c.status === activeTab) &&
+      (!searchTerm ||
+        c.parent.toLowerCase().includes(searchTerm) ||
+        c.student.toLowerCase().includes(searchTerm))
+  );
 
   const patchStatus = (id: string, status: Status) => {
     setAppointments((prev) => {
@@ -151,22 +156,18 @@ export default function TeacherParentChatTab() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto h-full min-h-0 flex flex-col gap-3 sm:gap-6 px-3 sm:px-0 pb-20 lg:pb-6 overflow-hidden">
-      <PageHeader
-        title="Parent Communication"
-        subtitle="Manage chat requests and conversations"
-        compact
-      />
+    <div className="mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-col gap-5 overflow-hidden pb-20 lg:pb-6">
+      <SaPageHeader eyebrow="Communication" title="Parent Communication" description="Manage chat requests and conversations" />
 
       <div className="grid grid-cols-1 lg:grid-cols-[360px_minmax(0,1fr)] flex-1 min-h-0 gap-3 sm:gap-6 overflow-hidden">
         {/* ================= Sidebar ================= */}
         <div
-          className={`glass-card rounded-xl sm:rounded-2xl flex flex-col overflow-hidden min-h-0
+          className={`rounded-2xl border border-line bg-elev-1 flex flex-col overflow-hidden min-h-0
           ${activeChat ? "hidden lg:flex" : "flex"}
           w-full min-h-[280px] lg:min-h-0`}
         >
           {/* Tabs */}
-          <div className="p-3 sm:p-4 flex gap-2 border-b border-white/10 -mb-px overflow-x-auto no-scrollbar">
+          <div className="p-3 sm:p-4 flex gap-2 border-b border-line -mb-px overflow-x-auto no-scrollbar">
             {(["all", "approved", "pending", "rejected", "ended"] as const).map(
               (tab) => (
                 <button
@@ -174,8 +175,8 @@ export default function TeacherParentChatTab() {
                   onClick={() => setActiveTab(tab)}
                   className={`px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-lg text-xs capitalize whitespace-nowrap shrink-0 min-h-[40px] sm:min-h-0 touch-manipulation
                     ${activeTab === tab
-                      ? "bg-lime-500 text-black"
-                      : "bg-white/5 text-gray-400 hover:bg-white/10 active:bg-white/15"
+                      ? "bg-primary text-on-primary"
+                      : "border border-line bg-surface text-fg-muted hover:bg-elev-2"
                     }`}
                 >
                   {tab}
@@ -185,8 +186,8 @@ export default function TeacherParentChatTab() {
           </div>
 
           {/* Search */}
-          <div className="p-3 sm:p-4 border-b border-white/10 shrink-0">
-            <SearchInput icon={Search} placeholder="Search conversations..." />
+          <div className="p-3 sm:p-4 border-b border-line shrink-0">
+            <SearchBox value={search} onChange={setSearch} placeholder="Search by parent or student..." />
           </div>
 
           {/* Chat List */}
@@ -201,33 +202,31 @@ export default function TeacherParentChatTab() {
                 />
               </div>
             ) : error && appointments.length === 0 ? (
-              <div className="p-4 text-center text-red-400 text-sm">
+              <div className="p-4 text-center text-red-700 dark:text-red-400 text-sm">
                 {error}
               </div>
             ) : filteredChats.length === 0 ? (
-              <div className="p-4 text-center text-gray-400 text-sm">
-                No conversations
-              </div>
+              <EmptyState title={searchTerm ? "No matching conversations" : "No conversations"} />
             ) : (
               filteredChats.map((chat) => (
                 <button
                   key={chat.id}
+                  type="button"
                   onClick={() => setActiveChatId(chat.id)}
-                  className="w-full p-2.5 sm:p-3 rounded-xl flex gap-2 sm:gap-3 bg-white/5 hover:bg-white/10 active:bg-white/15 transition text-left touch-manipulation"
+                  aria-current={activeChatId === chat.id || undefined}
+                  className={`flex w-full touch-manipulation gap-3 rounded-xl p-3 text-left transition ${
+                    activeChatId === chat.id ? "bg-primary/10" : "hover:bg-elev-2"
+                  }`}
                 >
-                  <img
-                    src={chat.avatar}
-                    alt={chat.parent}
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover shrink-0"
-                  />
+                  <InitialsAvatar name={chat.parent} src={chat.avatar === DEFAULT_AVATAR ? null : chat.avatar} />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm text-white truncate">
+                    <p className="font-semibold text-sm text-fg truncate">
                       {chat.parent}
                     </p>
-                    <p className="text-xs text-lime-400 truncate">
+                    <p className="text-xs text-primary truncate">
                       Parent of {chat.student}
                     </p>
-                    <p className="text-xs text-gray-400 truncate">
+                    <p className="text-xs text-fg-muted truncate">
                       {chat.lastMessage}
                     </p>
                   </div>
@@ -239,7 +238,7 @@ export default function TeacherParentChatTab() {
 
         {/* ================= Chat Window ================= */}
         <div
-          className={`min-w-0 min-h-[300px] sm:min-h-0 glass-card rounded-xl sm:rounded-2xl overflow-hidden flex flex-col
+          className={`min-w-0 min-h-[300px] sm:min-h-0 rounded-2xl border border-line bg-elev-1 overflow-hidden flex flex-col
           ${activeChat ? "flex" : "hidden lg:flex"}`}
         >
           {activeChat ? (
@@ -251,8 +250,8 @@ export default function TeacherParentChatTab() {
               onEndChat={() => endChat(activeChat.id)}
             />
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-400">
-              Select a conversation
+            <div className="flex flex-1 items-center justify-center">
+              <EmptyState title="Select a conversation" description="Choose a chat on the left to read and reply." />
             </div>
           )}
         </div>

@@ -60,10 +60,10 @@ export type CommonSettingsProps = {
 };
 
 export const CARD_CLASS =
-  "rounded-3xl border border-white/15 bg-white/[0.06] backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.25)]";
-export const CARD_HEADER_CLASS = "px-5 py-5 sm:px-8 sm:py-7 border-b border-white/10";
+  "rounded-3xl border border-line bg-elev-1 shadow-card";
+export const CARD_HEADER_CLASS = "px-5 py-5 sm:px-8 sm:py-7 border-b border-line";
 export const CARD_BODY_CLASS = "p-4 md:p-5 space-y-4";
-export const LABEL_CLASS = "block text-xs md:text-sm font-medium text-gray-400 mb-2";
+export const LABEL_CLASS = "block text-xs md:text-sm font-medium text-fg-muted mb-2";
 
 export const LANGUAGE_OPTIONS = [
   { label: "English", value: "English" },

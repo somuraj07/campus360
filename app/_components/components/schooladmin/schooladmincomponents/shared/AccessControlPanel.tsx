@@ -16,37 +16,22 @@ export function AccessControlPanel({
 }) {
   const allSelected = allowedFeatures.length === AVAILABLE_FEATURES_FOR_TEACHERS.length;
   return (
-    <div
-      className="col-span-1 bg-black/20 bg-gradient-to-b from-white/10/5
-     to-white/0 rounded-2xl p-5 flex flex-col gap-4
-      bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 h-full"
-    >
-      <div className="flex items-center justify-between gap-2">
-        <div>
-          <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2">
-            <Shield className="lucide lucide-shield w-5 h-5 text-lime-400" /> Access Control{" "}
-            <span className="text-red-400 text-sm font-normal">*</span>
-          </h3>
-          <p className="text-[11px] text-white/50">
-            Choose which modules this user can access.
-          </p>
-          {fieldErrors.allowedFeatures ? (
-            <p className="text-xs text-red-400 mt-2" role="alert">
-              {fieldErrors.allowedFeatures}
-            </p>
-          ) : null}
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-[200px] flex-1">
+          <AllowedFeatureToggle label="Select All" checked={allSelected} onChange={onToggleAll} />
         </div>
-        <span className="text-[11px] font-medium text-lime-300 px-3 py-1 bg-lime-400/10 text-lime-400
-         text-xs font-bold rounded-full border border-lime-400/20">
-          {allowedFeatures.length} Active
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+          <Shield size={13} />
+          {allowedFeatures.length} of {AVAILABLE_FEATURES_FOR_TEACHERS.length} active
         </span>
       </div>
-
-      <AllowedFeatureToggle label="Select All" checked={allSelected} onChange={onToggleAll} />
-
-      <div className="lg:col-span-1" />
-
-      <div className="space-y-4 overflow-y-auto pr-2 no-scrollbar">
+      {fieldErrors.allowedFeatures ? (
+        <p className="text-xs text-red-700 dark:text-red-400" role="alert">
+          {fieldErrors.allowedFeatures}
+        </p>
+      ) : null}
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {AVAILABLE_FEATURES_FOR_TEACHERS.map((feature) => (
           <AllowedFeatureToggle
             key={feature.key}

@@ -13,16 +13,16 @@ export function AppointTeacherMobileList({
   onRemove: (classId: string) => void;
 }) {
   return (
-    <div className="md:hidden border-t border-white/10 p-4 space-y-3">
+    <div className="md:hidden border-t border-line p-4 space-y-3">
       {appointments.length === 0 ? (
-        <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-center text-white/50 text-sm">
+        <div className="rounded-xl border border-line bg-elev-1 p-6 text-center text-fg-subtle text-sm">
           No class teachers appointed yet. Select a class and teacher above to assign.
         </div>
       ) : (
         appointments.map((item) => (
           <div
             key={item.classId}
-            className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3"
+            className="rounded-xl border border-line bg-elev-1 p-4 space-y-3"
           >
             <div className="flex items-start gap-3">
               <img
@@ -33,16 +33,16 @@ export function AppointTeacherMobileList({
                 }}
               />
               <div className="min-w-0">
-                <div className="truncate text-sm font-semibold text-white">
+                <div className="truncate text-sm font-semibold text-fg">
                   {item.className}
                 </div>
-                <div className="mt-1 text-xs text-white/60">
+                <div className="mt-1 text-xs text-fg-muted">
                   {item.teacherEmail}
                 </div>
               </div>
             </div>
 
-            <div className="mt-3 text-sm text-white/80">
+            <div className="mt-3 text-sm text-fg">
               {item.teacherName}
             </div>
 
@@ -50,7 +50,7 @@ export function AppointTeacherMobileList({
               <button onClick={() => onEdit(item)}>
                 <Pencil
                   size={16}
-                  className="text-lime-400 hover:text-lime-300"
+                  className="text-primary hover:text-primary"
                 />
               </button>
 
@@ -58,7 +58,7 @@ export function AppointTeacherMobileList({
                 disabled={removingId === item.classId}
                 onClick={() => onRemove(item.classId)}
               >
-                <Trash2 size={16} className="text-red-400" />
+                <Trash2 size={16} className="text-red-700 dark:text-red-400" />
               </button>
             </div>
           </div>

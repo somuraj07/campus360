@@ -1,5 +1,6 @@
 import { ChevronDown, Clock, Plus } from "lucide-react";
 import PageHeader from "../../../common/PageHeader";
+import { EmptyState, btnClass } from "../../../common/ui";
 import TimellyLoader from "../../../common/TimellyLoader";
 import { useTeacherLeaveState } from "./shared";
 import { LeaveApplicationForm } from "./shared";
@@ -23,27 +24,29 @@ export default function TeacherLeave() {
   } = useTeacherLeaveState();
 
   return (
-    <div className="w-full space-y-6 animate-in fade-in duration-500 text-white pb-10">
+    <div className="w-full space-y-5 pb-10 text-fg">
       {/* 1. Header Section */}
       <PageHeader
+        eyebrow="Leave"
         title={showForm ? (editingLeave ? "Edit Leave Request" : "Apply New Leave") : "My Leave Application"}
         subtitle={showForm ? "Please fill in the details below" : "Apply for leave and track your status"}
         rightSlot={
           !showForm ? (
             <button
+              type="button"
               onClick={() => setShowForm(true)}
-              className="flex items-center gap-2 border border-[#b4f03d]/20 bg-[#b4f03d]/5 text-[#b4f03d] px-4 md:px-6 py-2.5 md:py-3 rounded-2xl font-bold text-xs md:text-sm hover:bg-[#b4f03d]/10 transition-all"
+              className={btnClass("primary")}
             >
-              <Plus size={18} strokeWidth={3} />
+              <Plus size={16} />
               <span>New Leave</span>
             </button>
           ) : (
             <button
               type="button"
               onClick={closeForm}
-              className="flex items-center gap-2 border border-white/10 bg-white/5 text-white/60 px-4 md:px-6 py-2.5 md:py-3 rounded-2xl font-bold text-xs md:text-sm hover:bg-white/10 hover:text-white transition-all"
+              className={btnClass("secondary")}
             >
-              <ChevronDown size={18} strokeWidth={3} />
+              <ChevronDown size={16} />
               <span>Cancel</span>
             </button>
           )
@@ -72,9 +75,8 @@ export default function TeacherLeave() {
       )}
 
       {!loading && myLeaves.length === 0 && !showForm && (
-        <div className="max-w-6xl mx-auto border border-white/10 rounded-[1.5rem] p-12 text-center text-white/40 bg-white/5 backdrop-blur-xl">
-          <Clock className="mx-auto mb-4 opacity-20" size={48} />
-          <p>No leave applications found. Apply your first leave today!</p>
+        <div className="rounded-2xl border border-line bg-elev-1">
+          <EmptyState icon={Clock} title="No leave applications yet" description="Apply for your first leave with New Leave." />
         </div>
       )}
     </div>

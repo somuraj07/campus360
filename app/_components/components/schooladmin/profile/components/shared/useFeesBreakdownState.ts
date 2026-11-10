@@ -224,7 +224,7 @@ export function useFeesBreakdownState({
           chip: "Discount approval pending",
           border: "border-sky-400/25",
           bg: "bg-sky-400/10",
-          text: "text-sky-200",
+          text: "text-sky-800 dark:text-sky-200",
           dot: "bg-sky-300",
         }
       : approvalStatus === "REJECTED"
@@ -233,17 +233,17 @@ export function useFeesBreakdownState({
             chip: "Discount rejected",
             border: "border-red-400/25",
             bg: "bg-red-400/10",
-            text: "text-red-200",
+            text: "text-red-800 dark:text-red-200",
             dot: "bg-red-300",
           }
         : approvalStatus === "APPROVED"
           ? {
               label: "Approved",
               chip: "Discount approved",
-              border: "border-lime-400/25",
-              bg: "bg-lime-400/10",
-              text: "text-lime-200",
-              dot: "bg-lime-300",
+              border: "border-primary/25",
+              bg: "bg-primary/10",
+              text: "text-primary",
+              dot: "bg-primary",
             }
           : null;
   const displayAmountPaid =

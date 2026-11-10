@@ -33,7 +33,7 @@ export default function GlobalError({
         <div style={{ textAlign: "center", padding: 24, maxWidth: 420 }}>
           <h1 style={{ fontSize: 24, marginBottom: 12 }}>Something went wrong</h1>
           <p style={{ color: "#4b5563", marginBottom: 24 }}>
-            Timelly hit an unexpected error. Your data is safe. Please try again.
+            RS Solutions hit an unexpected error. Your data is safe. Please try again.
           </p>
           <button
             onClick={reset}

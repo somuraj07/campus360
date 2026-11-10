@@ -16,8 +16,8 @@ export function AppHeaderMobileSearch({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-start p-4 md:hidden">
-      <div className="w-full bg-neutral-900 rounded-xl p-4">
+    <div className="fixed inset-0 z-50 bg-overlay flex items-start p-4 md:hidden">
+      <div className="w-full bg-surface rounded-xl p-4">
         <SearchInput
           icon={Search}
           showSearchIcon
@@ -29,13 +29,13 @@ export function AppHeaderMobileSearch({
         <div className="flex gap-2 mt-3">
           <button
             onClick={onSubmit}
-            className="px-4 py-2 bg-lime-400 text-black rounded-lg text-sm font-medium"
+            className="px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-medium"
           >
             Search
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 text-sm text-white/60 hover:text-white"
+            className="px-4 py-2 text-sm text-fg-muted hover:text-fg"
           >
             Close
           </button>

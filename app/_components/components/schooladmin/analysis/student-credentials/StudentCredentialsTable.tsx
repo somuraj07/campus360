@@ -9,12 +9,12 @@ import StudentCredentialsPagination from "./StudentCredentialsPagination";
 function PasswordCell({ row, reset }: { row: StudentCredentialRow; reset: ResetOneProps }) {
   if (row.passwordVerified) {
     return (
-      <span className="font-mono text-xs text-lime-300 sm:text-sm">{row.password}</span>
+      <span className="font-mono text-xs text-primary sm:text-sm">{row.password}</span>
     );
   }
   return (
     <div>
-      <span className="text-xs text-amber-300/90 sm:text-sm">{passwordUnavailableLabel(row)}</span>
+      <span className="text-xs text-amber-700 dark:text-amber-300 sm:text-sm">{passwordUnavailableLabel(row)}</span>
       {row.passwordState !== "NO_DOB" && row.passwordState !== "PENDING" ? <ResetOneButton row={row} {...reset} /> : null}
     </div>
   );
@@ -41,15 +41,15 @@ export function StudentCredentialsTable({
   const reset: ResetOneProps = { onResetOne, resettingId, busy };
   return (
     <>
-      <p className="mb-3 text-xs text-white/45 sm:text-sm">{summaryLabel}</p>
+      <p className="mb-3 text-xs text-fg-subtle sm:text-sm">{summaryLabel}</p>
 
       <StudentCredentialsMobileList rows={rows} reset={reset} />
 
       <div className="hidden lg:block">
-        <div className="overflow-x-auto overscroll-x-contain rounded-xl border border-white/10">
+        <div className="overflow-x-auto overscroll-x-contain rounded-xl border border-line">
           <table className="w-full min-w-0 text-left text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-wider text-gray-400 sm:text-[11px]">
+              <tr className="border-b border-line bg-elev-1 text-[10px] font-bold uppercase tracking-wider text-fg-muted sm:text-[11px]">
                 <th className="py-3 pl-4 pr-3 font-medium">Name</th>
                 <th className="py-3 px-2 font-medium">Email (login)</th>
                 <th className="py-3 px-2 font-medium">DOB</th>
@@ -59,10 +59,10 @@ export function StudentCredentialsTable({
                 <th className="py-3 pl-2 pr-4 font-medium">Admission no.</th>
               </tr>
             </thead>
-            <tbody className="text-white/90">
+            <tbody className="text-fg">
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-white/40">
+                  <td colSpan={7} className="py-10 text-center text-fg-subtle">
                     No students found for this filter.
                   </td>
                 </tr>
@@ -70,10 +70,10 @@ export function StudentCredentialsTable({
                 rows.map((row) => (
                   <tr
                     key={row.studentId}
-                    className="border-b border-white/5 last:border-0 hover:bg-white/3"
+                    className="border-b border-line-subtle last:border-0 hover:bg-elev-2"
                   >
-                    <td className="py-3 pl-4 pr-3 font-medium text-white">{row.name}</td>
-                    <td className="max-w-[180px] truncate py-3 px-2 font-mono text-xs text-sky-200/90 xl:max-w-none xl:whitespace-normal xl:text-sm">
+                    <td className="py-3 pl-4 pr-3 font-medium text-fg">{row.name}</td>
+                    <td className="max-w-[180px] truncate py-3 px-2 font-mono text-xs text-sky-800 dark:text-sky-200 xl:max-w-none xl:whitespace-normal xl:text-sm">
                       {row.email}
                     </td>
                     <td className="py-3 px-2 text-xs tabular-nums sm:text-sm">

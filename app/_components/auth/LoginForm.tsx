@@ -10,7 +10,6 @@ import {
   clearSuperAdminLoginInProgress,
 } from "@/lib/auth/superAdminBrowserSession";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
-const LOGO_SRC = "/timelylogo.webp";
 
 function getEmailFromUrl(): string {
   if (typeof window === "undefined") return "";
@@ -67,24 +66,20 @@ export default function LoginForm() {
 
   return (
     <div className="relative z-10 w-full max-w-md">
-      <div className="rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.3)] backdrop-blur-xl bg-black/20">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-pop">
         {/* Header - logo from public folder (root path) */}
-        <div className="p-8 pb-6 border-b border-white/5 flex flex-col items-center text-center bg-white/[0.02]">
-          <img
-            src={LOGO_SRC}
-            alt="Timelly"
-            className="h-12 w-40 mb-6 drop-shadow-[0_0_15px_rgba(163,230,53,0.3)] object-contain"
-          />
-          <h1 className="text-2xl font-bold text-white mb-2">
+        <div className="px-8 pt-8 pb-2 flex flex-col items-start text-left">
+          <span aria-hidden className="mb-5 block h-1 w-10 rounded-full bg-accent" />
+          <h1 className="text-2xl font-semibold tracking-tight text-fg mb-1.5">
             {isSwitchAccount ? "Switch Account" : "Welcome Back"}
           </h1>
-          <p className="text-gray-400 text-sm">
+          <p className="text-fg-muted text-sm">
             {isSwitchAccount
               ? "Enter your password to continue"
               : "Sign in to access your dashboard"}
           </p>
           {isSwitchAccount && email && (
-            <p className="text-lime-400/90 text-sm font-medium mt-2 truncate max-w-full px-4">
+            <p className="text-primary text-sm font-medium mt-2 truncate max-w-full">
               {email}
             </p>
           )}
@@ -94,23 +89,23 @@ export default function LoginForm() {
         <div className="p-8 pt-6">
           <form onSubmit={handleLogin} className="space-y-5">
             {error && (
-              <p className="text-sm text-red-500">{error}</p>
+              <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300">{error}</p>
             )}
 
             {!isSwitchAccount && (
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider ml-1">
+                <label className="text-xs font-semibold text-fg-muted uppercase tracking-wider ml-1">
                   Email Address
                 </label>
                 <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-lime-400 pointer-events-none" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-fg-subtle group-focus-within:text-primary pointer-events-none" />
                   <input
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your school email"
-                    className="w-full pl-11 pr-4 py-3.5 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-lime-400/50 focus:bg-black/60 text-sm"
+                    className="w-full pl-11 pr-4 py-3.5 bg-surface border border-line-strong rounded-lg text-fg placeholder:text-fg-faint focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 text-sm transition"
                   />
                 </div>
               </div>
@@ -118,12 +113,12 @@ export default function LoginForm() {
 
             <div className="space-y-1.5">
               <div className="flex justify-between ml-1">
-                <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <label className="text-xs font-semibold text-fg-muted uppercase tracking-wider">
                   Password
                 </label>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500 group-focus-within:text-lime-400 pointer-events-none" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-fg-subtle group-focus-within:text-primary pointer-events-none" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
@@ -131,12 +126,12 @@ export default function LoginForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={isSwitchAccount ? "Enter password" : "••••••••"}
                   autoFocus={isSwitchAccount}
-                  className="w-full pl-11 pr-12 py-3.5 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-lime-400/50 focus:bg-black/60 text-sm"
+                  className="w-full pl-11 pr-12 py-3.5 bg-surface border border-line-strong rounded-lg text-fg placeholder:text-fg-faint focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 text-sm transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors p-1"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-fg-subtle hover:text-fg transition-colors p-1"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -150,10 +145,10 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={loading || (isSwitchAccount && !email)}
-              className="group w-full py-3.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="group w-full py-3.5 bg-primary hover:bg-primary-hover text-on-primary font-semibold rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <span className="h-5 w-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                <span className="h-5 w-5 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
               ) : (
                 <>
                   {isSwitchAccount ? "Continue" : "Sign In"}
@@ -165,7 +160,7 @@ export default function LoginForm() {
             {isSwitchAccount && (
               <a
                 href="/admin/login"
-                className="block text-center text-sm text-white/50 hover:text-white/70 transition-colors"
+                className="block text-center text-sm text-fg-subtle hover:text-fg-muted transition-colors"
               >
                 Use a different account
               </a>
@@ -174,10 +169,10 @@ export default function LoginForm() {
         </div>
 
         {/* Footer */}
-        <div className="px-8 py-5 bg-black/40 border-t border-white/5 text-center">
-          <p className="text-gray-500 text-xs">
+        <div className="px-8 py-4 bg-elev-2 border-t border-line text-center">
+          <p className="text-fg-subtle text-xs">
             Don&apos;t have an account?{" "}
-            <a href="#" className="text-lime-400 font-medium hover:underline">
+            <a href="#" className="text-primary font-medium hover:underline">
               School Administrator
             </a>
           </p>

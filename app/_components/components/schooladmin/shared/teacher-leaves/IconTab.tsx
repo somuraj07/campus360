@@ -17,8 +17,8 @@ export function IconTab({
     <button
       onClick={onClick}
       className={`flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm ${active
-        ? "bg-white/5 text-lime-400 border-b-2 border-lime-400"
-        : "text-gray-400 hover:text-white"
+        ? "bg-elev-1 text-primary border-b-2 border-primary"
+        : "text-fg-muted hover:text-fg"
         }`}
     >
       <Icon size={16} />

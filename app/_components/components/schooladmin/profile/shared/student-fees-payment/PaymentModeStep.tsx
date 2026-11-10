@@ -23,7 +23,7 @@ export function PaymentModeStep({
         <button
           type="button"
           onClick={onContinue}
-          className="rounded-xl bg-blue-500/90 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-400"
+          className="rounded-xl bg-blue-500/90 px-4 py-2 text-sm font-semibold text-fg hover:bg-blue-400"
         >
           Continue
         </button>
@@ -34,11 +34,11 @@ export function PaymentModeStep({
   return (
     <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
       <div>
-        <label className="mb-1 block text-xs text-white/60">Payment mode</label>
+        <label className="mb-1 block text-xs text-fg-muted">Payment mode</label>
         <select
           value={mode}
           onChange={(e) => setMode(e.target.value as "CASH" | "ONLINE" | "CHEQUE" | "DD" | "OTHERS")}
-          className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+          className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
         >
           <option value="CASH">Cash</option>
           <option value="ONLINE">Online</option>
@@ -49,26 +49,26 @@ export function PaymentModeStep({
       </div>
       {mode !== "CASH" ? (
         <div className="md:col-span-2">
-          <label className="mb-1 block text-xs text-white/60">Reference / UTR</label>
+          <label className="mb-1 block text-xs text-fg-muted">Reference / UTR</label>
           <input
             value={referenceNo}
             onChange={(e) => setReferenceNo(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+            className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
             placeholder="Enter transaction reference"
           />
         </div>
       ) : (
         <div className="md:col-span-2 flex items-end">
-          <p className="text-xs text-lime-300">Cash selected: UTR not required.</p>
+          <p className="text-xs text-primary">Cash selected: UTR not required.</p>
         </div>
       )}
       <div>
-        <label className="mb-1 block text-xs text-white/60">Payment date</label>
+        <label className="mb-1 block text-xs text-fg-muted">Payment date</label>
         <input
           type="date"
           value={paymentDate}
           onChange={(e) => setPaymentDate(e.target.value)}
-          className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+          className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
         />
       </div>
     </div>

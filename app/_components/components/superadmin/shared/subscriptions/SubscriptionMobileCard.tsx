@@ -1,6 +1,7 @@
 import { Pencil } from "lucide-react";
 import type { SubscriptionRow } from "../../Subscriptions";
 import { ModeBadge, StatusPill } from "./subscriptionsColumns";
+import { InitialsAvatar, btnClass } from "../ui";
 
 export function SubscriptionMobileCard({
   row: r,
@@ -9,61 +10,43 @@ export function SubscriptionMobileCard({
   row: SubscriptionRow;
   onEdit: (r: SubscriptionRow) => void;
 }) {
+  const isParent = r.billingMode === "PARENT_SUBSCRIPTION";
   return (
-    <article className="rounded-2xl border border-white/10 bg-white/4 backdrop-blur-sm p-4 shadow-lg shadow-black/20">
-      <div className="flex gap-3 justify-between items-start min-w-0">
+    <article className="overflow-hidden rounded-2xl border border-line bg-elev-1">
+      <div className="flex items-center gap-3 p-4">
+        <InitialsAvatar name={r.name} />
         <div className="min-w-0 flex-1">
-          <h3 className="text-base font-semibold text-white leading-snug wrap-break-word">
-            {r.name}
-          </h3>
-          <p className="text-xs text-white/45 mt-0.5 line-clamp-2">
-            {r.location || "No location"}
-          </p>
+          <p className="truncate text-[15px] font-semibold text-fg">{r.name}</p>
+          <p className="truncate text-xs text-fg-subtle">{r.location || "No location"}</p>
         </div>
-        <button
-          type="button"
-          onClick={() => onEdit(r)}
-          className="shrink-0 inline-flex items-center gap-1 px-3 py-2 rounded-xl border border-white/15 bg-white/10 text-xs font-medium text-white hover:bg-white/15 active:scale-[0.98] transition"
-        >
-          <Pencil className="w-3.5 h-3.5" />
+        <button type="button" onClick={() => onEdit(r)} className={btnClass("secondary", "sm")}>
+          <Pencil size={13} />
           Edit
         </button>
       </div>
-
-      <div className="mt-3 flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap gap-2 px-4 pb-3">
         <ModeBadge mode={r.billingMode} />
         <StatusPill active={r.isActive} />
       </div>
-
-      <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-xs sm:text-sm border-t border-white/10 pt-3">
-        <div>
-          <dt className="text-white/45">Created</dt>
-          <dd className="text-white/85 mt-0.5 tabular-nums">
+      <dl className="grid grid-cols-3 divide-x divide-line-subtle border-t border-line-subtle text-center">
+        <div className="px-2 py-3">
+          <dt className="text-[11px] text-fg-subtle">Amount / yr</dt>
+          <dd className="mt-0.5 text-sm font-semibold text-fg tabular-nums">
+            {isParent
+              ? typeof r.parentSubscriptionAmount === "number"
+                ? `₹${r.parentSubscriptionAmount.toLocaleString("en-IN")}`
+                : "Not set"
+              : "Included"}
+          </dd>
+        </div>
+        <div className="px-2 py-3">
+          <dt className="text-[11px] text-fg-subtle">Trial</dt>
+          <dd className="mt-0.5 text-sm font-semibold text-fg">{isParent ? `${r.parentSubscriptionTrialDays ?? 0} days` : "—"}</dd>
+        </div>
+        <div className="px-2 py-3">
+          <dt className="text-[11px] text-fg-subtle">Created</dt>
+          <dd className="mt-0.5 text-sm font-semibold text-fg tabular-nums">
             {new Date(r.createdAt).toLocaleDateString("en-IN")}
-          </dd>
-        </div>
-        <div className="text-right sm:text-left">
-          <dt className="text-white/45">Trial</dt>
-          <dd className="text-white/85 mt-0.5">
-            {r.billingMode === "PARENT_SUBSCRIPTION"
-              ? `${r.parentSubscriptionTrialDays ?? 0} days`
-              : "—"}
-          </dd>
-        </div>
-        <div className="col-span-2">
-          <dt className="text-white/45">Amount (₹ / year)</dt>
-          <dd className="text-white mt-0.5 font-medium">
-            {r.billingMode === "PARENT_SUBSCRIPTION" ? (
-              typeof r.parentSubscriptionAmount === "number" ? (
-                <span className="text-lime-200/90">
-                  ₹{r.parentSubscriptionAmount.toLocaleString("en-IN")}
-                </span>
-              ) : (
-                <span className="text-white/50">Not set</span>
-              )
-            ) : (
-              <span className="text-white/50">Included in school plan</span>
-            )}
           </dd>
         </div>
       </dl>

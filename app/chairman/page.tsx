@@ -71,7 +71,7 @@ function ChairmanContent() {
         title="Opening chairman portal"
         steps={["Checking session", "Preparing access", "Loading workspace"]}
         bare
-        className="min-h-screen bg-[#08080a]"
+        className="min-h-screen bg-surface"
       />
     );
   }
@@ -111,7 +111,7 @@ export default function ChairmanPage() {
           title="Loading chairman page"
           steps={["Dashboard", "Approvals", "Settings"]}
           bare
-          className="min-h-screen bg-[#08080a]"
+          className="min-h-screen bg-surface"
         />
       }
     >

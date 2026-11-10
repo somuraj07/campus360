@@ -123,7 +123,7 @@ const SingleReceipt = ({ data }: { data: AdmissionReceiptData }) => {
 
       <div className="absolute bottom-3 left-0 right-0 text-center text-[10px] font-semibold pt-2 border-t flex flex-col gap-0.5 mx-8" style={{ color: "#94a3b8", borderColor: "#f1f5f9" }}>
         <p>This is a computer-generated receipt and does not require a physical signature.</p>
-        <p>Powered by Timelly</p>
+        <p>Powered by RS Solutions</p>
       </div>
     </div>
   );

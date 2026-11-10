@@ -50,8 +50,8 @@ function buildHeaderMap(headerRow: string[]) {
   };
 
   const timellyCol =
-    find("timellyid", "timelly id", "timelly", "rollno", "roll no", "roll", "student id", "timelly number", "timelly no") ||
-    [...map.entries()].find(([k]) => k.includes("timelly") || k === "rollno" || k === "roll")?.[1];
+    find("rssolutionsid", "rs solutions id", "rsid", "rs id", "timellyid", "timelly id", "timelly", "rollno", "roll no", "roll", "student id", "timelly number", "timelly no") ||
+    [...map.entries()].find(([k]) => k.includes("rssolutions") || k.includes("timelly") || k === "rollno" || k === "roll")?.[1];
 
   const feeNameCol =
     find("feename", "fee name", "fee", "extra fee", "description", "fee description") ||
@@ -79,7 +79,7 @@ function parseRowsFromSheetData(
     return {
       rows: [],
       parseError:
-        "Could not detect columns. Use headers: Timelly ID (or Roll No), Fee Name, Amount.",
+        "Could not detect columns. Use headers: RS Solutions ID (or Roll No), Fee Name, Amount.",
     };
   }
 
@@ -147,7 +147,7 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
 
   const downloadTemplate = useCallback(() => {
     const aoa = [
-      ["Timelly ID", "Fee Name", "Amount"],
+      ["RS Solutions ID", "Fee Name", "Amount"],
       ["101", "Lab Fee", 500],
       ["ADM/2026/102", "Uniform Fee", 1200],
     ];
@@ -226,28 +226,28 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0F172A] shadow-2xl max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 shrink-0">
-          <div className="flex items-center gap-2 text-lg font-bold text-gray-100">
-            <FileSpreadsheet className="h-5 w-5 text-lime-400" />
-            Bulk extra fees (Timelly ID)
+    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-overlay p-4">
+      <div className="w-full max-w-lg rounded-2xl border border-line bg-surface shadow-pop max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="flex items-center justify-between border-b border-line px-5 py-4 shrink-0">
+          <div className="flex items-center gap-2 text-lg font-bold text-fg">
+            <FileSpreadsheet className="h-5 w-5 text-primary" />
+            Bulk extra fees (RS Solutions ID)
           </div>
-          <button type="button" onClick={handleClose} className="text-white/60 hover:text-white" aria-label="Close">
+          <button type="button" onClick={handleClose} className="text-fg-muted hover:text-fg" aria-label="Close">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="space-y-4 overflow-y-auto p-5 text-sm text-gray-300">
-          <p className="text-gray-400 leading-relaxed">
-            Upload an <span className="text-white/90">.xlsx</span> file. Each row adds one{" "}
-            <strong className="text-white">student-level extra fee</strong> (same as Fees → Add extra fee for one
-            student). Students are matched by <strong className="text-white">Timelly ID</strong> (roll number, or last
-            part of admission like <code className="text-lime-300/90">ADM/2026/123</code> →{" "}
-            <code className="text-lime-300/90">123</code>).
+        <div className="space-y-4 overflow-y-auto p-5 text-sm text-fg-muted">
+          <p className="text-fg-muted leading-relaxed">
+            Upload an <span className="text-fg">.xlsx</span> file. Each row adds one{" "}
+            <strong className="text-fg">student-level extra fee</strong> (same as Fees → Add extra fee for one
+            student). Students are matched by <strong className="text-fg">RS Solutions ID</strong> (roll number, or last
+            part of admission like <code className="text-primary">ADM/2026/123</code> →{" "}
+            <code className="text-primary">123</code>).
           </p>
-          <ul className="list-disc pl-5 text-gray-500 space-y-1 text-xs">
-            <li>Required columns: Timelly ID (or Roll No), Fee Name, Amount</li>
+          <ul className="list-disc pl-5 text-fg-subtle space-y-1 text-xs">
+            <li>Required columns: RS Solutions ID (or Roll No), Fee Name, Amount</li>
             <li>All worksheets in the file are merged — sheet tab names are not used</li>
           </ul>
 
@@ -255,7 +255,7 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
             <button
               type="button"
               onClick={downloadTemplate}
-              className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white hover:bg-white/10"
+              className="rounded-lg border border-line bg-elev-1 px-3 py-2 text-xs font-semibold text-fg hover:bg-elev-3"
             >
               Download template
             </button>
@@ -263,43 +263,43 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
               type="button"
               onClick={() => void handleCleanupDuplicates()}
               disabled={submitting || cleaning}
-              className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-xs font-semibold text-amber-200 hover:bg-amber-400/20 disabled:opacity-50"
+              className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-xs font-semibold text-amber-800 dark:text-amber-200 hover:bg-amber-400/20 disabled:opacity-50"
             >
               {cleaning ? "Cleaning duplicates..." : "Cleanup duplicate extra fees"}
             </button>
           </div>
 
-          <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-black/20 px-4 py-8 text-center hover:bg-white/[0.04]">
+          <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-line-strong bg-well px-4 py-8 text-center hover:bg-elev-2">
             <input
               type="file"
               accept=".xlsx,.xls"
               className="hidden"
               onChange={(e) => setFile(e.target.files?.[0] ?? null)}
             />
-            <Upload className="mx-auto mb-2 h-8 w-8 text-lime-400/80" />
-            <span className="text-white/80">{file ? file.name : "Click to select Excel file"}</span>
-            <span className="mt-1 text-xs text-gray-500">.xlsx or .xls</span>
+            <Upload className="mx-auto mb-2 h-8 w-8 text-primary" />
+            <span className="text-fg">{file ? file.name : "Click to select Excel file"}</span>
+            <span className="mt-1 text-xs text-fg-subtle">.xlsx or .xls</span>
           </label>
 
           {localError && (
-            <div className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-sm text-rose-200">
+            <div className="rounded-lg border border-rose-500/40 bg-rose-500/10 px-3 py-2 text-sm text-rose-800 dark:text-rose-200">
               {localError}
             </div>
           )}
           {cleanupMessage && (
-            <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
+            <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-800 dark:text-emerald-200">
               {cleanupMessage}
             </div>
           )}
 
           {result && (
-            <div className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm space-y-2">
-              <p className="text-lime-300 font-semibold">Created: {result.created}</p>
+            <div className="rounded-lg border border-line bg-elev-1 px-3 py-2 text-sm space-y-2">
+              <p className="text-primary font-semibold">Created: {result.created}</p>
               {result.failed > 0 && (
-                <p className="text-amber-200">Skipped / failed rows: {result.failed}</p>
+                <p className="text-amber-800 dark:text-amber-200">Skipped / failed rows: {result.failed}</p>
               )}
               {result.errors.length > 0 && (
-                <ul className="max-h-40 overflow-y-auto text-xs text-gray-400 space-y-1 border-t border-white/10 pt-2 mt-2">
+                <ul className="max-h-40 overflow-y-auto text-xs text-fg-muted space-y-1 border-t border-line pt-2 mt-2">
                   {result.errors.map((err, i) => (
                     <li key={i}>
                       Row {err.index}
@@ -312,11 +312,11 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
           )}
         </div>
 
-        <div className="flex flex-col-reverse gap-2 border-t border-white/10 p-4 sm:flex-row sm:justify-end shrink-0">
+        <div className="flex flex-col-reverse gap-2 border-t border-line p-4 sm:flex-row sm:justify-end shrink-0">
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/80 hover:bg-white/5"
+            className="rounded-xl border border-line px-4 py-2 text-sm text-fg hover:bg-elev-2"
           >
             {result ? "Close" : "Cancel"}
           </button>
@@ -325,7 +325,7 @@ export default function BulkExtraFeeByTimellyModal({ open, onClose, onApplied }:
               type="button"
               disabled={submitting || !file}
               onClick={() => void handleSubmit()}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-lime-500 px-4 py-2 text-sm font-semibold text-black hover:bg-lime-400 disabled:opacity-40 disabled:pointer-events-none"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-40 disabled:pointer-events-none"
             >
               {submitting ? (
                 <>

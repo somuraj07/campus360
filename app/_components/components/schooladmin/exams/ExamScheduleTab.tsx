@@ -95,17 +95,17 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
   return (
     <div className="space-y-5 bg-transparent">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider" style={{ color: EXAM_TEXT_MAIN }}>
+        <h3 className="text-sm font-bold text-fg-muted uppercase tracking-wider" style={{ color: EXAM_TEXT_MAIN }}>
           Schedule
         </h3>
         <button
           type="button"
           onClick={() => setShowAddModal(true)}
-          className="text-xs font-bold text-lime-400 hover:text-lime-300 flex items-center gap-1 bg-lime-400/10
-           px-3 py-1.5 rounded-lg border border-lime-400/20 transition-all"
+          className="text-xs font-bold text-primary hover:text-primary flex items-center gap-1 bg-primary/10
+           px-3 py-1.5 rounded-lg border border-primary/20 transition-all"
           style={{
             color: EXAM_ACCENT,
-            backgroundColor: "rgba(159, 255, 0, 0.12)",
+            backgroundColor: "color-mix(in oklab, var(--primary) 12%, transparent)",
           }}
         >
           <Plus size={18} />
@@ -114,7 +114,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
       </div>
 
       {!orderedSchedules.length ? (
-        <div className="rounded-2xl border border-white/10 py-14 text-center" style={{ color: EXAM_TEXT_SECONDARY }}>
+        <div className="rounded-2xl border border-line py-14 text-center" style={{ color: EXAM_TEXT_SECONDARY }}>
           No exam schedule added yet. Click "Add Subject" to add one.
         </div>
       ) : (
@@ -128,25 +128,25 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
             return (
               <div
                 key={s.id}
-                className="bg-white/5 hover:bg-white/[0.07] rounded-xl border border-white/5 p-4 flex items-center gap-6 group transition-all"
+                className="bg-elev-1 hover:bg-elev-3 rounded-xl border border-line-subtle p-4 flex items-center gap-6 group transition-all"
                
               >
                 <div className="flex flex-col items-center justify-center min-w-[50px]">
-                  <div className="text-lg font-bold text-white leading-none" style={{ color: EXAM_TEXT_MAIN }}>
+                  <div className="text-lg font-bold text-fg leading-none" style={{ color: EXAM_TEXT_MAIN }}>
                     {day}
                   </div>
-                  <div className="text-[10px] font-medium text-gray-500 uppercase mt-1" style={{ color: EXAM_TEXT_SECONDARY }}>
+                  <div className="text-[10px] font-medium text-fg-subtle uppercase mt-1" style={{ color: EXAM_TEXT_SECONDARY }}>
                     {month}
                   </div>
                 </div>
 
-                <div className="w-px h-10 bg-white/10" />
+                <div className="w-px h-10 bg-elev-2" />
 
                 <div className="min-w-0 flex-1">
-                  <div className="text-base font-semibold text-gray-200" style={{ color: EXAM_TEXT_MAIN }}>
+                  <div className="text-base font-semibold text-fg" style={{ color: EXAM_TEXT_MAIN }}>
                     {s.subject}
                   </div>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-gray-500" style={{ color: EXAM_TEXT_SECONDARY }}>
+                  <div className="flex items-center gap-3 mt-1 text-xs text-fg-subtle" style={{ color: EXAM_TEXT_SECONDARY }}>
                     <span className="flex items-center gap-1"><Clock className="w-3 h-3"/>
                     <span>{s.startTime}</span></span>
                     
@@ -162,9 +162,9 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
 
       {showAddModal &&
         createPortal(
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
           <div
-            className="bg-[#0F172A] border border-white/10 rounded-2xl w-full max-w-md p-6 shadow-2xl"
+            className="bg-surface border border-line rounded-2xl w-full max-w-md p-6 shadow-pop"
             style={{
               background: "linear-gradient(180deg, rgba(10,27,57,0.98) 0%, rgba(9,22,47,0.96) 100%)",
             }}
@@ -176,7 +176,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
               <button
                 type="button"
                 onClick={() => setShowAddModal(false)}
-                className="min-h-[40px] min-w-[40px] rounded-xl border border-white/15 p-2.5 text-white/80 hover:bg-white/10"
+                className="min-h-[40px] min-w-[40px] rounded-xl border border-line p-2.5 text-fg hover:bg-elev-3"
               >
                 <X size={18} />
               </button>
@@ -194,7 +194,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                   placeholder="e.g. Mathematics"
                   list="schooladmin-exam-subject-options"
                   required
-                  className="w-full rounded-2xl border border-white/15 px-4 py-3.5 text-base"
+                  className="w-full rounded-2xl border border-line px-4 py-3.5 text-base"
                   style={{ background: EXAM_INPUT_BG, color: EXAM_TEXT_MAIN }}
                 />
                 <datalist id="schooladmin-exam-subject-options">
@@ -214,7 +214,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                     value={examDate}
                     onChange={(e) => setExamDate(e.target.value)}
                     required
-                    className="w-full rounded-2xl border border-white/15 px-4 py-3.5 text-base [color-scheme:dark]"
+                    className="w-full rounded-2xl border border-line px-4 py-3.5 text-base [color-scheme:dark]"
                     style={{ background: EXAM_INPUT_BG, color: EXAM_TEXT_MAIN }}
                   />
                 </div>
@@ -228,7 +228,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
                     required
-                    className="w-full rounded-2xl border border-white/15 px-4 py-3.5 text-base [color-scheme:dark]"
+                    className="w-full rounded-2xl border border-line px-4 py-3.5 text-base [color-scheme:dark]"
                     style={{ background: EXAM_INPUT_BG, color: EXAM_TEXT_MAIN }}
                   />
                 </div>
@@ -243,7 +243,7 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                   value={durationMin}
                   onChange={(e) => setDurationMin(Number(e.target.value) || 0)}
                   min={1}
-                  className="w-full rounded-2xl border border-white/15 px-4 py-3.5 text-base"
+                  className="w-full rounded-2xl border border-line px-4 py-3.5 text-base"
                   style={{ background: EXAM_INPUT_BG, color: EXAM_TEXT_MAIN }}
                 />
               </div>
@@ -252,14 +252,14 @@ export default function ExamScheduleTab({ termId, schedules, onScheduleChange }:
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 py-2.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5"
+                  className="flex-1 py-2.5 rounded-xl border border-line text-fg-muted hover:bg-elev-2"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 py-2.5 rounded-xl bg-lime-400 text-black font-bold hover:bg-lime-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 py-2.5 rounded-xl bg-primary text-on-primary font-bold hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   style={{
                     backgroundColor: EXAM_ACCENT,
                     boxShadow: `0 0 18px ${EXAM_ACCENT_GLOW}`,

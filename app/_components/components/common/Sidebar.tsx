@@ -7,7 +7,6 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, User, ChevronRight } from "lucide-react";
 import { SidebarItem } from "../../types/sidebar";
 import BrandLogo from "./TimellyLogo";
-import { PRIMARY_COLOR } from "../../constants/colors";
 import { AVATAR_URL } from "../../constants/images";
 import { useMemo } from "react";
 import { addRecentLogin, getRecentLogins } from "../../utils/recentLogins";
@@ -220,49 +219,83 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
   // eslint-disable-next-line react-hooks/exhaustive-deps -- isAllowed is an inline closure over isTeacher/allowedFeatures, which are listed
   }, [menuItems, isTeacher, allowedFeatures]);
 
+  const renderItem = (item: SidebarItem, { compact = false }: { compact?: boolean } = {}) => {
+    const isActive = item.tab === activeTab;
+    const isLogout = item.action === "logout";
+    const Icon = item.icon;
+    return (
+      <button
+        type="button"
+        key={item.label}
+        onClick={() => handleClick(item)}
+        disabled={item.disabled}
+        aria-current={isActive ? "page" : undefined}
+        className={`group relative flex w-full min-w-0 items-center gap-3 rounded-lg px-3 ${
+          compact ? "py-2" : "py-2.5"
+        } text-left text-[13.5px] transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+          isLogout
+            ? "text-red-200 hover:bg-red-500/15 hover:text-white"
+            : isActive
+            ? "bg-sidebar-active font-semibold text-sidebar-fg"
+            : "font-medium text-sidebar-muted hover:bg-sidebar-hover hover:text-sidebar-fg"
+        }`}
+      >
+        {isActive && (
+          <span aria-hidden className="absolute inset-y-1.5 left-0 w-[3px] rounded-r-full bg-accent" />
+        )}
+        <Icon
+          size={18}
+          className={`shrink-0 ${
+            isLogout ? "text-red-300" : isActive ? "text-accent" : "text-sidebar-muted group-hover:text-sidebar-fg"
+          }`}
+        />
+        <span className="min-w-0">
+          <span className="block truncate">{item.label}</span>
+          {item.description && (
+            <span className="block truncate text-[11px] font-normal text-sidebar-muted">{item.description}</span>
+          )}
+        </span>
+      </button>
+    );
+  };
+
   return (
-    <aside
-      className="
-        hidden lg:flex
-        w-64 shrink-0 h-full flex-col
-        bg-white/10 backdrop-blur-2xl
-        border-r border-white/10
-        shadow-[2px_0_12px_rgba(0,0,0,0.2)]
-      "
-    >
-      {/* Logo */}
-      <div className="h-21 flex items-center px-4 border-b border-white/10">
+    <aside className="hidden h-full w-[17rem] shrink-0 flex-col bg-sidebar text-sidebar-fg lg:flex">
+      {/* Brand */}
+      <div className="flex h-16 items-center gap-3 border-b border-sidebar-line px-5">
         <BrandLogo isbrandLogoWhite />
       </div>
 
       {/* Profile */}
-      <div className="px-4 py-4 border-b border-white/10" ref={profileRef}>
+      <div className="px-3 pt-4 pb-3" ref={profileRef}>
         <div className="relative">
           <button
             type="button"
             onClick={() => enableSwitchAccounts && setProfileOpen((o) => !o)}
-            className={`w-full bg-white/5 rounded-xl p-3 border border-white/10 text-left transition-all ${enableSwitchAccounts ? "hover:bg-white/10 cursor-pointer" : "cursor-default"}`}
+            className={`w-full rounded-xl border border-sidebar-line bg-white/[0.04] p-2.5 text-left transition ${
+              enableSwitchAccounts ? "cursor-pointer hover:bg-sidebar-hover" : "cursor-default"
+            }`}
           >
             <div className="flex items-center gap-3">
               <img
                 src={avatarUrl}
                 alt=""
-                className="w-10 h-10 rounded-xl border border-white/20 object-cover shrink-0"
+                className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-accent/70 ring-offset-2 ring-offset-sidebar"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = AVATAR_URL;
                 }}
               />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white break-words line-clamp-2">
-                  {displayName}
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-sidebar-fg">{displayName}</p>
+                <p className="truncate text-[11px] font-medium uppercase tracking-wider text-sidebar-muted">
+                  {subtitle}
                 </p>
-                <p className="text-xs text-white/60 break-words line-clamp-2">{subtitle}</p>
               </div>
               {enableSwitchAccounts && (
                 <ChevronDown
-                  size={18}
-                  className={`text-white/50 shrink-0 transition-transform ${profileOpen ? "rotate-180" : ""}`}
+                  size={16}
+                  className={`shrink-0 text-sidebar-muted transition-transform ${profileOpen ? "rotate-180" : ""}`}
                 />
               )}
             </div>
@@ -270,12 +303,15 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
 
           {enableSwitchAccounts && profileOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute left-0 right-0 mt-2 bg-[#0F172A] rounded-xl border border-white/10 shadow-xl py-2 z-20 max-h-[280px] overflow-y-auto"
+              className="absolute left-0 right-0 z-20 mt-2 max-h-[280px] overflow-y-auto rounded-xl border border-line bg-surface py-1.5 text-fg shadow-pop"
             >
+              <p className="px-4 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-wider text-fg-subtle">
+                Switch account
+              </p>
               {accounts.length === 0 ? (
-                <p className="px-4 py-3 text-xs text-white/50">No other accounts</p>
+                <p className="px-4 py-3 text-xs text-fg-subtle">No other accounts</p>
               ) : (
                 accounts.map((account) => {
                   const isCurrent = account.email === currentEmail;
@@ -285,30 +321,23 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
                       key={account.email}
                       onClick={() => handleSwitchAccount(account)}
                       disabled={isCurrent}
-                      className={`
-                        w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all
-                        ${isCurrent
-                          ? "opacity-70 cursor-default"
-                          : "hover:bg-white/10"
-                        }
-                      `}
+                      className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition ${
+                        isCurrent ? "cursor-default" : "hover:bg-elev-2"
+                      }`}
                     >
-                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                        <User size={16} className="text-white/70" />
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-elev-2">
+                        <User size={15} className="text-fg-muted" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">
-                          {account.name || account.email}
-                        </p>
-                        <p className="text-[11px] text-white/50 truncate">{account.email}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-fg">{account.name || account.email}</p>
+                        <p className="truncate text-[11px] text-fg-subtle">{account.email}</p>
                       </div>
-                      {!isCurrent && (
-                        <ChevronRight size={16} className="text-white/40 shrink-0" />
-                      )}
-                      {isCurrent && (
-                        <span className="text-[10px] text-lime-400 font-medium shrink-0">
+                      {isCurrent ? (
+                        <span className="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
                           Current
                         </span>
+                      ) : (
+                        <ChevronRight size={15} className="shrink-0 text-fg-subtle" />
                       )}
                     </button>
                   );
@@ -319,84 +348,21 @@ export default function AppSidebar({ menuItems, profile, activeTab = "dashboard"
         </div>
       </div>
 
-      {/* Menu */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 px-4 py-4 space-y-3 overflow-y-auto no-scrollbar">
-          {mainItems.map((item) => {
-            const isActive = item.tab === activeTab;
-            const Icon = item.icon;
-
-            return (
-              <motion.button
-                type="button"
-                key={item.label}
-                whileHover={{ x: 4 }}
-                onClick={() => handleClick(item)}
-                className={`
-                  w-full flex items-center gap-4 px-5 py-3 rounded-xl
-                  transition min-w-0
-                  ${
-                    isActive
-                      ? "bg-lime-400/10 text-lime-400 border border-lime-400/20 shadow-[0_0_22px_rgba(163,230,53,0.18)]"
-                      : "text-white/60 hover:bg-white/5 hover:text-white"
-                  }
-                `}
-              >
-                <Icon
-                  size={20}
-                  className="flex-shrink-0"
-                  style={{ color: isActive ? PRIMARY_COLOR : "#9ca3af" }}
-                />
-                <div className="min-w-0 text-left">
-                  <span className="block truncate text-sm ">{item.label}</span>
-                  {item.description && (
-                    <span className="block truncate text-xs text-white/55">{item.description}</span>
-                  )}
-                </div>
-              </motion.button>
-            );
-          })}
+      {/* Navigation */}
+      <nav aria-label="Main" className="flex min-h-0 flex-1 flex-col">
+        <p className="px-6 pb-2 pt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-sidebar-muted/80">
+          Menu
+        </p>
+        <div className="no-scrollbar flex-1 space-y-0.5 overflow-y-auto px-3 pb-4">
+          {mainItems.map((item) => renderItem(item))}
         </div>
 
         {bottomItems.length > 0 && (
-          <div className="px-4 pb-4 pt-2 space-y-3 border-t border-white/10">
-            {bottomItems.map((item) => {
-              const isActive = item.tab === activeTab;
-              const isLogout = item.action === "logout";
-              const Icon = item.icon;
-              return (
-                <motion.button
-                  type="button"
-                  key={item.label}
-                  whileHover={{ x: 4 }}
-                  onClick={() => handleClick(item)}
-                  className={`
-                    w-full flex items-center gap-4 px-5 py-3 rounded-xl
-                    transition min-w-0
-                    ${
-                      isLogout
-                        ? "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                        : isActive
-                        ? "bg-lime-400/10 text-lime-400 border border-lime-400/20"
-                        : "text-white/60 hover:bg-white/5 hover:text-white"
-                    }
-                  `}
-                >
-                  <Icon
-                    size={20}
-                    className="flex-shrink-0"
-                    style={{
-                      color: isLogout ? "#f87171" : isActive ? PRIMARY_COLOR : "#9ca3af",
-                    }}
-                  />
-                  <span className="truncate text-sm">{item.label}</span>
-                </motion.button>
-              );
-            })}
+          <div className="space-y-0.5 border-t border-sidebar-line px-3 py-3">
+            {bottomItems.map((item) => renderItem(item, { compact: true }))}
           </div>
         )}
-      </div>
-
+      </nav>
     </aside>
   );
 }

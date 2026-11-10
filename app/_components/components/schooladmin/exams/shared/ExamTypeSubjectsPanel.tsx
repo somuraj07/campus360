@@ -39,15 +39,15 @@ export function ExamTypeSubjectsPanel({
   );
 
   return (
-    <div className="border-t border-white/10 px-3 py-3 space-y-2">
-      <p className="text-[10px] font-bold uppercase tracking-wide text-white/40">
+    <div className="border-t border-line px-3 py-3 space-y-2">
+      <p className="text-[10px] font-bold uppercase tracking-wide text-fg-subtle">
         Subjects for {examTypeName}
       </p>
-      <p className="text-[10px] text-white/35">
+      <p className="text-[10px] text-fg-subtle">
         Delete removes the subject from {examTypeName} only. It stays in the subjects list and in other exam types.
       </p>
       {subjects.length === 0 ? (
-        <p className="text-[10px] text-white/40">Add subjects first, then set max marks for each one.</p>
+        <p className="text-[10px] text-fg-subtle">Add subjects first, then set max marks for each one.</p>
       ) : (
         visibleSubjects.map((subjectName) => {
           const subjectKey = subjectName.trim().toUpperCase();
@@ -78,7 +78,7 @@ export function ExamTypeSubjectsPanel({
               type="button"
               disabled={subjectSaving}
               onClick={() => onRestoreOnExam(examTypeName, removedName)}
-              className="px-2.5 py-1 rounded-full text-[10px] font-bold border border-white/10 bg-white/5 text-white/50 hover:text-white disabled:opacity-50"
+              className="px-2.5 py-1 rounded-full text-[10px] font-bold border border-line bg-elev-1 text-fg-subtle hover:text-fg disabled:opacity-50"
             >
               {removedName} · add back
             </button>

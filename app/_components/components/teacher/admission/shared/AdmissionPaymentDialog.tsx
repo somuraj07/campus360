@@ -29,20 +29,20 @@ export function AdmissionPaymentDialog({
 }) {
   if (!dialog) return null;
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0B1220] p-5 space-y-4">
-        <div className="text-white font-semibold">
+    <div className="fixed inset-0 z-50 bg-overlay flex items-center justify-center p-4">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-surface p-5 space-y-4">
+        <div className="text-fg font-semibold">
           {dialog.feeType === "APPLICATION" ? "Pay Application Fee" : "Pay Admission Fee"}
         </div>
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-fg-muted">
           {`${dialog.row.firstName} ${dialog.row.lastName}`}
         </p>
         {paymentError && (
-          <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-300">
+          <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-300">
             {paymentError}
           </div>
         )}
-        <div className="rounded-xl border border-white/10 bg-white/5 p-3 space-y-1">
+        <div className="rounded-xl border border-line bg-elev-1 p-3 space-y-1">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <Select
               label="Payment Mode"
@@ -85,7 +85,7 @@ export function AdmissionPaymentDialog({
             type="button"
             onClick={onCancel}
             disabled={paying}
-            className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/70"
+            className="px-4 py-2 rounded-xl bg-elev-1 border border-line text-fg-muted"
           >
             Cancel
           </button>
@@ -93,7 +93,7 @@ export function AdmissionPaymentDialog({
             type="button"
             onClick={() => onPay(dialog.row, dialog.feeType)}
             disabled={paying}
-            className="px-4 py-2 rounded-xl bg-lime-400 text-black font-semibold disabled:opacity-60 flex items-center justify-center gap-2"
+            className="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold disabled:opacity-60 flex items-center justify-center gap-2"
           >
             {paying && <Loader2 size={16} className="animate-spin" />}
             {paying ? "Processing..." : "Pay Now"}

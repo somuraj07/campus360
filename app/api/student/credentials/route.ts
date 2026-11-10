@@ -70,7 +70,7 @@ function toExportRows(rows: StudentCredentialRow[]) {
     Class: r.className,
     Section: r.section,
     "Admission No": r.admissionNumber,
-    "Roll / Timelly ID": r.rollNo,
+    "Roll / RS Solutions ID": r.rollNo,
     "Account active": r.accountActive ? "Yes" : "No",
   }));
 }

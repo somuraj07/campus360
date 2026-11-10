@@ -32,17 +32,17 @@ const progressWidth = (value: number | null) =>
 const gradeLabel = (value: string | null) => value ?? "--";
 
 const progressColor = (value: number | null) => {
-  if (value === null) return "bg-white/20";
-  if (value >= 92) return "bg-lime-400";
+  if (value === null) return "bg-elev-3";
+  if (value >= 92) return "bg-primary";
   if (value >= 85) return "bg-amber-400";
   return "bg-orange-400";
 };
 
 const gradePillClass = (grade?: string | null) => {
   const g = grade?.toUpperCase() ?? "";
-  if (g === "A+" || g === "A") return "bg-lime-400/15 text-lime-300 border-lime-400/30";
-  if (g === "B+" || g === "B") return "bg-amber-400/15 text-amber-300 border-amber-400/30";
-  return "bg-white/10 text-white/80 border-white/20";
+  if (g === "A+" || g === "A") return "bg-primary/15 text-primary border-primary/30";
+  if (g === "B+" || g === "B") return "bg-amber-400/15 text-amber-700 dark:text-amber-300 border-amber-400/30";
+  return "bg-elev-2 text-fg border-line-strong";
 };
 
 const getPhotoUrl = (student: StudentWithMetrics) =>
@@ -94,17 +94,17 @@ export default function StudentsSection({
             onError={(e) => {
               e.currentTarget.src = AVATAR_URL;
             }}
-            className="w-10 h-10 rounded-xl object-cover border border-white/10"
+            className="w-10 h-10 rounded-xl object-cover border border-line"
           />
           <div>
             <div
-              className={`text-sm font-medium text-white group-hover:text-lime-400 transition-colors ${
-                expandedId === row.id ? "text-lime-300" : "text-white"
+              className={`text-sm font-medium text-fg group-hover:text-primary transition-colors ${
+                expandedId === row.id ? "text-primary" : "text-fg"
               }`}
             >
               {row.user?.name ?? "Unnamed Student"}
             </div>
-            {/* <div className="text-xs text-white/40">
+            {/* <div className="text-xs text-fg-subtle">
               {row.user?.email ?? "No email"}
             </div> */}
           </div>
@@ -117,7 +117,7 @@ export default function StudentsSection({
       align: "center",
       render: (row: StudentWithMetrics) => (
         <div className="flex items-center justify-center gap-3">
-          <div className="h-2 w-28 rounded-full bg-white/10 overflow-hidden">
+          <div className="h-2 w-28 rounded-full bg-elev-2 overflow-hidden">
             <div
               className={`h-full rounded-full ${progressColor(
                 row.metrics.attendancePct
@@ -125,7 +125,7 @@ export default function StudentsSection({
               style={{ width: progressWidth(row.metrics.attendancePct) }}
             />
           </div>
-          <span className="text-sm text-gray-300 font-medium">
+          <span className="text-sm text-fg-muted font-medium">
             {formatPercent(row.metrics.attendancePct)}
           </span>
         </div>
@@ -165,8 +165,8 @@ export default function StudentsSection({
             onClick={() => onToggleExpanded(row.id)}
             className={`p-2 rounded-xl transition-all ${
               isExpanded
-                ? "bg-lime-400 text-black"
-                : "bg-white/10 text-white/80 hover:bg-white/20"
+                ? "bg-primary text-on-primary"
+                : "bg-elev-2 text-fg hover:bg-elev-3"
             }`}
             aria-label="Toggle student details"
           >
@@ -178,8 +178,8 @@ export default function StudentsSection({
   ];
 
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl mt-3">
-      <div className="px-5 pt-5 sm:px-6 sm:pt-6 pb-4 border-b border-white/10">
+    <section className="rounded-2xl border border-line bg-elev-1 mt-3">
+      <div className="px-5 pt-5 sm:px-6 sm:pt-6 pb-4 border-b border-line">
         <SectionHeaderWithSearch
           title={`${classTitle} Students`}
           subtitle={`${students.length} students enrolled`}
@@ -187,7 +187,7 @@ export default function StudentsSection({
           onSearch={onSearch}
           searchPlaceholder="Search by name or roll number..."
           searchWidthClassName="md:w-[360px]"
-          searchInputClassName="rounded-full bg-white/5 border-white/10 text-white/80 placeholder-white/40"
+          searchInputClassName="rounded-full bg-elev-1 border-line text-fg placeholder:text-fg-faint"
         />
       </div>
 
@@ -198,9 +198,9 @@ export default function StudentsSection({
           emptyText="No students found."
           showMobile={false}
           container={false}
-          theadClassName="bg-white/5"
-          thClassName="text-white/50 tracking-[0.18em]"
-          rowClassName="hover:bg-white/5"
+          theadClassName="bg-elev-1"
+          thClassName="text-fg-subtle tracking-[0.18em]"
+          rowClassName="hover:bg-elev-2"
           tdClassName="py-5"
           pagination={{
             page: safePage,
@@ -211,50 +211,50 @@ export default function StudentsSection({
       </div>
 
       {expandedStudent && (
-        <div className="px-5 pb-5 sm:px-6 sm:pb-6 overflow-hidden bg-white/[0.02]">
+        <div className="px-5 pb-5 sm:px-6 sm:pb-6 overflow-hidden bg-elev-1">
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white/5 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-all">
-              <div className="font-semibold text-white mb-4 flex items-center gap-2 text-sm">
-                <Mail size={14} className="text-lime-400 lucide lucide-mail w-4 h-4"/>
+            <div className="bg-elev-1 rounded-2xl p-5 border border-line-subtle hover:border-line transition-all">
+              <div className="font-semibold text-fg mb-4 flex items-center gap-2 text-sm">
+                <Mail size={14} className="text-primary lucide lucide-mail w-4 h-4"/>
                 Contact Information
               </div>
               <div className="mt-4 space-y-3 text-sm">
                 <div>
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Email</div>
-                  <div className="text-sm font-medium text-gray-200">
+                  <div className="text-[10px] text-fg-subtle uppercase tracking-wider mb-0.5">Email</div>
+                  <div className="text-sm font-medium text-fg">
                     {expandedStudent.user?.email ?? "Not available"}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Parent Contact</div>
-                  <div className="text-sm font-medium text-gray-200">
+                  <div className="text-[10px] text-fg-subtle uppercase tracking-wider mb-0.5">Parent Contact</div>
+                  <div className="text-sm font-medium text-fg">
                     {expandedStudent.phoneNo ?? "Not available"}
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-all">
-              <div className="font-semibold text-white mb-4 flex items-center gap-2 text-sm">
-                <Award size={14} className="rounded-lg text-lime-400 lucide lucide-award w-4 h-4"/>
+            <div className="bg-elev-1 rounded-2xl p-5 border border-line-subtle hover:border-line transition-all">
+              <div className="font-semibold text-fg mb-4 flex items-center gap-2 text-sm">
+                <Award size={14} className="rounded-lg text-primary lucide lucide-award w-4 h-4"/>
                 Performance & Actions
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Avg Marks</span>
-                <span className="text-sm font-bold text-white">
+                <span className="text-sm text-fg-muted">Avg Marks</span>
+                <span className="text-sm font-bold text-fg">
                   {formatPercent(expandedStudent.metrics.avgMarksPct)}
                 </span>
               </div>
-              <div className="flex items-center justify-between text-sm text-white/70 mt-1 mb-2">
-                <span className="text-sm text-gray-400">Attendance</span>
-                <span className="text-white/90">
+              <div className="flex items-center justify-between text-sm text-fg-muted mt-1 mb-2">
+                <span className="text-sm text-fg-muted">Attendance</span>
+                <span className="text-fg">
                   {formatPercent(expandedStudent.metrics.attendancePct)}
                 </span>
               </div>
               <button
                 type="button"
-                className="mt-auto w-full rounded-full border border-lime-400/30
-                bg-lime-400/15 px-4 py-2 text-sm font-semibold text-lime-300 hover:bg-lime-400/25 transition"
+                className="mt-auto w-full rounded-full border border-primary/30
+                bg-primary/15 px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/25 transition"
                 onClick={()=>{router.push("/teacher?tab=chat")}}
               >
                 Message Parent
@@ -266,14 +266,14 @@ export default function StudentsSection({
 
       <div className="mt-4 md:hidden space-y-3 px-5 pb-5 sm:px-6 sm:pb-6">
         {pagedStudents.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-white/60 text-center">
+          <div className="rounded-2xl border border-line bg-elev-1 p-6 text-fg-muted text-center">
             No students found.
           </div>
         ) : (
           pagedStudents.map((student) => (
             <div
               key={student.id}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4"
+              className="rounded-2xl border border-line bg-elev-1 p-4"
             >
               <button
                 type="button"
@@ -287,51 +287,51 @@ export default function StudentsSection({
                     onError={(e) => {
                       e.currentTarget.src = AVATAR_URL;
                     }}
-                    className="h-10 w-10 rounded-full object-cover border border-white/10"
+                    className="h-10 w-10 rounded-full object-cover border border-line"
                   />
                   <div>
-                    <div className="text-white font-medium">
+                    <div className="text-fg font-medium">
                       {student.user?.name ?? "Unnamed Student"}
                     </div>
-                    <div className="text-xs text-white/40">
+                    <div className="text-xs text-fg-subtle">
                       Roll: {student.rollNo ?? student.admissionNumber ?? "--"}
                     </div>
                   </div>
                 </div>
                 {expandedId === student.id ? (
-                  <ChevronUp size={18} className="text-white/70" />
+                  <ChevronUp size={18} className="text-fg-muted" />
                 ) : (
-                  <ChevronDown size={18} className="text-white/70" />
+                  <ChevronDown size={18} className="text-fg-muted" />
                 )}
               </button>
 
               {expandedId === student.id && (
                 <div className="mt-4 space-y-3">
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                      <div className="text-xs text-white/50">Avg Marks</div>
-                      <div className="text-white/90 font-semibold">
+                    <div className="rounded-xl border border-line bg-elev-1 p-3">
+                      <div className="text-xs text-fg-subtle">Avg Marks</div>
+                      <div className="text-fg font-semibold">
                         {formatPercent(student.metrics.avgMarksPct)}
                       </div>
                     </div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                      <div className="text-xs text-white/50">Attendance</div>
-                      <div className="text-lime-300 font-semibold">
+                    <div className="rounded-xl border border-line bg-elev-1 p-3">
+                      <div className="text-xs text-fg-subtle">Attendance</div>
+                      <div className="text-primary font-semibold">
                         {formatPercent(student.metrics.attendancePct)}
                       </div>
                     </div>
                   </div>
 
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-fg-subtle">
                     Contact: {student.phoneNo ?? "Not available"}
                   </div>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-fg-subtle">
                     Email: {student.user?.email ?? "Not available"}
                   </div>
 
                   <button
                     type="button"
-                    className="w-full rounded-full border border-lime-400/30 bg-lime-400/10 px-4 py-2 text-sm font-semibold text-lime-300 hover:bg-lime-400/20 transition"
+                    className="w-full rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/20 transition"
                   >
                     Message
                   </button>

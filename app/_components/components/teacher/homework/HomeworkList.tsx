@@ -24,12 +24,12 @@ export default function HomeworkList({
 }: Props) {
   if (homeworks.length === 0) {
     return (
-      <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-12 text-center">
-        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-          <BookOpen className="text-white/20" size={32} />
+      <div className="bg-elev-1 border-b border-line rounded-2xl p-12 text-center">
+        <div className="w-16 h-16 bg-elev-1 rounded-full flex items-center justify-center mx-auto mb-4">
+          <BookOpen className="text-fg-faint" size={32} />
         </div>
-        <h3 className="text-lg font-medium text-white/60">No assignments found</h3>
-        <p className="text-sm text-white/40">Try adjusting your search or filters</p>
+        <h3 className="text-lg font-medium text-fg-muted">No assignments found</h3>
+        <p className="text-sm text-fg-subtle">Try adjusting your search or filters</p>
       </div>
     );
   }

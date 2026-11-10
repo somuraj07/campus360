@@ -77,21 +77,20 @@ export default function MobileMoreOptions({
       transition={{ type: "spring", damping: 30, stiffness: 300 }}
       className="
         fixed inset-x-0 bottom-0 z-50 min-[1100px]:hidden
-        bg-gradient-to-br from-[#0b1220] to-[#1a2332]/95
-        backdrop-blur-xl
-        rounded-t-3xl
-        border-t border-white/10
+        bg-gradient-to-br from-elev-2 to-elev-3/95
+                rounded-t-3xl
+        border-t border-line
         p-6 max-h-[80vh] overflow-y-auto no-scrollbar
       "
     >
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-white font-semibold text-lg">
+        <h3 className="text-fg font-semibold text-lg">
           More Options
         </h3>
         <button
           onClick={onClose}
-          className="p-1 rounded-lg text-white/60 hover:text-white hover:bg-white/10"
+          className="p-1 rounded-lg text-fg-muted hover:text-fg hover:bg-elev-3"
         >
           <X size={20} />
         </button>
@@ -113,8 +112,8 @@ export default function MobileMoreOptions({
                 gap-2 p-4 rounded-xl
                 transition-all
                 ${isSettings
-                  ? "bg-lime-500/10 border border-lime-500/30"
-                  : "bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20"
+                  ? "bg-primary/10 border border-primary/30"
+                  : "bg-elev-1 hover:bg-elev-3 border border-line-subtle hover:border-line-strong"
                 }
               `}
             >
@@ -123,7 +122,7 @@ export default function MobileMoreOptions({
               {/* FIXED TEXT */}
               <span
                 className="
-                  text-xs text-white/70
+                  text-xs text-fg-muted
                   text-center
                   leading-snug
                   break-words
@@ -147,7 +146,7 @@ export default function MobileMoreOptions({
             bg-red-500/10 hover:bg-red-500/20
             border border-red-500/30
             rounded-xl
-            text-red-400 font-medium
+            text-red-700 dark:text-red-400 font-medium
             flex items-center justify-center gap-2
           "
         >

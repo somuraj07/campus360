@@ -288,7 +288,7 @@ export async function buildStudentDetailsPdfBuffer(args: {
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     doc.setTextColor(148, 163, 184);
-    doc.text("Powered by Timelly", margin, pageH - 7);
+    doc.text("Powered by RS Solutions", margin, pageH - 7);
     doc.text(`Page ${p} of ${totalPages}`, pageW - margin, pageH - 7, { align: "right" });
   }
 

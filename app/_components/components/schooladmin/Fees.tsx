@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
-import PageHeader from "../common/PageHeader";
+import { SaPage, SaPageHeader, btnClass } from "../common/ui";
 import FeeStatCards from "./fees/FeeStatCards";
 import AdmissionFeeDayReport from "./fees/AdmissionFeeDayReport";
 import OfflinePaymentForm from "./fees/OfflinePaymentForm";
@@ -14,7 +14,7 @@ import ExtraFeesList from "./fees/ExtraFeesList";
 import FeeStructureConfig from "./fees/FeeStructureConfig";
 import FeeRecordsTable from "./fees/FeeRecordsTable";
 import FeeTransactionsList from "./fees/FeeTransactionsList";
-import FeesSectionNav from "./fees/FeesSectionNav";
+import FeesSectionNav, { feesSectionMeta } from "./fees/FeesSectionNav";
 import PettyCashSection from "./fees/PettyCashSection";
 import ReceiptLookup from "./fees/ReceiptLookup";
 import BulkFeeEdit from "./fees/BulkFeeEdit";
@@ -40,7 +40,7 @@ type FeesTabProps = {
 
 function SectionLoader() {
   return (
-    <div className="flex min-h-[200px] items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+    <div className="flex min-h-[200px] items-center justify-center rounded-2xl border border-line bg-elev-1">
       <Spinner />
     </div>
   );
@@ -69,6 +69,7 @@ function applySnapshot(
 
 export default function FeesTab({ section }: FeesTabProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session } = useSession();
   const schoolId = session?.user?.schoolId ?? null;
   const req = useMemo(() => feesRequirementsForSection(section), [section]);
@@ -179,23 +180,25 @@ export default function FeesTab({ section }: FeesTabProps) {
   const structuresList = structures ?? [];
   const extraFeesList = extraFees ?? [];
 
+  const sectionMeta = feesSectionMeta(pathname);
+
   return (
-    <div className="min-h-screen w-full overflow-x-hidden text-white">
-      <div className="w-full space-y-4 px-3 pb-6 sm:space-y-6 sm:px-4 md:px-6">
-        <PageHeader
-          title="Fees Management"
-          subtitle="Track and manage student fee payments with detailed breakdowns"
+    <SaPage>
+        <SaPageHeader
+          eyebrow="Finance"
+          title={sectionMeta.title}
+          description={sectionMeta.description}
         />
 
         <FeesSectionNav schoolId={schoolId} />
 
         {loadError && (
-          <div className="flex flex-col gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-2 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-800 dark:text-red-200 sm:flex-row sm:items-center sm:justify-between">
             <span>Couldn&apos;t load fees data: {loadError}</span>
             <button
               type="button"
               onClick={() => void fetchData({ revalidate: true })}
-              className="self-start rounded-lg border border-red-400/40 px-3 py-1.5 font-medium text-red-100 hover:bg-red-500/20 sm:self-auto"
+              className={`${btnClass("dangerSoft", "sm")} self-start sm:self-auto`}
             >
               Retry
             </button>
@@ -338,7 +341,6 @@ export default function FeesTab({ section }: FeesTabProps) {
             <PettyCashSection />
           </div>
         )}
-      </div>
-    </div>
+    </SaPage>
   );
 }

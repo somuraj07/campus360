@@ -16,22 +16,22 @@ export function ReportCardStudentList({
   onSelectStudent: (id: string) => void;
 }) {
   return (
-    <div className="lg:col-span-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
-      <div className="p-4 border-b border-white/10 bg-white/[0.02]">
-        <h3 className="font-bold text-white text-sm">
+    <div className="lg:col-span-4 rounded-2xl border border-line bg-elev-1 overflow-hidden">
+      <div className="p-4 border-b border-line bg-elev-1">
+        <h3 className="font-bold text-fg text-sm">
           Students{" "}
-          <span className="text-white/40 font-normal">
+          <span className="text-fg-subtle font-normal">
             ({filteredStudents.length})
           </span>
         </h3>
       </div>
-      <div className="max-h-[500px] overflow-y-auto divide-y divide-white/5">
+      <div className="max-h-[500px] overflow-y-auto divide-y divide-line-subtle">
         {classesLoading || studentsLoading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="w-8 h-8 border-2 border-lime-500/30 border-t-lime-500 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
           </div>
         ) : filteredStudents.length === 0 ? (
-          <p className="text-white/40 text-sm text-center py-8">
+          <p className="text-fg-subtle text-sm text-center py-8">
             {students.length === 0
               ? "No students found"
               : "No matching students"}
@@ -41,9 +41,9 @@ export function ReportCardStudentList({
             <button
               key={s.id}
               onClick={() => onSelectStudent(s.id)}
-              className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-all hover:bg-white/5 ${
+              className={`w-full text-left px-4 py-3 flex items-center gap-3 transition-all hover:bg-elev-2 ${
                 selectedStudentId === s.id
-                  ? "bg-lime-400/10 border-l-2 border-lime-400"
+                  ? "bg-primary/10 border-l-2 border-primary"
                   : "border-l-2 border-transparent"
               }`}
             >
@@ -53,15 +53,15 @@ export function ReportCardStudentList({
                 className="w-9 h-9 rounded-full flex-shrink-0"
               />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-white truncate">
+                <p className="text-sm font-medium text-fg truncate">
                   {s.name}
                 </p>
-                <p className="text-xs text-white/40">
+                <p className="text-xs text-fg-subtle">
                   Roll: {s.rollNo ?? "—"}
                 </p>
               </div>
               {selectedStudentId === s.id && (
-                <div className="ml-auto w-2 h-2 rounded-full bg-lime-400 flex-shrink-0" />
+                <div className="ml-auto w-2 h-2 rounded-full bg-primary flex-shrink-0" />
               )}
             </button>
           ))

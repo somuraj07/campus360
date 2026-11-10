@@ -1,4 +1,5 @@
-import { Calendar, FileText, DollarSign, Bell, Award } from "lucide-react";
+import { ArrowRight, Award, Bell, Calendar, FileText, IndianRupee, type LucideIcon } from "lucide-react";
+import { Badge, EmptyState, Panel, btnClass } from "@/app/_components/components/common/ui";
 
 interface ListItemProps {
   title: string;
@@ -9,76 +10,80 @@ interface ListItemProps {
   activityType?: "certificate" | "leave" | "fee" | "news";
 }
 
-const ActivityIcon = ({ type }: { type?: string }) => {
-  const cls = "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0";
-  switch (type) {
-    case "certificate":
-      return <div className={`${cls} bg-purple-500/20`}><Award className="w-5 h-5 text-purple-400" /></div>;
-    case "leave":
-      return <div className={`${cls} bg-amber-500/20`}><FileText className="w-5 h-5 text-amber-400" /></div>;
-    case "fee":
-      return <div className={`${cls} bg-lime-500/20`}><DollarSign className="w-5 h-5 text-lime-400" /></div>;
-    case "news":
-      return <div className={`${cls} bg-blue-500/20`}><Bell className="w-5 h-5 text-blue-400" /></div>;
-    default:
-      return <div className={`${cls} bg-white/5 border border-white/10`}><FileText className="w-5 h-5 text-gray-400" /></div>;
-  }
+const ACTIVITY: Record<string, { Icon: LucideIcon; tone: string }> = {
+  certificate: { Icon: Award, tone: "bg-violet-500/10 text-violet-700 dark:text-violet-300" },
+  leave: { Icon: FileText, tone: "bg-amber-500/10 text-amber-700 dark:text-amber-300" },
+  fee: { Icon: IndianRupee, tone: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" },
+  news: { Icon: Bell, tone: "bg-sky-500/10 text-sky-700 dark:text-sky-300" },
 };
+
+function initials(name: string) {
+  return name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
+}
 
 export const SidebarList = ({
   title,
   items,
   subtitle,
   showViewAll = true,
-  onViewAllClick
+  onViewAllClick,
 }: {
   title: string;
   items: ListItemProps[];
   subtitle?: string;
   showViewAll?: boolean;
-  onViewAllClick?:()=>void
+  onViewAllClick?: () => void;
 }) => (
-  <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-4 sm:p-6 md:p-8">
-    <div className="flex justify-between items-start gap-4 mb-4 sm:mb-6">
-      <div>
-        <h3 className="font-bold text-xl text-white">{title}</h3>
-        {subtitle && <p className="text-gray-400 text-sm mt-0.5">{subtitle}</p>}
-      </div>
-      {showViewAll && (
-        <button onClick={onViewAllClick} className="text-lime-400 text-xs font-bold hover:text-white transition-colors py-2 px-3 min-h-[44px] touch-manipulation -my-1">
-          View All
+  <Panel
+    title={title}
+    description={subtitle}
+    className="h-full"
+    bodyClassName="p-0"
+    actions={
+      showViewAll && onViewAllClick ? (
+        <button type="button" onClick={onViewAllClick} className={btnClass("ghost", "sm")}>
+          View All <ArrowRight size={14} />
         </button>
-      )}
-    </div>
-    <div className="space-y-0">
-      {items.map((item, idx) => (
-        <div key={idx} className="flex justify-between items-center py-4 sm:py-5 border-b border-white/5 last:border-0 gap-3">
-          <div className="flex gap-4 items-center min-w-0">
-            {item.type === "workshop" && (
-              <div className="w-10 h-10 rounded-full bg-lime-500/10 flex items-center justify-center flex-shrink-0">
-                <Calendar className="w-5 h-5 text-lime-400" />
+      ) : undefined
+    }
+  >
+    {items.length === 0 ? (
+      <EmptyState title="Nothing here right now" />
+    ) : (
+      <ul className="divide-y divide-line-subtle">
+        {items.map((item, idx) => {
+          const act = ACTIVITY[item.activityType ?? ""];
+          return (
+            <li key={idx} className="flex items-center justify-between gap-3 px-5 py-3.5">
+              <div className="flex min-w-0 items-center gap-3">
+                {item.type === "teacher" ? (
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xs font-semibold text-primary">
+                    {initials(item.title)}
+                  </span>
+                ) : item.type === "workshop" ? (
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Calendar size={16} />
+                  </span>
+                ) : (
+                  <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${act?.tone ?? "bg-elev-2 text-fg-subtle"}`}>
+                    {act ? <act.Icon size={16} /> : <FileText size={16} />}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-fg">{item.title}</p>
+                  <p className="truncate text-xs text-fg-subtle">{item.subtitle}</p>
+                  {item.meta && <p className="mt-0.5 text-[11px] text-fg-faint">{item.meta}</p>}
+                </div>
               </div>
-            )}
-            {item.type === "activity" && <ActivityIcon type={item.activityType} />}
-            <div className="min-w-0">
-              <p className="text-sm font-bold text-gray-100">{item.title}</p>
-              <p className="text-xs text-gray-500 font-medium mt-0.5">{item.subtitle}</p>
-              {item.meta && <p className="text-[11px] text-gray-500 mt-1.5">{item.meta}</p>}
-            </div>
-          </div>
-          {item.status && (
-            <span className={`text-[10px] font-bold px-2.5 py-1 rounded-lg flex-shrink-0 ${
-              item.status === "Approved" || item.status === "Confirmed"
-                ? "bg-lime-400/20 text-lime-400"
-                : item.status === "Pending"
-                  ? "bg-amber-400/20 text-amber-400"
-                  : "bg-white/10 text-white/70"
-            }`}>
-              {item.status}
-            </span>
-          )}
-        </div>
-      ))}
-    </div>
-  </div>
+              {item.status && (
+                <Badge tone={item.status === "Pending" ? "gold" : item.status === "Scheduled" ? "sky" : "green"} dot>
+                  {item.status}
+                </Badge>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </Panel>
 );

@@ -123,7 +123,7 @@ export default function ExtraFeesList({
   if (extraFees.length === 0) return null;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold mb-4">
         {`All Extra Fees (${extraFees.length}${
           extraFees.length > PAGE_SIZE
@@ -133,7 +133,7 @@ export default function ExtraFeesList({
       </h3>
       <div className="space-y-3 sm:hidden">
         {pageRows.map((ef) => (
-          <div key={ef.id} className="rounded-xl border border-white/10 bg-black/10 p-4">
+          <div key={ef.id} className="rounded-xl border border-line bg-well p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 {editingId === ef.id ? (
@@ -141,13 +141,13 @@ export default function ExtraFeesList({
                     type="text"
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-black/20 px-2 py-1.5 text-sm"
+                    className="h-9 w-full rounded-lg border px-2.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                   />
                 ) : (
-                  <div className="break-words text-white">
+                  <div className="break-words text-fg">
                     {ef.name}
                     {ef.splitIntoTwoInstallments ? (
-                      <span className="ml-1.5 text-[10px] font-semibold uppercase text-sky-300">2 inst.</span>
+                      <span className="ml-1.5 text-[10px] font-semibold uppercase text-sky-700 dark:text-sky-300">2 inst.</span>
                     ) : null}
                   </div>
                 )}
@@ -158,17 +158,17 @@ export default function ExtraFeesList({
                     type="number"
                     value={editAmount}
                     onChange={(e) => setEditAmount(e.target.value)}
-                    className="w-24 rounded-lg border border-white/10 bg-black/20 px-2 py-1.5 text-sm"
+                    className="h-9 w-24 rounded-lg border px-2.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                   />
                 ) : (
-                  <span className="text-white">₹{ef.amount.toLocaleString()}</span>
+                  <span className="text-fg">₹{ef.amount.toLocaleString()}</span>
                 )}
               </div>
             </div>
             <div
-              className={`mt-3 text-sm text-gray-400 ${
+              className={`mt-3 text-sm text-fg-muted ${
                 ef.targetType === "STUDENT" && ef.targetStudentId
-                  ? "cursor-pointer select-none underline-offset-2 hover:text-gray-200 hover:underline"
+                  ? "cursor-pointer select-none underline-offset-2 hover:text-fg hover:underline"
                   : ""
               }`}
               onMouseEnter={() => {
@@ -183,15 +183,15 @@ export default function ExtraFeesList({
               }}
             >
               Applies to: {targetLabel(ef, classes, students)}
-              <span className="block mt-1 text-xs text-white/50">Residency: {residencyLabel(ef.residencyScope)}</span>
+              <span className="block mt-1 text-xs text-fg-subtle">Residency: {residencyLabel(ef.residencyScope)}</span>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               {editingId === ef.id ? (
                 <>
-                  <label className="flex w-full cursor-pointer items-center gap-2 text-[11px] text-white/70">
+                  <label className="flex w-full cursor-pointer items-center gap-2 text-[11px] text-fg-muted">
                     <input
                       type="checkbox"
-                      className="h-3.5 w-3.5 rounded border-white/20 bg-black/40"
+                      className="h-3.5 w-3.5 rounded border-line-strong bg-well"
                       checked={editSplitIntoTwoInstallments}
                       onChange={(e) => setEditSplitIntoTwoInstallments(e.target.checked)}
                     />
@@ -200,14 +200,14 @@ export default function ExtraFeesList({
                   <button
                     type="button"
                     onClick={handleUpdate}
-                    className="rounded-lg bg-lime-500/20 px-3 py-1.5 text-xs text-lime-400 hover:bg-lime-500/30"
+                    className="rounded-lg bg-primary/20 px-3 py-1.5 text-xs text-primary hover:bg-primary/30"
                   >
                     Save
                   </button>
                   <button
                     type="button"
                     onClick={() => setEditingId(null)}
-                    className="rounded-lg border border-white/20 px-3 py-1.5 text-xs"
+                    className="rounded-lg border border-line-strong px-3 py-1.5 text-xs"
                   >
                     Cancel
                   </button>
@@ -217,7 +217,7 @@ export default function ExtraFeesList({
                   <button
                     type="button"
                     onClick={() => startEdit(ef)}
-                    className="rounded-lg p-2 hover:bg-white/10"
+                    className="rounded-lg p-2 hover:bg-elev-3"
                     title="Edit"
                   >
                     <Pencil size={14} />
@@ -225,7 +225,7 @@ export default function ExtraFeesList({
                   <button
                     type="button"
                     onClick={() => handleDelete(ef)}
-                    className="rounded-lg p-2 text-red-400 hover:bg-red-500/20"
+                    className="rounded-lg p-2 text-red-700 dark:text-red-400 hover:bg-red-500/20"
                     title="Delete"
                   >
                     <Trash2 size={14} />
@@ -239,7 +239,7 @@ export default function ExtraFeesList({
       <div className="-mx-4 hidden overflow-x-auto px-4 sm:block sm:mx-0 sm:px-0">
         <table className="min-w-[560px] w-full text-sm">
           <thead>
-            <tr className="text-left text-gray-400 border-b border-white/10">
+            <tr className="text-left text-fg-muted border-b border-line">
               <th className="py-3">Name</th>
               <th className="py-3">Amount</th>
               <th className="py-3">Applies To</th>
@@ -249,7 +249,7 @@ export default function ExtraFeesList({
           </thead>
           <tbody>
             {pageRows.map((ef) => (
-              <tr key={ef.id} className="border-b border-white/5">
+              <tr key={ef.id} className="border-b border-line-subtle">
                 <td className="py-3">
                   {editingId === ef.id ? (
                     <div className="flex flex-col gap-2">
@@ -257,12 +257,12 @@ export default function ExtraFeesList({
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="rounded-lg bg-black/20 border border-white/10 px-2 py-1.5 text-sm w-full max-w-[180px]"
+                        className="h-9 w-full max-w-[180px] rounded-lg border px-2.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                       />
-                      <label className="flex cursor-pointer items-center gap-2 text-[10px] text-white/60">
+                      <label className="flex cursor-pointer items-center gap-2 text-[10px] text-fg-muted">
                         <input
                           type="checkbox"
-                          className="h-3 w-3 rounded border-white/20 bg-black/40"
+                          className="h-3 w-3 rounded border-line-strong bg-well"
                           checked={editSplitIntoTwoInstallments}
                           onChange={(e) => setEditSplitIntoTwoInstallments(e.target.checked)}
                         />
@@ -270,10 +270,10 @@ export default function ExtraFeesList({
                       </label>
                     </div>
                   ) : (
-                    <span className="text-white">
+                    <span className="text-fg">
                       {ef.name}
                       {ef.splitIntoTwoInstallments ? (
-                        <span className="ml-1.5 text-[10px] font-semibold uppercase text-sky-300">2 inst.</span>
+                        <span className="ml-1.5 text-[10px] font-semibold uppercase text-sky-700 dark:text-sky-300">2 inst.</span>
                       ) : null}
                     </span>
                   )}
@@ -284,16 +284,16 @@ export default function ExtraFeesList({
                       type="number"
                       value={editAmount}
                       onChange={(e) => setEditAmount(e.target.value)}
-                      className="rounded-lg bg-black/20 border border-white/10 px-2 py-1.5 text-sm w-24"
+                      className="h-9 w-24 rounded-lg border px-2.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
                     />
                   ) : (
-                    <span className="text-white">₹{ef.amount.toLocaleString()}</span>
+                    <span className="text-fg">₹{ef.amount.toLocaleString()}</span>
                   )}
                 </td>
                 <td
-                  className={`py-3 text-gray-400 ${
+                  className={`py-3 text-fg-muted ${
                     ef.targetType === "STUDENT" && ef.targetStudentId
-                      ? "cursor-pointer select-none underline-offset-2 hover:underline hover:text-gray-200"
+                      ? "cursor-pointer select-none underline-offset-2 hover:underline hover:text-fg"
                       : ""
                   }`}
                   title={
@@ -314,21 +314,21 @@ export default function ExtraFeesList({
                 >
                   {targetLabel(ef, classes, students)}
                 </td>
-                <td className="py-3 text-gray-400">{residencyLabel(ef.residencyScope)}</td>
+                <td className="py-3 text-fg-muted">{residencyLabel(ef.residencyScope)}</td>
                 <td className="py-3">
                   {editingId === ef.id ? (
                     <div className="flex gap-1">
                       <button
                         type="button"
                         onClick={handleUpdate}
-                        className="px-2 py-1 rounded-lg bg-lime-500/20 text-lime-400 text-xs hover:bg-lime-500/30"
+                        className="px-2 py-1 rounded-lg bg-primary/20 text-primary text-xs hover:bg-primary/30"
                       >
                         Save
                       </button>
                       <button
                         type="button"
                         onClick={() => setEditingId(null)}
-                        className="px-2 py-1 rounded-lg border border-white/20 text-xs"
+                        className="px-2 py-1 rounded-lg border border-line-strong text-xs"
                       >
                         Cancel
                       </button>
@@ -338,7 +338,7 @@ export default function ExtraFeesList({
                       <button
                         type="button"
                         onClick={() => startEdit(ef)}
-                        className="p-1.5 rounded-lg hover:bg-white/10"
+                        className="p-1.5 rounded-lg hover:bg-elev-3"
                         title="Edit"
                       >
                         <Pencil size={14} />
@@ -346,7 +346,7 @@ export default function ExtraFeesList({
                       <button
                         type="button"
                         onClick={() => handleDelete(ef)}
-                        className="p-1.5 rounded-lg hover:bg-red-500/20 text-red-400"
+                        className="p-1.5 rounded-lg hover:bg-red-500/20 text-red-700 dark:text-red-400"
                         title="Delete"
                       >
                         <Trash2 size={14} />

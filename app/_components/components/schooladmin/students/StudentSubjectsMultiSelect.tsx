@@ -107,20 +107,20 @@ export default function StudentSubjectsMultiSelect({
 
   return (
     <div className="md:col-span-2 xl:col-span-3">
-      <label className="block text-xs font-medium text-white/70 mb-1.5">
+      <label className="block text-xs font-medium text-fg-muted mb-1.5">
         Subjects
       </label>
-      <p className="text-[11px] text-white/45 mb-2">
+      <p className="text-[11px] text-fg-subtle mb-2">
         From exam &amp; syllabus catalog. Select the subjects this student takes.
       </p>
       <div className="flex flex-wrap gap-2 mb-2 min-h-[28px]">
         {selected.length === 0 ? (
-          <span className="text-xs text-white/40">No subjects selected</span>
+          <span className="text-xs text-fg-subtle">No subjects selected</span>
         ) : (
           selected.map((s) => (
             <span
               key={s}
-              className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-lime-400/20 border border-lime-400/30 text-lime-300 text-sm"
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-primary/20 border border-primary/30 text-primary text-sm"
             >
               {s}
               <button
@@ -128,7 +128,7 @@ export default function StudentSubjectsMultiSelect({
                 onClick={() =>
                   onChange(selected.filter((x) => x !== s))
                 }
-                className="hover:text-white"
+                className="hover:text-fg"
                 aria-label={`Remove ${s}`}
               >
                 ×
@@ -145,7 +145,7 @@ export default function StudentSubjectsMultiSelect({
             const v = e.target.value;
             if (v) addSubject(v);
           }}
-          className="flex-1 pl-4 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-lime-400/50 text-gray-300 text-sm disabled:opacity-50"
+          className="flex-1 pl-4 pr-4 py-3 bg-well border border-line rounded-xl focus:outline-none focus:ring-1 focus:ring-primary/50 text-fg-muted text-sm disabled:opacity-50"
         >
           <option value="">
             {loading
@@ -162,7 +162,7 @@ export default function StudentSubjectsMultiSelect({
         </select>
       </div>
       {error ? (
-        <p className="text-xs text-red-400 mt-1.5" role="alert">
+        <p className="text-xs text-red-700 dark:text-red-400 mt-1.5" role="alert">
           {error}
         </p>
       ) : null}

@@ -23,7 +23,7 @@ export default function ChatList({ chats, onSelect }: Props) {
         <button
           key={chat.id}
           onClick={() => onSelect(chat)}
-          className="w-full p-3 rounded-xl flex gap-3 bg-white/5 hover:bg-white/10 transition text-left"
+          className="w-full p-3 rounded-xl flex gap-3 bg-elev-1 hover:bg-elev-3 transition text-left"
         >
           <img
             src={chat.avatar}
@@ -32,13 +32,13 @@ export default function ChatList({ chats, onSelect }: Props) {
           />
 
           <div className="flex-1 min-w-0">
-            <p className="font-semibold text-sm truncate text-white">
+            <p className="font-semibold text-sm truncate text-fg">
               {chat.parent}
             </p>
-            <p className="text-xs text-lime-400 truncate">
+            <p className="text-xs text-primary truncate">
               Parent of {chat.student}
             </p>
-            <p className="text-xs text-gray-400 truncate">
+            <p className="text-xs text-fg-muted truncate">
               {chat.lastMessage}
             </p>
           </div>

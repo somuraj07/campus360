@@ -42,39 +42,39 @@ export const STATUS_META: Record<
 > = {
   PRESENT: {
     label: "Present",
-    dotClass: "bg-[#A3E635]/70",
-    cardBg: "bg-lime-400/20 border border-lime-300/20",
-    textClass: "text-lime-300",
+    dotClass: "bg-primary/70",
+    cardBg: "bg-primary/20 border border-primary/20",
+    textClass: "text-primary",
   },
   ABSENT: {
     label: "Absent",
     dotClass: "bg-red-500/70",
     cardBg: "bg-red-500/20 border border-red-400/20",
-    textClass: "text-red-300",
+    textClass: "text-red-700 dark:text-red-300",
   },
   LATE: {
     label: "Late",
     dotClass: "bg-orange-500/70",
     cardBg: "bg-orange-500/20 border border-orange-400/20",
-    textClass: "text-orange-300",
+    textClass: "text-orange-700 dark:text-orange-300",
   },
   HOLIDAY: {
     label: "Holiday",
     dotClass: "bg-purple-500/70",
     cardBg: "bg-violet-500/20 border border-violet-300/20",
-    textClass: "text-violet-300",
+    textClass: "text-violet-700 dark:text-violet-300",
   },
   WEEKEND: {
     label: "Weekend",
-    dotClass: "bg-white/30",
-    cardBg: "bg-white/10 border border-white/10",
-    textClass: "text-white/70",
+    dotClass: "bg-elev-3",
+    cardBg: "bg-elev-2 border border-line",
+    textClass: "text-fg-muted",
   },
   NONE: {
     label: "No Record",
-    dotClass: "bg-white/10",
-    cardBg: "bg-white/[0.04] border border-white/5",
-    textClass: "text-white/40",
+    dotClass: "bg-elev-2",
+    cardBg: "bg-elev-1 border border-line-subtle",
+    textClass: "text-fg-subtle",
   },
 };
 

@@ -10,9 +10,9 @@ export function SelectedDaySection({
   selectedDayRecords: AttendanceRecord[];
 }) {
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/[0.05] p-3.5 sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-3.5 sm:p-6">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h3 className="text-lg sm:text-xl font-semibold text-white">{selectedDayLabel}</h3>
+        <h3 className="text-lg sm:text-xl font-semibold text-fg">{selectedDayLabel}</h3>
         <span
           className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${STATUS_META[selectedDayStatus].cardBg} ${STATUS_META[selectedDayStatus].textClass}`}
         >
@@ -36,7 +36,7 @@ export function SelectedDaySection({
             })}
           </div>
         ) : (
-          <p className="text-sm text-white/60">No period-wise attendance records are available for this date.</p>
+          <p className="text-sm text-fg-muted">No period-wise attendance records are available for this date.</p>
         )}
       </div>
     </section>

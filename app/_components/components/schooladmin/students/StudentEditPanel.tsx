@@ -28,13 +28,13 @@ export default function StudentEditPanel({
   onSave,
 }: Props) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0f1724] p-6 shadow-2xl">
+    <div className="rounded-2xl border border-line bg-surface p-6 shadow-card">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-lime-300 font-semibold">
+        <div className="flex items-center gap-2 text-primary font-semibold">
           <Save size={18} />
           Editing {studentName}
         </div>
-        <button onClick={onClose} className="text-white/60 hover:text-white">
+        <button onClick={onClose} className="text-fg-muted hover:text-fg">
           <X size={18} />
         </button>
       </div>
@@ -116,7 +116,7 @@ export default function StudentEditPanel({
         <button
           onClick={onSave}
           disabled={saving}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-lime-400 px-5 py-3 text-sm font-semibold text-black hover:bg-lime-300 disabled:opacity-60"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-60"
         >
           <Save size={16} />
           {saving ? "Saving..." : "Save Changes"}

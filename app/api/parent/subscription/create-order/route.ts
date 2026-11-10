@@ -131,7 +131,7 @@ export async function POST(req: Request) {
       customer_phone: phone,
       first_name: firstName,
       last_name: lastName,
-      description: "Parent subscription - Timelly",
+      description: "Parent subscription - RS Solutions",
       customer_id: customerId,
       order_id: orderId,
       return_url: "http://hyperpg.in/",

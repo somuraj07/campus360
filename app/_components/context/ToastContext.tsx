@@ -36,7 +36,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`px-4 py-2 rounded-md shadow text-white text-sm
+            className={`px-4 py-2 rounded-md shadow text-fg text-sm
               ${toast.type === "success" && "bg-green-600"}
               ${toast.type === "error" && "bg-red-600"}
               ${toast.type === "info" && "bg-blue-600"}

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { fetchClassList } from "@/lib/api/classList";
 import { formatRupee } from "@/lib/formatRupee";
+import { fieldClass } from "../../common/ui";
 
 type PickStudent = { id: string; admissionNumber: string; name: string; className: string; residency: string };
 type ClassOption = { id: string; name: string; section: string | null };
@@ -35,8 +36,7 @@ type HistoryRow = {
   undoneByName: string | null;
 };
 
-const inputClass =
-  "w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-lime-400/50 focus:outline-none";
+const inputClass = fieldClass;
 const btn =
   "rounded-xl px-4 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50";
 
@@ -210,9 +210,9 @@ export default function BulkFeeEdit() {
   };
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold">Bulk fee edit</h3>
-      <p className="mt-1 text-sm text-gray-400">
+      <p className="mt-1 text-sm text-fg-muted">
         Set one fee head (for example Hostel Fee or Transport) to the same amount for many students at once. Only this
         year&apos;s records change. You see every student&apos;s before and after first, and the whole change can be undone.
         School, class and section fees are not touched: a student who already gets a fee with that name from one of those is
@@ -220,7 +220,7 @@ export default function BulkFeeEdit() {
       </p>
 
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           Class
           <select className={`${inputClass} mt-1`} value={classId} onChange={(e) => setClassId(e.target.value)}>
             <option value="">All classes</option>
@@ -232,7 +232,7 @@ export default function BulkFeeEdit() {
             ))}
           </select>
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           Residency
           <select className={`${inputClass} mt-1`} value={residency} onChange={(e) => setResidency(e.target.value)}>
             <option value="">Hostel and day scholars</option>
@@ -240,7 +240,7 @@ export default function BulkFeeEdit() {
             <option value="DAY_SCHOLAR">Day scholars only</option>
           </select>
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           Fee head name
           <input
             className={`${inputClass} mt-1`}
@@ -253,7 +253,7 @@ export default function BulkFeeEdit() {
             maxLength={100}
           />
         </label>
-        <label className="block text-xs text-gray-400">
+        <label className="block text-xs text-fg-muted">
           Amount (₹) for the full year
           <input
             className={`${inputClass} mt-1`}
@@ -268,7 +268,7 @@ export default function BulkFeeEdit() {
         </label>
       </div>
 
-      <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-3">
+      <div className="mt-4 rounded-xl border border-line bg-well p-3">
         <div className="flex flex-wrap items-center gap-2">
           <input
             className={`${inputClass} max-w-xs`}
@@ -276,7 +276,7 @@ export default function BulkFeeEdit() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search name or admission no."
           />
-          <button type="button" onClick={selectAllVisible} className={`${btn} border border-white/15 text-white/80 hover:bg-white/5`}>
+          <button type="button" onClick={selectAllVisible} className={`${btn} border border-line text-fg hover:bg-elev-2`}>
             Select shown (max {maxPick})
           </button>
           <button
@@ -285,29 +285,29 @@ export default function BulkFeeEdit() {
               setSelected(new Set());
               setPlan(null);
             }}
-            className={`${btn} border border-white/15 text-white/80 hover:bg-white/5`}
+            className={`${btn} border border-line text-fg hover:bg-elev-2`}
           >
             Clear
           </button>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-fg-muted">
             {selected.size} selected{selected.size > maxPick ? ` (over the ${maxPick} limit)` : ""} · {students.length} students
           </span>
         </div>
-        <div className="mt-3 max-h-64 overflow-y-auto rounded-lg border border-white/5">
+        <div className="mt-3 max-h-64 overflow-y-auto rounded-lg border border-line-subtle">
           {loadingStudents ? (
-            <p className="p-4 text-sm text-gray-400">Loading students…</p>
+            <p className="p-4 text-sm text-fg-muted">Loading students…</p>
           ) : visible.length === 0 ? (
-            <p className="p-4 text-sm text-gray-400">No students found.</p>
+            <p className="p-4 text-sm text-fg-muted">No students found.</p>
           ) : (
-            <ul className="divide-y divide-white/5 text-sm">
+            <ul className="divide-y divide-line-subtle text-sm">
               {visible.map((s) => (
                 <li key={s.id}>
-                  <label className="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-white/5">
+                  <label className="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-elev-2">
                     <input type="checkbox" checked={selected.has(s.id)} onChange={() => toggle(s.id)} />
-                    <span className="min-w-0 flex-1 truncate text-white">{s.name || "-"}</span>
-                    <span className="font-mono text-xs text-gray-400">{s.admissionNumber}</span>
-                    <span className="hidden text-xs text-gray-400 sm:inline">{s.className}</span>
-                    <span className="text-xs text-gray-500">{s.residency}</span>
+                    <span className="min-w-0 flex-1 truncate text-fg">{s.name || "-"}</span>
+                    <span className="font-mono text-xs text-fg-muted">{s.admissionNumber}</span>
+                    <span className="hidden text-xs text-fg-muted sm:inline">{s.className}</span>
+                    <span className="text-xs text-fg-subtle">{s.residency}</span>
                   </label>
                 </li>
               ))}
@@ -317,15 +317,15 @@ export default function BulkFeeEdit() {
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
-        <button type="button" onClick={() => void preview()} disabled={!canPreview || busy !== null} className={`${btn} bg-lime-400 text-black hover:bg-lime-300`}>
+        <button type="button" onClick={() => void preview()} disabled={!canPreview || busy !== null} className={`${btn} bg-primary text-on-primary hover:bg-primary-hover`}>
           {busy === "preview" ? "Checking…" : "Preview changes"}
         </button>
-        {error ? <p className="text-sm text-red-300">{error}</p> : null}
+        {error ? <p className="text-sm text-red-700 dark:text-red-300">{error}</p> : null}
       </div>
 
       {plan ? (
-        <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-3">
-          <p className="text-sm text-white">
+        <div className="mt-4 rounded-xl border border-line bg-well p-3">
+          <p className="text-sm text-fg">
             <strong>{plan.willChange}</strong> student{plan.willChange === 1 ? "" : "s"} will change
             {plan.skipped > 0 ? `, ${plan.skipped} skipped` : ""}. Total change in fees:{" "}
             <strong>
@@ -333,10 +333,10 @@ export default function BulkFeeEdit() {
             </strong>
             .
           </p>
-          <div className="mt-3 max-h-80 overflow-auto rounded-lg border border-white/5">
+          <div className="mt-3 max-h-80 overflow-auto rounded-lg border border-line-subtle">
             <table className="w-full min-w-[640px] text-left text-xs">
               <thead>
-                <tr className="bg-white/5 text-[11px] uppercase tracking-wider text-gray-400">
+                <tr className="bg-elev-1 text-[11px] uppercase tracking-wider text-fg-muted">
                   <th className="px-3 py-2">Student</th>
                   <th className="px-3 py-2">Class</th>
                   <th className="px-3 py-2 text-right">Now</th>
@@ -345,11 +345,11 @@ export default function BulkFeeEdit() {
                   <th className="px-3 py-2">Note</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 text-white/90">
+              <tbody className="divide-y divide-line-subtle text-fg">
                 {plan.items.map((i) => (
-                  <tr key={i.studentId} className={i.action === "SKIP" ? "text-white/45" : ""}>
+                  <tr key={i.studentId} className={i.action === "SKIP" ? "text-fg-subtle" : ""}>
                     <td className="px-3 py-2">
-                      {i.name || "-"} <span className="font-mono text-gray-500">{i.admissionNumber}</span>
+                      {i.name || "-"} <span className="font-mono text-fg-subtle">{i.admissionNumber}</span>
                     </td>
                     <td className="px-3 py-2">{i.className || "-"}</td>
                     <td className="px-3 py-2 text-right tabular-nums">₹{formatRupee(i.currentAmount)}</td>
@@ -371,20 +371,20 @@ export default function BulkFeeEdit() {
         </div>
       ) : null}
 
-      <h4 className="mt-6 text-sm font-semibold text-white">Recent bulk edits</h4>
+      <h4 className="mt-6 text-sm font-semibold text-fg">Recent bulk edits</h4>
       {history.length === 0 ? (
-        <p className="mt-2 text-sm text-gray-400">No bulk edits yet.</p>
+        <p className="mt-2 text-sm text-fg-muted">No bulk edits yet.</p>
       ) : (
         <ul className="mt-2 space-y-2">
           {history.map((h) => (
-            <li key={h.id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-xs text-gray-300">
+            <li key={h.id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-well px-3 py-2 text-xs text-fg-muted">
               <span>
-                <strong className="text-white">{h.headName}</strong> set to ₹{formatRupee(h.amount)} for {h.studentCount} students (
+                <strong className="text-fg">{h.headName}</strong> set to ₹{formatRupee(h.amount)} for {h.studentCount} students (
                 {h.totalDelta >= 0 ? "+" : "-"}₹{formatRupee(Math.abs(h.totalDelta))}) by {h.actorName ?? "unknown"} on {fmtDate(h.createdAt)}
                 {h.status === "UNDONE" ? ` · undone ${h.undoneAt ? fmtDate(h.undoneAt) : ""}${h.undoneByName ? ` by ${h.undoneByName}` : ""}` : ""}
               </span>
               {h.status === "APPLIED" ? (
-                <button type="button" onClick={() => void undo(h)} disabled={busy !== null} className={`${btn} border border-amber-400/40 py-1 text-amber-200 hover:bg-amber-400/10`}>
+                <button type="button" onClick={() => void undo(h)} disabled={busy !== null} className={`${btn} border border-amber-400/40 py-1 text-amber-800 dark:text-amber-200 hover:bg-amber-400/10`}>
                   Undo
                 </button>
               ) : null}

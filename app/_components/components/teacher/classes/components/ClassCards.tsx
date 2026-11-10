@@ -23,7 +23,7 @@ export default function ClassCards({
 }: ClassCardsProps) {
   if (classes.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-white/60">
+      <div className="rounded-2xl border border-line bg-elev-1 p-6 text-fg-muted">
         No classes available yet.
       </div>
     );
@@ -42,28 +42,28 @@ export default function ClassCards({
             aria-pressed={isActive}
           >
             <StatCard
-              className={`bg-white/5 transition-all ${
+              className={`bg-elev-1 transition-all ${
                 isActive
-                  ? "border-lime-400/40 shadow-[0_0_20px_rgba(163,230,53,0.2)]"
+                  ? "border-primary/40 "
                   : ""
               }`}
             >
               <div className="flex items-start justify-between">
-                <div className="p-3 rounded-xl bg-white/5">
-                  <Users size={18} className={isActive?"text-lime-400":"text-gray-400"} />
+                <div className="p-3 rounded-xl bg-elev-1">
+                  <Users size={18} className={isActive?"text-primary":"text-fg-muted"} />
                 </div>
                 {isActive && (
-                  <span className="h-2.5 w-2.5 rounded-full bg-lime-400 shadow-[0_0_10px_rgba(163,230,53,0.6)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-primary " />
                 )}
               </div>
               <div className="mt-5">
-                <h4 className="text-lg font-semibold text-white">
+                <h4 className="text-lg font-semibold text-fg">
                   {getClassLabel(c)}
                 </h4>
-                <p className="text-sm text-lime-300 mt-1">
+                <p className="text-sm text-primary mt-1">
                   Subject: {getSubjectLabel(c)}
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-fg-muted mt-2">
                   {c._count?.students ?? 0} Students
                 </p>
               </div>

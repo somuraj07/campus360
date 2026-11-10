@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { TeacherDashboardContent } from "./dashboardComponents/TeacherDashboardSections";
 import { TeacherDashboardData } from "./dashboardComponents/types";
 import TimellyLoader from "../../common/TimellyLoader";
+import { SaPage, SaPageHeader, btnClass } from "../../common/ui";
+import { BookOpen, MessageSquare } from "lucide-react";
 import {
   loadTeacherDashboard,
   peekTeacherDashboard,
@@ -66,7 +68,7 @@ export default function TeacherDashboard() {
   if (error && !data) {
     return (
       <main className="flex-1 overflow-y-auto px-3 sm:px-4">
-        <div className="py-6 sm:p-6 text-center text-red-400">{error}</div>
+        <div className="py-6 sm:p-6 text-center text-red-700 dark:text-red-400">{error}</div>
       </main>
     );
   }
@@ -74,27 +76,26 @@ export default function TeacherDashboard() {
   const stats = data?.stats ?? { totalClasses: 0, pendingChats: 0 };
 
   return (
-    <div className="transition-all duration-500 opacity-100 scale-100 blur-0 
-        animate-fadeIn max-w-7xl mx-auto space-y-6 pb-6 animate-fadeIn">
-      <div className="
-               rounded-2xl p-6 relative overflow-hidden group bg-white/5 backdrop-blur-xl border-b border-white/10
-                    ">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-white tracking-tight">
-          {getGreeting()}, {data?.profile?.name ?? "Teacher"} ☀️
-        </h1>
-
-        <p className="text-gray-400 text-sm md:text-base max-w-2xl">
-          Welcome back to your dashboard. You have{" "}
-          <span className="text-lime-300 font-semibold">
-            {stats.totalClasses} classes
-          </span>{" "}
-          scheduled for today and{" "}
-          <span className="text-lime-300 font-semibold">
-            {stats.pendingChats} new messages
-          </span>{" "}
-          from parents.
-        </p>
-      </div>
+    <SaPage>
+      <SaPageHeader
+        eyebrow={new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+        title={`${getGreeting()}, ${data?.profile?.name ?? "Teacher"}`}
+        description={`You teach ${stats.totalClasses} class${stats.totalClasses === 1 ? "" : "es"} and have ${
+          stats.pendingChats
+        } new parent message${stats.pendingChats === 1 ? "" : "s"}.`}
+        actions={
+          <>
+            <button type="button" onClick={() => router.push("/teacher?tab=chat")} className={btnClass("secondary")}>
+              <MessageSquare size={16} />
+              Messages
+            </button>
+            <button type="button" onClick={() => router.push("/teacher?tab=classes")} className={btnClass("primary")}>
+              <BookOpen size={16} />
+              My classes
+            </button>
+          </>
+        }
+      />
 
       {data && (
         <TeacherDashboardContent
@@ -103,6 +104,6 @@ export default function TeacherDashboard() {
           onOpenChat={() => router.push("/teacher?tab=chat")}
         />
       )}
-    </div>
+    </SaPage>
   );
 }

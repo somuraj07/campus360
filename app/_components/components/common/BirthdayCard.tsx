@@ -42,16 +42,16 @@ export function BirthdayCard({ schoolId, action }: Props) {
   }, [schoolId]);
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-4 sm:p-6 md:p-8">
+    <div className="h-full rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
       <div className="flex justify-between items-start gap-4 mb-4 sm:mb-6">
         <div>
-          <h3 className="font-bold text-xl text-white">Today&apos;s Birthdays</h3>
-          <p className="text-gray-400 text-sm mt-0.5">Students celebrating today</p>
+          <h3 className="text-[15px] font-semibold text-fg">Today&apos;s Birthdays</h3>
+          <p className="text-fg-muted text-sm mt-0.5">Students celebrating today</p>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           {action}
           {data && data.count > 0 && (
-            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-lime-400/20 text-lime-400">
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-primary/20 text-primary">
               {data.count}
             </span>
           )}
@@ -59,34 +59,34 @@ export function BirthdayCard({ schoolId, action }: Props) {
       </div>
 
       {error ? (
-        <p className="text-sm text-red-300/80">{error}</p>
+        <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
       ) : !data ? (
         <div className="space-y-3 animate-pulse" aria-label="Loading birthdays">
-          <div className="h-10 rounded-xl bg-white/5" />
-          <div className="h-10 rounded-xl bg-white/5" />
+          <div className="h-10 rounded-xl bg-elev-1" />
+          <div className="h-10 rounded-xl bg-elev-1" />
         </div>
       ) : data.students.length === 0 ? (
-        <p className="text-sm text-gray-500">No student birthdays today.</p>
+        <p className="text-sm text-fg-subtle">No student birthdays today.</p>
       ) : (
         <div className="max-h-72 overflow-y-auto space-y-0">
           {data.students.map((s) => (
             <div
               key={s.id}
-              className="flex justify-between items-center py-3 border-b border-white/5 last:border-0 gap-3"
+              className="flex justify-between items-center py-3 border-b border-line-subtle last:border-0 gap-3"
             >
               <div className="flex gap-4 items-center min-w-0">
                 <div className="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center flex-shrink-0">
-                  <Cake className="w-5 h-5 text-pink-400" />
+                  <Cake className="w-5 h-5 text-pink-700 dark:text-pink-400" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-gray-100 truncate">{s.name}</p>
-                  <p className="text-xs text-gray-500 font-medium mt-0.5 truncate">
+                  <p className="text-sm font-bold text-fg truncate">{s.name}</p>
+                  <p className="text-xs text-fg-subtle font-medium mt-0.5 truncate">
                     {s.admissionNumber ? `${s.className} • ${s.admissionNumber}` : s.className}
                   </p>
                 </div>
               </div>
               {typeof s.turning === "number" && s.turning > 0 && (
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-white/10 text-white/70 flex-shrink-0">
+                <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-elev-2 text-fg-muted flex-shrink-0">
                   Turns {s.turning}
                 </span>
               )}

@@ -17,12 +17,12 @@ export default function EditProfileForm({
   onSave,
 }: EditProfileFormProps) {
   return (
-    <section className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
+    <section className="overflow-hidden rounded-2xl border border-line bg-elev-1 ">
       <div className="flex items-center gap-2.5 p-5 sm:px-6">
-        <SquarePen size={20} className="text-lime-400" />
-        <h3 className="text-[20px] font-bold leading-tight text-white sm:text-xl">Edit Information</h3>
+        <SquarePen size={20} className="text-primary" />
+        <h3 className="text-[20px] font-bold leading-tight text-fg sm:text-xl">Edit Information</h3>
       </div>
-      <div className="h-px bg-white/10" />
+      <div className="h-px bg-elev-2" />
 
       <div className="space-y-5 px-5 py-5 sm:px-6 sm:py-6">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -55,7 +55,7 @@ export default function EditProfileForm({
           />
         </div>
 
-        <h3 className="p-2 text-[16px] font-bold leading-tight text-white sm:text-xl">Contact Information</h3>
+        <h3 className="p-2 text-[16px] font-bold leading-tight text-fg sm:text-xl">Contact Information</h3>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <LocalInput label="Email" value={formData.email} onChange={(value) => onChange("email", value)} />
           <LocalInput label="Phone Number" value={formData.phone} onChange={(value) => onChange("phone", value)} />
@@ -67,20 +67,20 @@ export default function EditProfileForm({
           />
         </div>
 
-        <div className="mt-1 h-px bg-white/10" />
+        <div className="mt-1 h-px bg-elev-2" />
 
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-end gap-3 pb-1 pt-1">
           <button
             type="button"
             onClick={onCancel}
-            className="w-full sm:w-auto cursor-pointer rounded-2xl border border-white/20 bg-white/10 px-7 py-2.5 text-base font-semibold text-white hover:bg-white/15"
+            className="w-full sm:w-auto cursor-pointer rounded-2xl border border-line-strong bg-elev-2 px-7 py-2.5 text-base font-semibold text-fg hover:bg-elev-3"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={onSave}
-            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-2xl bg-lime-400 px-7 py-2.5 text-base font-bold text-black shadow-[0_6px_24px_rgba(163,230,53,0.35)] hover:bg-lime-300"
+            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-2.5 text-base font-bold text-on-primary hover:bg-primary-hover"
           >
             <Save size={18} />
             Save Teacher
@@ -104,13 +104,13 @@ function LocalInput({
 }) {
   return (
     <div className={className}>
-      <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/55">
+      <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-fg-muted">
         {label}
       </label>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-12 w-full rounded-2xl border border-white/15 bg-black/35 px-4 text-base font-semibold text-white outline-none placeholder:text-white/45 focus:border-lime-400/70"
+        className="h-12 w-full rounded-2xl border border-line bg-well px-4 text-base font-semibold text-fg outline-none placeholder:text-fg-subtle focus:border-primary/70"
       />
     </div>
   );
@@ -129,17 +129,17 @@ function LocalSelect({
 
   return (
     <div>
-      <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/55">
+      <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-fg-muted">
         {label}
       </label>
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as TeacherStatus)}
-          className={`h-12 w-full appearance-none rounded-2xl bg-black/35 px-4 pr-10 text-base font-semibold outline-none ${
+          className={`h-12 w-full appearance-none rounded-2xl bg-well px-4 pr-10 text-base font-semibold outline-none ${
             isInactive
-              ? "border border-red-400/70 text-red-400 focus:border-red-400"
-              : "border border-lime-400/70 text-lime-400 focus:border-lime-400"
+              ? "border border-red-400/70 text-red-700 dark:text-red-400 focus:border-red-400"
+              : "border border-primary/70 text-primary focus:border-primary"
           }`}
         >
           <option value="Active">Active</option>
@@ -148,7 +148,7 @@ function LocalSelect({
         <ChevronDown
           size={16}
           className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 ${
-            isInactive ? "text-red-300" : "text-lime-300"
+            isInactive ? "text-red-700 dark:text-red-300" : "text-primary"
           }`}
         />
       </div>

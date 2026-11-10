@@ -7,16 +7,19 @@ interface StatCardProps {
   value: string | number;
 }
 
+/** Compact KPI tile matching `KpiCard` in common/ui (icon accepts any node). */
 export default function StatCard({ icon, iconClassName, label, value }: StatCardProps) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-      <div className={`flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 ${iconClassName ?? "text-lime-300"}`}>
-        {icon}
+    <div className="rounded-2xl border border-line bg-elev-1 p-5">
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-[13px] font-medium text-fg-subtle">{label}</p>
+        <span
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 ${iconClassName ?? "text-primary"}`}
+        >
+          {icon}
+        </span>
       </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-white/60">{label}</div>
-        <div className="text-lg font-semibold text-white">{value}</div>
-      </div>
+      <p className="mt-2 text-[28px] font-semibold leading-none tracking-tight text-fg tabular-nums">{value}</p>
     </div>
   );
 }

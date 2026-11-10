@@ -64,15 +64,15 @@ export default function UploadCsvPanel({ onCancel, onSuccess }: UploadCsvPanelPr
   };
 
   return (
-    <div className="bg-[#0F172A]/50 rounded-2xl p-6 border border-white/10 animate-fadeIn shadow-inner">
-      <div className="flex items-center gap-2 text-white font-semibold mb-4">
-        <Upload size={18} className="text-lime-400" />
+    <div className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6 animate-fadeIn">
+      <div className="mb-5 flex items-center gap-2 text-[15px] font-semibold text-fg">
+        <Upload size={18} className="text-primary" />
         Upload CSV
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-4">
         <div
-          className="rounded-2xl border border-dashed border-white/15 bg-white/5 p-6 text-center cursor-pointer hover:border-lime-400"
+          className="rounded-2xl border border-dashed border-line bg-elev-1 p-6 text-center cursor-pointer hover:border-primary"
           onClick={handleBrowseClick}
           role="button"
           tabIndex={0}
@@ -83,18 +83,18 @@ export default function UploadCsvPanel({ onCancel, onSuccess }: UploadCsvPanelPr
             }
           }}
         >
-          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5">
-            <Upload size={18} className="text-white/70" />
+          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-elev-1">
+            <Upload size={18} className="text-fg-muted" />
           </div>
-          <div className="text-sm text-white/80">
+          <div className="text-sm text-fg">
             {file ? file.name : "Click to upload or drag and drop"}
           </div>
-          <div className="text-xs text-white/40 mt-1">CSV file (max. 10MB)</div>
+          <div className="text-xs text-fg-subtle mt-1">CSV file (max. 10MB)</div>
         </div>
 
-        <div className="rounded-2xl border border-sky-300/20 bg-sky-900/10 p-4">
-          <div className="text-xs font-semibold text-sky-200 mb-2">Instructions:</div>
-          <ul className="list-disc pl-4 space-y-1 text-[11px] text-sky-200/80">
+        <div className="rounded-2xl border border-sky-300/20 bg-sky-50 dark:bg-sky-900/10 p-4">
+          <div className="text-xs font-semibold text-sky-800 dark:text-sky-200 mb-2">Instructions:</div>
+          <ul className="list-disc pl-4 space-y-1 text-[11px] text-sky-800 dark:text-sky-200">
             <li>File must be in .csv format</li>
             <li>Required columns: Class Name, Section, Class Teacher, Max Students</li>
             <li>Ensure no duplicate entries</li>
@@ -110,13 +110,13 @@ export default function UploadCsvPanel({ onCancel, onSuccess }: UploadCsvPanelPr
         onChange={handleFileChange}
       />
 
-      {error && <div className="mt-3 text-xs text-red-300">{error}</div>}
+      {error && <div className="mt-3 text-xs text-red-700 dark:text-red-300">{error}</div>}
 
-      <div className="mt-4 flex items-center justify-end gap-2">
+      <div className="mt-6 flex items-center justify-end gap-2 border-t border-line pt-4">
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 cursor-pointer"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 cursor-pointer disabled:opacity-55 disabled:cursor-not-allowed"
         >
           Cancel
         </button>
@@ -124,7 +124,7 @@ export default function UploadCsvPanel({ onCancel, onSuccess }: UploadCsvPanelPr
           type="button"
           onClick={handleUpload}
           disabled={isUploading}
-          className="rounded-xl bg-lime-400 px-3.5 py-2 text-xs font-semibold text-black hover:bg-lime-300 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-hover cursor-pointer disabled:opacity-55 disabled:cursor-not-allowed"
         >
           {isUploading ? "Uploading..." : "Upload File"}
         </button>

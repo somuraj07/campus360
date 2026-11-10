@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import PageHeader from "../../common/PageHeader";
+import { SaPage, SaPageHeader, Field, SelectInput, Alert } from "../../common/ui";
+import { CalendarDays } from "lucide-react";
 import TimellyLoader from "../../common/TimellyLoader";
 import TimetableGrid, { TimetablePayload } from "../../timetable/TimetableGrid";
 import {
@@ -94,34 +95,33 @@ export default function TeacherTimetableTab() {
   }
 
   return (
-    <div className="min-h-screen space-y-6 text-white">
-      <PageHeader title="Timetable" subtitle="View class-wise periods, breaks, teachers, and rooms." />
+    <SaPage>
+      <SaPageHeader eyebrow="Teaching" title="Timetable" description="View class-wise periods, breaks, teachers, and rooms." />
 
-      <section className="rounded-3xl border border-white/10 bg-white/4 p-5">
-        <label className="block max-w-sm space-y-2">
-          <span className="text-xs font-semibold uppercase tracking-wide text-white/50">Class</span>
-          <select
-            value={selectedClassId}
-            onChange={(event) => setSelectedClassId(event.target.value)}
-            className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none focus:border-lime-300/50"
-          >
+      <div className="flex flex-col gap-4 rounded-2xl border border-line bg-elev-1 px-5 py-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex min-w-0 items-start gap-3">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <CalendarDays size={16} />
+          </span>
+          <div className="min-w-0">
+            <h2 className="text-[15px] font-semibold text-fg">Class timetable</h2>
+            <p className="mt-0.5 text-xs text-fg-subtle">
+              {selectedClass ? `Showing timetable for ${classLabel(selectedClass)}.` : "Choose a class to view its timetable."}
+            </p>
+          </div>
+        </div>
+        <Field label="Class" className="w-full sm:w-64">
+          <SelectInput value={selectedClassId} onChange={(event) => setSelectedClassId(event.target.value)}>
             {classes.map((classRow) => (
-              <option key={classRow.id} value={classRow.id} className="bg-slate-950">
+              <option key={classRow.id} value={classRow.id}>
                 {classLabel(classRow)}
               </option>
             ))}
-          </select>
-        </label>
-        {selectedClass ? (
-          <p className="mt-3 text-sm text-white/55">Showing timetable for {classLabel(selectedClass)}.</p>
-        ) : null}
-      </section>
+          </SelectInput>
+        </Field>
+      </div>
 
-      {error ? (
-        <div className="rounded-2xl border border-red-400/25 bg-red-500/10 p-4 text-sm text-red-100">
-          {error}
-        </div>
-      ) : null}
+      {error ? <Alert tone="error">{error}</Alert> : null}
       {loadingTimetable ? (
         <TimellyLoader compact title="Loading schedule" steps={["Periods", "Teachers", "Rooms"]} />
       ) : (
@@ -130,6 +130,6 @@ export default function TeacherTimetableTab() {
           emptyMessage="No timetable has been published for this class yet."
         />
       )}
-    </div>
+    </SaPage>
   );
 }

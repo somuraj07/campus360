@@ -94,23 +94,23 @@ export const FeesBreakdown = (props: Props) => {
   } = useFeesBreakdownState(props);
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-[2rem] p-3 sm:p-6 min-w-0">
+    <div className="min-w-0 rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
       {feesRecordingDisabled ? (
-        <div className="mb-4 flex items-start gap-2 rounded-xl border border-red-500/35 bg-red-500/10 px-3 py-2.5 text-sm text-red-200">
+        <div className="mb-4 flex items-start gap-2 rounded-xl border border-red-500/35 bg-red-500/10 px-3 py-2.5 text-sm text-red-800 dark:text-red-200">
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
           <span>
-            <span className="font-semibold text-red-100">Inactive student.</span> You cannot record fees for this student.
+            <span className="font-semibold text-red-800 dark:text-red-100">Inactive student.</span> You cannot record fees for this student.
           </span>
         </div>
       ) : null}
       {residencyAdjustmentNote ? (
-        <div className="mb-4 rounded-xl border border-lime-500/30 bg-lime-500/10 px-3 py-2.5 text-sm text-lime-100">
+        <div className="mb-4 rounded-xl border border-primary/30 bg-primary/10 px-3 py-2.5 text-sm text-primary">
           {residencyAdjustmentNote}
         </div>
       ) : null}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6 min-w-0">
-        <h3 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2 min-w-0">
-          <Zap className="w-5 h-5 text-amber-400 flex-shrink-0" />
+        <h3 className="text-base sm:text-lg font-semibold text-fg flex items-center gap-2 min-w-0">
+          <Zap className="w-5 h-5 text-amber-700 dark:text-amber-400 flex-shrink-0" />
           <span className="leading-tight">Fees Breakdown</span>
         </h3>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto sm:flex-wrap sm:justify-end">
@@ -118,7 +118,7 @@ export const FeesBreakdown = (props: Props) => {
             type="button"
             onClick={() => !feesRecordingDisabled && setShowAssignFeeHeadsCatalog(true)}
             disabled={feesRecordingDisabled}
-            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/35 text-sky-100 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/35 text-sky-800 dark:text-sky-100 rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
           >
             <PlusCircle className="w-4 h-4 flex-shrink-0" />
             Assign from catalog
@@ -127,7 +127,7 @@ export const FeesBreakdown = (props: Props) => {
             type="button"
             onClick={() => !feesRecordingDisabled && setShowAddExtraFee(true)}
             disabled={feesRecordingDisabled}
-            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-elev-1 hover:bg-elev-3 border border-line text-fg rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
           >
             <PlusCircle className="w-4 h-4 flex-shrink-0" />
             Add Extra Fee
@@ -136,7 +136,7 @@ export const FeesBreakdown = (props: Props) => {
             type="button"
             onClick={() => void openModifyFeeModal()}
             disabled={feesRecordingDisabled || modifyFeeOpening}
-            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center justify-center gap-2 px-3 py-2.5 min-h-[44px] touch-manipulation bg-elev-1 hover:bg-elev-3 border border-line text-fg rounded-lg text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Settings className="w-4 h-4 flex-shrink-0" />
             {modifyFeeOpening ? "Refreshing..." : "Edit Fee Setup"}
@@ -145,7 +145,7 @@ export const FeesBreakdown = (props: Props) => {
             <button
               onClick={handleDownloadReceipt}
               disabled={isGeneratingReceipt}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg text-sm font-semibold transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-elev-3 disabled:cursor-not-allowed text-white rounded-lg text-sm font-semibold transition-colors"
             >
               <Download className="w-4 h-4" />
               {isGeneratingReceipt ? "Generating..." : "Download Receipt"}

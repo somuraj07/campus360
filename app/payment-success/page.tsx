@@ -68,8 +68,8 @@ function PaymentSuccessContent() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-2 border-lime-500/30 border-t-lime-500 mx-auto mb-4" />
-          <p className="text-white/80">Loading receipt…</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary/30 border-t-primary mx-auto mb-4" />
+          <p className="text-fg">Loading receipt…</p>
         </div>
       </div>
     );
@@ -78,11 +78,11 @@ function PaymentSuccessContent() {
   if (error || !receipt) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-[#1a1a1a] border border-[#333] rounded-2xl p-8 text-center">
-          <p className="text-red-400 font-medium mb-4">{error || "Receipt not found"}</p>
+        <div className="max-w-md w-full bg-surface border border-line rounded-2xl p-8 text-center">
+          <p className="text-red-700 dark:text-red-400 font-medium mb-4">{error || "Receipt not found"}</p>
           <Link
             href="/parent?tab=fees"
-            className="inline-flex items-center gap-2 text-lime-400 hover:text-lime-300"
+            className="inline-flex items-center gap-2 text-primary hover:text-primary"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Fees
@@ -101,24 +101,24 @@ function PaymentSuccessContent() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-gradient-to-br from-[#1a1a1a] via-[#2d2d2d] to-[#1a1a1a] rounded-2xl shadow-2xl border border-[#333] overflow-hidden">
+      <div className="w-full max-w-md bg-gradient-to-br from-elev-2 via-elev-2 to-elev-2 rounded-2xl shadow-card border border-line overflow-hidden">
         {/* Header */}
-        <div className="p-6 text-center border-b border-[#333]">
+        <div className="p-6 text-center border-b border-line">
           <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/50 mx-auto mb-4">
-            <CheckCircle className="w-8 h-8 text-emerald-400" />
+            <CheckCircle className="w-8 h-8 text-emerald-700 dark:text-emerald-400" />
           </div>
-          <h1 className="text-xl font-bold text-white">Payment Successful</h1>
-          <p className="text-[#808080] text-sm mt-1">Your payment has been completed successfully.</p>
+          <h1 className="text-xl font-bold text-fg">Payment Successful</h1>
+          <p className="text-fg-subtle text-sm mt-1">Your payment has been completed successfully.</p>
         </div>
 
         {/* Receipt */}
         <div className="p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Receipt className="w-4 h-4 text-lime-400" />
+          <h2 className="text-sm font-semibold text-fg flex items-center gap-2">
+            <Receipt className="w-4 h-4 text-primary" />
             Receipt
           </h2>
 
-          <div className="bg-black/30 rounded-xl border border-[#404040] divide-y divide-[#404040] overflow-hidden">
+          <div className="bg-well rounded-xl border border-line divide-y divide-line overflow-hidden">
             <Row label="Order ID" value={receipt.orderId || receipt.paymentId} />
             <Row label="Transaction ID" value={receipt.transactionId || "—"} />
             <Row label="Payment ID" value={receipt.paymentId} />
@@ -138,19 +138,19 @@ function PaymentSuccessContent() {
           </div>
 
           {receipt.student && (
-            <div className="bg-black/30 rounded-xl border border-[#404040] p-4 space-y-2">
-              <p className="text-xs text-[#808080] uppercase tracking-wider">Paid for</p>
+            <div className="bg-well rounded-xl border border-line p-4 space-y-2">
+              <p className="text-xs text-fg-subtle uppercase tracking-wider">Paid for</p>
               {receipt.student.name && (
-                <p className="text-white font-medium">{receipt.student.name}</p>
+                <p className="text-fg font-medium">{receipt.student.name}</p>
               )}
               {receipt.student.admissionNumber && (
-                <p className="text-sm text-[#808080]">Admission No: {receipt.student.admissionNumber}</p>
+                <p className="text-sm text-fg-subtle">Admission No: {receipt.student.admissionNumber}</p>
               )}
               {receipt.student.class && (
-                <p className="text-sm text-[#808080]">Class: {receipt.student.class}</p>
+                <p className="text-sm text-fg-subtle">Class: {receipt.student.class}</p>
               )}
               {receipt.student.school && (
-                <p className="text-sm text-[#808080]">{receipt.student.school}</p>
+                <p className="text-sm text-fg-subtle">{receipt.student.school}</p>
               )}
             </div>
           )}
@@ -160,7 +160,7 @@ function PaymentSuccessContent() {
         <div className="p-6 pt-0 flex flex-col gap-3">
           <Link
             href="/parent?tab=fees"
-            className="w-full py-3 px-4 rounded-xl font-semibold text-center text-black bg-lime-500 hover:bg-lime-400 transition flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 rounded-xl font-semibold text-center text-on-primary bg-primary hover:bg-primary-hover transition flex items-center justify-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Fees
@@ -177,8 +177,8 @@ export default function PaymentSuccessPage() {
       fallback={
         <div className="min-h-screen bg-black flex items-center justify-center p-4">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-2 border-lime-500/30 border-t-lime-500 mx-auto mb-4" />
-            <p className="text-white/80">Loading…</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-2 border-primary/30 border-t-primary mx-auto mb-4" />
+            <p className="text-fg">Loading…</p>
           </div>
         </div>
       }
@@ -191,8 +191,8 @@ export default function PaymentSuccessPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center px-4 py-3">
-      <span className="text-sm text-[#808080]">{label}</span>
-      <span className="text-sm font-medium text-white text-right break-all max-w-[60%]">{value}</span>
+      <span className="text-sm text-fg-subtle">{label}</span>
+      <span className="text-sm font-medium text-fg text-right break-all max-w-[60%]">{value}</span>
     </div>
   );
 }

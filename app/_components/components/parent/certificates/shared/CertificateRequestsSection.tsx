@@ -18,24 +18,24 @@ export function CertificateRequestsSection({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h4 className="text-white font-bold text-base md:text-lg">Certificate Requests</h4>
-        <div className="text-xs text-gray-400">
-          Pending: <span className="text-orange-400 font-semibold">{pendingRequests.length}</span>{" "}
-          • Approved: <span className="text-lime-400 font-semibold">{approvedRequests.length}</span>{" "}
-          • Rejected: <span className="text-red-400 font-semibold">{rejectedRequests.length}</span>
+        <h4 className="text-fg font-bold text-base md:text-lg">Certificate Requests</h4>
+        <div className="text-xs text-fg-muted">
+          Pending: <span className="text-orange-700 dark:text-orange-400 font-semibold">{pendingRequests.length}</span>{" "}
+          • Approved: <span className="text-primary font-semibold">{approvedRequests.length}</span>{" "}
+          • Rejected: <span className="text-red-700 dark:text-red-400 font-semibold">{rejectedRequests.length}</span>
         </div>
       </div>
 
       {loading ? (
         <ParentTimellyLoader preset="certificates" compact className="w-full" />
       ) : certificateRequests.length === 0 ? (
-        <div className="py-6 text-center text-gray-400 text-sm">No certificate requests yet.</div>
+        <div className="py-6 text-center text-fg-muted text-sm">No certificate requests yet.</div>
       ) : (
         <div className="space-y-6">
           {/* Pending */}
           {pendingRequests.length > 0 && (
             <div className="space-y-3">
-              <h5 className="text-sm font-semibold text-orange-300">Pending</h5>
+              <h5 className="text-sm font-semibold text-orange-700 dark:text-orange-300">Pending</h5>
               {pendingRequests.map((req) => {
                 const elapsedDays = daysSince(req.createdAt);
                 const expected = addDays(req.createdAt, 7);
@@ -62,7 +62,7 @@ export function CertificateRequestsSection({
           {/* Approved */}
           {approvedRequests.length > 0 && (
             <div className="space-y-3">
-              <h5 className="text-sm font-semibold text-lime-300">Approved</h5>
+              <h5 className="text-sm font-semibold text-primary">Approved</h5>
               {approvedRequests.map((req) => {
                 const elapsedDays = daysSince(req.createdAt);
                 const approvedOn = req.issuedDate || req.updatedAt || req.createdAt;
@@ -87,7 +87,7 @@ export function CertificateRequestsSection({
           {/* Rejected */}
           {rejectedRequests.length > 0 && (
             <div className="space-y-3">
-              <h5 className="text-sm font-semibold text-red-300">Rejected</h5>
+              <h5 className="text-sm font-semibold text-red-700 dark:text-red-300">Rejected</h5>
               {rejectedRequests.map((req) => {
                 const elapsedDays = daysSince(req.createdAt);
                 const rejectedOn = req.updatedAt || req.createdAt;

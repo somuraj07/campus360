@@ -124,13 +124,13 @@ export function ExamsPageInner() {
         <PageHeader
           title="Exams & Syllabus"
           subtitle="Manage examination schedules and syllabus tracking"
-          className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-6 backdrop-blur-xl mb-0"
+          className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6 mb-0"
           rightSlot={
             <button
               type="button"
               onClick={() => setShowAddModal(true)}
-              className="px-4 py-2 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl
-               shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2 text-sm"
+              className="px-4 py-2 bg-primary hover:bg-primary-hover text-on-primary font-bold rounded-xl
+               shadow-card  transition-all flex items-center gap-2 text-sm"
               style={{
                 backgroundColor: EXAM_ACCENT,
                 boxShadow: `0 0 22px ${EXAM_ACCENT}44`,
@@ -144,7 +144,7 @@ export function ExamsPageInner() {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6 lg:h-[calc(100vh-180px)] lg:overflow-hidden">
           <aside className="order-2 lg:order-1 lg:col-span-4 space-y-3 lg:h-full lg:overflow-y-auto lg:pr-2 no-scrollbar">
-            {error && <p className="text-sm text-red-400">{error}</p>}
+            {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
 
             {loading ? (
               <GlassCard className="p-10 flex justify-center">
@@ -181,7 +181,7 @@ export function ExamsPageInner() {
             )}
           </aside>
 
-          <section className="order-1 lg:order-2 lg:col-span-8 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden min-h-[600px] flex flex-col lg:h-full lg:min-h-0">
+          <section className="order-1 lg:order-2 lg:col-span-8 bg-elev-1 rounded-2xl border border-line overflow-hidden min-h-[600px] flex flex-col lg:h-full lg:min-h-0">
             {!selectedId ? (
               <GlassCard className="min-h-[420px] p-8 sm:p-12 flex items-center justify-center" style={{ color: EXAM_TEXT_SECONDARY }}>
                 <Calendar className="mb-3 h-11 w-11 opacity-70" style={{ color: EXAM_TEXT_MAIN }} />
@@ -192,15 +192,15 @@ export function ExamsPageInner() {
                 <Spinner />
               </GlassCard>
             ) : termDetail ? (
-              <GlassCard variant="card" className="h-full flex flex-col border-b border-white/10 bg-black/20">
-                <div className="p-6 border-b border-white/10 bg-black/20">
+              <GlassCard variant="card" className="h-full flex flex-col border-b border-line bg-well">
+                <div className="p-6 border-b border-line bg-well">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
-                      <h2 className="text-2xl font-bold text-white mb-2" style={{ color: EXAM_TEXT_MAIN }}>
+                      <h2 className="text-2xl font-bold text-fg mb-2" style={{ color: EXAM_TEXT_MAIN }}>
                         {termDetail.name}
                       </h2>
                       {termDetail.description && (
-                        <p className="text-gray-400 text-sm max-w-xl" style={{ color: EXAM_TEXT_SECONDARY }}>
+                        <p className="text-fg-muted text-sm max-w-xl" style={{ color: EXAM_TEXT_SECONDARY }}>
                           {termDetail.description}
                         </p>
                       )}
@@ -208,20 +208,20 @@ export function ExamsPageInner() {
 
                     {startsInDays !== null && (
                       <div className="shrink-0 text-left sm:text-right">
-                        <p className="text-xs text-gray-500 mb-1" style={{ color: EXAM_TEXT_SECONDARY }}>Starts in</p>
-                        <div className="text-3xl font-bold text-lime-400" style={{ color: EXAM_ACCENT }}>
+                        <p className="text-xs text-fg-subtle mb-1" style={{ color: EXAM_TEXT_SECONDARY }}>Starts in</p>
+                        <div className="text-3xl font-bold text-primary" style={{ color: EXAM_ACCENT }}>
                           {startsInDays}
                         </div>
-                        <p className="text-sm font-normal text-gray-400" style={{ color: EXAM_TEXT_SECONDARY }}>days</p>
+                        <p className="text-sm font-normal text-fg-muted" style={{ color: EXAM_TEXT_SECONDARY }}>days</p>
                       </div>
                     )}
                   </div>
 
-                  <div className="mt-5 flex gap-2 sm:gap-6 border-b border-white/10 overflow-x-auto no-scrollbar">
+                  <div className="mt-5 flex gap-2 sm:gap-6 border-b border-line overflow-x-auto no-scrollbar">
                     <button
                       type="button"
                       onClick={() => setTab("schedule")}
-                      className="min-h-[44px] border-b-2 px-1 pb-3 text-base font-semibold whitespace-nowrap pb-3 text-sm font-medium transition-all relative text-lime-400"
+                      className="min-h-[44px] border-b-2 px-1 pb-3 text-base font-semibold whitespace-nowrap pb-3 text-sm font-medium transition-all relative text-primary"
                       style={tab === "schedule" ? { color: EXAM_ACCENT, borderBottomColor: EXAM_ACCENT } : { color: EXAM_TEXT_SECONDARY, borderBottomColor: "transparent" }}
                     >
                       Exam Schedule
@@ -229,7 +229,7 @@ export function ExamsPageInner() {
                     <button
                       type="button"
                       onClick={() => setTab("syllabus")}
-                      className="min-h-[44px] border-b-2 px-1 pb-3 text-base font-semibold whitespace-nowrap pb-3 text-sm font-medium transition-all relative text-gray-400 hover:text-gray-200"
+                      className="min-h-[44px] border-b-2 px-1 pb-3 text-base font-semibold whitespace-nowrap pb-3 text-sm font-medium transition-all relative text-fg-muted hover:text-fg"
                       style={tab === "syllabus" ? { color: EXAM_ACCENT, borderBottomColor: EXAM_ACCENT } : { color: EXAM_TEXT_SECONDARY, borderBottomColor: "transparent" }}
                     >
                       Syllabus Tracking
@@ -237,7 +237,7 @@ export function ExamsPageInner() {
                   </div>
                 </div>
 
-                <div className="p-6 flex-1 bg-black/10 overflow-y-auto no-scrollbar">
+                <div className="p-6 flex-1 bg-well overflow-y-auto no-scrollbar">
                   <AnimatePresence mode="wait">
                     {tab === "schedule" && (
                       <motion.div key="schedule" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>

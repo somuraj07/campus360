@@ -6,12 +6,12 @@ interface RowProps {
 
 export default function Row({ title, sub, right }: RowProps) {
   return (
-    <div className="flex justify-between bg-white/10 rounded-xl p-3">
+    <div className="flex justify-between bg-elev-2 rounded-xl p-3">
       <div>
         <div className="text-sm font-semibold">{title}</div>
-        {sub && <div className="text-xs text-white/40">{sub}</div>}
+        {sub && <div className="text-xs text-fg-subtle">{sub}</div>}
       </div>
-      <span className="text-xs text-white/50">{right}</span>
+      <span className="text-xs text-fg-subtle">{right}</span>
     </div>
   );
 }

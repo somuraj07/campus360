@@ -1,5 +1,6 @@
 "use client";
 
+import { SaPage, Alert, EmptyState } from "../common/ui";
 import TimellyLoader from "../common/TimellyLoader";
 import { formatMoney } from "./shared";
 import { useDiscountApprovalsState } from "./shared";
@@ -30,7 +31,7 @@ export default function DiscountApprovals() {
   } = useDiscountApprovalsState();
 
   return (
-    <div className="space-y-5">
+    <SaPage>
       <DiscountApprovalsSearchHeader
         search={search}
         setSearch={setSearch}
@@ -43,10 +44,10 @@ export default function DiscountApprovals() {
       />
 
       {error ? (
-        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">{error}</div>
+        <Alert tone="error">{error}</Alert>
       ) : null}
       {success ? (
-        <div className="rounded-2xl border border-lime-500/30 bg-lime-500/10 p-4 text-sm text-lime-200">{success}</div>
+        <Alert tone="success">{success}</Alert>
       ) : null}
 
       {loading ? (
@@ -56,10 +57,14 @@ export default function DiscountApprovals() {
           compact
         />
       ) : filteredApprovals.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-white/3 p-8 text-center text-white/60">
-          {search.trim()
-            ? "No discount requests match your search."
-            : `No ${status === "ALL" ? "history" : status.toLowerCase()} discount requests found.`}
+        <div className="rounded-2xl border border-line bg-elev-1">
+          <EmptyState
+            title={
+              search.trim()
+                ? "No discount requests match your search"
+                : `No ${status === "ALL" ? "history" : status.toLowerCase()} discount requests`
+            }
+          />
         </div>
       ) : (
         <div className="space-y-4">
@@ -77,24 +82,24 @@ export default function DiscountApprovals() {
       )}
       {!loading ? (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40">Showing</p>
-            <p className="mt-1 text-2xl font-black text-white">{filteredApprovals.length}</p>
+          <div className="rounded-2xl border border-line bg-elev-1 p-4">
+            <p className="text-xs text-fg-subtle">Showing</p>
+            <p className="mt-1 text-2xl font-semibold text-fg">{filteredApprovals.length}</p>
           </div>
-          <div className="rounded-2xl border border-amber-400/20 bg-white/5 p-4">
-            <p className="text-xs text-white/40">Discount Value</p>
-            <p className="mt-1 text-lg font-black text-amber-200">{formatMoney(visibleDiscountTotal)}</p>
+          <div className="rounded-2xl border border-amber-400/20 bg-elev-1 p-4">
+            <p className="text-xs text-fg-subtle">Discount Value</p>
+            <p className="mt-1 text-lg font-semibold text-amber-800 dark:text-amber-200">{formatMoney(visibleDiscountTotal)}</p>
           </div>
-          <div className="rounded-2xl border border-lime-400/20 bg-white/5 p-4">
-            <p className="text-xs text-white/40">Current Filter</p>
-            <p className="mt-1 text-lg font-black text-lime-200">{status === "ALL" ? "History" : status}</p>
+          <div className="rounded-2xl border border-primary/20 bg-elev-1 p-4">
+            <p className="text-xs text-fg-subtle">Current Filter</p>
+            <p className="mt-1 text-lg font-semibold text-primary">{status === "ALL" ? "History" : status}</p>
           </div>
-          <div className="rounded-2xl border border-sky-400/20 bg-white/5 p-4">
-            <p className="text-xs text-white/40">Pending Here</p>
-            <p className="mt-1 text-2xl font-black text-sky-200">{pendingCount}</p>
+          <div className="rounded-2xl border border-sky-400/20 bg-elev-1 p-4">
+            <p className="text-xs text-fg-subtle">Pending Here</p>
+            <p className="mt-1 text-2xl font-semibold text-sky-800 dark:text-sky-200">{pendingCount}</p>
           </div>
         </div>
       ) : null}
-    </div>
+    </SaPage>
   );
 }

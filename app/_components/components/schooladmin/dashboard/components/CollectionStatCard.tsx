@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { CalendarDays } from "lucide-react";
+import { Banknote, CalendarDays, Smartphone } from "lucide-react";
 
 type CollectionRow = {
   formattedAmount: string;
@@ -17,86 +16,45 @@ type Props = {
   loading?: boolean;
 };
 
-function formatShortDate(ymd: string) {
-  const [year, month, day] = ymd.split("-").map(Number);
-  if (!year || !month || !day) return "Date";
-  return new Date(year, month - 1, day).toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "short",
-  });
-}
-
-/** Fifth dashboard stat card: day collection with calendar, cash & online. */
-export function CollectionStatCard({
-  selectedDate,
-  onDateChange,
-  totalFormatted,
-  cash,
-  online,
-  loading = false,
-}: Props) {
-  const dateInputRef = useRef<HTMLInputElement>(null);
-
-  const openDatePicker = () => {
-    const input = dateInputRef.current;
-    if (!input) return;
-
-    const pickerInput = input as HTMLInputElement & { showPicker?: () => void };
-    if (typeof pickerInput.showPicker === "function") {
-      pickerInput.showPicker();
-      return;
-    }
-
-    input.focus();
-    input.click();
-  };
-
+/** Day collection: total for the picked date, split into cash and online. */
+export function CollectionStatCard({ selectedDate, onDateChange, totalFormatted, cash, online, loading = false }: Props) {
   return (
     <div
-      className={`col-span-1 sm:col-span-2 xl:col-span-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 sm:p-4 md:p-4 flex-1 min-w-0 transition-opacity ${loading ? "opacity-60" : ""}`}
+      className={`flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-elev-1 transition-opacity ${loading ? "opacity-60" : ""}`}
     >
-      <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
-        <div className="p-2 bg-white/5 w-fit rounded-xl">
-          <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-lime-400" />
+      <div className="relative bg-sidebar px-5 pb-5 pt-4 text-white">
+        <span aria-hidden className="absolute inset-x-0 bottom-0 h-1 bg-accent" />
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/65">Day Collection</p>
+          <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-white/10 px-2 py-1 text-xs font-medium text-white hover:bg-white/15">
+            <CalendarDays size={14} />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => onDateChange(e.target.value)}
+              className="w-[7.4rem] bg-transparent text-xs text-white outline-none [color-scheme:dark]"
+              aria-label="Select collection date"
+            />
+          </label>
         </div>
-        <div className="relative">
-          <button
-            type="button"
-            onClick={openDatePicker}
-            className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-2 text-[10px] font-semibold text-white/80 cursor-pointer hover:bg-white/10 sm:h-8 sm:text-xs"
-            title="Select date"
-          >
-            <CalendarDays className="h-3.5 w-3.5 text-lime-400" />
-            <span className="whitespace-nowrap">{formatShortDate(selectedDate)}</span>
-          </button>
-          <input
-            ref={dateInputRef}
-            type="date"
-            value={selectedDate}
-            onChange={(e) => onDateChange(e.target.value)}
-            className="sr-only"
-            aria-label="Select collection date"
-          />
+        <p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums">{totalFormatted}</p>
+      </div>
+      <dl className="grid flex-1 grid-cols-2 divide-x divide-line-subtle">
+        <div className="p-4">
+          <dt className="flex items-center gap-1.5 text-xs text-fg-subtle">
+            <Banknote size={14} /> Cash
+          </dt>
+          <dd className="mt-1 text-lg font-semibold text-fg tabular-nums">{cash.formattedAmount}</dd>
+          <dd className="text-xs text-fg-subtle">{cash.count} paid</dd>
         </div>
-      </div>
-      <p className="text-gray-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider truncate">
-        Day Collection
-      </p>
-      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mt-0.5 mb-1.5 text-white truncate">
-        {totalFormatted}
-      </h3>
-      <div className="space-y-0.5">
-        <p className="text-[9px] sm:text-[10px] font-bold tracking-wide uppercase truncate">
-          <span className="text-gray-400">Cash </span>
-          <span className="text-white">{cash.formattedAmount}</span>
-          <span className="text-lime-400/90 font-medium normal-case"> · {cash.count} paid</span>
-        </p>
-        <p className="text-[9px] sm:text-[10px] font-bold tracking-wide uppercase truncate">
-          <span className="text-gray-400">Online </span>
-          <span className="text-lime-300">{online.formattedAmount}</span>
-          <span className="text-lime-400/90 font-medium normal-case"> · {online.count} paid</span>
-        </p>
-      </div>
+        <div className="p-4">
+          <dt className="flex items-center gap-1.5 text-xs text-fg-subtle">
+            <Smartphone size={14} /> Online
+          </dt>
+          <dd className="mt-1 text-lg font-semibold text-fg tabular-nums">{online.formattedAmount}</dd>
+          <dd className="text-xs text-fg-subtle">{online.count} paid</dd>
+        </div>
+      </dl>
     </div>
   );
 }

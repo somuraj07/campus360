@@ -136,12 +136,12 @@ export default function UploadCSVModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-overlay flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-xl w-[400px]">
         <h3 className="font-semibold mb-2">Upload Students CSV / Excel</h3>
-        <p className="text-xs text-gray-500 mb-3">
+        <p className="text-xs text-fg-subtle mb-3">
           Tuition is calculated from the admin global fee structure for the student&apos;s class (plus extra fees), not from this file. Use the same columns as the admission export, with an optional leading{" "}
-          <span className="font-medium">Timelly ID</span> column (plain roll number, or values like{" "}
+          <span className="font-medium">RS Solutions ID</span> column (plain roll number, or values like{" "}
           <span className="font-mono">ADM/2026/123</span> where the last segment is used). Required fields include{" "}
           <span className="font-medium">First Name</span>, <span className="font-medium">Last Name</span>,{" "}
           <span className="font-medium">Parent Name</span>, <span className="font-medium">Parent Phone</span>,{" "}
@@ -156,7 +156,7 @@ export default function UploadCSVModal({
             type="file"
             accept=".csv,.xlsx,.xls"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+            className="border border-line-strong rounded-lg px-3 py-2 w-full"
           />
           <button
             type="button"
@@ -168,7 +168,7 @@ export default function UploadCSVModal({
         </div>
 
         <div className="flex justify-end gap-3 mt-4">
-          <button onClick={onClose} className="border px-4 py-2 rounded border-gray-300">
+          <button onClick={onClose} className="border px-4 py-2 rounded border-line-strong">
             Cancel
           </button>
 
@@ -176,7 +176,7 @@ export default function UploadCSVModal({
             onClick={handleUpload}
             disabled={loading}
             style={{ backgroundColor: PRIMARY_COLOR }}
-            className="text-white px-4 py-2 rounded disabled:opacity-60"
+            className="text-fg px-4 py-2 rounded disabled:opacity-60"
           >
             {loading ? "Uploading..." : "Upload"}
           </button>

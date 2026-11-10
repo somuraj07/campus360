@@ -110,7 +110,7 @@ export async function exportPdf(report: ComparisonReport) {
     doc.setTextColor(0, 0, 0);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
-    doc.text("Timelly School ERP", margin, pageHeight - 6);
+    doc.text("RS Solutions School ERP", margin, pageHeight - 6);
     doc.text(`Page ${pageNo}`, pageWidth - margin, pageHeight - 6, { align: "right" });
   };
 

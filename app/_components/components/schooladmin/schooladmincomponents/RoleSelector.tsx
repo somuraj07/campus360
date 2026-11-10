@@ -20,15 +20,7 @@ export default function RoleSelector({
 }: RoleSelectorProps) {
   return (
     <div className="w-full">
-      <label className="block text-sm font-medium text-white mb-3">
-        User Role
-      </label>
-
-      <div
-        className="
-          grid grid-cols-3 gap-4
-        "
-      >
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3" role="radiogroup" aria-label="User role">
         {ROLES.map((role) => {
           const isActive = value === role.value;
 
@@ -36,26 +28,26 @@ export default function RoleSelector({
             <label
               key={role.value}
               className={clsx(
-                "py-3 px-4 rounded-xl border flex items-center justify-center gap-2 transition-all bg-black/20 border-white/10 text-gray-400 hover:border-white/30",
+                "flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border px-4 text-sm font-medium transition",
                 isActive
-                  ? "border-lime-400 text-lime-400  shadow-lg shadow-lime-400/10"
-                  : "border-white/10 text-white/70 bg-white/5 hover:bg-white/10"
+                  ? "border-primary bg-primary/10 text-primary ring-4 ring-primary/10"
+                  : "border-line-strong bg-surface text-fg-muted hover:bg-elev-2"
               )}
             >
               <input
                 type="radio"
                 name="role"
                 value={role.value}
-                checked={true} //{isActive} Always checked to allow deselection by clicking another option
+                checked={isActive}
                 onChange={() => onChange(role.value)}
-                className="hidden"
+                className="sr-only"
               />
 
               <Shield
                 size={16}
                 className={clsx(
                   "transition-colors",
-                  isActive ? "text-lime-400" : "text-white/40"
+                  isActive ? "text-primary" : "text-fg-subtle"
                 )}
               />
 

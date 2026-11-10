@@ -83,15 +83,15 @@ export default function useStudentFormAdd({
 
         // Use raw API text for classification: formatted `message` can match the generic
         // "timelly id already exists" substring even for the name+ID combined error.
-        if (lowerRaw.includes("student name and timelly id already exist")) {
+        if ((lowerRaw.includes("student name and rs solutions id already exist") || lowerRaw.includes("student name and timelly id already exist"))) {
           setErrors((prev) => ({
             ...prev,
             name: "Already exist.",
             rollNo: "Already exist.",
           }));
         } else if (
-          lowerRaw.includes("timelly id already exists") ||
-          lowerRaw.includes("timelly id is already used")
+          (lowerRaw.includes("rs solutions id already exists") || lowerRaw.includes("timelly id already exists")) ||
+          (lowerRaw.includes("rs solutions id is already used") || lowerRaw.includes("timelly id is already used"))
         ) {
           setErrors((prev) => ({ ...prev, rollNo: "Already exist." }));
         }

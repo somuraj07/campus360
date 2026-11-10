@@ -169,11 +169,11 @@ export async function enrollStudentFromAdmissionApplication(params: {
     if (duplicateTimellyId) {
       const existingName = duplicateTimellyId.user?.name?.trim() || "";
       if (existingName && existingName.toLowerCase() === normalizedStudentName.toLowerCase()) {
-        const err = new Error("Student name and Timelly ID already exist");
+        const err = new Error("Student name and RS Solutions ID already exist");
         (err as { statusCode?: number }).statusCode = 400;
         throw err;
       }
-      const err = new Error("Timelly ID already exists");
+      const err = new Error("RS Solutions ID already exists");
       (err as { statusCode?: number }).statusCode = 400;
       throw err;
     }
@@ -217,7 +217,7 @@ export async function enrollStudentFromAdmissionApplication(params: {
           select: { id: true },
         });
         if (existingAdmission) {
-          throw new Error("This Timelly ID is already used. Please use a different Timelly ID.");
+          throw new Error("This RS Solutions ID is already used. Please use a different RS Solutions ID.");
         }
       } else {
         const candidate = await tx.schoolSettings.update({

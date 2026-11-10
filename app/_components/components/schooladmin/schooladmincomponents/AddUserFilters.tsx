@@ -32,13 +32,13 @@ export default function FilterBar({
           {/* Left Icon */}
           <Filter
             size={16}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-fg-muted"
           />
 
           {/* Dropdown Arrow */}
           <ChevronDown
             size={16}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-fg-muted pointer-events-none"
           />
 
           <select
@@ -50,11 +50,11 @@ export default function FilterBar({
               w-full pl-10 pr-10 py-3
               rounded-2xl
               text-sm
-              text-white
-              bg-black/30
-              border border-white/20
+              text-fg
+              bg-well
+              border border-line-strong
               focus:outline-none
-              focus:border-lime-400/60
+              focus:border-primary/60
               appearance-none
               cursor-pointer
               transition
@@ -62,7 +62,7 @@ export default function FilterBar({
           >
             <option value="">{filter.placeholder}</option>
             {filter.options.map((opt) => (
-              <option key={opt.value} value={opt.value} className="text-white bg-gray-900">
+              <option key={opt.value} value={opt.value} className="text-fg bg-surface">
                 {opt.label}
               </option>
             ))}

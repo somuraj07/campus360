@@ -36,8 +36,8 @@ export default function ExamTermCard({ term, isSelected, onClick, onEdit }: Exam
       }}
       className={`group relative flex h-[230px] w-full flex-col overflow-hidden rounded-2xl border p-5 text-left transition-all ${
         isSelected
-          ? "bg-white/10 border-lime-400/50 shadow-xl"
-          : "border-white/10 bg-white/[0.04] hover:bg-white/[0.08]"
+          ? "bg-elev-2 border-primary/50 shadow-card"
+          : "border-line bg-elev-1 hover:bg-elev-3"
       }`}
       aria-pressed={isSelected}
     >
@@ -51,7 +51,7 @@ export default function ExamTermCard({ term, isSelected, onClick, onEdit }: Exam
 
       <div className="mb-4 flex items-start justify-between gap-3">
         <span
-          className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-lime-400/20 text-lime-400"
+          className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primary/20 text-primary"
           style={{
             background: isUpcoming ? EXAM_UPCOMING_LABEL_BG : EXAM_COMPLETED_LABEL_BG,
             color: isUpcoming ? EXAM_ACCENT : "#B4B4B4",
@@ -66,25 +66,25 @@ export default function ExamTermCard({ term, isSelected, onClick, onEdit }: Exam
             e.stopPropagation();
             onEdit?.(term);
           }}
-          className="p-1.5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white"
+          className="p-1.5 hover:bg-elev-3 rounded-lg text-fg-muted hover:text-fg"
           aria-label={`Edit ${term.name}`}
         >
           <LucideSquarePen className="h-4 w-4" style={{ color: EXAM_TEXT_SECONDARY }} />
         </button>
       </div>
 
-      <h3 className="font-bold text-lg mb-1 text-gray-300 line-clamp-1" style={{ color: EXAM_TEXT_MAIN }}>
+      <h3 className="font-bold text-lg mb-1 text-fg-muted line-clamp-1" style={{ color: EXAM_TEXT_MAIN }}>
         {term.name}
       </h3>
 
       <p
-        className="text-xs text-gray-500 mb-4 overflow-hidden"
+        className="text-xs text-fg-subtle mb-4 overflow-hidden"
         style={{ color: EXAM_TEXT_SECONDARY, minHeight: "2.5rem", maxHeight: "2.5rem" }}
       >
         {term.description || "No description added yet."}
       </p>
 
-      <div className="mt-auto flex items-center gap-4 text-xs text-gray-400 border-t border-white/5 pt-3" style={{ color: EXAM_TEXT_SECONDARY }}>
+      <div className="mt-auto flex items-center gap-4 text-xs text-fg-muted border-t border-line-subtle pt-3" style={{ color: EXAM_TEXT_SECONDARY }}>
         <span className="flex items-center gap-1.5">
           <BookOpen size={15} />
           {term._count?.syllabus ?? 0} Subjects

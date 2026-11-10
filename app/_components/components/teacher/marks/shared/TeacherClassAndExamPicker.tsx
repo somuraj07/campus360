@@ -27,23 +27,23 @@ export function TeacherClassAndExamPicker({
   onSelectedExamTypeChange: (v: string) => void;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6">
+    <div className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Class Selection */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between mb-3">
-            <label className="text-xs font-medium text-white/60 uppercase tracking-widest">
+            <label className="text-xs font-medium text-fg-muted uppercase tracking-widest">
               Select Classes
             </label>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">
+              <span className="text-xs text-fg-subtle">
                 {selectedClassIds.size} selected
               </span>
               <button
                 type="button"
                 onClick={onSelectAll}
-                className="text-xs text-lime-400 hover:text-lime-300 font-medium"
+                className="text-xs text-primary hover:text-primary font-medium"
               >
                 {allVisibleSelected ? "Deselect All" : "Select All"}
               </button>
@@ -51,23 +51,23 @@ export function TeacherClassAndExamPicker({
           </div>
 
           <div className="relative mb-3">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-faint" />
             <input
               type="text"
               placeholder="Search classes..."
               value={classSearch}
               onChange={(e) => onClassSearchChange(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 bg-black/30 border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 outline-none focus:border-lime-400/40"
+              className="w-full pl-8 pr-3 py-2 bg-well border border-line rounded-xl text-fg text-sm placeholder:text-fg-faint outline-none focus:border-primary/40"
             />
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-48 overflow-y-auto">
             {classesLoading ? (
               <div className="col-span-full flex justify-center py-6">
-                <div className="w-6 h-6 border-2 border-lime-500/30 border-t-lime-500 rounded-full animate-spin" />
+                <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
               </div>
             ) : filteredClasses.length === 0 ? (
-              <p className="col-span-full text-white/30 text-sm text-center py-4">No classes found</p>
+              <p className="col-span-full text-fg-faint text-sm text-center py-4">No classes found</p>
             ) : (
               filteredClasses.map((cls) => {
                 const selected = selectedClassIds.has(cls.id);
@@ -78,18 +78,18 @@ export function TeacherClassAndExamPicker({
                     onClick={() => onToggleClass(cls.id)}
                     className={`px-3 py-2 rounded-xl text-sm font-medium border transition text-left flex items-center gap-2 ${
                       selected
-                        ? "bg-lime-400/15 text-lime-400 border-lime-400/30"
-                        : "bg-white/5 text-white/60 border-white/10 hover:bg-white/10"
+                        ? "bg-primary/15 text-primary border-primary/30"
+                        : "bg-elev-1 text-fg-muted border-line hover:bg-elev-3"
                     }`}
                   >
                     <div
                       className={`w-4 h-4 rounded flex items-center justify-center border transition flex-shrink-0 ${
                         selected
-                          ? "bg-lime-400 border-lime-400"
-                          : "border-white/20"
+                          ? "bg-primary border-primary"
+                          : "border-line-strong"
                       }`}
                     >
-                      {selected && <Check size={10} className="text-black" />}
+                      {selected && <Check size={10} className="text-on-primary" />}
                     </div>
                     <span className="truncate">{cls.label}</span>
                   </button>
@@ -101,7 +101,7 @@ export function TeacherClassAndExamPicker({
 
         {/* Exam Type */}
         <div>
-          <label className="block text-xs font-medium text-white/60 mb-3 uppercase tracking-widest">
+          <label className="block text-xs font-medium text-fg-muted mb-3 uppercase tracking-widest">
             Exam Type
           </label>
           <div className="space-y-2">
@@ -112,8 +112,8 @@ export function TeacherClassAndExamPicker({
                 onClick={() => onSelectedExamTypeChange(opt)}
                 className={`w-full px-4 py-2.5 rounded-xl text-sm font-medium border transition text-left ${
                   selectedExamType === opt
-                    ? "bg-lime-400/15 text-lime-400 border-lime-400/30"
-                    : "bg-white/5 text-white/60 border-white/10 hover:bg-white/10"
+                    ? "bg-primary/15 text-primary border-primary/30"
+                    : "bg-elev-1 text-fg-muted border-line hover:bg-elev-3"
                 }`}
               >
                 {opt === "ALL" ? "All Exams" : opt}

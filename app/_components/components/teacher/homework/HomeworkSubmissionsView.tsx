@@ -70,11 +70,11 @@ export default function HomeworkSubmissionsView({ homeworkId, onBack }: Homework
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-2 text-white/70 hover:text-white text-sm"
+          className="flex items-center gap-2 text-fg-muted hover:text-fg text-sm"
         >
           <ArrowLeft size={18} /> Back to Homework
         </button>
-        <p className="text-red-300">{error}</p>
+        <p className="text-red-700 dark:text-red-300">{error}</p>
       </div>
     );
   }
@@ -85,21 +85,21 @@ export default function HomeworkSubmissionsView({ homeworkId, onBack }: Homework
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-2 text-white/70 hover:text-white text-sm w-fit"
+          className="flex items-center gap-2 text-fg-muted hover:text-fg text-sm w-fit"
         >
           <ArrowLeft size={18} /> Back to Homework
         </button>
-        <h3 className="text-lg font-semibold text-white truncate">
+        <h3 className="text-lg font-semibold text-fg truncate">
           {homeworkTitle}
         </h3>
       </div>
 
-      <p className="text-white/60 text-sm">
+      <p className="text-fg-muted text-sm">
         {submissions.length} submission{submissions.length !== 1 ? "s" : ""}
       </p>
 
       {submissions.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/60">
+        <div className="rounded-2xl border border-line bg-elev-1 p-8 text-center text-fg-muted">
           No submissions yet.
         </div>
       ) : (
@@ -107,19 +107,19 @@ export default function HomeworkSubmissionsView({ homeworkId, onBack }: Homework
           {submissions.map((s) => (
             <div
               key={s.id}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6 flex flex-col md:flex-row md:items-start gap-4"
+              className="rounded-2xl border border-line bg-elev-1 p-4 md:p-6 flex flex-col md:flex-row md:items-start gap-4"
             >
               <div className="flex items-center gap-3 min-w-0 md:min-w-[200px]">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime-400/20 text-lime-400">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
                   <User size={20} />
                 </span>
                 <div className="min-w-0">
-                  <p className="font-medium text-white truncate">{s.studentName}</p>
-                  <p className="text-xs text-white/50">
+                  <p className="font-medium text-fg truncate">{s.studentName}</p>
+                  <p className="text-xs text-fg-subtle">
                     {s.admissionNumber}
                     {s.rollNo ? ` • Roll: ${s.rollNo}` : ""}
                   </p>
-                  <p className="text-xs text-white/40 mt-0.5">
+                  <p className="text-xs text-fg-subtle mt-0.5">
                     Submitted {new Date(s.submittedAt).toLocaleString()}
                   </p>
                 </div>
@@ -127,11 +127,11 @@ export default function HomeworkSubmissionsView({ homeworkId, onBack }: Homework
 
               <div className="flex-1 min-w-0 space-y-2">
                 {s.content && (
-                  <p className="text-sm text-white/70 whitespace-pre-wrap">{s.content}</p>
+                  <p className="text-sm text-fg-muted whitespace-pre-wrap">{s.content}</p>
                 )}
                 {s.fileUrl ? (
                   <div>
-                    <p className="text-xs text-white/50 mb-1 uppercase tracking-wide">Document</p>
+                    <p className="text-xs text-fg-subtle mb-1 uppercase tracking-wide">Document</p>
                     <AttachmentPreview
                       url={s.fileUrl}
                       label="View submission document"
@@ -140,7 +140,7 @@ export default function HomeworkSubmissionsView({ homeworkId, onBack }: Homework
                   </div>
                 ) : (
                   !s.content && (
-                    <p className="text-sm text-white/40 italic">No attachment or text</p>
+                    <p className="text-sm text-fg-subtle italic">No attachment or text</p>
                   )
                 )}
               </div>

@@ -31,20 +31,20 @@ export function EditPaymentDialog({
 }) {
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-overlay p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="edit-payment-title"
     >
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900 p-5 shadow-xl">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-surface p-5 shadow-pop">
         <div className="mb-4 flex items-start justify-between gap-3">
-          <h4 id="edit-payment-title" className="text-lg font-semibold text-white">
+          <h4 id="edit-payment-title" className="text-lg font-semibold text-fg">
             {isSyntheticPaymentId(editing.id) ? `Edit ${editing.feeTypeName || "fee"}` : "Edit transaction"}
           </h4>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1 text-white/60 hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-1 text-fg-muted hover:bg-elev-3 hover:text-fg"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -52,25 +52,25 @@ export function EditPaymentDialog({
         </div>
         <div className="space-y-3 text-sm">
           {isSyntheticPaymentId(editing.id) ? (
-            <p className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/70">
+            <p className="rounded-lg border border-line bg-elev-1 px-3 py-2 text-xs text-fg-muted">
               This line is the amount stored on the student profile (not a separate payment
               record). Saving updates the student; use 0 to clear.
             </p>
           ) : null}
           {isSyntheticPaymentId(editing.id) || isSuccessStatus(editing.status) ? (
             <div>
-              <label className="mb-1 block text-xs font-medium text-white/50">Amount (₹)</label>
+              <label className="mb-1 block text-xs font-medium text-fg-subtle">Amount (₹)</label>
               <input
                 type="number"
                 min={0}
                 step="0.01"
                 value={editAmount}
                 onChange={(e) => onEditAmountChange(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+                className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
               />
             </div>
           ) : (
-            <p className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-200/90">
+            <p className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
               Amount can only be edited for successful (SUCCESS) payments. You can still update
               reference, method, and date.
             </p>
@@ -78,23 +78,23 @@ export function EditPaymentDialog({
           {!isSyntheticPaymentId(editing.id) ? (
             <>
               <div>
-                <label className="mb-1 block text-xs font-medium text-white/50">Reference / UTR</label>
+                <label className="mb-1 block text-xs font-medium text-fg-subtle">Reference / UTR</label>
                 <input
                   type="text"
                   value={editRef}
                   onChange={(e) => onEditRefChange(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+                  className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
                   placeholder="Transaction reference"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-white/50">
+                <label className="mb-1 block text-xs font-medium text-fg-subtle">
                   Payment method (fee report column)
                 </label>
                 <select
                   value={editGateway}
                   onChange={(e) => onEditGatewayChange(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+                  className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
                 >
                   {!EDIT_GATEWAY_OPTIONS.some((o) => o.value === editGateway) ? (
                     <option value={editGateway}>
@@ -108,7 +108,7 @@ export function EditPaymentDialog({
                   ))}
                 </select>
                 {!EDIT_GATEWAY_OPTIONS.some((o) => o.value === (editing?.method || "").trim()) ? (
-                  <p className="mt-1 text-[11px] text-amber-200/90">
+                  <p className="mt-1 text-[11px] text-amber-800 dark:text-amber-200">
                     This row uses a non-standard gateway code. Select{' '}
                     <span className="font-semibold">Online (UPI / QR)</span> or{' '}
                     <span className="font-semibold">UPI</span> for digital collections, then save — the fee Excel
@@ -117,12 +117,12 @@ export function EditPaymentDialog({
                 ) : null}
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-white/50">Date recorded</label>
+                <label className="mb-1 block text-xs font-medium text-fg-subtle">Date recorded</label>
                 <input
                   type="date"
                   value={editDate}
                   onChange={(e) => onEditDateChange(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-white"
+                  className="w-full rounded-xl border border-line bg-well px-3 py-2 text-fg"
                 />
               </div>
             </>
@@ -133,7 +133,7 @@ export function EditPaymentDialog({
             type="button"
             onClick={onClose}
             disabled={saving}
-            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/80 hover:bg-white/5 disabled:opacity-50"
+            className="rounded-xl border border-line px-4 py-2 text-sm text-fg hover:bg-elev-2 disabled:opacity-50"
           >
             Cancel
           </button>
@@ -141,7 +141,7 @@ export function EditPaymentDialog({
             type="button"
             onClick={onSave}
             disabled={saving}
-            className="rounded-xl bg-lime-500/90 px-4 py-2 text-sm font-semibold text-black hover:bg-lime-400 disabled:opacity-50"
+            className="rounded-xl bg-primary/90 px-4 py-2 text-sm font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save"}
           </button>

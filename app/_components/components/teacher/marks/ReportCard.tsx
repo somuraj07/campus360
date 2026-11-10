@@ -45,7 +45,7 @@ export default function TeacherReportCard({
   return (
     <div className="space-y-6">
       {/* FILTER BAR */}
-      <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6">
+      <div className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <SelectField
             label="CLASS"
@@ -56,30 +56,30 @@ export default function TeacherReportCard({
                 ? classOptions.map((o) => o.label)
                 : ["Select class"]
             }
-            className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl focus:outline-none focus:border-lime-400/50 text-white text-sm"
+            className="w-full px-4 py-2.5 bg-well border border-line rounded-xl focus:outline-none focus:border-primary/50 text-fg text-sm"
           />
           <SelectField
             label="EXAM TYPE"
             value={selectedExamType}
             onChange={setSelectedExamType}
             options={examTypeOptions}
-            className="w-full px-4 py-2.5 bg-black/40 border border-white/10 rounded-xl focus:outline-none focus:border-lime-400/50 text-white text-sm"
+            className="w-full px-4 py-2.5 bg-well border border-line rounded-xl focus:outline-none focus:border-primary/50 text-fg text-sm"
           />
           <div>
-            <label className="block text-xs font-medium text-white/60 mb-1.5 uppercase tracking-widest">
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-widest">
               SEARCH STUDENT
             </label>
             <div className="relative">
               <Search
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-subtle"
               />
               <input
                 type="text"
                 placeholder="Name or Roll No..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-black/40 border border-white/10 rounded-xl focus:outline-none focus:border-lime-400/50 text-white text-sm placeholder:text-white/30"
+                className="w-full pl-9 pr-4 py-2.5 bg-well border border-line rounded-xl focus:outline-none focus:border-primary/50 text-fg text-sm placeholder:text-fg-faint"
               />
             </div>
           </div>
@@ -99,26 +99,26 @@ export default function TeacherReportCard({
         {/* REPORT CARD */}
         <div className="lg:col-span-8 space-y-6">
           {!selectedStudentId ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 flex flex-col items-center justify-center text-center">
-              <BookOpen size={48} className="text-white/20 mb-4" />
-              <h3 className="text-lg font-semibold text-white/60">
+            <div className="rounded-2xl border border-line bg-elev-1 p-12 flex flex-col items-center justify-center text-center">
+              <BookOpen size={48} className="text-fg-faint mb-4" />
+              <h3 className="text-lg font-semibold text-fg-muted">
                 Select a Student
               </h3>
-              <p className="text-sm text-white/30 mt-1 max-w-sm">
+              <p className="text-sm text-fg-faint mt-1 max-w-sm">
                 Choose a student from the list to view their report card
               </p>
             </div>
           ) : reportLoading ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 flex items-center justify-center">
-              <div className="w-10 h-10 border-2 border-lime-500/30 border-t-lime-500 rounded-full animate-spin" />
+            <div className="rounded-2xl border border-line bg-elev-1 p-12 flex items-center justify-center">
+              <div className="w-10 h-10 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
             </div>
           ) : !reportData || reportData.marks.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-12 flex flex-col items-center justify-center text-center">
-              <Award size={48} className="text-white/20 mb-4" />
-              <h3 className="text-lg font-semibold text-white/60">
+            <div className="rounded-2xl border border-line bg-elev-1 p-12 flex flex-col items-center justify-center text-center">
+              <Award size={48} className="text-fg-faint mb-4" />
+              <h3 className="text-lg font-semibold text-fg-muted">
                 No Marks Found
               </h3>
-              <p className="text-sm text-white/30 mt-1 max-w-sm">
+              <p className="text-sm text-fg-faint mt-1 max-w-sm">
                 No marks have been entered for this student yet
               </p>
             </div>

@@ -159,14 +159,14 @@ export default function EditClassPanel({
   };
 
   return (
-    <div className="bg-[#0F172A] p-4 shadow-inner animate-fadeIn border-y border-white/10">
+    <div className="animate-fadeIn px-1 py-1">
       <div className="p-4 sm:p-5">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 text-white">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-lime-400/15 border border-lime-400/30">
-              <Pencil size={16} className="text-lime-400" />
+          <div className="flex items-center gap-3 text-fg">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 border border-primary/30">
+              <Pencil size={16} className="text-primary" />
             </span>
-            <h3 className="text-base sm:text-lg font-semibold text-lime-300">
+            <h3 className="text-base sm:text-lg font-semibold text-primary">
               Edit Class: {row.name}
             </h3>
           </div>
@@ -174,7 +174,7 @@ export default function EditClassPanel({
           <button
             type="button"
             onClick={onClose}
-            className="h-8 w-8 rounded-lg border border-white/10 bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="h-8 w-8 rounded-lg border border-line bg-elev-1 text-fg-muted hover:text-fg hover:bg-elev-3 transition-colors cursor-pointer"
             aria-label="Close edit class"
           >
             <X size={16} className="mx-auto" />
@@ -182,12 +182,12 @@ export default function EditClassPanel({
         </div>
 
         {saveError && (
-          <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <div className="mt-3 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300">
             {saveError}
           </div>
         )}
 
-        <div className="mt-4 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr_1.2fr_auto] gap-3 items-end">
+        <div className="mt-4 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr_1.2fr_auto] gap-5 items-end">
           <SearchInput
             label="Class Name"
             value={className}
@@ -251,7 +251,7 @@ export default function EditClassPanel({
             type="button"
             onClick={handleSave}
             disabled={saveLoading || isLoadingClass || isLoadingTeachers}
-            className="h-[40px] lg:h-[46px] px-5 rounded-lg bg-lime-400 text-black font-semibold flex items-center justify-center gap-2 hover:bg-lime-300 transition text-sm disabled:opacity-50"
+            className="h-[40px] lg:h-[46px] px-5 rounded-lg bg-primary text-on-primary font-semibold flex items-center justify-center gap-2 hover:bg-primary-hover transition text-sm disabled:opacity-50"
           >
             <Save size={16} />
             {saveLoading ? "Saving..." : "Save"}

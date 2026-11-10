@@ -101,7 +101,11 @@ function buildAddress(row: Record<string, unknown>) {
 
 function extractTimellyId(row: Record<string, unknown>) {
   const rawId = toStr(
-    row["Timelly ID"] ??
+    row["RS Solutions ID"] ??
+      row["RS Solutions Id"] ??
+      row["RS ID"] ??
+      // Legacy header names from templates downloaded before the RS Solutions rebrand.
+      row["Timelly ID"] ??
       row["Timelly Id"] ??
       row.rollNo ??
       row.studentId ??
@@ -281,9 +285,9 @@ export async function POST(req: Request) {
           if (existingByRoll && existingByRoll.id !== existingStudent?.id) {
             const existingName = normalizeStudentName(existingByRoll.user?.name ?? "");
             if (existingName && existingName === normalizedName) {
-              throw new Error("Student name and Timelly ID already exist");
+              throw new Error("Student name and RS Solutions ID already exist");
             }
-            throw new Error("Timelly ID already exists");
+            throw new Error("RS Solutions ID already exists");
           }
         }
 
@@ -427,7 +431,7 @@ export async function POST(req: Request) {
                 select: { id: true },
               });
               if (existingAdmission) {
-                throw new Error("This Timelly number is already used.");
+                throw new Error("This RS Solutions number is already used.");
               }
             } else {
               const candidate = await tx.schoolSettings.update({

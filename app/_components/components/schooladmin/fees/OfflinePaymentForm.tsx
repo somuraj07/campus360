@@ -56,9 +56,9 @@ export default function OfflinePaymentForm({
     head.headType === "BASE_COMPONENT" ? `BASE:${head.componentIndex}` : `EXTRA:${head.extraFeeId}`;
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold mb-4">Offline Payment Entry</h3>
-      <p className="text-sm text-gray-400 mb-4">
+      <p className="text-sm text-fg-muted mb-4">
         Record manual payments, cheque deposits, or bank transfers.
       </p>
       {!showForm ? (
@@ -120,9 +120,9 @@ export default function OfflinePaymentForm({
             onToggleHead={toggleHead}
           />
           {breakdownLoading ? (
-            <p className="text-xs text-gray-500">Loading due amounts...</p>
+            <p className="text-xs text-fg-subtle">Loading due amounts...</p>
           ) : breakdownError ? (
-            <p className="text-xs text-red-400">{breakdownError}</p>
+            <p className="text-xs text-red-700 dark:text-red-400">{breakdownError}</p>
           ) : null}
           <OfflinePaymentAmountPreview
             amount={amount}
@@ -138,7 +138,7 @@ export default function OfflinePaymentForm({
                 key={m}
                 onClick={() => setPaymentMode(m)}
                 className={`rounded-lg px-3 py-1.5 text-sm ${
-                  paymentMode === m ? "bg-emerald-500/30 text-emerald-400" : "bg-white/5"
+                  paymentMode === m ? "bg-emerald-500/30 text-emerald-700 dark:text-emerald-400" : "bg-elev-1"
                 }`}
               >
                 {m}
@@ -146,12 +146,12 @@ export default function OfflinePaymentForm({
             ))}
           </div>
           <div>
-            <label className="block text-xs text-white/70 mb-1">Reference No. / UTR No.</label>
+            <label className="block text-xs text-fg-muted mb-1">Reference No. / UTR No.</label>
             <input
               type="text"
               value={refNo}
               onChange={(e) => setRefNo(e.target.value)}
-              className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-2.5 text-white"
+              className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               placeholder="Enter reference / UTR / cheque number"
             />
           </div>
@@ -163,7 +163,7 @@ export default function OfflinePaymentForm({
             />
             <button
               onClick={resetForm}
-              className="rounded-xl border border-white/20 px-4 py-2"
+              className="rounded-xl border border-line-strong px-4 py-2"
             >
               Cancel
             </button>

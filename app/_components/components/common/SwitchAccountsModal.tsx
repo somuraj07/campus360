@@ -41,20 +41,20 @@ export default function SwitchAccountsModal({ open, onClose, currentEmail }: Pro
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-[#0F172A] rounded-2xl shadow-2xl max-w-md w-full border border-white/10 overflow-hidden"
+          className="bg-surface rounded-2xl shadow-pop max-w-md w-full border border-line overflow-hidden"
         >
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-            <h3 className="text-lg font-semibold text-white">Switch Account</h3>
+          <div className="flex items-center justify-between px-5 py-4 border-b border-line">
+            <h3 className="text-lg font-semibold text-fg">Switch Account</h3>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-white/10 text-white/60 hover:text-white"
+              className="p-2 rounded-lg hover:bg-elev-3 text-fg-muted hover:text-fg"
             >
               <X size={20} />
             </button>
@@ -62,7 +62,7 @@ export default function SwitchAccountsModal({ open, onClose, currentEmail }: Pro
 
           <div className="p-4 max-h-[320px] overflow-y-auto">
             {accounts.length === 0 ? (
-              <p className="text-white/50 text-sm py-6 text-center">
+              <p className="text-fg-subtle text-sm py-6 text-center">
                 No previous logins found. Logout and sign in to add accounts here.
               </p>
             ) : (
@@ -78,25 +78,25 @@ export default function SwitchAccountsModal({ open, onClose, currentEmail }: Pro
                         w-full flex items-center gap-3 px-4 py-3 rounded-xl
                         transition-all text-left
                         ${isCurrent
-                          ? "bg-white/5 border border-white/10 cursor-default opacity-70"
-                          : "hover:bg-white/10 border border-transparent hover:border-white/10"
+                          ? "bg-elev-1 border border-line cursor-default opacity-70"
+                          : "hover:bg-elev-3 border border-transparent hover:border-line"
                         }
                       `}
                     >
-                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                        <User size={20} className="text-white/70" />
+                      <div className="w-10 h-10 rounded-full bg-elev-2 flex items-center justify-center shrink-0">
+                        <User size={20} className="text-fg-muted" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">
+                        <p className="text-sm font-medium text-fg truncate">
                           {account.name || account.email}
                         </p>
-                        <p className="text-xs text-white/50 truncate">{account.email}</p>
+                        <p className="text-xs text-fg-subtle truncate">{account.email}</p>
                       </div>
                       {!isCurrent && (
-                        <ChevronRight size={18} className="text-white/40 shrink-0" />
+                        <ChevronRight size={18} className="text-fg-subtle shrink-0" />
                       )}
                       {isCurrent && (
-                        <span className="text-xs text-lime-400 font-medium shrink-0">
+                        <span className="text-xs text-primary font-medium shrink-0">
                           Current
                         </span>
                       )}
@@ -107,7 +107,7 @@ export default function SwitchAccountsModal({ open, onClose, currentEmail }: Pro
             )}
           </div>
 
-          <p className="px-5 py-3 text-xs text-white/40 border-t border-white/5">
+          <p className="px-5 py-3 text-xs text-fg-subtle border-t border-line-subtle">
             You will need to enter the password for the selected account.
           </p>
         </motion.div>

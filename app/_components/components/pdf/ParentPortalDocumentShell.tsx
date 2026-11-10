@@ -57,7 +57,7 @@ export function ParentPortalDocumentShell({
         style={{ opacity: 0.06 }}
       >
         <img
-          src={brand.schoolLogo || "/timelylogo.webp"}
+          src={brand.schoolLogo || "/icon.png"}
           alt=""
           className="w-52 h-52 object-contain"
         />
@@ -137,7 +137,7 @@ export function ParentPortalDocumentShell({
         className="absolute bottom-2 left-0 right-0 text-center text-[11px] z-10"
         style={{ fontWeight: 400 }}
       >
-        Powered by Timelly
+        Powered by RS Solutions
       </div>
     </div>
   );

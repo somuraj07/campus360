@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { Sun } from "lucide-react";
-import PageHeader from "../../common/PageHeader";
+import { SaPage, SaPageHeader, Alert } from "../../common/ui";
 import ParentHomeStats from "./ParentHomeStats";
 import { BirthdayCard } from "../../common/BirthdayCard";
 import ParentHomeCircularsSection from "./ParentHomeCircularsSection";
@@ -123,23 +122,16 @@ export default function ParentHomeTab() {
 
   if (error) {
     return (
-      <div className="rounded-2xl border border-red-400/20 bg-red-500/10 p-8 text-red-100">
-        {error}
-      </div>
+      <Alert tone="error">{error}</Alert>
     );
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6 md:space-y-8 pb-4 sm:pb-6">
-      <PageHeader
-        title={
-          <span className="inline-flex items-center gap-1.5 sm:gap-2">
-            Home
-            <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-300 flex-shrink-0" />
-          </span>
-        }
-        subtitle={`${getGreeting()}! Welcome back, here's what's happening with ${data.studentName}`}
-        compact
+    <SaPage>
+      <SaPageHeader
+        eyebrow={new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+        title={getGreeting()}
+        description={`Here's what's happening with ${data.studentName}.`}
       />
 
       <ParentHomeStats
@@ -157,6 +149,6 @@ export default function ParentHomeTab() {
 
       <ParentHomeCircularsSection circulars={data.circulars} />
       <ParentHomeUpdatesSection feeds={data.feeds} events={data.events} />
-    </div>
+    </SaPage>
   );
 }

@@ -94,12 +94,12 @@ export default function ChatWindow({
     <div className="flex flex-col h-full w-full min-h-0">
 
       {/* ================= Header ================= */}
-      <div className="p-3 sm:p-4 border-b border-white/10 shrink-0">
+      <div className="p-3 sm:p-4 border-b border-line shrink-0">
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <button
               onClick={onBack}
-              className="lg:hidden text-white shrink-0 p-1 -m-1 touch-manipulation"
+              className="lg:hidden text-fg shrink-0 p-1 -m-1 touch-manipulation"
               aria-label="Back to conversations"
             >
               <ArrowLeft size={22} />
@@ -112,10 +112,10 @@ export default function ChatWindow({
             />
 
             <div className="min-w-0">
-              <p className="font-semibold text-white truncate">
+              <p className="font-semibold text-fg truncate">
                 {chat.parent}
               </p>
-              <p className="text-xs md:text-sm text-lime-400 truncate">
+              <p className="text-xs md:text-sm text-primary truncate">
                 {variant === "parent" ? `Requested for ${chat.student}` : `Parent of ${chat.student}`}
               </p>
             </div>
@@ -129,7 +129,7 @@ export default function ChatWindow({
               <>
                 <button
                   onClick={() => alert("Starting voice call...")}
-                  className="p-2 sm:p-2 rounded-full hover:bg-white/10 active:bg-white/15 text-gray-300 hover:text-white transition touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
+                  className="p-2 sm:p-2 rounded-full hover:bg-elev-3 active:bg-elev-3 text-fg-muted hover:text-fg transition touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
                   aria-label="Voice call"
                 >
                   <Phone size={20} />
@@ -137,7 +137,7 @@ export default function ChatWindow({
 
                 <button
                   onClick={() => alert("Starting video call...")}
-                  className="p-2 sm:p-2 rounded-full hover:bg-white/10 active:bg-white/15 text-gray-300 hover:text-white transition touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
+                  className="p-2 sm:p-2 rounded-full hover:bg-elev-3 active:bg-elev-3 text-fg-muted hover:text-fg transition touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
                   aria-label="Video call"
                 >
                   <Video size={20} />
@@ -150,7 +150,7 @@ export default function ChatWindow({
               <>
                 <button
                   onClick={onApprove}
-                  className="px-3 py-2 sm:py-1.5 rounded-full bg-lime-400 text-black text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
+                  className="px-3 py-2 sm:py-1.5 rounded-full bg-primary text-on-primary text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
                 >
                   <Check size={16} />
                   <span className="hidden sm:inline">Approve</span>
@@ -158,7 +158,7 @@ export default function ChatWindow({
 
                 <button
                   onClick={onReject}
-                  className="px-3 py-2 sm:py-1.5 rounded-full bg-red-500/20 text-red-400 text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
+                  className="px-3 py-2 sm:py-1.5 rounded-full bg-red-500/20 text-red-700 dark:text-red-400 text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
                 >
                   <X size={16} />
                   <span className="hidden sm:inline">Reject</span>
@@ -170,7 +170,7 @@ export default function ChatWindow({
             {canChat && variant === "teacher" && onEndChat && (
               <button
                 onClick={onEndChat}
-                className="px-3 py-2 sm:py-1.5 rounded-full bg-amber-500/20 text-amber-400 text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
+                className="px-3 py-2 sm:py-1.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-400 text-xs sm:text-sm flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0"
                 title="End chat"
                 aria-label="End chat"
               >
@@ -185,14 +185,14 @@ export default function ChatWindow({
       {/* ================= Body ================= */}
       {isPending && (
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
-          <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4">
-            <UserPlus className="text-lime-400" size={28} />
+          <div className="w-16 h-16 rounded-full bg-elev-2 flex items-center justify-center mb-4">
+            <UserPlus className="text-primary" size={28} />
           </div>
 
-          <p className="text-lg text-white/80">
+          <p className="text-lg text-fg">
             {chat.parent} wants to connect with you
           </p>
-          <p className="text-sm text-white/40 mt-2">
+          <p className="text-sm text-fg-subtle mt-2">
             Approve to start chatting
           </p>
         </div>
@@ -201,7 +201,7 @@ export default function ChatWindow({
       {!isPending && !isRejected && (
         <div className="flex-1 flex flex-col p-3 sm:p-4 overflow-hidden min-h-0">
           {isEnded && (
-            <p className="text-center text-amber-400/90 text-sm py-2 border-b border-white/10 mb-2">
+            <p className="text-center text-amber-700 dark:text-amber-400 text-sm py-2 border-b border-line mb-2">
               Chat ended by the teacher. No new messages can be sent.
             </p>
           )}
@@ -211,7 +211,7 @@ export default function ChatWindow({
                 <TimellyLoader compact bare title="Loading messages" steps={["Chat"]} />
               </div>
             ) : messages.length === 0 ? (
-              <div className="text-center text-gray-400 text-sm py-4">
+              <div className="text-center text-fg-muted text-sm py-4">
                 {isEnded ? "No messages in this chat." : "No messages yet. Start the conversation."}
               </div>
             ) : (
@@ -222,8 +222,8 @@ export default function ChatWindow({
                     key={m.id}
                     className={`max-w-[85%] sm:max-w-[75%] rounded-xl p-3 text-sm ${
                       isMe
-                        ? "ml-auto bg-lime-500 text-black"
-                        : "bg-white/10 text-white"
+                        ? "ml-auto bg-primary text-on-primary"
+                        : "bg-elev-2 text-fg"
                     }`}
                   >
                     {m.content}
@@ -236,15 +236,15 @@ export default function ChatWindow({
       )}
 
       {isRejected && (
-        <div className="flex-1 flex items-center justify-center text-gray-400 text-sm">
+        <div className="flex-1 flex items-center justify-center text-fg-muted text-sm">
           This conversation has been closed.
         </div>
       )}
 
       {/* ================= Input ================= */}
       {!isRejected && !isEnded && (
-        <div className="p-3 sm:p-4 pb-4 border-t border-white/10 flex items-center gap-2 sm:gap-3 shrink-0">
-          <button type="button" className="text-gray-400 shrink-0 p-2 -m-2 touch-manipulation" aria-label="Attach file">
+        <div className="p-3 sm:p-4 pb-4 border-t border-line flex items-center gap-2 sm:gap-3 shrink-0">
+          <button type="button" className="text-fg-muted shrink-0 p-2 -m-2 touch-manipulation" aria-label="Attach file">
             <Paperclip size={20} />
           </button>
 
@@ -258,7 +258,7 @@ export default function ChatWindow({
                 handleSend();
               }
             }}
-            className="flex-1 min-w-0 bg-white/5 rounded-xl px-4 py-3 sm:py-2.5 text-base sm:text-sm outline-none text-white disabled:opacity-40"
+            className="flex-1 min-w-0 bg-elev-1 rounded-xl px-4 py-3 sm:py-2.5 text-base sm:text-sm outline-none text-fg disabled:opacity-40"
             placeholder={
               isPending
                 ? "Approve request to start chatting…"
@@ -269,7 +269,7 @@ export default function ChatWindow({
           <button
             disabled={isPending || !canChat || sending}
             onClick={handleSend}
-            className="text-lime-400 disabled:opacity-40 p-2 -m-2 touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
+            className="text-primary disabled:opacity-40 p-2 -m-2 touch-manipulation min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 flex items-center justify-center"
             aria-label="Send message"
           >
             <Send size={20} />

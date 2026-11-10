@@ -48,47 +48,29 @@ export function AnalysisOverviewSection({
 }) {
   return (
     <>
-      {/* Stats - responsive grid */}
-      <div className={`grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 ${shellLoading ? "animate-pulse" : ""}`}>
+      <div className={`mb-5 grid grid-cols-1 gap-4 sm:mb-6 sm:grid-cols-2 xl:grid-cols-4 ${shellLoading ? "animate-pulse" : ""}`}>
         {stats.map((stat, i) => (
-          <div
-            key={i}
-            className="rounded-xl sm:rounded-2xl p-3 sm:p-5 bg-white/10 backdrop-blur-md border border-white/10 flex flex-col justify-between min-h-[100px] sm:min-h-0"
-          >
-            <div className="flex items-start gap-2 sm:gap-4">
-              <div
-                className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center border shrink-0 ${stat.iconBorder} ${stat.iconBg}`}
-              >
-                <stat.icon
-                  className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.iconColor}`}
-                />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <p className="text-[10px] sm:text-xs text-white/70 leading-tight truncate">
-                  {stat.title}
-                </p>
-                <h2
-                  className={`text-lg sm:text-2xl font-bold truncate ${stat.changeColor}`}
-                >
-                  {stat.value}
-                </h2>
-              </div>
+          <div key={i} className="rounded-2xl border border-line bg-elev-1 p-5">
+            <div className="flex items-start justify-between gap-3">
+              <p className="truncate text-[13px] font-medium text-fg-subtle">{stat.title}</p>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <stat.icon className="h-[18px] w-[18px]" />
+              </span>
             </div>
-            <p
-              className={`text-[10px] sm:text-xs mt-2 sm:mt-3 ml-0 sm:ml-2 ${stat.changeColor} truncate`}
-            >
-              {stat.change}
+            <p className="mt-2 truncate text-[28px] font-semibold leading-none tracking-tight text-fg tabular-nums">
+              {stat.value}
             </p>
+            <p className={`mt-2.5 truncate text-xs ${stat.changeColor}`}>{stat.change}</p>
           </div>
         ))}
       </div>
 
       {/* Charts Row 1 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5 sm:mb-6">
+        <div className="rounded-2xl border border-line bg-elev-1 p-5 min-h-[280px] sm:min-h-[320px]">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-lime-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-primary shrink-0" />
+            <h3 className="text-[15px] font-semibold text-fg">
               Monthly Fees Collection
             </h3>
           </div>
@@ -96,8 +78,8 @@ export function AnalysisOverviewSection({
             <AreaChart data={feesData}>
               <defs>
                 <linearGradient id="fees" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#a3e635" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#a3e635" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis
@@ -111,7 +93,7 @@ export function AnalysisOverviewSection({
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="#a3e635"
+                stroke="#0EA5E9"
                 fill="url(#fees)"
                 strokeWidth={2}
               />
@@ -119,10 +101,10 @@ export function AnalysisOverviewSection({
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-2xl border border-line bg-elev-1 p-5 min-h-[280px] sm:min-h-[320px]">
           <div className="flex items-center gap-2 mb-4">
-            <Users className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <Users className="w-4 h-4 sm:w-5 sm:h-5 text-sky-700 dark:text-sky-400 shrink-0" />
+            <h3 className="text-[15px] font-semibold text-fg">
               Student Enrollment Growth
             </h3>
           </div>
@@ -144,10 +126,10 @@ export function AnalysisOverviewSection({
 
       {/* Charts Row 2 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-2xl border border-line bg-elev-1 p-5 min-h-[280px] sm:min-h-[320px]">
           <div className="flex items-center gap-2 mb-4">
-            <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-sky-400 shrink-0" />
-            <h3 className="font-semibold text-white text-xs sm:text-sm">
+            <CalendarCheck className="w-4 h-4 sm:w-5 sm:h-5 text-sky-700 dark:text-sky-400 shrink-0" />
+            <h3 className="text-[15px] font-semibold text-fg">
               Attendance: Students vs Teachers
             </h3>
           </div>
@@ -175,22 +157,22 @@ export function AnalysisOverviewSection({
               <Line
                 type="monotone"
                 dataKey="teachers"
-                stroke="#a3e635"
+                stroke="#0EA5E9"
                 strokeWidth={2}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/10 backdrop-blur-md min-h-[280px] sm:min-h-[320px]">
+        <div className="rounded-2xl border border-line bg-elev-1 p-5 min-h-[280px] sm:min-h-[320px]">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 bg-dark-400 shrink-0" />
-              <h3 className="font-semibold text-white text-xs sm:text-sm">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-700 dark:text-yellow-400 bg-dark-400 shrink-0" />
+              <h3 className="text-[15px] font-semibold text-fg">
                 Subject Performance
               </h3>
             </div>
-            <span className="text-[10px] sm:text-xs text-white/50 border border-white/10 rounded-lg px-2 py-1">
+            <span className="text-[10px] sm:text-xs text-fg-subtle border border-line rounded-lg px-2 py-1">
               All Exams
             </span>
           </div>
@@ -218,24 +200,24 @@ export function AnalysisOverviewSection({
       </div>
 
       {/* Top Performing Teachers - sorted best first */}
-      <div className="mt-4 sm:mt-6 rounded-xl sm:rounded-2xl p-4 sm:p-6 bg-white/10 backdrop-blur-md border border-white/10">
+      <div className="mt-4 sm:mt-6 rounded-xl sm:rounded-2xl p-4 sm:p-6 bg-elev-2 border border-line">
         <div className="mb-4 sm:mb-5">
           <div className="flex items-center gap-2">
-            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-300 shrink-0" />
-            <h3 className="font-semibold text-white text-sm sm:text-base">
+            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-700 dark:text-purple-300 shrink-0" />
+            <h3 className="font-semibold text-fg text-sm sm:text-base">
               Top Performing Teachers
             </h3>
           </div>
-          <p className="text-xs sm:text-sm text-white/50 mt-1">
+          <p className="text-xs sm:text-sm text-fg-subtle mt-1">
             By student exam performance ({selectedYear}-
             {selectedYear + 1}), best first
           </p>
         </div>
 
-        <div className="border-t border-white/10 mb-4 sm:mb-5" />
+        <div className="border-t border-line mb-4 sm:mb-5" />
 
         {topTeachers.length === 0 ? (
-          <p className="text-sm text-white/50 py-4">
+          <p className="text-sm text-fg-subtle py-4">
             No teacher performance data for this year yet.
           </p>
         ) : (
@@ -243,26 +225,26 @@ export function AnalysisOverviewSection({
             {topTeachers.map((t) => (
               <div
                 key={t.id}
-                className="rounded-lg sm:rounded-xl p-4 sm:p-6 bg-white/5 border border-white/10 flex items-center justify-between gap-3"
+                className="rounded-lg sm:rounded-xl p-4 sm:p-6 bg-elev-1 border border-line flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full uppercase bg-purple-400/20 flex items-center justify-center text-purple-300 shrink-0 text-sm sm:text-base">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full uppercase bg-purple-400/20 flex items-center justify-center text-purple-700 dark:text-purple-300 shrink-0 text-sm sm:text-base">
                     {t.name.charAt(0)}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm sm:text-base font-semibold text-white truncate">
+                    <p className="text-sm sm:text-base font-semibold text-fg truncate">
                       {t.name}
                     </p>
-                    <p className="text-[10px] sm:text-xs text-white/30 truncate">
+                    <p className="text-[10px] sm:text-xs text-fg-faint truncate">
                       {t.subject}
                     </p>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-lime-400 font-bold text-sm sm:text-base">
+                  <p className="text-primary font-bold text-sm sm:text-base">
                     {t.rating.toFixed(1)}
                   </p>
-                  <p className="text-[10px] text-white/40">Rating</p>
+                  <p className="text-[10px] text-fg-subtle">Rating</p>
                 </div>
               </div>
             ))}

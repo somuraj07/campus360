@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, ComponentType, type CSSProperties } from "react";
+import { useEffect, useRef, useState, ComponentType } from "react";
 import { LucideProps, Eye, EyeOff } from "lucide-react";
 import clsx from "clsx";
-import { PRIMARY_COLOR, HOVER_COLOR } from "../../constants/colors";
 
 interface SearchInputProps {
   value?: string;
@@ -45,7 +44,7 @@ export default function SearchInput({
   inputClassName,
   label,
   type = "text",
-  iconClassName = "text-gray-400",
+  iconClassName = "text-fg-muted",
   error,
   variant = "default", // 👈 default safe
 }: SearchInputProps) {
@@ -82,7 +81,7 @@ export default function SearchInput({
   return (
     <div className={clsx("w-full", className)}>
       {label && (
-        <label className="block text-xs sm:text-sm mb-1 text-white/70">
+        <label className="mb-1.5 block text-[13px] font-medium text-fg">
           {label}
         </label>
       )}
@@ -91,12 +90,12 @@ export default function SearchInput({
 
         {shouldShowIcon && !shouldRenderIconButton && (
           <Icon
-            size={18}
+            size={16}
             className={clsx(
               "absolute top-1/2 -translate-y-1/2",
-              iconOnRight ? "right-4" : "left-4",
+              iconOnRight ? "right-3.5" : "left-3.5",
               "z-10 pointer-events-none",
-              isGlass ? "text-white/60" : iconClassName
+              isGlass ? "text-fg-faint" : iconClassName === "text-fg-muted" ? "text-fg-faint" : iconClassName
             )}
           />
         )}
@@ -109,8 +108,8 @@ export default function SearchInput({
               "absolute top-1/2 -translate-y-1/2",
               iconOnRight ? "right-3" : "left-3",
               "z-10 rounded-full p-1.5",
-              "text-white/70 hover:text-white",
-              "hover:bg-white/10"
+              "text-fg-muted hover:text-fg",
+              "hover:bg-elev-3"
             )}
           >
             <Icon size={18} />
@@ -127,47 +126,24 @@ export default function SearchInput({
           onKeyDown={onKeyDown}
           aria-invalid={!!error}
           className={clsx(
-            "w-full rounded-xl",
-            shouldShowIcon && !iconOnRight ? "pl-11" : "pl-4",
-            shouldShowIcon && iconOnRight ? "pr-11" : "pr-4",
-            "py-2.5 sm:py-3",
-            "bg-black/20 border border-white/10",
-            "text-gray-200 text-sm sm:text-base",
-            "placeholder-white/40",
-            "focus:outline-none focus:ring-0",
-            disabled && "opacity-60 cursor-not-allowed",
-            inputClassName,
-
-            // 👇 CONDITIONAL STYLING
-            isGlass
-              ? [
-                  "bg-black/30",
-                  "border border-white/20",
-                  "focus:border-lime-400/60",
-                ]
-              : [
-                  "bg-black/20",
-                  "border border-white/10",
-                  "hover:border-[var(--hover-color)]",
-                  "focus:border-[var(--primary-color)]",
-                ]
+            "h-11 w-full rounded-lg border bg-surface text-sm text-fg transition",
+            shouldShowIcon && !iconOnRight ? "pl-10" : "pl-3.5",
+            shouldShowIcon && iconOnRight ? "pr-10" : type === "password" ? "pr-10" : "pr-3.5",
+            "placeholder:text-fg-faint focus:outline-none focus:ring-4",
+            error
+              ? "border-red-400 focus:border-red-500 focus:ring-red-500/15"
+              : "border-line-strong hover:border-fg-faint focus:border-primary focus:ring-primary/10",
+            disabled && "cursor-not-allowed opacity-60",
+            isGlass && "bg-surface",
+            inputClassName
           )}
-          style={
-            !isGlass
-              ? ({
-                  backgroundColor: "rgba(255, 255, 255, 0.05)",
-                  "--primary-color": PRIMARY_COLOR,
-                  "--hover-color": HOVER_COLOR,
-                } as CSSProperties)
-              : undefined
-          }
         />
 
         {type === "password" && (
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 inset-y-0 flex items-center text-white/70 hover:text-white"
+            className="absolute right-3 inset-y-0 flex items-center text-fg-muted hover:text-fg"
             tabIndex={-1}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -176,7 +152,7 @@ export default function SearchInput({
       </div>
 
       {error && (
-        <p className="text-sm mt-1 text-red-500">
+        <p className="mt-1.5 text-xs text-red-700 dark:text-red-400">
           {error}
         </p>
       )}

@@ -77,9 +77,9 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-4 min-w-0 w-full">
       {/* Student Identity Card */}
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5 shadow-lg text-left min-w-0 w-full">
+      <div className="bg-elev-1 border border-line rounded-2xl p-5 text-left min-w-0 w-full">
         <div className="flex items-center justify-between gap-2 mb-3">
-          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Student</span>
+          <h3 className="text-[15px] font-semibold text-fg">Student</h3>
           <div className="flex items-center gap-1.5">
             <button
               type="button"
@@ -87,7 +87,7 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
               onMouseEnter={feesRecordingDisabled ? undefined : onFeesHover}
               onFocus={feesRecordingDisabled ? undefined : onFeesHover}
               disabled={feesRecordingDisabled}
-              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-blue-500/40 bg-blue-500/15 px-2.5 py-1.5 text-[11px] font-semibold text-blue-300 hover:bg-blue-500/25 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
               title={feesRecordingDisabled ? "Inactive students — fees cannot be recorded" : "Open fees sheet"}
             >
               <CircleDollarSign className="h-3.5 w-3.5" strokeWidth={2.25} />
@@ -97,7 +97,7 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
               type="button"
               onClick={openStudentModal}
               disabled={!canEdit}
-              className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-lime-500/40 bg-lime-500/15 px-2.5 py-1.5 text-[11px] font-semibold text-lime-300 hover:bg-lime-500/25 disabled:cursor-not-allowed disabled:opacity-40"
+              className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3 text-xs font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
               title="Edit student details"
             >
               <Pencil className="h-3.5 w-3.5" strokeWidth={2.25} />
@@ -110,25 +110,25 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
           <div className="relative w-[4.5rem] h-[4.5rem] shrink-0">
             <img
               src={student.photoUrl || "/avatar.jpg"}
-              className="rounded-2xl border-2 border-[#b4f44d]/90 object-cover w-full h-full shadow-md"
+              className="rounded-2xl object-cover w-full h-full ring-1 ring-line"
               alt={student.name}
             />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Name</p>
-            <p className="text-sm font-bold text-white break-words leading-snug">{student.name}</p>
-            <p className="text-[11px] text-[#b4f44d] font-mono break-all mt-1 opacity-90" title={student.id}>
+            <p className="text-[11px] font-medium text-fg-subtle">Name</p>
+            <p className="text-[15px] font-semibold text-fg break-words leading-snug">{student.name}</p>
+            <p className="mt-1 break-all font-mono text-xs text-fg-subtle" title={student.id}>
               {student.id}
             </p>
           </div>
         </div>
 
         <div className="mb-2.5 grid grid-cols-2 gap-2">
-          <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 min-w-0">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Type</p>
-            <p className="text-xs font-semibold text-white truncate">{getResidencyLabel(residencyType)}</p>
+          <div className="rounded-xl border border-line bg-elev-1 px-3 py-2 min-w-0">
+            <p className="text-[11px] font-medium text-fg-subtle">Type</p>
+            <p className="text-xs font-semibold text-fg truncate">{getResidencyLabel(residencyType)}</p>
             {residencyPeriods.length > 0 ? (
-              <p className="mt-1 text-[10px] leading-snug text-lime-200/80">
+              <p className="mt-1 text-[10px] leading-snug text-primary">
                 {residencyYearLabel ? `${residencyYearLabel}: ` : ""}
                 {residencyPeriods
                   .map(
@@ -139,56 +139,56 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
               </p>
             ) : null}
           </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 min-w-0">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">DOB</p>
-            <p className="text-xs font-semibold text-white truncate">{formatDobDisplay(student.dob)}</p>
+          <div className="rounded-xl border border-line bg-elev-1 px-3 py-2 min-w-0">
+            <p className="text-[11px] font-medium text-fg-subtle">DOB</p>
+            <p className="text-xs font-semibold text-fg truncate">{formatDobDisplay(student.dob)}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-3">
-          <div className="bg-white/5 py-2 px-2 sm:px-2.5 rounded-xl border border-white/5 min-w-0 text-center">
-            <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Class</p>
-            <p className="text-[11px] sm:text-xs font-bold text-white break-words leading-tight" title={student.className}>
+          <div className="bg-elev-1 py-2 px-2 sm:px-2.5 rounded-xl border border-line-subtle min-w-0 text-center">
+            <p className="text-[11px] font-medium text-fg-subtle">Class</p>
+            <p className="text-[13px] font-semibold text-fg break-words leading-tight" title={student.className}>
               {student.className}
             </p>
           </div>
-          <div className="bg-white/5 py-2 px-2 sm:px-2.5 rounded-xl border border-white/5 min-w-0 text-center">
-            <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Roll</p>
-            <p className="text-[11px] sm:text-xs font-bold text-white break-words leading-tight">{student.rollNo || "—"}</p>
+          <div className="bg-elev-1 py-2 px-2 sm:px-2.5 rounded-xl border border-line-subtle min-w-0 text-center">
+            <p className="text-[11px] font-medium text-fg-subtle">Roll</p>
+            <p className="text-[13px] font-semibold text-fg break-words leading-tight">{student.rollNo || "—"}</p>
           </div>
-          <div className="bg-white/5 py-2 px-2 sm:px-2.5 rounded-xl border border-white/5 min-w-0 text-center">
-            <p className="text-[9px] sm:text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Age</p>
-            <p className="text-[11px] sm:text-xs font-bold text-white">{student.age}</p>
+          <div className="bg-elev-1 py-2 px-2 sm:px-2.5 rounded-xl border border-line-subtle min-w-0 text-center">
+            <p className="text-[11px] font-medium text-fg-subtle">Age</p>
+            <p className="text-[13px] font-semibold text-fg">{student.age}</p>
           </div>
         </div>
 
-        <div className="space-y-2 pt-3 border-t border-white/5 text-xs text-gray-300">
+        <div className="space-y-2 pt-3 border-t border-line-subtle text-xs text-fg-muted">
           <div className="flex items-start gap-2.5 min-w-0">
-            <Mail size={14} className="text-[#b4f44d] shrink-0 mt-0.5" />
+            <Mail size={14} className="text-primary shrink-0 mt-0.5" />
             <span className="break-all line-clamp-2 min-w-0">{student.email || "—"}</span>
           </div>
           <div className="flex items-start gap-2.5 min-w-0">
-            <Phone size={14} className="text-[#b4f44d] shrink-0 mt-0.5" />
+            <Phone size={14} className="text-primary shrink-0 mt-0.5" />
             <span className="break-all">{student.phone || "—"}</span>
           </div>
           <div className="flex items-start gap-2.5 min-w-0">
-            <MapPin size={14} className="text-[#b4f44d] shrink-0 mt-0.5" />
+            <MapPin size={14} className="text-primary shrink-0 mt-0.5" />
             <span className="leading-snug line-clamp-4 break-words">{normalizedAddress || "—"}</span>
           </div>
         </div>
       </div>
 
       {/* Parent Details Card */}
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5 shadow-lg min-w-0 w-full">
+      <div className="bg-elev-1 border border-line rounded-2xl p-5 min-w-0 w-full">
         <div className="flex items-center justify-between gap-2 mb-3">
-          <h4 className="text-[#b4f44d] font-bold flex items-center gap-2 text-sm min-w-0">
+          <h4 className="text-fg font-semibold flex items-center gap-2 text-[15px] min-w-0">
             <Users className="w-5 h-5 shrink-0" /> Parents Details
           </h4>
           <button
             type="button"
             onClick={() => setParentModalOpen(true)}
             disabled={!canEdit}
-            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-lime-500/40 bg-lime-500/15 px-2.5 py-1.5 text-[11px] font-semibold text-lime-300 hover:bg-lime-500/25 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3 text-xs font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
             title="Edit parent / guardian details"
           >
             <Pencil className="h-3.5 w-3.5" strokeWidth={2.25} />
@@ -197,15 +197,15 @@ export const ProfileSidebar = (props: ProfileSidebarProps) => {
         </div>
 
         <div className="space-y-3">
-          <div className="rounded-xl border border-white/5 bg-white/5 p-2.5">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mb-1.5">Father / Guardian</p>
-            <p className="text-xs font-bold text-white break-words">{fatherName || "Not Provided"}</p>
-            <p className="text-[11px] text-gray-400 mt-1">{fatherPhone || "—"}</p>
+          <div className="rounded-xl border border-line-subtle bg-elev-1 p-2.5">
+            <p className="text-[11px] font-medium text-fg-subtle mb-1.5">Father / Guardian</p>
+            <p className="text-xs font-bold text-fg break-words">{fatherName || "Not Provided"}</p>
+            <p className="text-[11px] text-fg-muted mt-1">{fatherPhone || "—"}</p>
           </div>
-          <div className="rounded-xl border border-white/5 bg-white/5 p-2.5">
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter mb-1.5">Mother</p>
-            <p className="text-xs font-bold text-white break-words">{motherName || "Not Provided"}</p>
-            <p className="text-[11px] text-gray-400 mt-1">{motherPhone || "—"}</p>
+          <div className="rounded-xl border border-line-subtle bg-elev-1 p-2.5">
+            <p className="text-[11px] font-medium text-fg-subtle mb-1.5">Mother</p>
+            <p className="text-xs font-bold text-fg break-words">{motherName || "Not Provided"}</p>
+            <p className="text-[11px] text-fg-muted mt-1">{motherPhone || "—"}</p>
           </div>
         </div>
       </div>

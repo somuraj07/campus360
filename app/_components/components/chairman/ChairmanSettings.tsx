@@ -1,5 +1,6 @@
 "use client";
 
+import { SaPage, SaPageHeader, Alert } from "../common/ui";
 import { useCallback, useEffect, useState } from "react";
 import { useRef } from "react";
 import type { ChangeEvent, FormEvent } from "react";
@@ -211,43 +212,43 @@ export default function ChairmanSettings({ onProfileUpdated }: { onProfileUpdate
   }
 
   return (
-    <div className="space-y-5">
-      <div className="rounded-3xl border border-white/10 bg-white/4 p-4 sm:p-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-lime-300/80">Chairman Settings</p>
-        <h1 className="mt-1 text-2xl font-bold text-white">Account Settings</h1>
-        <p className="mt-1 text-sm text-white/60">Edit chairman profile, mobile number and password.</p>
-      </div>
+    <SaPage>
+      <SaPageHeader eyebrow="Chairman" title="Account Settings" description="Edit chairman profile, mobile number and password." />
 
-      {error ? <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">{error}</div> : null}
-      {message ? <div className="rounded-2xl border border-lime-500/30 bg-lime-500/10 p-4 text-sm text-lime-200">{message}</div> : null}
+      {error ? <Alert tone="error">{error}</Alert> : null}
+      {message ? <Alert tone="success">{message}</Alert> : null}
 
-      <form onSubmit={saveProfile} className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-        <h2 className="text-lg font-bold text-white">Profile</h2>
+      <form onSubmit={saveProfile} className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
+        <h2 className="text-[15px] font-semibold text-fg">Profile</h2>
         <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-            <img
-              src={profile.photoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name || "Chairman")}&size=120&background=4ade80&color=111827`}
-              alt={profile.name || "Chairman"}
-              className="h-full w-full object-cover"
-              onError={(event) => {
-                event.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.name || "Chairman")}&size=120&background=4ade80&color=111827`;
-              }}
-            />
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-line bg-well">
+            {profile.photoUrl ? (
+              <img src={profile.photoUrl} alt={profile.name || "Chairman"} className="h-full w-full object-cover" />
+            ) : (
+              <span className="flex h-full w-full items-center justify-center bg-primary/10 text-xl font-semibold text-primary">
+                {(profile.name || "Chairman")
+                  .split(/\s+/)
+                  .filter(Boolean)
+                  .slice(0, 2)
+                  .map((w) => w[0]?.toUpperCase())
+                  .join("")}
+              </span>
+            )}
             {uploading ? (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/55">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+              <div className="absolute inset-0 flex items-center justify-center bg-overlay">
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-line border-t-primary" />
               </div>
             ) : null}
           </div>
           <div>
-            <p className="font-semibold text-white">Profile Photo</p>
-            <p className="text-sm text-white/50">Upload JPG, PNG, or WebP image.</p>
+            <p className="font-semibold text-fg">Profile Photo</p>
+            <p className="text-sm text-fg-subtle">Upload JPG, PNG, or WebP image.</p>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={uploadProfilePhoto} />
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="mt-2 rounded-xl border border-lime-400/30 bg-lime-400/10 px-4 py-2 text-sm font-semibold text-lime-200 hover:bg-lime-400/20 disabled:opacity-60"
+              className="mt-2 rounded-xl border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/20 disabled:opacity-60"
             >
               {uploading ? "Uploading..." : "Update Photo"}
             </button>
@@ -256,20 +257,20 @@ export default function ChairmanSettings({ onProfileUpdated }: { onProfileUpdate
 
         <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block">
-            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-white/80">
-              <User className="h-4 w-4 text-white/45" />
+            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-fg">
+              <User className="h-4 w-4 text-fg-subtle" />
               Name
             </span>
             <input
               value={profile.name}
               onChange={(event) => setProfile((prev) => ({ ...prev, name: event.target.value }))}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+              className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
               placeholder="Chairman name"
             />
           </label>
           <label className="block">
-            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-white/80">
-              <Phone className="h-4 w-4 text-white/45" />
+            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-fg">
+              <Phone className="h-4 w-4 text-fg-subtle" />
               Mobile
             </span>
             <input
@@ -277,36 +278,36 @@ export default function ChairmanSettings({ onProfileUpdated }: { onProfileUpdate
               onChange={(event) =>
                 setProfile((prev) => ({ ...prev, mobile: event.target.value.replace(/\D/g, "").slice(0, 10) }))
               }
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+              className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
               placeholder="10 digit mobile number"
             />
           </label>
           <label className="block md:col-span-2">
-            <span className="mb-2 block text-sm font-medium text-white/80">Email</span>
+            <span className="mb-2 block text-sm font-medium text-fg">Email</span>
             <input
               value={profile.email}
               disabled
-              className="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/55 outline-none"
+              className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg-muted outline-none"
             />
           </label>
           <label className="block">
-            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-white/80">
-              <MapPin className="h-4 w-4 text-white/45" />
+            <span className="mb-2 flex items-center gap-2 text-sm font-medium text-fg">
+              <MapPin className="h-4 w-4 text-fg-subtle" />
               Address
             </span>
             <input
               value={profile.address}
               onChange={(event) => setProfile((prev) => ({ ...prev, address: event.target.value }))}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+              className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
               placeholder="Address"
             />
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/80">Language</span>
+            <span className="mb-2 block text-sm font-medium text-fg">Language</span>
             <select
               value={profile.language}
               onChange={(event) => setProfile((prev) => ({ ...prev, language: event.target.value }))}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+              className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
             >
               <option value="English">English</option>
               <option value="Hindi">Hindi</option>
@@ -320,47 +321,47 @@ export default function ChairmanSettings({ onProfileUpdated }: { onProfileUpdate
         <button
           type="submit"
           disabled={savingProfile}
-          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-lime-400 px-4 py-3 text-sm font-bold text-black disabled:opacity-60 sm:w-auto"
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-on-primary disabled:opacity-60 sm:w-auto"
         >
           <Save className="h-4 w-4" />
           {savingProfile ? "Saving..." : "Save Profile"}
         </button>
       </form>
 
-      <form onSubmit={savePassword} className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-        <h2 className="text-lg font-bold text-white">Change Password</h2>
+      <form onSubmit={savePassword} className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
+        <h2 className="text-[15px] font-semibold text-fg">Change Password</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <input
             type="password"
             value={currentPassword}
             onChange={(event) => setCurrentPassword(event.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+            className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
             placeholder="Current password"
           />
           <input
             type="password"
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+            className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
             placeholder="New password"
           />
           <input
             type="password"
             value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-lime-400/70"
+            className="w-full rounded-xl border border-line bg-well px-4 py-3 text-fg outline-none focus:border-primary/70"
             placeholder="Confirm new password"
           />
         </div>
         <button
           type="submit"
           disabled={savingPassword}
-          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-black disabled:opacity-60 sm:w-auto"
+          className="mt-5 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-hover disabled:opacity-60 sm:w-auto"
         >
           <Lock className="h-4 w-4" />
           {savingPassword ? "Updating..." : "Update Password"}
         </button>
       </form>
-    </div>
+    </SaPage>
   );
 }

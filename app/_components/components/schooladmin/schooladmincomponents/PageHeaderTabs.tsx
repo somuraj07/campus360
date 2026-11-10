@@ -43,29 +43,20 @@ export default function PageTabs({
   };
 
   return (
-    <div className="w-full overflow-x-auto">
-      <div className="flex w-max sm:w-full bg-[#0F172A]/50 p-1 rounded-xl border border-white/10">
+    <div className="max-w-full overflow-x-auto">
+      <div role="tablist" className="inline-flex rounded-xl border border-line bg-elev-2 p-1">
         {tabs.map((tab) => {
           const isActive = active === tab.value;
-
           return (
             <button
               key={tab.value}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
               onClick={() => handleChange(tab.value)}
-              className={`
-                whitespace-nowrap
-                px-4 sm:px-5
-                py-2
-                rounded-xl
-                text-xs sm:text-sm
-                font-medium
-                transition-all
-                ${
-                  isActive
-                    ? "bg-lime-400 text-black shadow-lg"
-                    : "text-white/70 hover:text-white"
-                }
-              `}
+              className={`whitespace-nowrap rounded-lg px-4 py-1.5 text-[13px] font-medium transition ${
+                isActive ? "bg-surface text-fg shadow-card" : "text-fg-subtle hover:text-fg"
+              }`}
             >
               {tab.label}
             </button>

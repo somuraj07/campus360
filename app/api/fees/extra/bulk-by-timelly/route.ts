@@ -208,7 +208,7 @@ export async function POST(req: Request) {
           : String(raw.studentName).trim();
 
       if (!tid) {
-        errors.push({ index, timellyId: "", message: "Timelly ID is empty" });
+        errors.push({ index, timellyId: "", message: "RS Solutions ID is empty" });
         return;
       }
       if (!feeName) {
@@ -245,7 +245,7 @@ export async function POST(req: Request) {
         errors.push({
           index: row.index,
           timellyId: row.token,
-          message: "No student found for this Timelly ID",
+          message: "No student found for this RS Solutions ID",
         });
         continue;
       }

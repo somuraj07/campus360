@@ -226,19 +226,19 @@ function ParentDashboardInner() {
 
           {showSubscriptionModal && (
             <>
-              <div className="fixed inset-0 z-30 bg-black/20 pointer-events-none" />
+              <div className="fixed inset-0 z-30 bg-overlay pointer-events-none" />
               <div className="fixed left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 px-4 w-full max-w-sm">
-                <div className="max-w-sm w-full rounded-2xl bg-black/80 border border-white/15 p-6 text-center text-white shadow-xl">
+                <div className="max-w-sm w-full rounded-2xl bg-black/80 border border-line p-6 text-center text-fg shadow-card">
                   <div className="flex justify-center mb-3">
-                    <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center">
-                      <Lock className="w-5 h-5 text-lime-300" />
+                    <div className="h-10 w-10 rounded-full bg-elev-2 flex items-center justify-center">
+                      <Lock className="w-5 h-5 text-primary" />
                     </div>
                   </div>
                   <h3 className="text-base font-semibold mb-1">Subscription required</h3>
-                  <p className="text-xs text-white/70 mb-3">
-                    To enjoy all Timelly features for your child, please activate your parent subscription.
+                  <p className="text-xs text-fg-muted mb-3">
+                    To enjoy all RS Solutions features for your child, please activate your parent subscription.
                   </p>
-                  <p className="text-[11px] text-white/60 mb-4">
+                  <p className="text-[11px] text-fg-muted mb-4">
                     Once subscribed, attendance, homework, analytics and more will be fully unlocked for you.
                   </p>
                   <button
@@ -246,7 +246,7 @@ function ParentDashboardInner() {
                     onClick={() =>
                       (window.location.href = "/parent?tab=subscription")
                     }
-                    className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-lg bg-lime-400 text-black hover:bg-lime-300"
+                    className="inline-flex items-center justify-center px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-on-primary hover:bg-primary-hover"
                   >
                     Go to Subscription
                   </button>

@@ -77,7 +77,7 @@ export default function SyllabusTrackingTab({
   };
 
   return (
-    <div className="min-h-[280px] sm:min-h-[400px] rounded-xl sm:rounded-2xl p-4 sm:p-6 -m-4 sm:-m-6 md:-mx-6 md:-mb-6 border border-white/5 bg-white/[0.04] backdrop-blur-[8px]">
+    <div className="min-h-[280px] sm:min-h-[400px] rounded-xl sm:rounded-2xl p-4 sm:p-6 -m-4 sm:-m-6 md:-mx-6 md:-mb-6 border border-line-subtle bg-elev-1 ">
       <div className="space-y-5 sm:space-y-8">
         <div>
           <div className="flex flex-col sm:flex-row gap-2 mb-4">
@@ -87,7 +87,7 @@ export default function SyllabusTrackingTab({
               onChange={(e) => setNewSubjectName(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addSubject()}
               placeholder="Add new subject..."
-              className="flex-1 w-full sm:max-w-xs rounded-lg px-3 py-3 sm:py-2.5 text-sm border border-white/15 placeholder:opacity-70 min-h-[44px] touch-manipulation text-base"
+              className="flex-1 w-full sm:max-w-xs rounded-lg px-3 py-3 sm:py-2.5 text-sm border border-line placeholder:opacity-70 min-h-[44px] touch-manipulation text-base"
               style={{
                 background: EXAM_INPUT_BG,
                 color: EXAM_TEXT_MAIN,
@@ -100,7 +100,7 @@ export default function SyllabusTrackingTab({
               className="px-4 py-3 sm:py-2.5 rounded-lg font-medium disabled:opacity-50 flex items-center justify-center gap-1.5 transition hover:opacity-90 min-h-[44px] touch-manipulation w-full sm:w-auto"
               style={{
                 backgroundColor: EXAM_ACCENT,
-                color: "#1A1A1A",
+                color: "var(--on-primary)",
               }}
             >
               {addingNewSubject ? (
@@ -139,7 +139,7 @@ export default function SyllabusTrackingTab({
                   className="text-xs sm:text-sm px-2 py-0.5 rounded w-fit"
                   style={{
                     color: EXAM_TEXT_SECONDARY,
-                    background: "rgba(255,255,255,0.08)",
+                    background: "var(--elev-2)",
                   }}
                 >
                   {unitCount} Units
@@ -170,7 +170,7 @@ export default function SyllabusTrackingTab({
                 {(s.units ?? []).map((u) => (
                   <li
                     key={u.id}
-                    className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 sm:p-3.5 rounded-lg sm:rounded-xl border border-white/10 min-h-[44px]"
+                    className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 sm:p-3.5 rounded-lg sm:rounded-xl border border-line min-h-[44px]"
                     style={{
                       background: EXAM_CARD_TRANSPARENT,
                       backdropFilter: "blur(6px)",
@@ -214,7 +214,7 @@ export default function SyllabusTrackingTab({
                     onChange={(e) => setNewUnitName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addUnit(s.subject)}
                     placeholder="Add new unit/topic..."
-                    className="flex-1 rounded-lg px-3 py-3 text-sm border border-white/15 placeholder:opacity-70 min-h-[44px] touch-manipulation text-base w-full"
+                    className="flex-1 rounded-lg px-3 py-3 text-sm border border-line placeholder:opacity-70 min-h-[44px] touch-manipulation text-base w-full"
                     style={{
                       background: EXAM_INPUT_BG,
                       color: EXAM_TEXT_MAIN,
@@ -227,7 +227,7 @@ export default function SyllabusTrackingTab({
                     onClick={() => addUnit(s.subject)}
                     disabled={addingUnitForSubject === s.subject}
                     className="p-3 sm:p-2.5 rounded-xl sm:rounded-lg transition hover:opacity-90 min-h-[44px] min-w-[44px] touch-manipulation flex items-center justify-center disabled:opacity-60 w-full sm:w-auto"
-                    style={{ backgroundColor: EXAM_ACCENT, color: "#1A1A1A" }}
+                    style={{ backgroundColor: EXAM_ACCENT, color: "var(--on-primary)" }}
                   >
                     {addingUnitForSubject === s.subject ? (
                       <Spinner size={16} />
@@ -243,7 +243,7 @@ export default function SyllabusTrackingTab({
                     setAddingSubject(s.subject);
                     setNewUnitName("");
                   }}
-                  className="mt-2 text-sm flex items-center gap-1.5 transition hover:opacity-90 min-h-[44px] touch-manipulation py-2 px-1 -mx-1 rounded-lg active:bg-white/5"
+                  className="mt-2 text-sm flex items-center gap-1.5 transition hover:opacity-90 min-h-[44px] touch-manipulation py-2 px-1 -mx-1 rounded-lg active:bg-elev-2"
                   style={{ color: EXAM_TEXT_SECONDARY }}
                 >
                   <Plus size={14} className="flex-shrink-0" /> Add new unit/topic...

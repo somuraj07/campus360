@@ -61,7 +61,7 @@ export default function ProfileModal({
   return (
     <div
       className="
-        fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] animate-fadeIn
+        fixed inset-0 bg-overlay flex items-center justify-center z-[100] animate-fadeIn
       "
       onClick={(e) => {
         if (e.target === e.currentTarget) {
@@ -74,9 +74,9 @@ export default function ProfileModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-[rgba(255,255,255,0.05)] backdrop-blur-xl border
-         border-[rgba(255,255,255,0.1)] border-solid rounded-2xl 
-         shadow-[0px_10px_15px_0px_rgba(0,0,0,0.1),0px_4px_6px_0px_rgba(0,0,0,0.1)] 
+        className="bg-elev-1 border
+         border-line border-solid rounded-2xl 
+         shadow-card 
          max-w-md w-full mx-4 animate-scaleIn overflow-hidden p-6 relative"
         
       >
@@ -86,33 +86,33 @@ export default function ProfileModal({
             e.stopPropagation();
             onClose();
           }}
-          className="absolute top-4 right-4 p-2 hover:bg-white/[0.1] rounded-lg transition-all text-white/65 hover:text-white z-10"
+          className="absolute top-4 right-4 p-2 hover:bg-elev-3 rounded-lg transition-all text-fg-muted hover:text-fg z-10"
           aria-label="Close profile modal"
         >
-          <X className="text-white" size={20} />
+          <X className="text-fg" size={20} />
         </button>
 
-        <div className="flex gap-4 items-center mb-6 relative pb-6 border-b border-white/[0.1] bg-white/[0.02] -mx-6 -mt-6 px-6 pt-6">
+        <div className="flex gap-4 items-center mb-6 relative pb-6 border-b border-line bg-elev-1 -mx-6 -mt-6 px-6 pt-6">
           <img
             src={imageUrl}
             alt={name}
-            className="w-16 h-16 rounded-2xl border-2 border-white/[0.1] object-cover"
+            className="w-16 h-16 rounded-2xl border-2 border-line object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = AVATAR_URL;
             }}
           />
           <div>
-            <h2 id="profile-modal-title" className="text-xl font-bold text-white">{name}</h2>
-            <p className="text-[#C7F000] text-sm font-medium">{roleLabel || "-"}</p>
+            <h2 id="profile-modal-title" className="text-xl font-bold text-fg">{name}</h2>
+            <p className="text-primary text-sm font-medium">{roleLabel || "-"}</p>
           </div>
         </div>
 
         <div className="space-y-4">
-          <Info icon={<Mail className="lucide lucide-mail w-5 h-5 text-[#C7F000]"/>} label="Email" value={email || "-"} />
-          <Info icon={<Phone className="lucide lucide-mail w-5 h-5 text-[#C7F000]"/>} label="Phone" value={phone || "-"} />
-          <Info icon={<MapPin className="lucide lucide-mail w-5 h-5 text-[#C7F000]"/>} label="Address" value={address || "-"} />
-          <Info icon={<User className="lucide lucide-mail w-5 h-5 text-[#C7F000]"/>} label="Role" value={roleLabel || "-"} />
+          <Info icon={<Mail className="lucide lucide-mail w-5 h-5 text-primary"/>} label="Email" value={email || "-"} />
+          <Info icon={<Phone className="lucide lucide-mail w-5 h-5 text-primary"/>} label="Phone" value={phone || "-"} />
+          <Info icon={<MapPin className="lucide lucide-mail w-5 h-5 text-primary"/>} label="Address" value={address || "-"} />
+          <Info icon={<User className="lucide lucide-mail w-5 h-5 text-primary"/>} label="Role" value={roleLabel || "-"} />
         </div>
 
         <div className="mt-6 flex flex-col gap-2">
@@ -120,9 +120,7 @@ export default function ProfileModal({
             <button
               type="button"
               onClick={handleSettings}
-              className="w-full py-3.5 bg-[#C7F000]/22 hover:bg-[#C7F000]/30 text-[#0F172A] border
-             border-[#C7F000]/30 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 
-            shadow-[0_0_22px_rgba(199,240,0,0.45)]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-line-strong bg-surface py-3 font-semibold text-fg transition-colors hover:bg-elev-2"
             >
               <Settings size={18} /> Settings
             </button>
@@ -130,7 +128,7 @@ export default function ProfileModal({
           {/* <button
             type="button"
             onClick={handleLogout}
-            className="w-full py-3 rounded-xl bg-white/10 text-white font-medium flex items-center justify-center gap-2 hover:bg-white/15"
+            className="w-full py-3 rounded-xl bg-elev-2 text-fg font-medium flex items-center justify-center gap-2 hover:bg-elev-3"
           >
             <LogOut size={18} /> Sign Out
           </button> */}
@@ -160,11 +158,11 @@ function Info({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.08] transition-all">
-      <div className="p-2.5 bg-[#C7F000]/18 rounded-xl border border-[#C7F000]/25">{icon}</div>
+    <div className="flex items-center gap-4 p-4 rounded-2xl bg-elev-1 border border-line-subtle hover:bg-elev-3 transition-all">
+      <div className="p-2.5 bg-primary/18 rounded-xl border border-primary/25">{icon}</div>
       <div className="min-w-0 flex-1">
-        <p className="text-xs text-white/60 font-medium uppercase tracking-wider">{label}</p>
-        <p className="font-medium text-white/78 text-sm mt-0.5">{value}</p>
+        <p className="text-xs text-fg-muted font-medium uppercase tracking-wider">{label}</p>
+        <p className="font-medium text-fg-muted text-sm mt-0.5">{value}</p>
       </div>
     </div>
   );

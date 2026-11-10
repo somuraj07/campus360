@@ -39,7 +39,7 @@ async function resolveCaller(
     const school = await prisma.school.findUnique({ where: { id: schoolId }, select: { id: true, isActive: true } });
     if (!school) return { error: "School not found", status: 400 };
     if (school.isActive === false) {
-      return { error: "Your school's Timelly access is deactivated. Please contact Timelly support.", status: 403 };
+      return { error: "Your school's RS Solutions access is deactivated. Please contact RS Solutions support.", status: 403 };
     }
     return { schoolId: school.id, limited: true };
   }

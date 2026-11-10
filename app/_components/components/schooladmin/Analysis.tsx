@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
-import { motion } from "framer-motion";
+import { SaPage, SaPageHeader, Alert } from "../common/ui";
 
 import TimellyLoader from "../common/TimellyLoader";
 import AnalysisSectionNav from "./AnalysisSectionNav";
@@ -175,31 +175,21 @@ export default function AnalysisDashboard({ section = "overview" }: AnalysisDash
 
   if (section === "student-credentials") {
     return (
-      <div className="p-4 sm:p-6 text-white">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.22 }}
-          className="mb-4 rounded-xl border border-white/10 bg-white/5 p-3 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:mb-5 sm:rounded-2xl sm:p-5"
-        >
-          <div className="mb-2 border-b border-white/10 pb-2 sm:mb-4 sm:pb-4">
-            <p className="text-sm font-semibold tracking-tight text-white sm:text-base">
-              Analysis
-            </p>
-            <p className="mt-0.5 text-xs text-white/55 sm:text-sm">
-              Share login details with students by class and section.
-            </p>
-          </div>
-          <AnalysisSectionNav embedded />
-        </motion.div>
+      <SaPage>
+        <SaPageHeader
+          eyebrow="Insights"
+          title="Student Credentials"
+          description="Share login details with students by class and section."
+        />
+        <AnalysisSectionNav embedded />
         <StudentCredentialsPanel />
-      </div>
+      </SaPage>
     );
   }
 
   if ((sessionStatus === "loading" || shellLoading || (!error && !data)) && !data) {
     return (
-      <div className="p-4 sm:p-6 text-white">
+      <div className="p-4 sm:p-6 text-fg">
         <TimellyLoader
           title="Loading analysis"
           steps={["School data", "Student strength", "Insights"]}
@@ -210,8 +200,8 @@ export default function AnalysisDashboard({ section = "overview" }: AnalysisDash
   }
   if (error || !data) {
     return (
-      <div className="p-4 sm:p-6 text-white">
-        <p className="text-red-400">{error ?? "No data available"}</p>
+      <div className="p-4 sm:p-6 text-fg">
+        <Alert tone="error">{error ?? "No data available"}</Alert>
       </div>
     );
   }
@@ -255,7 +245,7 @@ export default function AnalysisDashboard({ section = "overview" }: AnalysisDash
   });
 
   return (
-    <div className="min-h-screen p-3 pb-6 text-white sm:p-4 md:p-5">
+    <div className="mx-auto w-full max-w-[1400px] pb-10 text-fg">
       <AnalysisFilterHeader
         classId={classId}
         onClassIdChange={setClassId}

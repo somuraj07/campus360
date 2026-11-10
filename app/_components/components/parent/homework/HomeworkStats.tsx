@@ -24,25 +24,25 @@ export default function HomeworkStats({
     <>
       <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
         <div className="somu rounded-2xl statCard">
-          <ListChecks className="icon text-lime-400" />
+          <ListChecks className="icon text-primary" />
           <div className="statValue">{total}</div>
           <p className="statLabel">All assignments</p>
         </div>
 
         <div className="somu rounded-2xl statCard">
-          <Clock className="icon text-orange-400" />
+          <Clock className="icon text-orange-700 dark:text-orange-400" />
           <div className="statValue">{pending}</div>
           <p className="statLabel">Need attention</p>
         </div>
 
         <div className="somu rounded-2xl statCard">
-          <CheckCircle2 className="icon text-lime-400" />
+          <CheckCircle2 className="icon text-primary" />
           <div className="statValue">{submitted}</div>
           <p className="statLabel">On time</p>
         </div>
 
         <div className="somu rounded-2xl statCard">
-          <TrendingUp className="icon text-yellow-300" />
+          <TrendingUp className="icon text-yellow-700 dark:text-yellow-300" />
           <div className="statValue">{completion}%</div>
           <p className="statLabel">Overall progress</p>
         </div>
@@ -67,7 +67,7 @@ export default function HomeworkStats({
         .statLabel {
           margin-top: 4px;
           font-size: 14px;
-          color: rgba(255, 255, 255, 0.7);
+          color: var(--fg-muted);
         }
       `}</style>
     </>

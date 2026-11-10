@@ -1,8 +1,6 @@
 "use client";
 
 import clsx from "clsx";
-import type { CSSProperties } from "react";
-import { PRIMARY_COLOR, HOVER_COLOR } from "../../constants/colors";
 
 interface SelectOption {
   label: string;
@@ -34,7 +32,7 @@ export default function SelectInput({
   return (
     <div className={clsx("w-full", className)}>
       {label && (
-        <label className="block text-xs md:text-sm font-medium text-gray-400 mb-2">
+        <label className="mb-1.5 block text-[13px] font-medium text-fg">
           {label}
         </label>
       )}
@@ -46,30 +44,20 @@ export default function SelectInput({
           onChange={(e) => onChange?.(e.target.value)}
           aria-invalid={!!error}
           className={clsx(
-            "w-full rounded-xl appearance-none cursor-pointer",
-            "pl-4 pr-10 py-2.5 sm:py-3",
-            "border",
-            bgColor === "black"
-              ? "bg-[#0F172A]/50 border-white/10 text-gray-200"
-              : "bg-white/10 border-gray-300/20 text-white",
-            "text-sm sm:text-base",
-            "focus:outline-none focus:ring-0",
-            "hover:border-[var(--hover-color)]",
-            "focus:border-[var(--primary-color)]",
-            disabled && "opacity-60 cursor-not-allowed",
-            error && "border-red-500"
+            "h-11 w-full cursor-pointer appearance-none rounded-lg border bg-surface pl-3.5 pr-10 text-sm text-fg transition",
+            "focus:outline-none focus:ring-4",
+            error
+              ? "border-red-400 focus:border-red-500 focus:ring-red-500/15"
+              : "border-line-strong hover:border-fg-faint focus:border-primary focus:ring-primary/10",
+            bgColor === "white" && "bg-elev-2",
+            disabled && "cursor-not-allowed opacity-60"
           )}
-          style={{
-            "--primary-color": PRIMARY_COLOR,
-            "--hover-color": HOVER_COLOR,
-          } as CSSProperties}
         >
           {options.map((option) => (
             <option
               key={`${option.label}-${option.value ?? option.label}`}
               value={option.value ?? option.label}
               disabled={option.disabled}
-              className="bg-gray-800 text-white hover:bg-gray-600 focus:bg-gray-600"
             >
               {option.label}
             </option>
@@ -77,7 +65,7 @@ export default function SelectInput({
         </select>
 
         {/* Dropdown Arrow */}
-        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/70">
+        <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-fg-subtle">
           <svg
             width="16"
             height="16"
@@ -97,7 +85,7 @@ export default function SelectInput({
       </div>
 
       {error && (
-        <p className="text-sm mt-1 text-red-500">
+        <p className="mt-1.5 text-xs text-red-700 dark:text-red-400">
           {error}
         </p>
       )}

@@ -34,21 +34,20 @@ export function DailyAttendanceCard({
   onSaveAttendance: () => void;
 }) {
   return (
-    <div className=" bg-white/4
-  backdrop-blur-2xl
-  rounded-3xl
-  border border-white/10
-  shadow-[0_20px_60px_rgba(0,0,0,0.45)]
+    <div className=" bg-elev-1
+    rounded-3xl
+  border border-line
+  shadow-card
   overflow-hidden">
 
-      <div className="px-3 sm:px-4 md:p-5 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+      <div className="px-3 sm:px-4 md:p-5 border-b border-line flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h3 className="text-lg font-bold text-gray-100 flex items-center gap-2">
+          <h3 className="text-lg font-bold text-fg flex items-center gap-2">
             <Calendar size={18} />
             Mark Daily Attendance
           </h3>
-          <p className="text-xs text-gray-400 mt-0.5">
-            {attendanceDate === todayStr() ? "Today" : "Selected date"}: {attendanceDate} • Overall: <span className="text-lime-400 font-semibold">{overallPct}%</span> ({presentCount}/{teachersCount})
+          <p className="text-xs text-fg-muted mt-0.5">
+            {attendanceDate === todayStr() ? "Today" : "Selected date"}: {attendanceDate} • Overall: <span className="text-primary font-semibold">{overallPct}%</span> ({presentCount}/{teachersCount})
           </p>
         </div>
 
@@ -57,12 +56,12 @@ export function DailyAttendanceCard({
             type="date"
             value={attendanceDate}
             onChange={(e) => onAttendanceDateChange(e.target.value)}
-            className="px-3 py-1.5 bg-black/30 border border-white/10 rounded-lg text-sm text-gray-200 focus:outline-none focus:border-lime-400/50"
+            className="px-3 py-1.5 bg-well border border-line rounded-lg text-sm text-fg focus:outline-none focus:border-primary/50"
           />
           <button
             type="button"
             onClick={onMarkAllPresent}
-            className="px-3 py-1.5 bg-lime-400/10 hover:bg-lime-400/20 text-lime-400 border border-lime-400/20 rounded-lg text-xs font-semibold flex items-center gap-2"
+            className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg text-xs font-semibold flex items-center gap-2"
           >
             Mark All Present
           </button>
@@ -88,10 +87,10 @@ export function DailyAttendanceCard({
                   code={t.teacherId}
                   percentage={status === "PRESENT" || status === "LATE" ? 100 : 0}
                   stats={[
-                    { label: "PRES", value: status === "PRESENT" ? 1 : 0, color: "text-lime-400" },
-                    { label: "ABS", value: status === "ABSENT" ? 1 : 0, color: "text-red-400" },
-                    { label: "LATE", value: status === "LATE" ? 1 : 0, color: "text-sky-400" },
-                    { label: "LEAVE", value: status === "ON_LEAVE" ? 1 : 0, color: "text-yellow-400" },
+                    { label: "PRES", value: status === "PRESENT" ? 1 : 0, color: "text-primary" },
+                    { label: "ABS", value: status === "ABSENT" ? 1 : 0, color: "text-red-700 dark:text-red-400" },
+                    { label: "LATE", value: status === "LATE" ? 1 : 0, color: "text-sky-700 dark:text-sky-400" },
+                    { label: "LEAVE", value: status === "ON_LEAVE" ? 1 : 0, color: "text-yellow-700 dark:text-yellow-400" },
                   ]}
                   statuses={[
                     { label: "P", active: status === "PRESENT" },
@@ -107,18 +106,18 @@ export function DailyAttendanceCard({
               );
             })}
             {attendanceLoading && teachers.length > 0 ? (
-              <p className="col-span-full text-xs text-white/40">Updating attendance…</p>
+              <p className="col-span-full text-xs text-fg-subtle">Updating attendance…</p>
             ) : null}
           </div>
         )}
       </div>
 
-      <div className="mt-6 flex justify-end pt-4 border-t border-white/5 px-4 pb-4">
+      <div className="mt-6 flex justify-end pt-4 border-t border-line-subtle px-4 pb-4">
         <button
           type="button"
           onClick={onSaveAttendance}
           disabled={saveAttendanceLoading}
-          className="px-6 py-2.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-[0_0_15px_rgba(163,230,53,0.3)] flex items-center gap-2 disabled:opacity-60"
+          className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold rounded-xl flex items-center gap-2 disabled:opacity-60"
         >
           <Save size={18} />
           {saveAttendanceLoading ? "Saving..." : "Save Today's Attendance"}

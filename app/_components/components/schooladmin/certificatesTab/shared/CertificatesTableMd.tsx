@@ -20,70 +20,70 @@ export function CertificatesTableMd({
   return (
     <div className="hidden md:block lg:hidden overflow-x-auto">
       <table className="w-full text-sm">
-        <thead className="bg-white/5 border-b border-white/10">
+        <thead className="bg-elev-1 border-b border-line">
           <tr>
-            <th className="px-4 py-3 text-left text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-[10px] font-semibold text-fg-muted uppercase tracking-wider">
               Student
             </th>
-            <th className="px-4 py-3 text-left text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-[10px] font-semibold text-fg-muted uppercase tracking-wider">
               Class
             </th>
-            <th className="px-4 py-3 text-left text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-[10px] font-semibold text-fg-muted uppercase tracking-wider">
               Certificate Type
             </th>
-            <th className="px-4 py-3 text-left text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-[10px] font-semibold text-fg-muted uppercase tracking-wider">
               Request Details
             </th>
-            <th className="px-4 py-3 text-left text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-[10px] font-semibold text-fg-muted uppercase tracking-wider">
               Actions
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-white/10">
+        <tbody className="divide-y divide-line">
           {filtered.length === 0 ? (
             <tr>
-              <td colSpan={5} className="px-4 py-8 text-center text-white/60 text-sm">
+              <td colSpan={5} className="px-4 py-8 text-center text-fg-muted text-sm">
                 No {activeTab} requests
               </td>
             </tr>
           ) : (
             filtered.map((row) => (
-              <tr key={row.id} className="hover:bg-white/5 transition-all">
+              <tr key={row.id} className="hover:bg-elev-2 transition-all">
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="font-medium">
                     {row.student?.user?.name ?? "—"}
                   </div>
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-fg-muted">
                     {row.student?.user?.email ?? "—"}
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs">
+                  <span className="px-3 py-1 rounded-full bg-elev-2 text-xs">
                     {classNameDisplay(row)}
                   </span>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm font-medium text-white">
+                  <div className="text-sm font-medium text-fg">
                     {getCertificateTypeLabel(row.certificateType)}
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <div className="text-xs text-white/60 space-y-1">
+                  <div className="text-xs text-fg-muted space-y-1">
                     <div>
-                      <span className="text-white/50">ID: </span>
+                      <span className="text-fg-subtle">ID: </span>
                       {`CR${row.id.slice(-6).toUpperCase()}`}
                     </div>
                     <div>
-                      <span className="text-white/50">Purpose: </span>
+                      <span className="text-fg-subtle">Purpose: </span>
                       {row.reason || "—"}
                     </div>
                     <div>
-                      <span className="text-white/50">Requested: </span>
+                      <span className="text-fg-subtle">Requested: </span>
                       {formatDate(row.createdAt)}
                     </div>
                     {row.issuedDate && (
                       <div>
-                        <span className="text-white/50">Issued: </span>
+                        <span className="text-fg-subtle">Issued: </span>
                         {formatDate(row.issuedDate)}
                       </div>
                     )}
@@ -95,7 +95,7 @@ export function CertificatesTableMd({
                       <button
                         disabled={!!actingId}
                         onClick={() => onOpenApproveModal(row.id)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-lime-400 text-black text-xs font-semibold disabled:opacity-50"
+                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-primary text-on-primary text-xs font-semibold disabled:opacity-50"
                       >
                         {actingId === row.id && approvingId === row.id ? (
                           <Loader2 size={14} className="animate-spin" />
@@ -120,20 +120,20 @@ export function CertificatesTableMd({
                         href={row.tcDocumentUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 text-xs"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-elev-2 hover:bg-elev-3 text-xs"
                       >
                         <Download size={14} />
                         <span className="hidden md:inline">Download</span>
                       </a>
                     ) : (
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-white/5 text-white/50 text-xs cursor-default">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-elev-1 text-fg-subtle text-xs cursor-default">
                         <Download size={14} />
                         <span className="hidden md:inline">N/A</span>
                       </span>
                     )
                   )}
                   {STATUS_MAP[row.status] === "rejected" && (
-                    <span className="text-red-400 font-medium text-xs">
+                    <span className="text-red-700 dark:text-red-400 font-medium text-xs">
                       Rejected
                     </span>
                   )}

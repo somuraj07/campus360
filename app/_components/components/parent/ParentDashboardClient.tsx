@@ -44,7 +44,7 @@ function renderTabContent(tab: string) {
     case "subscription":
       return <ParentSubscriptionTab />;
     default:
-      return <div className="p-6 text-white/60">Content for {tab}</div>;
+      return <div className="p-6 text-fg-muted">Content for {tab}</div>;
   }
 }
 
@@ -117,9 +117,9 @@ export default function ParentDashboardClient() {
       >
         {renderTabContent(tab)}
         {isLocked && !loadingSub && (
-          <div className="fixed bottom-4 right-4 max-w-sm rounded-2xl bg-red-500/10 border border-red-400/40 px-4 py-3 text-sm text-red-100 backdrop-blur-md shadow-lg">
+          <div className="fixed bottom-4 right-4 max-w-sm rounded-2xl bg-red-500/10 border border-red-400/40 px-4 py-3 text-sm text-red-800 dark:text-red-100 shadow-pop">
             <p className="font-semibold mb-1">Subscription required</p>
-            <p className="text-xs text-red-100/80">
+            <p className="text-xs text-red-800 dark:text-red-100">
               Your access is limited. Please subscribe from the Fees section or contact the school.
             </p>
           </div>

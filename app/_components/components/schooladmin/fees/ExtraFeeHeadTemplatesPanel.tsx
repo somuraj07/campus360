@@ -9,11 +9,11 @@ import {
   fetchExtraFeeHeadTemplates,
   updateExtraFeeHeadTemplate,
 } from "@/lib/api/extraFeeHeadTemplates";
+import { fieldClass, fieldLabelClass } from "../../common/ui";
 
-const inputClass =
-  "w-full min-h-[44px] rounded-xl border border-white/10 bg-[#0F172A]/50 px-4 py-2.5 text-sm text-gray-200 placeholder:text-white/35 focus:border-lime-400/60 focus:outline-none focus:ring-1 focus:ring-lime-400/30";
+const inputClass = fieldClass;
 
-const labelClass = "block text-xs font-medium text-gray-400 mb-2";
+const labelClass = fieldLabelClass;
 
 type Template = { id: string; name: string; amount: number; splitIntoTwoInstallments: boolean };
 
@@ -165,17 +165,17 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
   };
 
   const splitCheckbox = (checked: boolean, onChange: (v: boolean) => void, idPrefix: string) => (
-    <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-white/10 bg-black/25 px-3 py-2.5 text-xs text-white/75 md:col-span-2">
+    <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-line bg-well px-3 py-2.5 text-xs text-fg-muted md:col-span-2">
       <input
         id={`${idPrefix}-split-2`}
         type="checkbox"
-        className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-black/40 text-lime-500 focus:ring-lime-500/40"
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-line-strong bg-well text-primary focus:ring-primary/40"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
       <span>
-        <span className="font-medium text-white/90">Two installments (50% + 50%)</span>
-        <span className="mt-0.5 block text-[11px] text-white/45">
+        <span className="font-medium text-fg">Two installments (50% + 50%)</span>
+        <span className="mt-0.5 block text-[11px] text-fg-subtle">
           When assigned to a student, show as 1st and 2nd installment on the fee breakdown (same idea as hostel).
         </span>
       </span>
@@ -183,28 +183,28 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
   );
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur sm:p-6">
-      <header className="mb-6 border-b border-white/10 pb-5">
-        <h3 className="text-lg font-semibold tracking-tight text-white">Custom fee heads (saved templates)</h3>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-white/55">
+    <section className="rounded-2xl border border-line bg-elev-1 p-5 sm:p-6">
+      <header className="mb-6 border-b border-line pb-5">
+        <h3 className="text-lg font-semibold tracking-tight text-fg">Custom fee heads (saved templates)</h3>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">
           Add any number of title + amount pairs. They are stored as reusable heads — students are not charged until
-          you assign them on <span className="font-medium text-white/75">Student Details → Fees → Assign from catalog</span>{" "}
+          you assign them on <span className="font-medium text-fg-muted">Student Details → Fees → Assign from catalog</span>{" "}
           (or Admission → Assign Fees).
         </p>
       </header>
 
-      <div className="rounded-xl border border-white/10 bg-black/20 p-4 sm:p-5 space-y-4">
-        <div className="text-xs font-semibold text-white/80">Saved heads</div>
+      <div className="rounded-xl border border-line bg-well p-4 sm:p-5 space-y-4">
+        <div className="text-xs font-semibold text-fg">Saved heads</div>
         {loading ? (
-          <p className="text-sm text-white/45 py-4">Loading…</p>
+          <p className="text-sm text-fg-subtle py-4">Loading…</p>
         ) : templates.length === 0 ? (
-          <p className="text-sm text-white/45 py-2">No custom heads yet. Add one below.</p>
+          <p className="text-sm text-fg-subtle py-2">No custom heads yet. Add one below.</p>
         ) : (
           <ul className="max-h-64 overflow-y-auto space-y-2 pr-1">
             {templates.map((t) => (
               <li
                 key={t.id}
-                className="rounded-lg border border-white/10 bg-white/5 px-3 py-3 text-sm text-white/80"
+                className="rounded-lg border border-line bg-elev-1 px-3 py-3 text-sm text-fg"
               >
                 {editingId === t.id ? (
                   <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:items-end">
@@ -236,14 +236,14 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
                         type="button"
                         onClick={() => void saveEdit()}
                         disabled={rowSavingId === t.id}
-                        className="rounded-xl bg-lime-500/90 px-3 py-2 text-xs font-semibold text-black hover:bg-lime-400 disabled:opacity-50"
+                        className="inline-flex h-8 items-center rounded-lg bg-primary px-3 text-xs font-semibold text-on-primary hover:bg-primary-hover disabled:opacity-55"
                       >
                         {rowSavingId === t.id ? "Saving…" : "Save"}
                       </button>
                       <button
                         type="button"
                         onClick={cancelEdit}
-                        className="rounded-xl border border-white/20 px-3 py-2 text-xs text-white/70 hover:bg-white/5"
+                        className="rounded-xl border border-line-strong px-3 py-2 text-xs text-fg-muted hover:bg-elev-2"
                       >
                         Cancel
                       </button>
@@ -252,11 +252,11 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
                 ) : (
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <span className="font-medium text-white">{t.name}</span>
-                      <span className="text-white/50"> · </span>
-                      <span className="text-lime-200/90">₹{t.amount.toLocaleString("en-IN")}</span>
+                      <span className="font-medium text-fg">{t.name}</span>
+                      <span className="text-fg-subtle"> · </span>
+                      <span className="text-primary">₹{t.amount.toLocaleString("en-IN")}</span>
                       {t.splitIntoTwoInstallments ? (
-                        <span className="ml-2 rounded-md border border-sky-500/30 bg-sky-500/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-200">
+                        <span className="ml-2 rounded-md border border-sky-500/30 bg-sky-500/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-sky-800 dark:text-sky-200">
                           2 installments
                         </span>
                       ) : null}
@@ -265,7 +265,7 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
                       <button
                         type="button"
                         onClick={() => startEdit(t)}
-                        className="rounded-lg border border-white/20 px-3 py-1.5 text-xs text-white/80 hover:bg-white/10"
+                        className="rounded-lg border border-line-strong px-3 py-1.5 text-xs text-fg hover:bg-elev-3"
                       >
                         Edit
                       </button>
@@ -273,7 +273,7 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
                         type="button"
                         onClick={() => void remove(t.id)}
                         disabled={deletingId === t.id}
-                        className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-200 hover:bg-red-500/20 disabled:opacity-50"
+                        className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-800 dark:text-red-200 hover:bg-red-500/20 disabled:opacity-50"
                       >
                         {deletingId === t.id ? "…" : "Delete"}
                       </button>
@@ -285,8 +285,8 @@ export default function ExtraFeeHeadTemplatesPanel({ onSuccess }: { onSuccess?: 
           </ul>
         )}
 
-        <div className="border-t border-white/10 pt-4 space-y-3">
-          <div className="text-xs font-semibold text-white/80">New head</div>
+        <div className="border-t border-line pt-4 space-y-3">
+          <div className="text-xs font-semibold text-fg">New head</div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:items-end">
             <div>
               <label className={labelClass} htmlFor="new-fee-head-title">

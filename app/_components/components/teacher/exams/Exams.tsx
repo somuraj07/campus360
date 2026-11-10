@@ -113,10 +113,10 @@ export default function TeacherExamsTab() {
                 rightSlot={
                     <button
                         onClick={() => setView({ mode: "create" })}
-                        className="px-4 py-2.5 bg-lime-400 hover:bg-lime-500
-                          text-black font-bold rounded-xl transition-all
-                          shadow-[0_0_15px_rgba(163,230,53,0.3)] 
-                          hover:shadow-[0_0_20px_rgba(163,230,53,0.4)] flex items-center gap-2"
+                        className="px-4 py-2.5 bg-primary hover:bg-primary-hover
+                          text-on-primary font-bold rounded-xl transition-all
+                          
+                          flex items-center gap-2"
                     >
                         <Plus size={18} strokeWidth={3} /> Schedule Exam
                     </button>
@@ -124,9 +124,9 @@ export default function TeacherExamsTab() {
             />
 
             {/* REFINED SEARCH BAR SECTION */}
-            <div className="relative mb-8  px-6 py-4 rounded-2xl  border border-white/10 rounded-2xl p-4 flex items-center gap-4">
+            <div className="relative mb-8  px-6 py-4 rounded-2xl  border border-line rounded-2xl p-4 flex items-center gap-4">
 
-                <Search className="absolute h-4 w-6 left-10 top-1/2 -translate-y-1/2 text-white/50 " />
+                <Search className="absolute h-4 w-6 left-10 top-1/2 -translate-y-1/2 text-fg-subtle " />
 
                 <input
 
@@ -136,9 +136,9 @@ export default function TeacherExamsTab() {
 
                     onChange={(e) => setSearchQuery(e.target.value)}
 
-                    className="w-full pl-9 pr-4 py-2 bg-black/20 
-                    border border-white/10 rounded-xl focus:outline-none
-                    focus:border-lime-400/50 text-sm text-white placeholder-gray-500 transition-all"
+                    className="w-full pl-9 pr-4 py-2 bg-well 
+                    border border-line rounded-xl focus:outline-none
+                    focus:border-primary/50 text-sm text-fg placeholder:text-fg-faint transition-all"
 
                 />
 
@@ -150,8 +150,8 @@ export default function TeacherExamsTab() {
             ) : (
                 <>
                     {filtered.length === 0 ? (
-                        <div className="rounded-[32px] border border-white/10 bg-white/5 p-20 text-center">
-                            <p className="text-white/40">No exams found matching your search.</p>
+                        <div className="rounded-2xl border border-line bg-elev-1 p-20 text-center">
+                            <p className="text-fg-subtle">No exams found matching your search.</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -48,19 +48,19 @@ export function ExamDetailsFormFields({
 }) {
   return (
     <div className="somu rounded-[1rem] p-8 flex flex-col gap-8 h-fit ">
-      <h2 className="text-lg font-bold text-white flex items-center gap-2"><BookOpen className="text-lime-400"/>Exam Details</h2>
+      <h2 className="text-lg font-bold text-fg flex items-center gap-2"><BookOpen className="text-primary"/>Exam Details</h2>
 
       <div className="space-y-3">
         {/* Exam Title */}
         <div className="flex flex-col gap-2">
-          <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Exam Title</label>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Exam Title</label>
           <input
             value={examTitle}
             onChange={(e) => onExamTitleChange(e.target.value)}
             placeholder="Term 1 Mathematics Finals"
             list="teacher-exam-title-options"
-            className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none
-            focus:border-lime-400/50 text-white placeholder-gray-500 transition-all text-sm"
+            className="w-full px-4 py-3 bg-well border border-line rounded-xl focus:outline-none
+            focus:border-primary/50 text-fg placeholder:text-fg-faint transition-all text-sm"
           />
           <datalist id="teacher-exam-title-options">
             {examTypeOptions.map((name) => (
@@ -72,17 +72,17 @@ export function ExamDetailsFormFields({
         {/* Class and Subject */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Class</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Class</label>
             {classLoading ? (
-              <div className="bg-[#2a213a]/50 border border-white/5 rounded-2xl p-2 text-white/40 text-sm">
+              <div className="rounded-xl border border-line-subtle bg-elev-2/50 p-2 text-sm text-fg-faint">
                 <TimellyLoader compact bare title="Loading classes" steps={["Roster"]} />
               </div>
             ) : (
               <select
                 value={selectedClassId}
                 onChange={(e) => onSelectedClassIdChange(e.target.value)}
-                className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none
-                 focus:border-lime-400/50 text-white placeholder-gray-500 transition-all text-sm"
+                className="w-full px-4 py-3 bg-well border border-line rounded-xl focus:outline-none
+                 focus:border-primary/50 text-fg placeholder:text-fg-faint transition-all text-sm"
               >
                 <option value="">Select class</option>
                 {classes.map((c) => (
@@ -94,14 +94,14 @@ export function ExamDetailsFormFields({
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Subject</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Subject</label>
             <input
               value={subject}
               onChange={(e) => onSubjectChange(e.target.value)}
               placeholder="Mathematics"
               list="teacher-exam-subject-options"
-              className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none
-              focus:border-lime-400/50 text-white placeholder-gray-500 transition-all text-sm"
+              className="w-full px-4 py-3 bg-well border border-line rounded-xl focus:outline-none
+              focus:border-primary/50 text-fg placeholder:text-fg-faint transition-all text-sm"
             />
             <datalist id="teacher-exam-subject-options">
               {subjectOptions.map((name) => (
@@ -114,23 +114,23 @@ export function ExamDetailsFormFields({
         {/* Date and Status */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Date</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Date</label>
             <input
               type="date"
               value={examDate}
               onChange={(e) => onExamDateChange(e.target.value)}
-              className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:border-lime-400/50
-               text-white placeholder-gray-500 transition-all text-sm [color-scheme:dark]"
+              className="w-full px-4 py-3 bg-well border border-line rounded-xl focus:outline-none focus:border-primary/50
+               text-fg placeholder:text-fg-faint transition-all text-sm [color-scheme:dark]"
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Status</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Status</label>
             <select
               value={examStatus}
               onChange={(e) => onExamStatusChange(e.target.value as "UPCOMING" | "COMPLETED")}
-              className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl
-              focus:outline-none focus:border-lime-400/50
-              text-white placeholder-gray-500 transition-all text-sm appearance-none cursor-pointer"
+              className="w-full px-4 py-3 bg-well border border-line rounded-xl
+              focus:outline-none focus:border-primary/50
+              text-fg placeholder:text-fg-faint transition-all text-sm appearance-none cursor-pointer"
             >
               <option value="UPCOMING">Upcoming</option>
               <option value="COMPLETED">Completed</option>
@@ -141,18 +141,18 @@ export function ExamDetailsFormFields({
         {/* Time and Duration */}
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Time</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Time</label>
             <input
               type="time"
               value={startTime}
               onChange={(e) => onStartTimeChange(e.target.value)}
-              className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl
-              focus:outline-none focus:border-lime-400/50 text-white
-               placeholder-gray-500 transition-all text-sm [color-scheme:dark]"
+              className="w-full px-4 py-3 bg-well border border-line rounded-xl
+              focus:outline-none focus:border-primary/50 text-fg
+               placeholder:text-fg-faint transition-all text-sm [color-scheme:dark]"
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">Duration</label>
+            <label className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">Duration</label>
             <div className="flex gap-2 flex-wrap items-center">
               <input
                 type="number"
@@ -173,10 +173,10 @@ export function ExamDetailsFormFields({
                   if (Number.isNaN(n) || n < 0) onDurationMinChange(60);
                 }}
                 placeholder="60"
-                className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none
-                focus:border-lime-400/50 text-white placeholder-gray-500 transition-all text-sm"
+                className="w-full px-4 py-3 bg-well border border-line rounded-xl focus:outline-none
+                focus:border-primary/50 text-fg placeholder:text-fg-faint transition-all text-sm"
               />
-              <span className="block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider">min</span>
+              <span className="block text-xs font-medium text-fg-muted mb-1.5 uppercase tracking-wider">min</span>
               <div className="flex gap-1">
                 {[60, 90, 120].map((m) => (
                   <button
@@ -186,7 +186,7 @@ export function ExamDetailsFormFields({
                       e.preventDefault();
                       onDurationMinChange(m);
                     }}
-                    className={`px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase ${durationMin === m ? "bg-[#b4ff39] text-black" : "bg-white/5 text-white/60 hover:text-white/80"
+                    className={`px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase ${durationMin === m ? "bg-primary text-on-primary" : "bg-elev-1 text-fg-muted hover:text-fg"
                       }`}
                   >
                     {m === 60 ? "1h" : m === 90 ? "1.5h" : m === 120 ? "2h" : "3h"}

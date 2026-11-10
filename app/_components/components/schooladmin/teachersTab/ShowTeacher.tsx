@@ -58,23 +58,23 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
             {/* Backdrop */}
             <div
                 onClick={onClose}
-                className="absolute inset-0 bg-black/70 backdrop-blur-md"
+                className="absolute inset-0 bg-overlay "
             />
 
             {/* Modal */}
-            <div className="relative z-10 w-full max-w-5xl max-h-[92vh] rounded-3xl bg-gradient-to-br from-[#0B1B34] to-[#0F172A] border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden">
+            <div className="relative z-10 w-full max-w-5xl max-h-[92vh] rounded-3xl bg-gradient-to-br from-elev-2 to-elev-2 border border-line shadow-card flex flex-col overflow-hidden">
 
                 {/* Header */}
-                <div className="px-8 py-6 border-b border-white/10 flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-white">
+                <div className="px-8 py-6 border-b border-line flex items-center justify-between">
+                    <h2 className="text-2xl font-bold text-fg">
                         Teacher Details
                     </h2>
 
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-lg hover:bg-white/5 transition"
+                        className="p-2 rounded-lg hover:bg-elev-2 transition"
                     >
-                        <X className="w-5 h-5 text-gray-400" />
+                        <X className="w-5 h-5 text-fg-muted" />
                     </button>
                 </div>
 
@@ -85,23 +85,23 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
                     <div className="flex items-center gap-6">
                         <img
                             src={teacher.avatar} alt={teacher.name ?? "Teacher"}
-                            className="w-20 h-20 rounded-2xl object-cover border border-white/10"
+                            className="w-20 h-20 rounded-2xl object-cover border border-line"
                         />
 
                         <div>
-                            <h3 className="text-xl font-bold text-white">
+                            <h3 className="text-xl font-bold text-fg">
                                 {teacher.name}
                             </h3>
 
-                            <p className="text-gray-400 mt-1">
+                            <p className="text-fg-muted mt-1">
                                 {teacher.teacherId}
                             </p>
 
                             <span
                                 className={`inline-block mt-3 px-4 py-1 rounded-full text-xs font-bold border
                   ${teacher.status === "Active"
-                                        ? "bg-lime-400/10 text-lime-400 border-lime-400/20"
-                                        : "bg-orange-400/10 text-orange-400 border-orange-400/20"
+                                        ? "bg-primary/10 text-primary border-primary/20"
+                                        : "bg-orange-400/10 text-orange-700 dark:text-orange-400 border-orange-400/20"
                                     }`}
                             >
                                 {teacher.status}
@@ -111,7 +111,7 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
 
                     {/* Professional Info */}
                     <div>
-                        <h4 className="text-gray-400 font-semibold mb-4">
+                        <h4 className="text-fg-muted font-semibold mb-4">
                             Professional Information
                         </h4>
 
@@ -135,29 +135,29 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="text-gray-400 font-semibold mb-4">
+                        <h4 className="text-fg-muted font-semibold mb-4">
                             Contact Information
                         </h4>
 
-                        <div className="rounded-2xl border border-lime-400/20 bg-lime-400/5 p-6 space-y-4">
+                        <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 space-y-4">
 
                             <div>
-                                <p className="text-lime-400 text-sm">Email</p>
-                                <p className="text-white font-semibold">
+                                <p className="text-primary text-sm">Email</p>
+                                <p className="text-fg font-semibold">
                                     {details?.email || "-"}
                                 </p>
                             </div>
 
                             <div>
-                                <p className="text-lime-400 text-sm">Phone</p>
-                                <p className="text-white">
+                                <p className="text-primary text-sm">Phone</p>
+                                <p className="text-fg">
                                     {teacher.phone}
                                 </p>
                             </div>
 
                             <div>
-                                <p className="text-lime-400 text-sm">Address</p>
-                                <p className="text-white">
+                                <p className="text-primary text-sm">Address</p>
+                                <p className="text-fg">
                                     {details?.address || "-"}
                                 </p>
                             </div>
@@ -168,11 +168,11 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
                 </div>
 
                 {/* Footer */}
-                <div className="px-8 py-6 border-t border-white/10 flex justify-between gap-4 bg-[#0F172A]">
+                <div className="px-8 py-6 border-t border-line flex justify-between gap-4 bg-surface">
 
                     <button
                         onClick={onClose}
-                        className="w-1/2 px-6 py-3 rounded-2xl bg-white/5 text-gray-300 hover:bg-white/10 transition"
+                        className="w-1/2 px-6 py-3 rounded-2xl bg-elev-1 text-fg-muted hover:bg-elev-3 transition"
                     >
                         Close
                     </button>
@@ -182,7 +182,7 @@ const ShowTeacher = ({ teacher, onClose, onEdit }: Props) => {
                             onClose();      // close show modal
                             onEdit(teacher); // open edit modal
                         }}
-                        className="w-1/2 px-6 py-3 rounded-2xl bg-lime-400 text-black font-semibold hover:bg-lime-300 transition flex items-center justify-center gap-2 shadow-lg shadow-lime-400/30"
+                        className="w-1/2 px-6 py-3 rounded-2xl bg-primary text-on-primary font-semibold hover:bg-primary-hover transition flex items-center justify-center gap-2 shadow-card "
                     >
                         <Pencil size={16} />
                         Edit Teacher
@@ -205,8 +205,8 @@ const InfoCard = ({
     label: string;
     value: string;
 }) => (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-5">
-        <p className="text-gray-400 text-sm">{label}</p>
-        <p className="text-white font-semibold mt-2">{value}</p>
+    <div className="bg-elev-1 border border-line rounded-2xl p-5">
+        <p className="text-fg-muted text-sm">{label}</p>
+        <p className="text-fg font-semibold mt-2">{value}</p>
     </div>
 );

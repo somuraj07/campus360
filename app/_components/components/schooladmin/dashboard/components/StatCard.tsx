@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
 
 interface StatCardProps {
   label: string;
@@ -8,15 +8,16 @@ interface StatCardProps {
   Icon: LucideIcon;
 }
 
-export const StatCard = ({ label, value, trend, trendColor = "text-lime-400", Icon }: StatCardProps) => (
-  <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-3 sm:p-4 md:p-4 flex-1 min-w-0">
-    <div className="p-2 sm:p-2.5 bg-white/5 w-fit rounded-xl mb-2 sm:mb-3">
-      <Icon className="w-5 h-5 text-lime-400" />
+/** KPI tile used on the school dashboard and the Teachers tab. */
+export const StatCard = ({ label, value, trend, trendColor = "text-fg-subtle", Icon }: StatCardProps) => (
+  <div className="min-w-0 flex-1 rounded-2xl border border-line bg-elev-1 p-5">
+    <div className="flex items-start justify-between gap-3">
+      <p className="truncate text-[13px] font-medium text-fg-subtle">{label}</p>
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+        <Icon size={18} />
+      </span>
     </div>
-    <p className="text-gray-400 text-[10px] sm:text-xs font-medium uppercase tracking-wider truncate">{label}</p>
-    <h3 className="text-lg sm:text-xl md:text-2xl font-bold mt-0.5 sm:mt-1 mb-1 sm:mb-1.5 text-white truncate">{value}</h3>
-    <p className={`${trendColor} text-[9px] sm:text-[10px] font-bold tracking-widest uppercase truncate`}>
-      {trend}
-    </p>
+    <p className="mt-2 truncate text-[28px] font-semibold leading-none tracking-tight text-fg tabular-nums">{value}</p>
+    <p className={`mt-2.5 truncate text-xs font-medium ${trendColor}`}>{trend}</p>
   </div>
 );

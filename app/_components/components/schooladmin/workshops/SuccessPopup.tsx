@@ -35,8 +35,8 @@ export default function SuccessPopup({
   if (portalTargetId && !targetEl) return null;
 
   const wrapperClassName = portalTargetId
-    ? "absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md"
-    : "fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md";
+    ? "absolute inset-0 z-50 flex items-center justify-center bg-overlay "
+    : "fixed inset-0 z-50 flex items-center justify-center bg-overlay ";
 
   const popup = (
     <div
@@ -44,16 +44,16 @@ export default function SuccessPopup({
       onClick={onClose}
     >
       <div
-        className="max-w-[360px] rounded-2xl bg-slate-900/90 border border-white/10 px-5 py-4 text-left shadow-xl backdrop-blur-xl"
+        className="max-w-[360px] rounded-2xl bg-surface border border-line px-5 py-4 text-left shadow-pop "
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-lime-400/20 border border-lime-400/50 flex items-center justify-center text-lime-300">
+          <div className="h-10 w-10 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center text-primary">
             <Check size={18} />
           </div>
           <div>
-            <div className="text-white font-semibold text-sm">{title}</div>
-            <div className="text-white/60 text-xs mt-0.5">{description}</div>
+            <div className="text-fg font-semibold text-sm">{title}</div>
+            <div className="text-fg-muted text-xs mt-0.5">{description}</div>
           </div>
         </div>
       </div>

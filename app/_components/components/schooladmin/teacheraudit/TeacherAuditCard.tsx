@@ -85,26 +85,26 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
 
   const getScoreColor = (s: number) => {
     if (s >= 90) return "bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]";
-    if (s >= 70) return "bg-lime-300 shadow-[0_0_10px_rgba(190,242,100,0.6)]";
+    if (s >= 70) return "bg-primary ";
     if (s < 50) return "bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.6)]";
-    return "bg-lime-500 shadow-[0_0_10px_rgba(132,204,22,0.5)]";
+    return "bg-primary ";
   };
 
   const barStyle = getScoreColor(displayScore);
 
   return (
     <div className="px-1 md:px-0 w-full">
-      <div className="max-w-full mx-auto rounded-2xl border border-white/10 shadow-lg overflow-hidden bg-white/5 backdrop-blur-xl">
+      <div className="max-w-full mx-auto rounded-2xl border border-line shadow-card overflow-hidden bg-elev-1 ">
         
         {/* MAIN CARD HEADER */}
         {/* Changed lg: gap to xl: gap to give iPad Pro more breathing room */}
-        <div className="px-4 py-6 sm:px-8 sm:py-6 border-b border-white/10">
+        <div className="px-4 py-6 sm:px-8 sm:py-6 border-b border-line">
           <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 xl:gap-8">
 
             {/* LEFT SECTION: Profile & Name */}
             <div className="flex items-center gap-4 min-w-0">
               <div className="relative flex-shrink-0">
-                <div className="w-16 h-16 xl:w-20 xl:h-20 rounded-2xl overflow-hidden border-2 border-white/10 shadow-xl">
+                <div className="w-16 h-16 xl:w-20 xl:h-20 rounded-2xl overflow-hidden border-2 border-line shadow-card">
                   {teacher.photoUrl ? (
                     <img
                       src={teacher.photoUrl}
@@ -112,24 +112,24 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-white/10 text-white/70 text-xl xl:text-2xl font-bold">
+                    <div className="w-full h-full flex items-center justify-center bg-elev-2 text-fg-muted text-xl xl:text-2xl font-bold">
                       {teacher.name?.charAt(0) || "?"}
                     </div>
                   )}
                 </div>
-                <div className="absolute -bottom-1 -right-1 xl:-bottom-2 xl:-right-2 w-6 h-6 xl:w-7 xl:h-7 rounded-full bg-[#1a1a1a] border border-white/20 flex items-center justify-center shadow-lg">
-                  <Award className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-yellow-400" />
+                <div className="absolute -bottom-1 -right-1 xl:-bottom-2 xl:-right-2 w-6 h-6 xl:w-7 xl:h-7 rounded-full bg-surface border border-line-strong flex items-center justify-center shadow-pop">
+                  <Award className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-yellow-700 dark:text-yellow-400" />
                 </div>
               </div>
 
               <div className="min-w-0">
-                <h3 className="text-lg xl:text-xl font-bold text-white tracking-tight truncate">
+                <h3 className="text-lg xl:text-xl font-bold text-fg tracking-tight truncate">
                   {teacher.name ?? "-"}
                 </h3>
-                <p className="text-xs xl:text-sm text-white/50 font-medium truncate">
+                <p className="text-xs xl:text-sm text-fg-subtle font-medium truncate">
                   {teacher.subject ?? "-"}
                 </p>
-                <p className="text-[10px] xl:text-xs text-white/20 font-mono mt-0.5 truncate uppercase">
+                <p className="text-[10px] xl:text-xs text-fg-faint font-mono mt-0.5 truncate uppercase">
                   ID: {teacher.teacherId ?? "-"}
                 </p>
               </div>
@@ -140,28 +140,28 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
               
               {/* SCORE SECTION */}
               <div className="flex items-center gap-4 w-full xl:w-auto">
-                <div className="h-12 w-12 xl:h-14 xl:w-14 flex-shrink-0 rounded-xl xl:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <div className="h-12 w-12 xl:h-14 xl:w-14 flex-shrink-0 rounded-xl xl:rounded-2xl bg-elev-1 border border-line flex items-center justify-center">
                   <span className={`text-lg xl:text-xl font-bold transition-colors duration-500 ${
-                    displayScore >= 90 ? "text-green-500" : 
-                    displayScore >= 70 ? "text-lime-300" : 
-                    displayScore < 50 ? "text-yellow-400" : "text-lime-500"
+                    displayScore >= 90 ? "text-green-600 dark:text-green-500" : 
+                    displayScore >= 70 ? "text-primary" : 
+                    displayScore < 50 ? "text-yellow-700 dark:text-yellow-400" : "text-primary"
                   }`}>
                     {displayScore}
                   </span>
                 </div>
                 
                 <div className="flex-1 xl:w-[180px]">
-                  <p className="text-[10px] text-white lowercase tracking-widest mb-1">
+                  <p className="text-[10px] text-fg lowercase tracking-widest mb-1">
                     Performance Score
                   </p>
-                  <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-2 rounded-full bg-elev-2 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ease-in-out ${barStyle}`}
                       style={{ width: `${displayScore}%` }}
                     />
                   </div>
                   <div className="flex justify-between items-center mt-1">
-                    <p className="text-[10px] text-white/40 font-bold">{displayScore}/100</p>
+                    <p className="text-[10px] text-fg-subtle font-bold">{displayScore}/100</p>
                   </div>
                 </div>
               </div>
@@ -173,8 +173,8 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                   onClick={onOpenAddGood}
                   className={`h-14 xl:h-16 px-3 xl:px-6 rounded-xl flex items-center justify-center gap-2 text-[10px] xl:text-sm font-bold transition-all flex-1 xl:flex-none whitespace-nowrap ${
                     isAddFormOpen && addFormMode === "good"
-                      ? "bg-lime-400 text-black shadow-[0_0_15px_rgba(163,230,53,0.4)]"
-                      : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
+                      ? "bg-primary text-on-primary "
+                      : "bg-elev-2 border border-line-strong text-fg hover:bg-elev-3"
                   }`}
                 >
                   <ThumbsUp size={14} className="xl:w-4 xl:h-4" /> <span>Add Good</span>
@@ -185,7 +185,7 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                   className={`h-14 xl:h-16 px-3 xl:px-6 rounded-xl flex items-center justify-center gap-2 text-[10px] xl:text-sm font-bold transition-all flex-1 xl:flex-none whitespace-nowrap ${
                     isAddFormOpen && addFormMode === "bad"
                       ? "bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)]"
-                      : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
+                      : "bg-elev-2 border border-line-strong text-fg hover:bg-elev-3"
                   }`}
                 >
                   <ThumbsDown size={14} className="xl:w-4 xl:h-4" /> <span>Add Bad</span>
@@ -193,7 +193,7 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
 
                 <button
                   onClick={onToggleHistory}
-                  className="h-14 xl:h-16 px-3 xl:px-6 rounded-xl bg-white/10 border border-white/20 text-white flex items-center justify-center gap-2 font-bold flex-1 xl:flex-none hover:bg-white/20 transition-all whitespace-nowrap"
+                  className="h-14 xl:h-16 px-3 xl:px-6 rounded-xl bg-elev-2 border border-line-strong text-fg flex items-center justify-center gap-2 font-bold flex-1 xl:flex-none hover:bg-elev-3 transition-all whitespace-nowrap"
                 >
                   <span className="text-[10px] xl:text-sm">View All</span>
                   {isHistoryOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -204,13 +204,13 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
 
           {/* ADD FORM SECTION */}
           {isAddFormOpen && (
-            <div className="mt-6 rounded-2xl bg-white/5 border border-white/10 px-3 py-6 xl:p-9 backdrop-blur-lg">
+            <div className="mt-6 rounded-2xl bg-elev-1 border border-line px-3 py-6 xl:p-9 ">
               <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
 
                 {/* LEFT: Category Selection */}
                 <div className="space-y-4">
                   <h4 className={`text-xs xl:text-sm font-semibold flex items-center gap-2 uppercase tracking-wider ${
-                    addFormMode === "good" ? "text-lime-400" : "text-red-400"
+                    addFormMode === "good" ? "text-primary" : "text-red-700 dark:text-red-400"
                   }`}>
                     {addFormMode === "good" ? <ThumbsUp size={16} /> : <ThumbsDown size={16} />}
                     ADD {addFormMode === "good" ? "POSITIVE" : "NEGATIVE"} RECORD
@@ -226,8 +226,8 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                           onClick={() => { onCategoryChange(enumValue); onCustomCategoryChange(""); }}
                           className={`px-3 py-1.5 rounded-full text-[10px] xl:text-xs border transition-all ${
                             isSelected
-                              ? addFormMode === "good" ? "bg-lime-400 text-black border-lime-400" : "bg-red-500 text-white border-red-500"
-                              : "border-white/20 text-white/70 hover:bg-white/10"
+                              ? addFormMode === "good" ? "bg-primary text-on-primary border-primary" : "bg-red-500 text-white border-red-500"
+                              : "border-line-strong text-fg-muted hover:bg-elev-3"
                           }`}
                         >
                           {c}
@@ -241,22 +241,22 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                 <div className="xl:col-span-2 space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-[11px] text-white/40 font-medium ml-1">Category</label>
+                      <label className="text-[11px] text-fg-subtle font-medium ml-1">Category</label>
                       <input
                         value={customCategory || CATEGORY_LABEL_FROM_ENUM(category)}
                         onChange={(e) => { onCustomCategoryChange(e.target.value); onCategoryChange(""); }}
                         placeholder="Category..."
-                        className="w-full h-11 rounded-xl bg-black/20 px-4 text-sm text-white border border-white/20 focus:outline-none focus:ring-1 focus:ring-white/30 transition"
+                        className="w-full h-11 rounded-xl bg-well px-4 text-sm text-fg border border-line-strong focus:outline-none focus:ring-1 focus:ring-line-strong transition"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[11px] text-white/40 font-medium ml-1">Details (Optional)</label>
+                      <label className="text-[11px] text-fg-subtle font-medium ml-1">Details (Optional)</label>
                       <input
                         value={description}
                         onChange={(e) => onDescriptionChange(e.target.value)}
                         placeholder="Description..."
-                        className="w-full h-11 rounded-xl bg-black/20 px-4 text-sm text-white border border-white/20 focus:outline-none focus:ring-1 focus:ring-white/30 transition"
+                        className="w-full h-11 rounded-xl bg-well px-4 text-sm text-fg border border-line-strong focus:outline-none focus:ring-1 focus:ring-line-strong transition"
                       />
                     </div>
                   </div>
@@ -264,8 +264,8 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                   {/* SLIDER */}
                   <div className="space-y-3 pt-1">
                     <div className="flex justify-between items-center">
-                      <label className="text-[11px] text-white/40 font-medium ml-1">Score Impact</label>
-                      <span className={`text-base font-bold ${addFormMode === "good" ? "text-lime-400" : "text-red-500"}`}>
+                      <label className="text-[11px] text-fg-subtle font-medium ml-1">Score Impact</label>
+                      <span className={`text-base font-bold ${addFormMode === "good" ? "text-primary" : "text-red-600 dark:text-red-500"}`}>
                         {addFormMode === "good" ? "+" : "-"}{Math.abs(scoreImpact)}
                       </span>
                     </div>
@@ -276,9 +276,9 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                         value={Math.abs(scoreImpact)}
                         onChange={(e) => onScoreImpactChange(addFormMode === "good" ? Number(e.target.value) : -Number(e.target.value))}
                         style={{
-                          background: `linear-gradient(to right, ${addFormMode === "good" ? "#a3e635" : "#ef4444"} 0%, ${addFormMode === "good" ? "#a3e635" : "#ef4444"} ${(Math.abs(scoreImpact) / 50) * 100}%, rgba(255, 255, 255, 0.1) ${(Math.abs(scoreImpact) / 50) * 100}%, rgba(255, 255, 255, 0.1) 100%)`,
+                          background: `linear-gradient(to right, ${addFormMode === "good" ? "#0EA5E9" : "#ef4444"} 0%, ${addFormMode === "good" ? "#0EA5E9" : "#ef4444"} ${(Math.abs(scoreImpact) / 50) * 100}%, var(--line) ${(Math.abs(scoreImpact) / 50) * 100}%, var(--line) 100%)`,
                         }}
-                        className="w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-white"
+                        className="w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-fg"
                       />
                     </div>
                   </div>
@@ -291,8 +291,8 @@ const displayScore = Math.max(0, Math.min(100, teacher.performanceScore));
                       onClick={onSaveRecord}
                       className={`w-full xl:w-auto h-12 px-10 rounded-2xl flex items-center justify-center gap-2 font-bold transition-all ${
                         isFormReady
-                          ? "bg-[#A3E635] text-black shadow-[0_8px_20px_rgba(163,230,53,0.3)] hover:scale-[1.02] active:scale-[0.98]"
-                          : "bg-white/10 text-white/30"
+                          ? "bg-primary text-on-primary hover:scale-[1.02] active:scale-[0.98]"
+                          : "bg-elev-2 text-fg-faint"
                       }`}
                     >
                       <Save size={18} />

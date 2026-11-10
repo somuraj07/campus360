@@ -22,13 +22,13 @@ export function ApproveCertificateModal({
 }) {
   const busy = actingId === approvingId || uploadingFile;
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl shadow-xl max-w-md w-full p-6">
+    <div className="fixed inset-0 bg-overlay z-50 flex items-center justify-center p-4">
+      <div className="bg-surface border border-line rounded-2xl shadow-pop max-w-md w-full p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-white">Approve Certificate Request</h3>
+          <h3 className="text-xl font-bold text-fg">Approve Certificate Request</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition"
+            className="text-fg-muted hover:text-fg transition"
           >
             ✕
           </button>
@@ -36,7 +36,7 @@ export function ApproveCertificateModal({
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-fg-muted mb-2">
               Attach Certificate Document (Optional)
             </label>
             <div className="flex items-center gap-3">
@@ -49,19 +49,19 @@ export function ApproveCertificateModal({
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/15 text-white rounded-lg transition"
+                className="flex items-center gap-2 px-4 py-2 bg-elev-2 hover:bg-elev-3 text-fg rounded-lg transition"
               >
                 <Upload size={16} />
                 {selectedFile ? "Change File" : "Choose File"}
               </button>
               {selectedFile && (
-                <div className="flex items-center gap-2 text-sm text-gray-300">
+                <div className="flex items-center gap-2 text-sm text-fg-muted">
                   <File size={16} />
                   <span className="truncate max-w-[200px]">{selectedFile.name}</span>
                 </div>
               )}
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-fg-muted mt-1">
               PDF, DOC, DOCX, or image files (max 10MB)
             </p>
           </div>
@@ -70,7 +70,7 @@ export function ApproveCertificateModal({
             <button
               onClick={() => onApprove(approvingId)}
               disabled={busy}
-              className="flex-1 px-4 py-3 bg-lime-400 text-black font-semibold rounded-lg hover:bg-lime-400/90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-3 bg-primary text-on-primary font-semibold rounded-lg hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {busy ? (
                 <>
@@ -87,7 +87,7 @@ export function ApproveCertificateModal({
             <button
               onClick={onClose}
               disabled={busy}
-              className="px-4 py-3 bg-[#2d2d2d] text-white font-semibold rounded-lg hover:bg-[#404040] transition disabled:opacity-50"
+              className="px-4 py-3 bg-elev-2 text-fg font-semibold rounded-lg hover:bg-elev-3 transition disabled:opacity-50"
             >
               Cancel
             </button>

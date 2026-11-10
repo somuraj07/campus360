@@ -180,10 +180,10 @@ export default function Page() {
     return (
       <main className="min-h-screen p-8">
         <div className="somu rounded-2xl p-7 text-center">
-          <p className="text-red-400">{error}</p>
+          <p className="text-red-700 dark:text-red-400">{error}</p>
           <button
             onClick={() => fetchHomeworks()}
-            className="mt-4 px-6 py-2 rounded-xl border border-lime-400 text-lime-300 hover:bg-lime-400/10 transition"
+            className="mt-4 px-6 py-2 rounded-xl border border-primary text-primary hover:bg-primary/10 transition"
           >
             Retry
           </button>
@@ -193,7 +193,7 @@ export default function Page() {
   }
 
   return (
-    <main className="min-h-screen space-y-8 text-white">
+    <main className="min-h-screen space-y-8 text-fg">
       <HomeworkHeader studentName={studentName} />
 
       <HomeworkStats
@@ -215,7 +215,7 @@ export default function Page() {
       <div className="space-y-6">
         {filteredHomeworks.length === 0 ? (
           <div className="somu rounded-2xl p-7 text-center">
-            <p className="text-white/70">No homework found</p>
+            <p className="text-fg-muted">No homework found</p>
           </div>
         ) : (
           filteredHomeworks.map((homework) => (
@@ -232,13 +232,13 @@ export default function Page() {
       <style jsx>{`
         .card {
           background: transparent;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--line);
           border-radius: 16px;
           transition: 0.3s ease;
         }
 
         .card:hover {
-          border: 1px solid rgba(255, 255, 255, 0.25);
+          border: 1px solid var(--line-strong);
         }
 
         .statCard {
@@ -259,7 +259,7 @@ export default function Page() {
         .statLabel {
           margin-top: 4px;
           font-size: 14px;
-          color: rgba(255, 255, 255, 0.7);
+          color: var(--fg-muted);
         }
       `}</style>
     </main>

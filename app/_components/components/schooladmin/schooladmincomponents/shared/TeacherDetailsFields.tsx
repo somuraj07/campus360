@@ -25,16 +25,7 @@ export function TeacherDetailsFields({
   onSubjectsDropdownOpenChange: (v: boolean) => void;
 }) {
   return (
-    <div className="space-y-4 pt-4 border-t border-white/10">
-      <div className="flex items-center gap-2">
-        <div className="h-9 w-9 rounded-full bg-lime-400/20 flex items-center justify-center">
-          <Briefcase className="w-5 h-5 text-lime-400" />
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-white">Teacher Details</h3>
-          <p className="text-xs text-white/50">Fill in teacher-specific information.</p>
-        </div>
-      </div>
+    <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <InputField
           label="Teacher ID"
@@ -45,20 +36,20 @@ export function TeacherDetailsFields({
           error={fieldErrors.teacherId}
         />
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">
-            Subject(s) <span className="text-red-400">*</span>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">
+            Subject(s) <span className="text-red-700 dark:text-red-400">*</span>
           </label>
           <div className="flex flex-wrap gap-2 mb-2">
             {(formData.subjects || []).map((s) => (
               <span
                 key={s}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-lime-400/20 border border-lime-400/30 text-lime-300 text-sm"
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-primary/20 border border-primary/30 text-primary text-sm"
               >
                 {s}
                 <button
                   type="button"
                   onClick={() => onChange("subjects", (formData.subjects || []).filter((x) => x !== s))}
-                  className="hover:text-white"
+                  className="hover:text-fg"
                 >
                   ×
                 </button>
@@ -88,7 +79,7 @@ export function TeacherDetailsFields({
                   }
                 }}
                 placeholder="Search or type a subject"
-                className="flex-1 pl-4 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-lime-400/50 text-gray-400 text-sm"
+                className="flex-1 pl-4 pr-4 py-3 bg-well border border-line rounded-xl focus:outline-none focus:ring-1 focus:ring-primary/50 text-fg-muted text-sm"
               />
               <button
                 type="button"
@@ -100,7 +91,7 @@ export function TeacherDetailsFields({
                     onSubjectsDropdownOpenChange(false);
                   }
                 }}
-                className="px-4 py-2 rounded-xl bg-lime-400/20 border border-lime-400/30 text-lime-300 text-sm font-medium hover:bg-lime-400/30"
+                className="px-4 py-2 rounded-xl bg-primary/20 border border-primary/30 text-primary text-sm font-medium hover:bg-primary/30"
               >
                 Add
               </button>
@@ -112,7 +103,7 @@ export function TeacherDetailsFields({
               );
               if (!filtered.length) return null;
               return (
-                <div className="absolute z-50 mt-1 w-full max-h-48 overflow-y-auto rounded-xl bg-[#1a1a2e] border border-white/10 shadow-xl no-scrollbar">
+                <div className="absolute z-50 mt-1 w-full max-h-48 overflow-y-auto rounded-xl bg-elev-2 border border-line shadow-pop no-scrollbar">
                   {filtered.map((s) => (
                     <button
                       key={s}
@@ -133,7 +124,7 @@ export function TeacherDetailsFields({
                         onSubjectInputChange("");
                         onSubjectsDropdownOpenChange(false);
                       }}
-                      className="w-full text-left px-4 py-2.5 text-sm text-white/80 hover:bg-lime-400/10 hover:text-lime-300 transition-colors"
+                      className="w-full text-left px-4 py-2.5 text-sm text-fg hover:bg-primary/10 hover:text-primary transition-colors"
                     >
                       {s}
                     </button>
@@ -143,14 +134,14 @@ export function TeacherDetailsFields({
             })()}
           </div>
           {fieldErrors.subjects ? (
-            <p className="text-xs text-red-400 mt-1.5" role="alert">
+            <p className="text-xs text-red-700 dark:text-red-400 mt-1.5" role="alert">
               {fieldErrors.subjects}
             </p>
           ) : null}
         </div>
         <div className="md:col-span-2">
-          <label className="block text-xs font-medium text-white/70 mb-1.5">Assigned Classes</label>
-          <div className="flex flex-wrap gap-2 p-3 bg-black/20 border border-white/10 rounded-xl min-h-[48px]">
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">Assigned Classes</label>
+          <div className="flex flex-wrap gap-2 p-3 bg-well border border-line rounded-xl min-h-[48px]">
             {classesList.map((c) => {
               const id = c.id;
               const label = c.section ? `${c.name}-${c.section}` : c.name;
@@ -168,8 +159,8 @@ export function TeacherDetailsFields({
                   }}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
                     selected
-                      ? "bg-lime-400/30 border-lime-400/50 text-lime-200"
-                      : "bg-white/5 border-white/10 text-white/60 hover:border-white/20"
+                      ? "bg-primary/30 border-primary/50 text-primary"
+                      : "bg-elev-1 border-line text-fg-muted hover:border-line-strong"
                   }`}
                 >
                   {label}
@@ -177,10 +168,10 @@ export function TeacherDetailsFields({
               );
             })}
             {classesList.length === 0 && (
-              <span className="text-white/40 text-sm">No classes found. Create classes first.</span>
+              <span className="text-fg-subtle text-sm">No classes found. Create classes first.</span>
             )}
           </div>
-          <p className="text-[11px] text-white/50 mt-1">
+          <p className="text-[11px] text-fg-subtle mt-1">
             Classes this teacher can enter marks for. Class teacher (homeroom) is set under Teachers → Appoint Teacher.
           </p>
         </div>
@@ -209,15 +200,15 @@ export function TeacherDetailsFields({
           error={fieldErrors.joiningDate}
         />
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">Status</label>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">Status</label>
           <div className="relative">
-            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-white/40">
+            <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-fg-subtle">
               <CheckCircle className="w-4 h-4" />
             </span>
             <select
               value={formData.teacherStatus || "Active"}
               onChange={(e) => onChange("teacherStatus", e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-lime-400/50 text-gray-400"
+              className="w-full pl-11 pr-4 py-3 bg-well border border-line rounded-xl focus:outline-none focus:ring-1 focus:ring-primary/50 text-fg-muted"
             >
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
@@ -235,9 +226,9 @@ export function TeacherDetailsFields({
           error={fieldErrors.mobile}
         />
         <div className="md:col-span-2">
-          <label className="block text-xs font-medium text-white/70 mb-1.5">Address</label>
+          <label className="block text-xs font-medium text-fg-muted mb-1.5">Address</label>
           <div className="relative">
-            <span className="pointer-events-none absolute left-3 top-3 text-white/40">
+            <span className="pointer-events-none absolute left-3 top-3 text-fg-subtle">
               <MapPin className="w-4 h-4" />
             </span>
             <textarea
@@ -246,15 +237,15 @@ export function TeacherDetailsFields({
               placeholder="Full Address"
               rows={2}
               aria-invalid={Boolean(fieldErrors.address)}
-              className={`w-full pl-11 pr-4 py-3 bg-black/20 rounded-xl focus:outline-none focus:ring-1 text-gray-400 resize-none ${
+              className={`w-full pl-11 pr-4 py-3 bg-well rounded-xl focus:outline-none focus:ring-1 text-fg-muted resize-none ${
                 fieldErrors.address
                   ? "border border-red-500/60 focus:ring-red-400/40"
-                  : "border border-white/10 focus:ring-lime-400/50"
+                  : "border border-line focus:ring-primary/50"
               }`}
             />
           </div>
           {fieldErrors.address ? (
-            <p className="text-xs text-red-400 mt-1.5" role="alert">
+            <p className="text-xs text-red-700 dark:text-red-400 mt-1.5" role="alert">
               {fieldErrors.address}
             </p>
           ) : null}

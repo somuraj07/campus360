@@ -24,13 +24,13 @@ export default function UsersMobileList({
   return (
     <div className="md:hidden space-y-3">
       {loading && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-8 text-center text-white/60 text-sm">
+        <div className="rounded-2xl border border-line bg-elev-1 px-4 py-8 text-center text-fg-muted text-sm">
           Loading users...
         </div>
       )}
 
       {!loading && users.length === 0 && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-8 text-center text-white/60 text-sm">
+        <div className="rounded-2xl border border-line bg-elev-1 px-4 py-8 text-center text-fg-muted text-sm">
           No users found.
         </div>
       )}
@@ -39,17 +39,17 @@ export default function UsersMobileList({
         users.map((row) => (
           <div
             key={row.id}
-            className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4"
+            className="rounded-2xl border border-line bg-elev-1 p-4"
           >
             <div className="flex items-center gap-3">
               <img
                 src={row.photoUrl || AVATAR_URL}
                 alt={row.name}
-                className="h-11 w-11 rounded-full object-cover border border-white/10"
+                className="h-11 w-11 rounded-full object-cover border border-line"
               />
               <div className="min-w-0">
-                <div className="text-sm font-semibold text-white truncate">{row.name}</div>
-                <div className="text-xs text-white/45 truncate">{row.email}</div>
+                <div className="text-sm font-semibold text-fg truncate">{row.name}</div>
+                <div className="text-xs text-fg-subtle truncate">{row.email}</div>
               </div>
             </div>
 
@@ -58,8 +58,8 @@ export default function UsersMobileList({
               <StatusBadge status="active" />
             </div>
 
-            <div className="mt-3 text-xs text-white/55">
-              Last active: <span className="text-white/70">{getLastActive(row)}</span>
+            <div className="mt-3 text-xs text-fg-muted">
+              Last active: <span className="text-fg-muted">{getLastActive(row)}</span>
             </div>
 
             <div className="mt-3 flex items-center justify-end gap-2">
@@ -70,8 +70,8 @@ export default function UsersMobileList({
                   disabled={row.role !== "TEACHER"}
                   className={`p-2 rounded-lg transition-colors ${
                     row.role === "TEACHER"
-                      ? "text-white/65 hover:text-white hover:bg-white/10"
-                      : "text-white/30 cursor-not-allowed"
+                      ? "text-fg-muted hover:text-fg hover:bg-elev-3"
+                      : "text-fg-faint cursor-not-allowed"
                   }`}
                   title={
                     row.role === "TEACHER"
@@ -85,7 +85,7 @@ export default function UsersMobileList({
               <button
                 type="button"
                 onClick={() => onDelete(row)}
-                className="p-2 rounded-lg text-white/60 hover:text-red-400 hover:bg-white/10 transition-colors"
+                className="p-2 rounded-lg text-fg-muted hover:text-red-700 dark:hover:text-red-400 hover:bg-elev-3 transition-colors"
                 title="Delete user"
               >
                 <Trash2 size={16} />

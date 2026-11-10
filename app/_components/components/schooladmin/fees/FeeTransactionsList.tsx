@@ -57,9 +57,9 @@ export default function FeeTransactionsList({
   };
 
   return (
-    <section className="w-full rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="w-full rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold mb-4 flex flex-wrap items-center gap-2">
-        <RotateCcw className="w-5 h-5 shrink-0 text-amber-400" />
+        <RotateCcw className="w-5 h-5 shrink-0 text-amber-700 dark:text-amber-400" />
         <span>
           {`Fee Transactions & Refunds (${filteredTransactions.length}${
             filteredTransactions.length > PAGE_SIZE
@@ -68,7 +68,7 @@ export default function FeeTransactionsList({
           })`}
         </span>
       </h3>
-      <p className="text-sm text-gray-400 mb-4">
+      <p className="text-sm text-fg-muted mb-4">
         View successful payments and process refunds when needed.
       </p>
 
@@ -91,9 +91,9 @@ export default function FeeTransactionsList({
       />
 
       {loading ? (
-        <div className="py-8 text-center text-gray-400">Loading transactions...</div>
+        <div className="py-8 text-center text-fg-muted">Loading transactions...</div>
       ) : filteredTransactions.length === 0 ? (
-        <div className="py-8 text-center text-gray-400">No transactions found</div>
+        <div className="py-8 text-center text-fg-muted">No transactions found</div>
       ) : (
         <>
           <FeeTransactionsMobileList

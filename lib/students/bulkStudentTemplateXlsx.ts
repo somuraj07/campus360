@@ -1,8 +1,8 @@
 import * as XLSX from "xlsx";
 
-/** Admission-style columns with Timelly ID first (matches bulk student upload API). */
+/** Admission-style columns with RS Solutions ID first (matches bulk student upload API). */
 const HEADERS = [
-  "Timelly ID",
+  "RS Solutions ID",
   "PEN Number",
   "APAAR ID",
   "Fedena No",

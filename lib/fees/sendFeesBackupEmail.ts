@@ -98,7 +98,7 @@ export async function sendFeesBackupEmail(options: {
   try {
     await transporter.verify();
     const info = await transporter.sendMail({
-      from: `"Timelly ERP" <${smtp.from}>`,
+      from: `"RS Solutions ERP" <${smtp.from}>`,
       to: recipient,
       subject,
       text,

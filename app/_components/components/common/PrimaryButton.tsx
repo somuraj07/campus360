@@ -10,14 +10,10 @@ export default function PrimaryButton({ title, loading = false, onClick }: Butto
   return (
     <motion.button
       onClick={onClick}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.985 }}
       disabled={loading}
       type="submit"
-      className="bg-lime-400 text-slate-900 font-semibold
-       rounded-xl hover:bg-lime-500 
-       shadow-lg shadow-lime-400/20
-       w-full py-3"
+      className="w-full rounded-lg bg-primary py-3 font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
     >
       {title}
     </motion.button>

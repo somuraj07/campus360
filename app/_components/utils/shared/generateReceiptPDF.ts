@@ -39,16 +39,16 @@ export async function generateReceiptPDF(data: ReceiptPDFInput): Promise<ArrayBu
     doc.rect(0, 0, pageWidth, 28, "F");
 
     // School Name in Header
-    const schoolName = data.schoolName || "Timelly School";
+    const schoolName = data.schoolName || "RS Solutions";
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.text(schoolName, margin, 12);
 
-    // Subtitle with Timelly branding
+    // Subtitle with RS Solutions branding
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("Fee Receipt • Powered by Timelly", margin, 18);
+    doc.text("Fee Receipt • Powered by RS Solutions", margin, 18);
 
     // Copy Type Badge
     const copyLabel = copyType === "admin" ? "ADMIN COPY" : "PARENT COPY";
@@ -76,7 +76,7 @@ export async function generateReceiptPDF(data: ReceiptPDFInput): Promise<ArrayBu
 
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text(`School: ${data.schoolName || "Timely School"}`, margin + 2, yPosition);
+    doc.text(`School: ${data.schoolName || "RS Solutions"}`, margin + 2, yPosition);
 
     // Student Information Section
     yPosition += 12;
@@ -177,7 +177,7 @@ export async function generateReceiptPDF(data: ReceiptPDFInput): Promise<ArrayBu
 
     yPosition += 6;
     doc.text(
-        `Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by Timelly`,
+        `Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by RS Solutions`,
         pageWidth / 2,
         yPosition,
         { align: "center" }

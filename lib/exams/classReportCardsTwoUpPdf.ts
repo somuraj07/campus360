@@ -247,7 +247,7 @@ function drawHalfCard(
   doc.setFontSize(5.5);
   doc.setTextColor(80);
   doc.text(
-    "Powered by Timelly",
+    "Powered by RS Solutions",
     pageW / 2,
     y0 + halfH - 5,
     { align: "center" }

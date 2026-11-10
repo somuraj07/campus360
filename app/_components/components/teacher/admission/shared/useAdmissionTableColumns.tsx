@@ -36,13 +36,13 @@ export function useAdmissionTableColumns({
         setPaymentDialog({ row: r, feeType });
       };
       return (
-        <div className="flex flex-wrap items-center gap-1 w-[10.5rem]">
+        <div className="flex flex-wrap items-center gap-1.5 w-[14rem]">
           {Number(r.applicationFee ?? 0) > 0 &&
             (r.applicationFeePaid ? (
               <button
                 type="button"
                 onClick={() => printFeeReceipt(r, "APPLICATION")}
-                className="inline-flex items-center justify-center rounded-md border border-lime-400/25 bg-lime-400/10 p-1.5 text-lime-300 hover:bg-lime-400/20"
+                className="inline-flex items-center justify-center rounded-md border border-primary/25 bg-primary/10 p-1.5 text-primary hover:bg-primary/20"
                 title="Print application fee receipt"
               >
                 <Printer size={13} />
@@ -51,7 +51,7 @@ export function useAdmissionTableColumns({
               <button
                 type="button"
                 onClick={() => openPay("APPLICATION")}
-                className="rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-amber-200 hover:bg-amber-500/20"
+                className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-[11px] font-semibold text-amber-800 dark:text-amber-200 hover:bg-amber-500/20"
                 title="Pay application fee"
               >
                 App
@@ -62,7 +62,7 @@ export function useAdmissionTableColumns({
               <button
                 type="button"
                 onClick={() => printFeeReceipt(r, "ADMISSION")}
-                className="inline-flex items-center justify-center rounded-md border border-lime-400/25 bg-lime-400/10 p-1.5 text-lime-300 hover:bg-lime-400/20"
+                className="inline-flex items-center justify-center rounded-md border border-primary/25 bg-primary/10 p-1.5 text-primary hover:bg-primary/20"
                 title="Print admission fee receipt"
               >
                 <Printer size={13} />
@@ -71,7 +71,7 @@ export function useAdmissionTableColumns({
               <button
                 type="button"
                 onClick={() => openPay("ADMISSION")}
-                className="rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-amber-200 hover:bg-amber-500/20"
+                className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-1 text-[11px] font-semibold text-amber-800 dark:text-amber-200 hover:bg-amber-500/20"
                 title="Pay admission fee"
               >
                 Adm
@@ -82,10 +82,10 @@ export function useAdmissionTableColumns({
               type="button"
               disabled={busy}
               onClick={() => enrollFromRow(r)}
-              className="inline-flex items-center gap-1 px-1.5 py-1 rounded-lg text-[9px] font-semibold bg-lime-400/20 border border-lime-400/35 text-lime-200 hover:bg-lime-400/30 disabled:opacity-50"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-primary/20 border border-primary/35 text-primary hover:bg-primary/30 disabled:opacity-50"
               title="Approve to create the student"
             >
-              {busy ? <Loader2 size={12} className="animate-spin" /> : <UserPlus size={12} />}
+              {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
               {busy ? "…" : "Approve"}
             </button>
           )}
@@ -95,17 +95,17 @@ export function useAdmissionTableColumns({
               onMouseEnter={() => warmAssignCatalog(r)}
               onFocus={() => warmAssignCatalog(r)}
               onClick={() => openAssignFeesDialog(r)}
-              className="inline-flex items-center gap-1 px-1.5 py-1 rounded-lg text-[9px] font-semibold bg-sky-500/20 border border-sky-500/35 text-sky-100 hover:bg-sky-500/30"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-sky-500/20 border border-sky-500/35 text-sky-800 dark:text-sky-100 hover:bg-sky-500/30"
               title="Assign extra fees"
             >
-              <IndianRupee size={12} />
+              <IndianRupee size={13} />
               Fees
             </button>
           )}
           <button
             type="button"
             onClick={() => router.push(`?tab=admission&view=add&editId=${r.id}`)}
-            className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-white/70 hover:bg-white/10"
+            className="p-2 rounded-lg bg-elev-1 border border-line text-fg-muted hover:bg-elev-3"
             title={enrolled ? "View / edit application" : "Edit application"}
           >
             <Pencil size={14} />
@@ -114,7 +114,7 @@ export function useAdmissionTableColumns({
             <button
               type="button"
               onClick={() => setDeleteRow(r)}
-              className="p-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 hover:bg-red-500/20"
+              className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-700 dark:text-red-300 hover:bg-red-500/20"
               title="Delete application"
             >
               <Trash2 size={14} />
@@ -132,7 +132,7 @@ export function useAdmissionTableColumns({
       {
         header: "Application no.",
         render: (r: AdmissionRow) => (
-          <span className="text-sm font-mono text-white/85">{r.applicationNo || "—"}</span>
+          <span className="text-sm font-mono text-fg">{r.applicationNo || "—"}</span>
         ),
       },
       {
@@ -152,8 +152,8 @@ export function useAdmissionTableColumns({
               }
               className={`text-left text-sm max-w-[14rem] truncate ${
                 canOpen
-                  ? "text-sky-200 hover:text-sky-100 hover:underline cursor-pointer"
-                  : "text-white/80 cursor-default"
+                  ? "text-sky-800 dark:text-sky-200 hover:text-sky-800 dark:hover:text-sky-100 hover:underline cursor-pointer"
+                  : "text-fg cursor-default"
               }`}
             >
               {name}
@@ -164,31 +164,31 @@ export function useAdmissionTableColumns({
       {
         header: "Class",
         render: (r: AdmissionRow) => (
-          <span className="text-sm text-white/70">{classLabel(r)}</span>
+          <span className="text-sm text-fg-muted">{classLabel(r)}</span>
         ),
       },
       {
         header: "Boarding",
         render: (r: AdmissionRow) => (
-          <div className="text-xs text-white/70 leading-snug">
+          <div className="text-xs text-fg-muted leading-snug">
             <div>{formatBoardingLabel(r.boardingType)}</div>
-            <div className="text-white/50">{displayResidencyType(r.residencyType)}</div>
+            <div className="text-fg-subtle">{displayResidencyType(r.residencyType)}</div>
           </div>
         ),
       },
       {
         header: "Parent",
         render: (r: AdmissionRow) => (
-          <div className="text-sm text-white/70">
-            <div className="text-white/80">{r.parentName}</div>
-            <div className="text-xs text-white/50">{r.parentPhone}</div>
+          <div className="text-sm text-fg-muted">
+            <div className="text-fg">{r.parentName}</div>
+            <div className="text-xs text-fg-subtle">{r.parentPhone}</div>
           </div>
         ),
       },
       {
         header: "Fees",
         render: (r: AdmissionRow) => (
-          <span className="text-xs text-white/65 whitespace-nowrap">
+          <span className="text-xs text-fg-muted whitespace-nowrap">
             App {formatInrCell(r.applicationFee)} · Adm {formatInrCell(r.admissionFee)}
           </span>
         ),
@@ -198,7 +198,7 @@ export function useAdmissionTableColumns({
         render: (r: AdmissionRow) => {
           if (r.studentId) {
             return (
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
                 <CheckCircle size={12} />
                 Enrolled
               </span>
@@ -207,13 +207,13 @@ export function useAdmissionTableColumns({
           const wf = r.workflowStatus ?? "PENDING";
           if (wf === "UPCOMING") {
             return (
-              <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-sky-500/20 text-sky-200 border border-sky-500/30">
+              <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-sky-500/20 text-sky-800 dark:text-sky-200 border border-sky-500/30">
                 Upcoming
               </span>
             );
           }
           return (
-            <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-200 border border-amber-500/25">
+            <span className="px-2 py-1 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-800 dark:text-amber-200 border border-amber-500/25">
               Pending
             </span>
           );
@@ -222,7 +222,7 @@ export function useAdmissionTableColumns({
       {
         header: "Applied",
         render: (r: AdmissionRow) => (
-          <span className="text-sm text-white/60 whitespace-nowrap">
+          <span className="text-sm text-fg-muted whitespace-nowrap">
             {new Date(r.createdAt).toLocaleDateString()}
           </span>
         ),

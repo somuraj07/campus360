@@ -1,5 +1,7 @@
+import { ArrowRight, Newspaper } from "lucide-react";
 import type { SchoolDashboardPayload } from "@/lib/school/loadSchoolDashboard";
 import { formatTimeAgo } from "./formatTimeAgo";
+import { Panel, btnClass } from "@/app/_components/components/common/ui";
 
 export function DashboardNewsSection({
   latestNews,
@@ -11,31 +13,29 @@ export function DashboardNewsSection({
   if (!latestNews || latestNews.length === 0) return null;
 
   return (
-    <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-2xl p-5 sm:p-6 md:p-8">
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h3 className="text-xl font-bold text-white">Latest News</h3>
-          <p className="text-gray-400 text-sm mt-0.5">Recent announcements and updates</p>
-        </div>
-        <button
-          onClick={onViewAll}
-          className="rounded-xl bg-lime-400 px-4 sm:px-5 py-2.5 text-sm font-bold text-black hover:bg-lime-300 transition-colors inline-flex items-center gap-1 min-h-[44px] touch-manipulation"
-        >
-          View All <span>→</span>
+    <Panel
+      icon={Newspaper}
+      title="Latest News"
+      description="Recent announcements and updates"
+      actions={
+        <button type="button" onClick={onViewAll} className={btnClass("ghost", "sm")}>
+          View All <ArrowRight size={14} />
         </button>
-      </div>
-      <div className="space-y-6">
+      }
+      bodyClassName="p-0"
+    >
+      <ul className="grid grid-cols-1 divide-y divide-line-subtle md:grid-cols-2 md:divide-x md:divide-y-0 xl:grid-cols-3">
         {latestNews.map((n) => (
-          <div key={n.id} className="pb-6 border-b border-white/5 last:border-0 last:pb-0">
-            <h4 className="text-base font-bold text-white">{n.title}</h4>
-            <p className="text-sm text-gray-400 mt-1">{n.description}</p>
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-xs text-gray-500">Posted by {n.postedBy}</span>
-              <span className="text-xs text-gray-500">{formatTimeAgo(n.createdAt)}</span>
+          <li key={n.id} className="flex flex-col p-5">
+            <h4 className="line-clamp-2 text-sm font-semibold text-fg">{n.title}</h4>
+            <p className="mt-1.5 line-clamp-3 flex-1 text-sm text-fg-muted">{n.description}</p>
+            <div className="mt-3 flex items-center justify-between gap-2 text-xs text-fg-subtle">
+              <span className="truncate">Posted by {n.postedBy}</span>
+              <span className="shrink-0">{formatTimeAgo(n.createdAt)}</span>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </Panel>
   );
 }

@@ -25,8 +25,8 @@ export default function HeaderActionButton({
         transition
         flex-1 sm:flex-none cursor-pointer
         ${primary
-          ? "bg-lime-400 text-black shadow-[0_6px_18px_rgba(163,230,53,0.35)] hover:bg-lime-300"
-          : "border border-white/10 bg-white/10 text-white/80 hover:bg-white/20"}
+          ? "bg-primary text-on-primary hover:bg-primary-hover"
+          : "border border-line bg-elev-2 text-fg hover:bg-elev-3"}
       `}
     >
       <Icon size={16} />

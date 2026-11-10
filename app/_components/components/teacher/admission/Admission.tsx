@@ -1,6 +1,6 @@
 "use client";
 
-import PageHeader from "../../common/PageHeader";
+import { SaPageHeader } from "../../common/ui";
 import PageTabs from "../../schooladmin/schooladmincomponents/PageHeaderTabs";
 import AdmissionReceiptTemplate from "../../pdf/AdmissionReceiptTemplate";
 import { DeleteAdmissionDialog } from "./shared";
@@ -62,15 +62,16 @@ export default function TeacherAdmissionTab() {
   } = useAdmissionTabState();
 
   return (
-    <>
-      <PageHeader
+    <div className="mx-auto w-full max-w-[1400px] space-y-5 pb-10 sm:space-y-6">
+      <SaPageHeader
+        eyebrow="Admissions"
         title="Admission"
-        subtitle={
+        description={
           view === "all"
             ? "This list is admission applications only. The enrolled student roster is under the Students tab."
             : "Track applications as Pending → Upcoming, then approve to create the school student automatically."
         }
-        rightSlot={
+        actions={
           <PageTabs
             tabs={[
               { label: "New Application", value: "add" },
@@ -81,7 +82,7 @@ export default function TeacherAdmissionTab() {
         }
       />
 
-      <div className="w-full min-w-0 max-w-full space-y-6">
+      <div className="w-full min-w-0 max-w-full space-y-5">
         {view === "add" && (
           <AdmissionFormView
             editId={editId}
@@ -185,6 +186,6 @@ export default function TeacherAdmissionTab() {
       <div className="pointer-events-none opacity-0 fixed -top-[10000px] -left-[10000px]">
         <AdmissionReceiptTemplate ref={receiptRef} data={receiptData} />
       </div>
-    </>
+    </div>
   );
 }

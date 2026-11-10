@@ -59,7 +59,7 @@ export default function CreateEventForm({
   } = useCreateEventFormState({ onCancel, onCreated, initialEvent });
 
   return (
-    <section className={`border border-lime-400/30 rounded-2xl p-4 sm:p-5 shadow-2xl relative overflow-hidden animate-fadeIn ${className ?? "bg-[#0F172A]"} `}>
+    <section className={`border border-primary/30 rounded-2xl p-4 sm:p-5 shadow-card relative overflow-hidden animate-fadeIn ${className ?? "bg-surface"} `}>
       <SuccessPopup
         open={showSuccess}
         title={successTitle}
@@ -71,14 +71,14 @@ export default function CreateEventForm({
       />
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="h-10 w-10 rounded-xl text-lime-300 flex items-center justify-center">
+          <span className="h-10 w-10 rounded-xl text-primary flex items-center justify-center">
             <SquarePen size={20} />
           </span>
           <div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white">
+            <h3 className="text-lg sm:text-xl font-semibold text-fg">
               {isEditing ? "Edit Event" : "Create New Event"}
             </h3>
-            <p className="text-xs sm:text-sm text-white/50">
+            <p className="text-xs sm:text-sm text-fg-subtle">
               {isEditing
                 ? "Update event details, schedule, and media"
                 : "Add event details, schedule, and media"}
@@ -89,7 +89,7 @@ export default function CreateEventForm({
           <button
             type="button"
             onClick={onCancel}
-            className="text-white/60 hover:text-white cursor-pointer"
+            className="text-fg-muted hover:text-fg cursor-pointer"
             aria-label="Close"
           >
             <X size={18} />

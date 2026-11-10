@@ -20,7 +20,7 @@ export function LeaveCardList({
   return (
     <div className="space-y-3">
       {leaves.length === 0 ? (
-        <div className="py-8 text-center text-gray-400">
+        <div className="py-8 text-center text-fg-muted">
           No {status.toLowerCase()} requests
         </div>
       ) : (
@@ -46,38 +46,38 @@ export function LeaveCardList({
           return (
             <div
               key={l.id}
-              className="w-full box-border bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-3 sm:p-4 space-y-2"
+              className="w-full box-border bg-elev-1 border border-line rounded-xl p-3 sm:p-4 space-y-2"
             >
               {/* Teacher Name */}
-              <p className="text-white font-semibold text-sm">{l.teacher.name}</p>
+              <p className="text-fg font-semibold text-sm">{l.teacher.name}</p>
 
               {/* Leave Details */}
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Leave Type</span>
-                  <span className="text-white font-medium">{l.leaveType}</span>
+                  <span className="text-fg-muted">Leave Type</span>
+                  <span className="text-fg font-medium">{l.leaveType}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Duration</span>
-                  <span className="text-white font-medium">
+                  <span className="text-fg-muted">Duration</span>
+                  <span className="text-fg font-medium">
                     {fromDate} - {toDate}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Days</span>
-                  <span className="text-white font-medium">{days}</span>
+                  <span className="text-fg-muted">Days</span>
+                  <span className="text-fg font-medium">{days}</span>
                 </div>
               </div>
 
               {/* Reason */}
               <div className="pt-1">
-                <p className="text-xs text-gray-400">Reason</p>
-                <p className="text-xs text-white">{l.reason ?? "—"}</p>
+                <p className="text-xs text-fg-muted">Reason</p>
+                <p className="text-xs text-fg">{l.reason ?? "—"}</p>
               </div>
 
               {/* Pending Leaves Warning */}
               {status === "PENDING" && (
-                <div className="flex items-center gap-1 text-yellow-400 text-xs pt-1">
+                <div className="flex items-center gap-1 text-yellow-700 dark:text-yellow-400 text-xs pt-1">
                   <AlertTriangle size={14} />
                   <span>pending leaves</span>
                 </div>
@@ -86,7 +86,7 @@ export function LeaveCardList({
               {/* Conditional Remarks */}
               {l.status === "CONDITIONALLY_APPROVED" && l.remarks && (
                 <div className="bg-yellow-500/30 border border-yellow-400 rounded-lg p-2 text-xs mt-1">
-                  <p className="text-yellow-300 font-semibold">
+                  <p className="text-yellow-700 dark:text-yellow-300 font-semibold">
                     Condition: {l.remarks}
                   </p>
                 </div>
@@ -114,8 +114,8 @@ export function LeaveCardList({
                 <div className="flex justify-end pt-2">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-medium ${l.status === "CONDITIONALLY_APPROVED"
-                      ? "bg-yellow-500/20 text-yellow-400"
-                      : "bg-lime-500/20 text-lime-400"
+                      ? "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400"
+                      : "bg-primary/20 text-primary"
                       }`}
                   >
                     {l.status === "CONDITIONALLY_APPROVED"

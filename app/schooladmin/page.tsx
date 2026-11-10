@@ -115,7 +115,7 @@ function SchoolAdminContent() {
 
   if (tab === "fees") {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center text-white/70">
+      <div className="flex min-h-[40vh] items-center justify-center text-fg-muted">
         Redirecting to Fees...
       </div>
     );
@@ -123,7 +123,7 @@ function SchoolAdminContent() {
 
   if (tab === "analysis") {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center text-white/70">
+      <div className="flex min-h-[40vh] items-center justify-center text-fg-muted">
         Redirecting to Analysis...
       </div>
     );

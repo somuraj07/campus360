@@ -67,31 +67,31 @@ export default function RefundModal({ transaction, onClose, onSuccess }: RefundM
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-      <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl shadow-xl w-full max-w-md">
-        <div className="flex justify-between items-center p-4 border-b border-white/10">
-          <h3 className="text-lg font-semibold text-white">Refund Payment</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-overlay ">
+      <div className="bg-surface border border-line rounded-2xl shadow-pop w-full max-w-md">
+        <div className="flex justify-between items-center p-4 border-b border-line">
+          <h3 className="text-lg font-semibold text-fg">Refund Payment</h3>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white"
+            className="p-2 rounded-lg hover:bg-elev-3 text-fg-muted hover:text-fg"
           >
             <X size={20} />
           </button>
         </div>
         <div className="p-4 space-y-4">
-          <p className="text-sm text-gray-400">
-            Student: <span className="text-white font-medium">
+          <p className="text-sm text-fg-muted">
+            Student: <span className="text-fg font-medium">
               {transaction.student.user?.name || transaction.student.admissionNumber || "-"}
             </span>
           </p>
-          <p className="text-sm text-gray-400">
-            Original amount: <span className="text-emerald-400">₹{transaction.amount.toLocaleString()}</span>
+          <p className="text-sm text-fg-muted">
+            Original amount: <span className="text-emerald-700 dark:text-emerald-400">₹{transaction.amount.toLocaleString()}</span>
           </p>
-          <p className="text-sm text-gray-400">
-            Max refundable: <span className="text-amber-400">₹{maxAmount.toLocaleString()}</span>
+          <p className="text-sm text-fg-muted">
+            Max refundable: <span className="text-amber-700 dark:text-amber-400">₹{maxAmount.toLocaleString()}</span>
           </p>
           <div>
-            <label className="block text-xs text-gray-400 mb-1">Refund Amount (₹)</label>
+            <label className="block text-xs text-fg-muted mb-1">Refund Amount (₹)</label>
             <input
               type="number"
               value={amount}
@@ -100,31 +100,31 @@ export default function RefundModal({ transaction, onClose, onSuccess }: RefundM
               max={maxAmount}
               step={0.01}
               placeholder={`Up to ${maxAmount.toLocaleString()}`}
-              className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
           </div>
           <div>
-            <label className="block text-xs text-gray-400 mb-1">Reason (optional)</label>
+            <label className="block text-xs text-fg-muted mb-1">Reason (optional)</label>
             <input
               type="text"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Duplicate payment"
-              className="w-full rounded-xl bg-black/20 border border-white/10 px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+              className="h-11 w-full rounded-lg border px-3.5 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
           </div>
         </div>
-        <div className="flex gap-2 p-4 border-t border-white/10">
+        <div className="flex gap-2 p-4 border-t border-line">
           <button
             onClick={handleSubmit}
             disabled={!isValid || saving}
-            className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium"
+            className="inline-flex h-10 flex-1 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-on-primary shadow-sm transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-55"
           >
             {saving ? "Processing..." : "Process Refund"}
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl border border-white/20 text-gray-300 hover:bg-white/5"
+            className="px-4 py-2.5 rounded-xl border border-line-strong text-fg-muted hover:bg-elev-2"
           >
             Cancel
           </button>

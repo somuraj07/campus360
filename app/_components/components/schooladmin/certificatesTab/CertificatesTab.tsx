@@ -54,11 +54,11 @@ export default function CertificatesTab({
 
   if (error) {
     return (
-      <div className="w-full rounded-2xl bg-white/5 border border-white/10 p-6 text-center text-red-400">
+      <div className="w-full rounded-2xl bg-elev-1 border border-line p-6 text-center text-red-700 dark:text-red-400">
         {error}
         <button
           onClick={onRefresh}
-          className="mt-3 text-sm text-lime-400 hover:underline"
+          className="mt-3 text-sm text-primary hover:underline"
         >
           Retry
         </button>
@@ -68,7 +68,7 @@ export default function CertificatesTab({
 
   return (
     <div className="w-full">
-      <div className="bg-white/5 backdrop-blur-xl rounded-2xl shadow-lg border border-white/10 overflow-hidden">
+      <div className="bg-elev-1 rounded-2xl shadow-card border border-line overflow-hidden">
         <div className="grid grid-cols-3 text-[11px] sm:text-sm font-medium">
           {(["pending", "approved", "rejected"] as TabStatus[]).map((tab) => (
             <button
@@ -76,15 +76,15 @@ export default function CertificatesTab({
               onClick={() => setActiveTab(tab)}
               className={`py-4 transition relative ${
                 activeTab === tab
-                  ? "text-lime-400"
-                  : "text-white/70 hover:text-white"
+                  ? "text-primary"
+                  : "text-fg-muted hover:text-fg"
               }`}
             >
               {tab === "pending" && `Pending (${count("pending")})`}
               {tab === "approved" && `Approved (${count("approved")})`}
               {tab === "rejected" && `Rejected (${count("rejected")})`}
               {activeTab === tab && (
-                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-lime-400" />
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-primary" />
               )}
             </button>
           ))}

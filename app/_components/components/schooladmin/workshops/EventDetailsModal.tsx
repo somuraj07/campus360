@@ -107,53 +107,53 @@ export default function EventDetailsModal({
       : AVATAR_URL;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4">
-      <div className="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-5xl bg-[#0F172A] border border-gray-400/30 rounded-2xl p-4 sm:p-5 shadow-2xl relative overflow-hidden animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay p-3 sm:p-4">
+      <div className="w-full max-w-[94vw] sm:max-w-2xl lg:max-w-5xl bg-surface border border-line-strong rounded-2xl p-4 sm:p-5 shadow-pop relative overflow-hidden animate-fadeIn">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 text-white/60 hover:text-white transition cursor-pointer"
+          className="absolute right-5 top-5 text-fg-muted hover:text-fg transition cursor-pointer"
           aria-label="Close"
         >
           <X size={20} />
         </button>
 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3 pr-10">
-          <h3 className="text-lg sm:text-2xl font-semibold text-white">
+          <h3 className="text-lg sm:text-2xl font-semibold text-fg">
             {event?.title || "Event Details"}
           </h3>
-          <span className="inline-flex items-center rounded-full bg-lime-400/20 px-3 py-1 text-xs font-semibold text-lime-300">
+          <span className="inline-flex items-center rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary">
             {statusLabel}
           </span>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-sm text-white/70">
+        <div className="mt-3 flex flex-wrap items-center gap-3 sm:gap-4 text-[11px] sm:text-sm text-fg-muted">
           <div className="flex items-center gap-2">
-            <CalendarDays size={14} className="text-lime-300" />
+            <CalendarDays size={14} className="text-primary" />
             <span>{formatDate(event?.eventDate) || "Date"}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Clock size={14} className="text-lime-300" />
+            <Clock size={14} className="text-primary" />
             <span>{formatTime(event?.eventDate) || "Time"}</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin size={14} className="text-lime-300" />
+            <MapPin size={14} className="text-primary" />
             <span className="truncate">{event?.location || "Location"}</span>
           </div>
         </div>
 
         <div className="mt-4 max-h-[72vh] overflow-y-auto pr-1 sm:pr-2 no-scrollbar">
           {loading ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-6 text-sm text-white/60">
+            <div className="rounded-2xl border border-line bg-elev-1 px-4 py-6 text-sm text-fg-muted">
               Loading event details...
             </div>
           ) : error ? (
-            <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-4 text-sm text-red-300">
+            <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-4 text-sm text-red-700 dark:text-red-300">
               {error}
             </div>
           ) : (
             <>
-              <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+              <div className="rounded-2xl border border-line bg-elev-1 overflow-hidden">
                 {event?.photo ? (
                   <img
                     src={event.photo}
@@ -161,29 +161,29 @@ export default function EventDetailsModal({
                     className="h-48 sm:h-60 w-full object-cover"
                   />
                 ) : (
-                  <div className="h-48 sm:h-60 w-full bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#0b1220]" />
+                  <div className="h-48 sm:h-60 w-full bg-gradient-to-br from-elev-2 via-elev-2 to-elev-2" />
                 )}
               </div>
 
               <div className="mt-5 sm:mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div className="lg:col-span-2 space-y-5">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
-                    <div className="flex items-center gap-2 text-white font-semibold">
-                      <span className="h-6 w-6 rounded-full text-lime-300 flex items-center justify-center">
+                  <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
+                    <div className="flex items-center gap-2 text-fg font-semibold">
+                      <span className="h-6 w-6 rounded-full text-primary flex items-center justify-center">
                         <Info size={18} />
                       </span>
                       About the Event
                     </div>
-                    <p className="mt-3 text-sm text-white/70 leading-relaxed">
+                    <p className="mt-3 text-sm text-fg-muted leading-relaxed">
                       {event?.description || "No description available."}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
-                    <div className="text-sm font-semibold text-white">
+                  <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
+                    <div className="text-sm font-semibold text-fg">
                       Additional Information
                     </div>
-                    <p className="mt-2 text-gray-400 text-sm italic leading-relaxed">
+                    <p className="mt-2 text-fg-muted text-sm italic leading-relaxed">
                       {event?.additionalInfo || "No additional information provided."}
                     </p>
                   </div>

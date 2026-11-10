@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import PageHeader from "../../../common/PageHeader";
+import { Badge } from "../../../common/ui";
 import TimellyLoader from "../../../common/TimellyLoader";
 import { approveStudentLeave, rejectStudentLeave } from "@/lib/api/studentLeaves";
 import {
@@ -161,28 +162,22 @@ export default function StudentLeave() {
   const isEmpty = pendingLeaves.length === 0 && allLeaves.length === 0;
 
   return (
-    <div className="text-white  md:px-0">
+    <div className="text-fg">
       {/* Header Section */}
       <PageHeader
+        eyebrow="Leave"
         title="Student Approvals"
         subtitle="Review and manage leave requests from your class"
         rightSlot={
           <div className="flex flex-wrap items-center gap-3">
-            {/* Pending Status Pill */}
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20">
-              <Clock size={16} className="text-yellow-400" />
-              <span className="text-yellow-400 font-bold text-xs md:text-sm">
-                {pendingLeaves.length} Pending
-              </span>
-            </div>
-
-            {/* Approved Status Pill */}
-            <div className="flex items-center gap-2 px-3 md:px-4 py-2 rounded-full bg-[#b4f03d]/10 border border-[#b4f03d]/20">
-              <CheckCircle2 size={16} className="text-[#b4f03d]" />
-              <span className="text-[#b4f03d] font-bold text-xs md:text-sm">
-                {approvedRecent} Approved
-              </span>
-            </div>
+            <Badge tone="gold">
+              <Clock size={13} />
+              {pendingLeaves.length} Pending
+            </Badge>
+            <Badge tone="green">
+              <CheckCircle2 size={13} />
+              {approvedRecent} Approved
+            </Badge>
           </div>
         }
       />
@@ -191,19 +186,19 @@ export default function StudentLeave() {
             )}
 
       {/* Sub-Nav & Search Bar */}
-      <div className="max-w-6xl mb-6 bg-white/[0.03] border border-white/10 rounded-[1rem] p-4 md:p-5 backdrop-blur-md">
+      <div className="mb-5 rounded-2xl border border-line bg-elev-1 px-5 py-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="inline-flex bg-white/5 p-1 rounded-2xl border border-white/5 w-full md:w-auto">
+          <div className="inline-flex w-full rounded-xl border border-line bg-elev-2 p-1 md:w-auto">
             <button
               onClick={() => setSubTab("pending")}
-              className={`flex-1 md:flex-none px-4 md:px-8 py-2 rounded-xl text-sm transition-all duration-300 ${subTab === "pending" ? "bg-[#b4f03d] text-black" : "text-white/40 hover:text-white"
+              className={`flex-1 md:flex-none px-4 md:px-8 py-2 rounded-xl text-sm transition-all duration-300 ${subTab === "pending" ? "bg-primary text-on-primary" : "text-fg-subtle hover:text-fg"
                 }`}
             >
               Pending
             </button>
             <button
               onClick={() => setSubTab("history")}
-              className={`flex-1 md:flex-none px-4 md:px-8 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${subTab === "history" ? "bg-[#b4f03d] text-black" : "text-white/40 hover:text-white"
+              className={`flex-1 md:flex-none px-4 md:px-8 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${subTab === "history" ? "bg-primary text-on-primary" : "text-fg-subtle hover:text-fg"
                 }`}
             >
               History
@@ -211,7 +206,7 @@ export default function StudentLeave() {
           </div>
           <div className="relative group w-full md:w-auto">
             <Search
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#b4f03d] transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-fg-faint group-focus-within:text-primary transition-colors"
               size={18}
             />
             <input
@@ -219,7 +214,7 @@ export default function StudentLeave() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search student name..."
-              className="bg-white/5 border border-white/10 rounded-2xl py-2.5 pl-12 pr-6 w-full md:w-80 focus:outline-none focus:border-[#b4f03d]/50 transition-all placeholder:text-white/20"
+              className="bg-elev-1 border border-line rounded-2xl py-2.5 pl-12 pr-6 w-full md:w-80 focus:outline-none focus:border-primary/50 transition-all placeholder:text-fg-faint"
             />
           </div>
         </div>
@@ -227,7 +222,7 @@ export default function StudentLeave() {
 
       {/* Request Cards */}
       {loading && isEmpty ? null : filteredList.length === 0 ? (
-        <div className="max-w-6xl mx-auto border border-white/10 rounded-[1rem] p-8 text-center text-white/50">
+        <div className="max-w-6xl mx-auto border border-line rounded-[1rem] p-8 text-center text-fg-subtle">
           {subTab === "pending" ? "No pending student leave requests." : "No leave history."}
         </div>
       ) : (
@@ -242,17 +237,17 @@ export default function StudentLeave() {
             return (
               <div
                 key={leave.id}
-                className="border border-white/10 rounded-[1.2rem] p-4 md:p-6 backdrop-blur-lg flex flex-col md:flex-row items-start gap-4 md:gap-6 relative group hover:border-white/20 transition-all shadow-2xl bg-white/[0.02]"
+                className="border border-line rounded-[1.2rem] p-4 md:p-6 flex flex-col md:flex-row items-start gap-4 md:gap-6 relative group hover:border-line-strong transition-all shadow-card bg-elev-1"
               >
                 {/* Profile Section */}
                 <div className="flex flex-row items-start gap-4 min-w-full md:min-w-[160px]">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl overflow-hidden shadow-card flex-shrink-0">
                     <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col">
-                    <h3 className="font-bold text-[1rem] md:text-[1.1rem] text-white tracking-tight">{name}</h3>
-                    <p className="text-white/40 text-xs font-medium mt-0.5">Class {classLabel}</p>
-                    <span className="inline-block mt-2 px-2 py-0.5 bg-white/5 border border-white/10 rounded-md text-[9px] font-bold tracking-widest text-white/40 uppercase w-fit">
+                    <h3 className="font-bold text-[1rem] md:text-[1.1rem] text-fg tracking-tight">{name}</h3>
+                    <p className="text-fg-subtle text-xs font-medium mt-0.5">Class {classLabel}</p>
+                    <span className="inline-block mt-2 px-2 py-0.5 bg-elev-1 border border-line rounded-md text-[9px] font-bold tracking-widest text-fg-subtle uppercase w-fit">
                       {leaveTypeShort(leave.leaveType)}
                     </span>
                   </div>
@@ -261,20 +256,20 @@ export default function StudentLeave() {
                 {/* Content Section */}
                 <div className="flex-1 flex flex-col gap-3 w-full">
                   <div className="flex items-center">
-                    <div className="inline-flex items-center gap-2 bg-white/5 px-3 md:px-4 py-2 rounded-xl border border-white/5">
-                      <Calendar size={14} className="text-[#b4f03d]" />
-                      <span className="text-[10px] md:text-xs font-medium text-white/80">
+                    <div className="inline-flex items-center gap-2 bg-elev-1 px-3 md:px-4 py-2 rounded-xl border border-line-subtle">
+                      <Calendar size={14} className="text-primary" />
+                      <span className="text-[10px] md:text-xs font-medium text-fg">
                         {formatDateRange(leave.fromDate, leave.toDate)}
                       </span>
-                      <span className="text-white/10 mx-1">|</span>
-                      <span className="text-[10px] md:text-xs font-bold text-white">
+                      <span className="text-fg-faint mx-1">|</span>
+                      <span className="text-[10px] md:text-xs font-bold text-fg">
                         {daysBetween(leave.fromDate, leave.toDate)} Days
                       </span>
                     </div>
                   </div>
 
-                  <div className="bg-black/20 rounded-xl px-4 py-3 border border-white/[0.03] min-h-[20px] flex flex-col justify-center">
-                    <p className="text-white/70 text-[0.85rem] md:text-[0.9rem] leading-relaxed font-normal">
+                  <div className="bg-well rounded-xl px-4 py-3 border border-line-subtle min-h-[20px] flex flex-col justify-center">
+                    <p className="text-fg-muted text-[0.85rem] md:text-[0.9rem] leading-relaxed font-normal">
                       {leave.reason}
                     </p>
                   </div>
@@ -282,11 +277,11 @@ export default function StudentLeave() {
 
                 {/* Action Section */}
                 {subTab === "pending" && leave.status === "PENDING" && (
-                  <div className="flex flex-row md:flex-col gap-3 w-full md:w-auto justify-stretch md:justify-center items-center md:border-l border-white/5 md:pl-6 self-stretch">
+                  <div className="flex flex-row md:flex-col gap-3 w-full md:w-auto justify-stretch md:justify-center items-center md:border-l border-line-subtle md:pl-6 self-stretch">
                     <button
                       onClick={() => handleApprove(leave.id)}
                       disabled={actionId !== null}
-                      className="flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 bg-white/[0.03] hover:bg-[#b4f03d] hover:text-black border border-white/10 text-[#b4f03d] px-4 md:px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 md:min-w-[120px] group/btn disabled:opacity-50"
+                      className="flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 bg-elev-1 hover:bg-primary-hover hover:text-on-primary border border-line text-primary px-4 md:px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 md:min-w-[120px] group/btn disabled:opacity-50"
                     >
                       <Check size={16} strokeWidth={3} />
                       <span>Approve</span>
@@ -294,7 +289,7 @@ export default function StudentLeave() {
                     <button
                       onClick={() => handleReject(leave.id)}
                       disabled={actionId !== null}
-                      className="flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 bg-white/[0.03] hover:bg-red-500/80 hover:text-white border border-white/10 text-red-400 px-4 md:px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 md:min-w-[120px] group/btn disabled:opacity-50"
+                      className="flex-1 md:flex-none flex items-center justify-center md:justify-start gap-3 bg-elev-1 hover:bg-red-500/80 hover:text-fg border border-line text-red-700 dark:text-red-400 px-4 md:px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 md:min-w-[120px] group/btn disabled:opacity-50"
                     >
                       <X size={18} strokeWidth={3} />
                       <span>Reject</span>
@@ -303,11 +298,11 @@ export default function StudentLeave() {
                 )}
 
                 {subTab === "history" && leave.status !== "PENDING" && (
-                  <div className="flex items-center md:border-l border-white/5 md:pl-6 self-stretch">
+                  <div className="flex items-center md:border-l border-line-subtle md:pl-6 self-stretch">
                     <span
                       className={`px-4 py-2 rounded-lg text-xs font-bold border ${leave.status === "APPROVED"
-                          ? "bg-[#b4f03d]/10 text-[#b4f03d] border-[#b4f03d]/20"
-                          : "bg-red-500/10 text-red-400 border-red-500/20"
+                          ? "bg-primary/10 text-primary border-primary/20"
+                          : "bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20"
                         }`}
                     >
                       {leave.status}

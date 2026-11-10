@@ -39,9 +39,9 @@ export default function PettyCashSection() {
   } = usePettyCashState();
 
   return (
-    <section className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-6">
+    <section className="rounded-2xl border border-line bg-elev-1 p-4 sm:p-6">
       <h3 className="text-lg font-semibold">Petty Cash</h3>
-      <p className="mt-1 text-sm text-gray-400">
+      <p className="mt-1 text-sm text-fg-muted">
         Store school expense records with Date, Head of Account, Description, Voucher No, and Cash/Online type.
       </p>
 
@@ -54,43 +54,43 @@ export default function PettyCashSection() {
         onResetForm={resetForm}
       />
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/10 p-3 text-sm">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-well p-3 text-sm">
         <div>
-          <span className="text-white/70">Filtered Total:</span>{" "}
-          <span className="font-semibold text-white">INR {filteredTotalAmount.toLocaleString()}</span>
-          <span className="mx-2 text-white/30">|</span>
-          <span className="text-white/70">All Time:</span>{" "}
-          <span className="font-semibold text-white">INR {totalAmount.toLocaleString()}</span>
+          <span className="text-fg-muted">Filtered Total:</span>{" "}
+          <span className="font-semibold text-fg">INR {filteredTotalAmount.toLocaleString()}</span>
+          <span className="mx-2 text-fg-faint">|</span>
+          <span className="text-fg-muted">All Time:</span>{" "}
+          <span className="font-semibold text-fg">INR {totalAmount.toLocaleString()}</span>
         </div>
         <div className="relative">
           <button
             type="button"
             onClick={() => setExportOpen((prev) => !prev)}
-            className="inline-flex items-center gap-2 rounded-xl border border-lime-500/40 bg-lime-500/10 px-3 py-2 text-sm text-lime-300 hover:bg-lime-500/20"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-55"
           >
             <Download size={16} />
             Export
           </button>
           {exportOpen ? (
-            <div className="absolute right-0 z-20 mt-2 min-w-[160px] overflow-hidden rounded-xl border border-white/15 bg-[#151525] shadow-xl">
+            <div className="absolute right-0 z-20 mt-2 min-w-[160px] overflow-hidden rounded-xl border border-line bg-elev-2 shadow-pop">
               <button
                 type="button"
                 onClick={() => void handleExport("pdf")}
-                className="block w-full px-3 py-2 text-left text-sm text-white/90 hover:bg-white/10"
+                className="block w-full px-3 py-2 text-left text-sm text-fg hover:bg-elev-3"
               >
                 Export as PDF
               </button>
               <button
                 type="button"
                 onClick={() => void handleExport("excel")}
-                className="block w-full px-3 py-2 text-left text-sm text-white/90 hover:bg-white/10"
+                className="block w-full px-3 py-2 text-left text-sm text-fg hover:bg-elev-3"
               >
                 Export as Excel
               </button>
               <button
                 type="button"
                 onClick={() => void handleExport("csv")}
-                className="block w-full px-3 py-2 text-left text-sm text-white/90 hover:bg-white/10"
+                className="block w-full px-3 py-2 text-left text-sm text-fg hover:bg-elev-3"
               >
                 Export as CSV
               </button>
@@ -99,11 +99,11 @@ export default function PettyCashSection() {
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-1 gap-2 rounded-xl border border-white/10 bg-black/10 p-3 md:grid-cols-5">
+      <div className="mt-3 grid grid-cols-1 gap-2 rounded-xl border border-line bg-well p-3 md:grid-cols-5">
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value as FilterType)}
-          className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+          className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
         >
           <option value="ALL">All</option>
           <option value="DAY">Day</option>
@@ -116,7 +116,7 @@ export default function PettyCashSection() {
             type="date"
             value={filterDay}
             onChange={(e) => setFilterDay(e.target.value)}
-            className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+            className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
           />
         ) : null}
         {filterType === "WEEK" ? (
@@ -124,7 +124,7 @@ export default function PettyCashSection() {
             type="week"
             value={filterWeek}
             onChange={(e) => setFilterWeek(e.target.value)}
-            className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+            className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
           />
         ) : null}
         {filterType === "MONTH" ? (
@@ -132,7 +132,7 @@ export default function PettyCashSection() {
             type="month"
             value={filterMonth}
             onChange={(e) => setFilterMonth(e.target.value)}
-            className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+            className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
           />
         ) : null}
         {filterType === "RANGE" ? (
@@ -141,17 +141,17 @@ export default function PettyCashSection() {
               type="date"
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
-              className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
             <input
               type="date"
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
-              className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white"
+              className="h-10 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
           </>
         ) : null}
-        <div className="flex items-center justify-end text-xs text-white/60 md:col-span-2">
+        <div className="flex items-center justify-end text-xs text-fg-muted md:col-span-2">
           Showing {filteredExpenses.length} record(s)
         </div>
       </div>

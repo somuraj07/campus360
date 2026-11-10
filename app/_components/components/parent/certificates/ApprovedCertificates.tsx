@@ -22,57 +22,57 @@ type FormattedCertificate = {
 
 const CertificateCard = ({ data }: { data: FormattedCertificate }) => {
   return (
-    <div className="relative group aspect-[1/1.35] bg-[#F3F4F6] rounded-xl overflow-hidden shadow-xl hover:-translate-y-2 transition duration-300">
+    <div className="relative group aspect-[1/1.35] bg-[#F8F6F0] rounded-xl overflow-hidden shadow-card hover:-translate-y-2 transition duration-300">
 
       {/* Double Border */}
-      <div className="absolute inset-3 border-4 border-[#1E293B] rounded-lg pointer-events-none"></div>
-      <div className="absolute inset-6 border border-[#1E293B] rounded-lg pointer-events-none"></div>
+      <div className="absolute inset-3 border-4 border-slate-300 rounded-lg pointer-events-none"></div>
+      <div className="absolute inset-6 border border-slate-300 rounded-lg pointer-events-none"></div>
 
       {/* Corner Accents */}
-      <div className="absolute top-4 left-4 w-10 h-10 border-t-2 border-l-2 border-[#1E293B]" />
-      <div className="absolute top-4 right-4 w-10 h-10 border-t-2 border-r-2 border-[#1E293B]" />
-      <div className="absolute bottom-4 left-4 w-10 h-10 border-b-2 border-l-2 border-[#1E293B]" />
-      <div className="absolute bottom-4 right-4 w-10 h-10 border-b-2 border-r-2 border-[#1E293B]" />
+      <div className="absolute top-4 left-4 w-10 h-10 border-t-2 border-l-2 border-slate-300" />
+      <div className="absolute top-4 right-4 w-10 h-10 border-t-2 border-r-2 border-slate-300" />
+      <div className="absolute bottom-4 left-4 w-10 h-10 border-b-2 border-l-2 border-slate-300" />
+      <div className="absolute bottom-4 right-4 w-10 h-10 border-b-2 border-r-2 border-slate-300" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-between text-center px-10 py-14">
 
         {/* Top */}
         <div className="flex flex-col items-center gap-4">
-          <div className="p-4 border-2 border-[#1E293B] rounded-full">
-            <BadgeCheck className="w-8 h-8 text-[#1E293B]" />
+          <div className="p-4 border-2 border-slate-300 rounded-full">
+            <BadgeCheck className="w-8 h-8 text-slate-800" />
           </div>
 
-          <h1 className="text-3xl font-serif font-bold tracking-wide text-[#1E293B]">
+          <h1 className="text-3xl font-serif font-bold tracking-wide text-slate-800">
             CERTIFICATE
           </h1>
 
-          <p className="italic text-gray-600 text-sm">
+          <p className="italic text-slate-500 text-sm">
             of Achievement
           </p>
         </div>
 
         {/* Middle */}
         <div className="space-y-4">
-          <p className="text-gray-500 tracking-widest text-xs">
+          <p className="text-slate-600 tracking-widest text-xs">
             THIS IS TO CERTIFY THAT
           </p>
 
-          <h2 className="text-2xl font-bold text-[#1E293B] border-b border-gray-400 pb-2 px-6">
+          <h2 className="text-2xl font-bold text-slate-800 border-b border-slate-400 pb-2 px-6">
             {data.name}
           </h2>
 
-          <p className="text-gray-600 text-sm">
+          <p className="text-slate-500 text-sm">
             has successfully completed requirements for the
           </p>
 
-          <p className="font-semibold text-[#1E293B]">
+          <p className="font-semibold text-slate-800">
             {data.title}
           </p>
         </div>
 
         {/* Bottom */}
-        <div className="w-full text-sm text-gray-600 flex flex-col gap-6">
+        <div className="w-full text-sm text-slate-500 flex flex-col gap-6">
 
           <div className="flex justify-between">
             <p>
@@ -85,14 +85,14 @@ const CertificateCard = ({ data }: { data: FormattedCertificate }) => {
 
           <div className="flex justify-between items-center pt-6">
             <div className="text-center">
-              <div className="border-t border-gray-400 w-28 mx-auto mb-1"></div>
+              <div className="border-t border-slate-400 w-28 mx-auto mb-1"></div>
               <p className="text-xs tracking-wide">SIGNATURE</p>
             </div>
 
             <Stamp className="w-8 h-8 text-red-600" />
 
             <div className="text-center">
-              <div className="border-t border-gray-400 w-28 mx-auto mb-1"></div>
+              <div className="border-t border-slate-400 w-28 mx-auto mb-1"></div>
               <p className="text-xs tracking-wide">CHAIRMAN</p>
             </div>
           </div>
@@ -106,28 +106,28 @@ const CertificateCard = ({ data }: { data: FormattedCertificate }) => {
           download
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute top-2 right-2 p-2 bg-white/20 rounded-full text-black/70 hover:bg-white/30 z-20"
+          className="absolute top-2 right-2 z-20 rounded-full bg-white/90 p-2 text-slate-800 shadow-sm hover:bg-white"
           aria-label="Download certificate"
         >
           <Download size={16} />
         </a>
       )}
 
-      Hover Overlay (kept for larger desktop button)
-      <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+      {/* Hover overlay (larger desktop download button) */}
+      <div className="absolute inset-0 z-20 bg-overlay opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
         {data.url ? (
           <a
             href={data.url}
             download
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-[#A3E635] text-black font-semibold rounded-full shadow-lg hover:scale-105 transition"
+            className="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-semibold rounded-full shadow-card hover:scale-105 transition"
           >
             <Download size={18} />
             Download PDF
           </a>
         ) : (
-          <button disabled className="flex items-center gap-2 px-6 py-3 bg-gray-500 text-white font-semibold rounded-full shadow-lg cursor-not-allowed">
+          <button disabled className="flex items-center gap-2 px-6 py-3 bg-white/90 text-slate-700 font-semibold rounded-full shadow-card cursor-not-allowed">
             <Download size={18} />
             No PDF Available
           </button>
@@ -148,20 +148,20 @@ const ApprovedCertificates = ({ certificates = [] }: { certificates?: Certificat
   }));
 
   return (
-    <div className="bg-[rgba(255,255,255,0.05)] backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg overflow-hidden">
+    <div className="bg-elev-1 border border-line rounded-2xl shadow-card overflow-hidden">
       
       {/* Header */}
-      <div className="px-6 py-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
+      <div className="px-6 py-4 border-b border-line-subtle bg-elev-1 flex justify-between items-center">
         <div>
-          <h2 className="text-lg font-semibold text-white">
+          <h2 className="text-lg font-semibold text-fg">
             Approved Certificates
           </h2>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-fg-muted">
             Official certificates ready
           </p>
         </div>
 
-        <span className="px-3 py-1 bg-[#A3E635]/20 text-[#A3E635] rounded-full text-xs font-bold border border-[#A3E635]/30">
+        <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-bold border border-primary/30">
           {formattedCertificates.length}
         </span>
       </div>
@@ -169,7 +169,7 @@ const ApprovedCertificates = ({ certificates = [] }: { certificates?: Certificat
       {/* Certificates Grid */}
       <div className="p-6">
         {formattedCertificates.length === 0 ? (
-          <div className="text-center text-gray-400 py-8">No certificates issued yet</div>
+          <div className="text-center text-fg-muted py-8">No certificates issued yet</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {formattedCertificates.map((certificate) => (

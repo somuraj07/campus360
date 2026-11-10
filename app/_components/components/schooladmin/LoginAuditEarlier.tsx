@@ -24,7 +24,7 @@ const dayFormat = new Intl.DateTimeFormat("en-IN", {
 });
 
 const inputClass =
-  "w-full bg-black/30 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-lime-400/50 [color-scheme:dark]";
+  "h-10 w-full rounded-lg border border-line-strong bg-surface px-3 text-sm text-fg placeholder:text-fg-faint focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10";
 
 /**
  * School admin: parents / students who logged in before sign-ins were recorded. The only record of
@@ -85,16 +85,16 @@ export default function LoginAuditEarlier() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5">
+      <div className="rounded-2xl border border-line bg-elev-1 p-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-lime-300 bg-lime-400/15">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-primary bg-primary/15">
             <Users className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <p className="text-xs text-gray-400 font-medium">Parents / Students who have logged in</p>
-            <p className="text-xl font-bold text-white">
+            <p className="text-[13px] font-medium text-fg">Parents / Students who have logged in</p>
+            <p className="text-xl font-bold text-fg">
               {data ? data.loggedIn : "–"}
-              <span className="text-xs font-medium text-gray-500 ml-1.5">
+              <span className="text-xs font-medium text-fg-subtle ml-1.5">
                 {data ? `of ${data.activeStudents} active student${data.activeStudents === 1 ? "" : "s"}` : ""}
               </span>
             </p>
@@ -102,12 +102,12 @@ export default function LoginAuditEarlier() {
         </div>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6">
+      <div className="rounded-2xl border border-line bg-elev-1 p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <label className="block lg:col-span-2">
-            <span className="text-xs text-gray-400 font-medium">Search</span>
+            <span className="text-[13px] font-medium text-fg">Search</span>
             <div className="relative mt-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-fg-subtle pointer-events-none" />
               <input
                 type="search"
                 value={search}
@@ -118,7 +118,7 @@ export default function LoginAuditEarlier() {
             </div>
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">Class</span>
+            <span className="text-[13px] font-medium text-fg">Class</span>
             <select value={classId} onChange={(e) => setClassId(e.target.value)} className={`${inputClass} mt-1`}>
               <option value="">All classes</option>
               {data?.classes.map((c) => (
@@ -129,11 +129,11 @@ export default function LoginAuditEarlier() {
             </select>
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">From</span>
+            <span className="text-[13px] font-medium text-fg">From</span>
             <input type="date" value={from} max={to || undefined} onChange={(e) => setFrom(e.target.value)} className={`${inputClass} mt-1`} />
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">To</span>
+            <span className="text-[13px] font-medium text-fg">To</span>
             <input type="date" value={to} min={from || undefined} onChange={(e) => setTo(e.target.value)} className={`${inputClass} mt-1`} />
           </label>
           {(from || to) && (
@@ -144,14 +144,14 @@ export default function LoginAuditEarlier() {
                   setFrom("");
                   setTo("");
                 }}
-                className="px-3 py-2 rounded-xl text-xs font-medium border border-white/10 bg-black/30 text-gray-300 hover:border-white/20"
+                className="px-3 py-2 rounded-xl text-xs font-medium border border-line bg-well text-fg-muted hover:border-line-strong"
               >
                 All dates
               </button>
             </div>
           )}
         </div>
-        <p className="text-xs text-gray-500 mt-3">
+        <p className="text-xs text-fg-subtle mt-3">
           {data?.recordingSince
             ? `Sign-ins are recorded from ${dayFormat.format(new Date(data.recordingSince))}. `
             : "Sign-in recording has just started. "}
@@ -160,41 +160,41 @@ export default function LoginAuditEarlier() {
         </p>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+      <div className="overflow-hidden rounded-2xl border border-line bg-elev-1">
         {error ? (
-          <p className="p-6 text-sm text-red-300/80">{error}</p>
+          <p className="p-6 text-sm text-red-700 dark:text-red-300">{error}</p>
         ) : !data ? (
           <div className="p-6 space-y-3 animate-pulse" aria-label="Loading earlier logins">
-            <div className="h-10 rounded-xl bg-white/5" />
-            <div className="h-10 rounded-xl bg-white/5" />
-            <div className="h-10 rounded-xl bg-white/5" />
+            <div className="h-10 rounded-xl bg-elev-1" />
+            <div className="h-10 rounded-xl bg-elev-1" />
+            <div className="h-10 rounded-xl bg-elev-1" />
           </div>
         ) : data.entries.length === 0 ? (
-          <p className="p-6 text-sm text-gray-500">No parent logins match these filters.</p>
+          <p className="p-6 text-sm text-fg-subtle">No parent logins match these filters.</p>
         ) : (
           <div className={loading ? "opacity-60 transition-opacity" : "transition-opacity"}>
             <table className="hidden md:table w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-gray-400 border-b border-white/10">
-                  <th className="px-5 py-3 font-medium">First logged in</th>
-                  <th className="px-5 py-3 font-medium">Student</th>
-                  <th className="px-5 py-3 font-medium">Details</th>
-                  <th className="px-5 py-3 font-medium">Last recorded sign-in</th>
+              <thead className="border-b border-line bg-well text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
+                <tr className="text-left">
+                  <th className="px-5 py-3">First logged in</th>
+                  <th className="px-5 py-3">Student</th>
+                  <th className="px-5 py-3">Details</th>
+                  <th className="px-5 py-3">Last recorded sign-in</th>
                 </tr>
               </thead>
               <tbody>
                 {data.entries.map((e) => (
-                  <tr key={e.userId} className="border-b border-white/5 last:border-0 align-top">
-                    <td className="px-5 py-3 text-gray-300 whitespace-nowrap">{timeFormat.format(new Date(e.firstLoginAt))}</td>
+                  <tr key={e.userId} className="border-b border-line-subtle last:border-0 align-top">
+                    <td className="px-5 py-3 text-fg-muted whitespace-nowrap">{timeFormat.format(new Date(e.firstLoginAt))}</td>
                     <td className="px-5 py-3">
-                      <p className="font-semibold text-gray-100">{e.name}</p>
-                      {e.fatherName && <p className="text-xs text-gray-500 mt-0.5">Father: {e.fatherName}</p>}
+                      <p className="font-semibold text-fg">{e.name}</p>
+                      {e.fatherName && <p className="text-xs text-fg-subtle mt-0.5">Father: {e.fatherName}</p>}
                     </td>
-                    <td className="px-5 py-3 text-gray-400">
+                    <td className="px-5 py-3 text-fg-muted">
                       {e.className ?? "No class"}
                       {e.admissionNumber ? ` • ${e.admissionNumber}` : ""}
                     </td>
-                    <td className="px-5 py-3 text-gray-400 whitespace-nowrap">
+                    <td className="px-5 py-3 text-fg-muted whitespace-nowrap">
                       {e.lastSignInAt ? timeFormat.format(new Date(e.lastSignInAt)) : "–"}
                     </td>
                   </tr>
@@ -202,17 +202,17 @@ export default function LoginAuditEarlier() {
               </tbody>
             </table>
 
-            <ul className="md:hidden divide-y divide-white/5">
+            <ul className="md:hidden divide-y divide-line-subtle">
               {data.entries.map((e) => (
                 <li key={e.userId} className="p-4 space-y-1">
-                  <p className="font-semibold text-gray-100 text-sm break-words">{e.name}</p>
-                  <p className="text-xs text-gray-400 break-words">
+                  <p className="font-semibold text-fg text-sm break-words">{e.name}</p>
+                  <p className="text-xs text-fg-muted break-words">
                     {e.className ?? "No class"}
                     {e.admissionNumber ? ` • ${e.admissionNumber}` : ""}
                     {e.fatherName ? ` • Father: ${e.fatherName}` : ""}
                   </p>
-                  <p className="text-xs text-gray-500">First logged in {timeFormat.format(new Date(e.firstLoginAt))}</p>
-                  {e.lastSignInAt && <p className="text-xs text-gray-500">Last sign-in {timeFormat.format(new Date(e.lastSignInAt))}</p>}
+                  <p className="text-xs text-fg-subtle">First logged in {timeFormat.format(new Date(e.firstLoginAt))}</p>
+                  {e.lastSignInAt && <p className="text-xs text-fg-subtle">Last sign-in {timeFormat.format(new Date(e.lastSignInAt))}</p>}
                 </li>
               ))}
             </ul>
@@ -220,7 +220,7 @@ export default function LoginAuditEarlier() {
         )}
 
         {data && data.total > 0 && (
-          <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-white/10 text-xs text-gray-400">
+          <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-line text-xs text-fg-muted">
             <span>
               {firstRow}–{lastRow} of {data.total}
             </span>
@@ -229,7 +229,7 @@ export default function LoginAuditEarlier() {
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1 || loading}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-line-strong bg-surface text-fg hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -241,7 +241,7 @@ export default function LoginAuditEarlier() {
                 type="button"
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages || loading}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-line-strong bg-surface text-fg hover:bg-elev-2 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Next page"
               >
                 <ChevronRight className="w-4 h-4" />

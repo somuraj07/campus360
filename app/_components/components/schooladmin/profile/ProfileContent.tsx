@@ -8,15 +8,21 @@ import { ProfileSidebar } from "./components/ProfileSidebar";
 import { AttendanceTrends } from "./components/AttendanceTrends";
 import { Certificates } from "./components/Certificates";
 import { getFeeBreakdownCached } from "@/lib/fees/feeBreakdownClientCache";
-import { FileSpreadsheet } from "lucide-react";
+import { FileSpreadsheet, Users } from "lucide-react";
 import BulkExtraFeeByTimellyModal from "./components/BulkExtraFeeByTimellyModal";
-import PageHeader from "../../common/PageHeader";
+import { SaPage, SaPageHeader, Badge, Alert, LoadingBlock, EmptyState, btnClass } from "../../common/ui";
 import Spinner from "../../common/Spinner";
 import { StudentNameCard } from "./shared";
 import { StudentFeesPaymentModal } from "./shared";
 import { StudentSearchFilterBar } from "./shared";
 import { ProfileStatCards } from "./shared";
 import { useStudentDetailsPageState } from "./shared";
+
+/** Academic year runs June–May, e.g. "2026-2027" from June 2026. */
+function academicYearLabel(now = new Date()): string {
+  const start = now.getMonth() >= 5 ? now.getFullYear() : now.getFullYear() - 1;
+  return `${start}-${start + 1}`;
+}
 
 function StudentDetailsPageContent() {
   const {
@@ -61,25 +67,19 @@ function StudentDetailsPageContent() {
   } = useStudentDetailsPageState();
 
   return (
-    <div className="w-full min-w-0 space-y-4 pb-6 sm:space-y-6 sm:pb-8 md:space-y-8">
-      <PageHeader
-        compact
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Students"
         title="Student Details"
-        subtitle="Search, view records, and manage fees."
-        rightSlot={
-          <div className="w-full sm:w-auto flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-end">
-            <button
-              type="button"
-              onClick={() => setBulkExtraFeeOpen(true)}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-lime-500/40 bg-lime-500/15 px-3 py-2 text-xs sm:text-sm font-semibold text-lime-200 hover:bg-lime-500/25 transition-colors"
-            >
-              <FileSpreadsheet className="h-4 w-4 shrink-0" />
+        description="Search, view records, and manage fees."
+        actions={
+          <>
+            <Badge tone="navy">Academic year {academicYearLabel()}</Badge>
+            <button type="button" onClick={() => setBulkExtraFeeOpen(true)} className={btnClass("secondary")}>
+              <FileSpreadsheet size={16} />
               Bulk extra fees (Excel)
             </button>
-            <div className="bg-[#0F172A]/40 border border-white/10 px-3 py-2 sm:px-4 rounded-xl text-xs sm:text-sm text-gray-200 whitespace-nowrap text-center">
-              {new Date().getFullYear() - 1}-{new Date().getFullYear() + 1}
-            </div>
-          </div>
+          </>
         }
       />
       <BulkExtraFeeByTimellyModal
@@ -107,7 +107,7 @@ function StudentDetailsPageContent() {
       />
 
       {listLoading && students.length === 0 && (
-        <div className="text-center py-8 text-gray-400 text-sm">Loading student list…</div>
+        <LoadingBlock label="Loading student list…" />
       )}
 
       {detail && (
@@ -117,23 +117,23 @@ function StudentDetailsPageContent() {
               <StudentNameCard
                 name={pageStudentName}
                 meta={pageStudentMeta}
-                className="pointer-events-auto border-white/15 bg-[#0a0f1a]/70 shadow-lg backdrop-blur-md"
+                className="pointer-events-auto border-line bg-elev-2/70 shadow-card "
               />
             </div>
           ) : null}
 
           {showStickyStudentName && pageStudentName ? (
-            <div className="xl:hidden sticky top-0 z-30 -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6 py-2 mb-2 bg-[#070b14]/95 backdrop-blur-md border-b border-white/10">
+            <div className="xl:hidden sticky top-0 z-30 -mx-3 sm:-mx-4 md:-mx-6 px-3 sm:px-4 md:px-6 py-2 mb-2 bg-elev-2/95 border-b border-line">
               <StudentNameCard name={pageStudentName} meta={pageStudentMeta} className="bg-transparent border-0 px-0 py-0" />
             </div>
           ) : null}
 
         <div className="min-w-0 w-full">
           {isSelectedInactive ? (
-            <div className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-              <span className="font-semibold text-red-100">Inactive student.</span>{" "}
+            <Alert tone="error">
+              <span className="font-semibold">Inactive student.</span>{" "}
               This student is inactive — you cannot record new fees, mark attendance, or use the student portal until they are set back to Active. Existing payments and transaction history are unchanged.
-            </div>
+            </Alert>
           ) : null}
 
           <div className="flex flex-col xl:flex-row xl:flex-wrap gap-4 sm:gap-6 md:gap-8 min-w-0 w-full items-start">
@@ -266,7 +266,7 @@ function StudentDetailsPageContent() {
       )}
 
       {!detail && selectedId && !listLoading && (
-        <div className="text-center py-12 text-gray-400">Student not found.</div>
+        <div className="text-center py-12 text-fg-muted">Student not found.</div>
       )}
 
       {feesModalOpen && detail && !isSelectedInactive ? (
@@ -289,9 +289,9 @@ function StudentDetailsPageContent() {
       ) : null}
 
       {!detail && !selectedId && !listLoading && students.length === 0 && (
-        <div className="text-center py-12 text-gray-400">No students found.</div>
+        <EmptyState icon={Users} title="No students found" description="Try a different class, section or status." />
       )}
-    </div>
+    </SaPage>
   );
 }
 
@@ -299,7 +299,7 @@ export default function StudentDetailsPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[40vh] items-center justify-center text-white/70">
+        <div className="flex min-h-[40vh] items-center justify-center text-fg-muted">
           <Spinner />
         </div>
       }

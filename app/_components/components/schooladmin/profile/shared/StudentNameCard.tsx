@@ -8,10 +8,9 @@ export function StudentNameCard({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 min-w-0 ${className}`}>
-      <p className="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">Name</p>
-      <p className="text-xs sm:text-sm font-bold text-white truncate">{name}</p>
-      {meta ? <p className="text-[10px] text-gray-400 truncate mt-0.5">{meta}</p> : null}
+    <div className={`rounded-xl border border-line bg-elev-1 px-3 py-2.5 min-w-0 ${className}`}>
+      <p className="truncate text-sm font-semibold text-fg">{name}</p>
+      {meta ? <p className="mt-0.5 truncate text-xs text-fg-subtle">{meta}</p> : null}
     </div>
   );
 }

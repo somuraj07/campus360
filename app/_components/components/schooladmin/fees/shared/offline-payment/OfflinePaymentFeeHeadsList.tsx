@@ -16,25 +16,25 @@ export function OfflinePaymentFeeHeadsList({
   onToggleHead: (head: SelectedHead) => void;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 overflow-hidden">
-      <div className="px-4 py-3 bg-white/5 border-b border-white/10">
+    <div className="rounded-xl border border-line overflow-hidden">
+      <div className="px-4 py-3 bg-elev-1 border-b border-line">
         <p className="text-sm font-semibold">Fee Heads</p>
-        <p className="text-xs text-gray-400">Select which fees to reduce</p>
+        <p className="text-xs text-fg-muted">Select which fees to reduce</p>
       </div>
       <div className="p-4 max-h-44 overflow-y-auto space-y-2">
         {headOptions.length === 0 ? (
-          <p className="text-sm text-gray-500">Select class and student to load fee heads</p>
+          <p className="text-sm text-fg-subtle">Select class and student to load fee heads</p>
         ) : (
           headOptions.map((h) => {
             const checked = selectedHeads.some((x) => getHeadKey(x) === h.key);
             return (
               <label
                 key={h.key}
-                className="flex items-center justify-between gap-3 text-sm px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/5 cursor-pointer"
+                className="flex items-center justify-between gap-3 text-sm px-3 py-2 rounded-lg bg-elev-1 hover:bg-elev-3 border border-line-subtle cursor-pointer"
               >
                 <span className="min-w-0">
-                  <span className="block text-gray-200 truncate">{h.label}</span>
-                  <span className="block text-xs text-gray-500 mt-0.5">
+                  <span className="block text-fg truncate">{h.label}</span>
+                  <span className="block text-xs text-fg-subtle mt-0.5">
                     Due: ₹{(dueByKey.get(h.key) ?? 0).toFixed(0).toLocaleString()}
                   </span>
                 </span>
@@ -42,7 +42,7 @@ export function OfflinePaymentFeeHeadsList({
                   type="checkbox"
                   checked={checked}
                   onChange={() => onToggleHead(h.head)}
-                  className="rounded border-white/30 w-4 h-4 accent-lime-500"
+                  className="rounded border-line-strong w-4 h-4 accent-primary"
                   disabled={!studentId}
                 />
               </label>

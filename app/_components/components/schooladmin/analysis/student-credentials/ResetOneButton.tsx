@@ -22,7 +22,7 @@ export function ResetOneButton({
       type="button"
       onClick={() => onResetOne(row)}
       disabled={working || busy || resettingId !== null}
-      className="mt-1 block rounded-md border border-amber-400/40 px-2 py-0.5 text-[11px] font-medium text-amber-200 hover:bg-amber-400/10 disabled:cursor-not-allowed disabled:opacity-50"
+      className="mt-1 block rounded-md border border-amber-400/40 px-2 py-0.5 text-[11px] font-medium text-amber-800 dark:text-amber-200 hover:bg-amber-400/10 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {working ? "Resetting…" : "Reset this student"}
     </button>

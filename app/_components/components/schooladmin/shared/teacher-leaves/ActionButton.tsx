@@ -16,14 +16,14 @@ export function ActionButton({
   disabled?: boolean;
 }) {
   const colorMap: Record<string, string> = {
-    green: "border-lime-400 text-black bg-lime-400",
+    green: "border-primary text-on-primary bg-primary",
     yellow: "border-yellow-400 text-black bg-yellow-400",
     red: "border-red-500 text-white bg-red-500",
   };
   const mobileColorMap: Record<string, string> = {
-    green: "border-lime-400  text-lime-400 bg-lime-400/10",
-    yellow: "border-yellow-400 text-yellow-400 bg-yellow-400/10",
-    red: "border-red-500 text-red-500 bg-red-500/10",
+    green: "border-primary  text-primary bg-primary/10",
+    yellow: "border-yellow-400 text-yellow-700 dark:text-yellow-400 bg-yellow-400/10",
+    red: "border-red-500 text-red-600 dark:text-red-500 bg-red-500/10",
   };
 
   // ICON-ONLY (desktop table)

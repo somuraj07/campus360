@@ -121,7 +121,7 @@ async function loadSingleLogo(trimmed: string, origin: string): Promise<PdfLogoA
   return fetchRemoteLogo(mediaUrl, headers);
 }
 
-/** School logo for PDF — uses school logoUrl (WebP/JPEG/PNG via sharp). No Timelly fallback here. */
+/** School logo for PDF — uses school logoUrl (WebP/JPEG/PNG via sharp). No RS Solutions fallback here. */
 export async function loadLogoForServerPdf(
   logoUrl: string | null | undefined,
   origin: string,
@@ -135,10 +135,9 @@ export async function loadLogoForServerPdf(
   return null;
 }
 
-/** Timelly fallback only when the school has no logo configured. */
+/** RS Solutions fallback only when the school has no logo configured. */
 export async function loadTimellyFallbackLogo(): Promise<PdfLogoAsset | null> {
   return (
-    (await readLocalLogo("whitetimellylogo.png")) ??
     (await readLocalLogo("icon.png"))
   );
 }

@@ -59,11 +59,11 @@ export function ExamTypesManager({
   editing: SubjectEditingProps;
 }) {
   return (
-    <div className="somu border-none bg-white/5! rounded-2xl sm:rounded-3xl p-4 sm:p-5 mb-4 sm:mb-6">
+    <div className="somu border-none bg-elev-1! rounded-2xl sm:rounded-3xl p-4 sm:p-5 mb-4 sm:mb-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h3 className="text-base sm:text-lg font-bold">Exam Types</h3>
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-fg-subtle">
             Exam types have no max marks. Each subject under an exam type has max marks, and parts such as Written and Viva.
           </p>
         </div>
@@ -73,13 +73,13 @@ export function ExamTypesManager({
             value={newExamType}
             onChange={(e) => onNewExamTypeChange(e.target.value.toUpperCase())}
             placeholder="e.g. HALF YEARLY"
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-black/40 border border-white/10 text-white text-sm outline-none focus:border-[#B4F42A]/50 uppercase"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-well border border-line text-fg text-sm outline-none focus:border-primary/50 uppercase"
           />
           <button
             type="button"
             onClick={onAddExamType}
             disabled={examTypeSaving}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-[#B4F42A] text-black text-sm font-bold inline-flex items-center justify-center gap-2 disabled:opacity-60"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-primary text-on-primary text-sm font-bold inline-flex items-center justify-center gap-2 disabled:opacity-60"
           >
             <Plus size={16} />
             {examTypeSaving ? "Saving..." : "Add"}
@@ -88,14 +88,14 @@ export function ExamTypesManager({
       </div>
 
       {examTypeError && (
-        <p className="mt-2 text-xs font-bold text-red-400">{examTypeError}</p>
+        <p className="mt-2 text-xs font-bold text-red-700 dark:text-red-400">{examTypeError}</p>
       )}
 
       <div className="mt-4 flex flex-col gap-3">
         {examTypesLoading ? (
-          <span className="text-xs text-white/50">Loading exam types...</span>
+          <span className="text-xs text-fg-subtle">Loading exam types...</span>
         ) : examTypes.length === 0 ? (
-          <span className="text-xs text-white/50">
+          <span className="text-xs text-fg-subtle">
             {examTypeError ? "Exam types could not be loaded." : "No exam types found."}
           </span>
         ) : (
@@ -105,24 +105,24 @@ export function ExamTypesManager({
             return (
               <div
                 key={t.name}
-                className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden"
+                className="rounded-2xl bg-elev-1 border border-line overflow-hidden"
               >
-                <div className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-white/80">
+                <div className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-fg">
                   <button
                     type="button"
-                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-white/10"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-elev-3"
                     aria-expanded={examOpen}
                     aria-label={examOpen ? `Hide subjects for ${t.name}` : `Show subjects for ${t.name}`}
                     onClick={() => onOpenExamTypeChange((current) => (current === t.name ? null : t.name))}
                   >
                     <ChevronDown
                       size={16}
-                      className={`text-white/70 transition-transform ${examOpen ? "rotate-180" : ""}`}
+                      className={`text-fg-muted transition-transform ${examOpen ? "rotate-180" : ""}`}
                     />
                   </button>
                   <span className="min-w-0 flex-1 text-left">
                     <span className="block truncate">{t.name}</span>
-                    <span className="block truncate text-[10px] font-medium text-white/40">
+                    <span className="block truncate text-[10px] font-medium text-fg-subtle">
                       {configuredCount > 0
                         ? `${configuredCount} subjects set`
                         : "Tap to set subject marks"}
@@ -135,7 +135,7 @@ export function ExamTypesManager({
                     className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-red-500/20 disabled:opacity-50"
                     title="Delete exam type"
                   >
-                    <Trash2 className="w-3.5 h-3.5 text-red-400" />
+                    <Trash2 className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
                   </button>
                 </div>
                 {examOpen && (
@@ -161,10 +161,10 @@ export function ExamTypesManager({
         )}
       </div>
       {sectionError && (
-        <p className="mt-2 text-xs font-bold text-red-400">{sectionError}</p>
+        <p className="mt-2 text-xs font-bold text-red-700 dark:text-red-400">{sectionError}</p>
       )}
       {subjectConfigMessage && (
-        <p className="mt-2 text-xs font-bold text-white/70">{subjectConfigMessage}</p>
+        <p className="mt-2 text-xs font-bold text-fg-muted">{subjectConfigMessage}</p>
       )}
     </div>
   );

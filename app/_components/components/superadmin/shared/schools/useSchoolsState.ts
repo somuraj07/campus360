@@ -4,7 +4,8 @@ import { useDebounce } from "@/app/_components/hooks/useDebounce";
 import type { SchoolRow } from "../../Schools";
 import { deleteSchool, fetchSuperadminSchools } from "@/lib/api/superadminSchools";
 
-const PAGE_SIZE = 10;
+export const SCHOOLS_PAGE_SIZE = 10;
+const PAGE_SIZE = SCHOOLS_PAGE_SIZE;
 
 export function useSchoolsState() {
   const router = useRouter();

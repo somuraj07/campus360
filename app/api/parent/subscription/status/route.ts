@@ -49,7 +49,7 @@ export async function GET() {
           expiresAt: null,
           invoiceUrl: null,
           deactivated: true,
-          message: "Your school's Timelly access is deactivated. Please contact your school or Timelly support.",
+          message: "Your school's RS Solutions access is deactivated. Please contact your school or RS Solutions support.",
         },
         { status: 200 }
       );

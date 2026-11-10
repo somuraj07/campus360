@@ -122,8 +122,8 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
           transition duration-300 cursor-pointer
           ${
             isDragging
-              ? "bg-lime-400/10 border-lime-400"
-              : "bg-white/5 border-white/20 hover:border-white/40"
+              ? "bg-primary/10 border-primary"
+              : "bg-elev-1 border-line-strong hover:border-line-strong"
           }
         `}
       >
@@ -140,15 +140,15 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
             transition={{ duration: 2, repeat: Infinity }}
             className="flex justify-center mb-4"
           >
-            <div className="w-16 h-16 rounded-full bg-lime-400/20 flex items-center justify-center">
-              <Upload className="text-lime-400" size={32} />
+            <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+              <Upload className="text-primary" size={32} />
             </div>
           </motion.div>
 
-          <h3 className="text-lg font-semibold text-white mb-2">
+          <h3 className="text-lg font-semibold text-fg mb-2">
             {file ? file.name : "Drag and drop your file"}
           </h3>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-fg-muted text-sm mb-4">
             {file
               ? "File selected. Ready to import."
               : "or click to browse. Supports CSV and Excel files (max 5MB)"}
@@ -160,7 +160,7 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
                 e.stopPropagation();
                 setFile(null);
               }}
-              className="text-lime-400 hover:text-lime-300 text-sm font-medium transition"
+              className="text-primary hover:text-primary text-sm font-medium transition"
             >
               Clear file
             </button>
@@ -177,8 +177,8 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
             exit={{ opacity: 0, y: -10 }}
             className="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-500/20 border border-red-500/30"
           >
-            <AlertCircle size={18} className="text-red-400 flex-shrink-0" />
-            <span className="text-sm text-red-300">{error}</span>
+            <AlertCircle size={18} className="text-red-700 dark:text-red-400 flex-shrink-0" />
+            <span className="text-sm text-red-700 dark:text-red-300">{error}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -190,28 +190,28 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="px-4 py-4 rounded-lg bg-white/5 border border-white/10"
+            className="px-4 py-4 rounded-lg bg-elev-1 border border-line"
           >
             <div className="flex items-center gap-3 mb-3">
-              <CheckCircle className="text-lime-400" size={20} />
-              <h4 className="font-semibold text-white">Import Summary</h4>
+              <CheckCircle className="text-primary" size={20} />
+              <h4 className="font-semibold text-fg">Import Summary</h4>
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="bg-lime-400/10 px-3 py-2 rounded-lg">
-                <p className="text-white/60">Successful</p>
-                <p className="text-lg font-bold text-lime-400">
+              <div className="bg-primary/10 px-3 py-2 rounded-lg">
+                <p className="text-fg-muted">Successful</p>
+                <p className="text-lg font-bold text-primary">
                   {result.successful}
                 </p>
               </div>
               <div className="bg-red-400/10 px-3 py-2 rounded-lg">
-                <p className="text-white/60">Failed</p>
-                <p className="text-lg font-bold text-red-400">{result.failed}</p>
+                <p className="text-fg-muted">Failed</p>
+                <p className="text-lg font-bold text-red-700 dark:text-red-400">{result.failed}</p>
               </div>
             </div>
             {result.errors && result.errors.length > 0 && (
               <div className="mt-3 text-sm">
-                <p className="text-white/60 mb-2">Errors:</p>
-                <ul className="space-y-1 text-red-300 text-xs">
+                <p className="text-fg-muted mb-2">Errors:</p>
+                <ul className="space-y-1 text-red-700 dark:text-red-300 text-xs">
                   {result.errors.slice(0, 5).map((err, idx) => (
                     <li key={idx}>• {err}</li>
                   ))}
@@ -230,8 +230,8 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
         <motion.button
           onClick={handleDownloadTemplate}
           whileHover={{ x: -4 }}
-          className="flex-1 px-4 py-3 rounded-xl border border-white/20 bg-white/5
-            text-white font-semibold hover:bg-white/10 transition
+          className="flex-1 px-4 py-3 rounded-xl border border-line-strong bg-elev-1
+            text-fg font-semibold hover:bg-elev-3 transition
             flex items-center justify-center gap-2"
         >
           <Download size={18} />
@@ -241,8 +241,8 @@ Admin User,admin@school.com,SCHOOLADMIN,Principal,Password123`;
           onClick={handleUpload}
           disabled={!file || uploading || !!result}
           whileHover={{ x: 4 }}
-          className="flex-1 px-4 py-3 rounded-xl bg-lime-400 text-black
-            font-semibold hover:bg-lime-300 disabled:opacity-50 disabled:cursor-not-allowed
+          className="flex-1 px-4 py-3 rounded-xl bg-primary text-on-primary
+            font-semibold hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed
             transition flex items-center justify-center gap-2"
         >
           {uploading ? (

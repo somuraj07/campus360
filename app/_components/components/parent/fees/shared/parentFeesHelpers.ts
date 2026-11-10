@@ -34,8 +34,8 @@ export function formatRupee(n: number) {
 }
 
 export function headStatus(due: number, total: number) {
-  if (total <= 0) return { label: "N/A", className: "bg-white/10 text-gray-400" };
-  if (due <= 0) return { label: "Paid", className: "bg-emerald-500/20 text-emerald-400" };
-  if (due < total) return { label: "Partial", className: "bg-amber-500/20 text-amber-400" };
-  return { label: "Due", className: "bg-red-500/20 text-red-400" };
+  if (total <= 0) return { label: "N/A", className: "bg-elev-2 text-fg-muted" };
+  if (due <= 0) return { label: "Paid", className: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-400" };
+  if (due < total) return { label: "Partial", className: "bg-amber-500/20 text-amber-700 dark:text-amber-400" };
+  return { label: "Due", className: "bg-red-500/20 text-red-700 dark:text-red-400" };
 }

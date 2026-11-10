@@ -171,14 +171,14 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
     };
 
     return (
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-4 sm:p-6">
+        <div className="bg-elev-1 border border-line rounded-[2rem] p-4 sm:p-6">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <CreditCard className="w-5 h-5 text-blue-400 flex-shrink-0" /> Offline Payments
+                <h3 className="text-lg font-semibold text-fg flex items-center gap-2">
+                    <CreditCard className="w-5 h-5 text-blue-700 dark:text-blue-400 flex-shrink-0" /> Offline Payments
                 </h3>
                 <button
                     onClick={() => setShowModal(!showModal)}
-                    className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-400 hover:bg-blue-500/30 text-sm font-semibold flex items-center gap-2 transition-colors"
+                    className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-700 dark:text-blue-400 hover:bg-blue-500/30 text-sm font-semibold flex items-center gap-2 transition-colors"
                 >
                     <Plus size={16} className={`transform transition-transform ${showModal ? 'rotate-45' : ''}`} />
                     {showModal ? 'Cancel' : 'Record Payment'}
@@ -186,27 +186,27 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
             </div>
 
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 text-sm">
-                <p className="text-blue-300">
+                <p className="text-blue-700 dark:text-blue-300">
                     <span className="font-semibold">Remaining Fee:</span>{" "}
                     <span className="text-lg font-bold">₹{currentRemainingFee.toLocaleString("en-IN")}</span>
                 </p>
-                <p className="text-blue-200/70 text-xs mt-2">
+                <p className="text-blue-800 dark:text-blue-200 text-xs mt-2">
                     Record cash, cheque, bank transfer, or demand draft payments manually.
                 </p>
             </div>
 
             {showModal && (
-                <div className="mt-6 bg-black/20 border border-white/10 rounded-2xl p-4 sm:p-6 space-y-4 animation-fadeIn">
-                    <h4 className="text-white font-semibold text-lg">Record Offline Payment</h4>
-                    <p className="text-sm text-gray-400">Student: {studentName}</p>
+                <div className="mt-6 bg-well border border-line rounded-2xl p-4 sm:p-6 space-y-4 animation-fadeIn">
+                    <h4 className="text-fg font-semibold text-lg">Record Offline Payment</h4>
+                    <p className="text-sm text-fg-muted">Student: {studentName}</p>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-xs text-gray-400 mb-2">Payment Method</label>
+                            <label className="block text-xs text-fg-muted mb-2">Payment Method</label>
                             <select
                                 value={formData.method}
                                 onChange={(e) => setFormData({ ...formData, method: e.target.value as OfflinePaymentMethod })}
-                                className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
+                                className="w-full bg-well border border-line rounded-xl px-4 py-2.5 text-fg text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
                             >
                                 <option value="CASH">Cash</option>
                                 <option value="CHEQUE">Cheque</option>
@@ -216,27 +216,27 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-400 mb-2">Amount (₹)</label>
+                            <label className="block text-xs text-fg-muted mb-2">Amount (₹)</label>
                             <input
                                 type="number"
                                 step="0.01"
                                 value={formData.amount}
                                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                                 placeholder="0"
-                                className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
+                                className="w-full bg-well border border-line rounded-xl px-4 py-2.5 text-fg text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-xs text-gray-400 mb-2">Select Fee Heads</label>
-                            <div className="rounded-xl border border-white/10 bg-black/20 max-h-48 overflow-y-auto divide-y divide-white/5">
+                            <label className="block text-xs text-fg-muted mb-2">Select Fee Heads</label>
+                            <div className="rounded-xl border border-line bg-well max-h-48 overflow-y-auto divide-y divide-line-subtle">
                                 {breakdownLoading ? (
-                                    <p className="px-4 py-3 text-xs text-gray-400">Loading heads...</p>
+                                    <p className="px-4 py-3 text-xs text-fg-muted">Loading heads...</p>
                                 ) : breakdownError ? (
-                                    <p className="px-4 py-3 text-xs text-red-400">{breakdownError}</p>
+                                    <p className="px-4 py-3 text-xs text-red-700 dark:text-red-400">{breakdownError}</p>
                                 ) : headOptions.length === 0 ? (
-                                    <p className="px-4 py-3 text-xs text-gray-500">No fee heads configured.</p>
+                                    <p className="px-4 py-3 text-xs text-fg-subtle">No fee heads configured.</p>
                                 ) : (
                                     headOptions.map((opt) => {
                                         const checked = selectedHeads.some((h) => {
@@ -251,17 +251,17 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
                                         return (
                                             <label
                                                 key={opt.key}
-                                                className="flex items-center justify-between gap-3 px-4 py-2 text-xs sm:text-sm text-gray-200 cursor-pointer hover:bg-white/5 transition-colors"
+                                                className="flex items-center justify-between gap-3 px-4 py-2 text-xs sm:text-sm text-fg cursor-pointer hover:bg-elev-2 transition-colors"
                                             >
                                                 <span className="flex-1 min-w-0">
                                                     <span className="block truncate">{opt.label}</span>
-                                                    <span className="block text-[10px] text-gray-400">
+                                                    <span className="block text-[10px] text-fg-muted">
                                                         Due before: ₹{opt.dueBefore.toFixed(0).toLocaleString()}
                                                     </span>
                                                 </span>
                                                 <input
                                                     type="checkbox"
-                                                    className="w-4 h-4 rounded border-white/40 accent-blue-500"
+                                                    className="w-4 h-4 rounded border-line-strong accent-blue-500"
                                                     checked={checked}
                                                     onChange={() => toggleHead(opt.head)}
                                                 />
@@ -274,13 +274,13 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
 
                         {formData.method === "CHEQUE" && (
                             <div>
-                                <label className="block text-xs text-gray-400 mb-2">Cheque Number</label>
+                                <label className="block text-xs text-fg-muted mb-2">Cheque Number</label>
                                 <input
                                     type="text"
                                     value={formData.referenceNumber}
                                     onChange={(e) => setFormData({ ...formData, referenceNumber: e.target.value })}
                                     placeholder="e.g., 123456"
-                                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
+                                    className="w-full bg-well border border-line rounded-xl px-4 py-2.5 text-fg text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
                                     required
                                 />
                             </div>
@@ -288,34 +288,34 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
 
                         {formData.method === "BANK_TRANSFER" && (
                             <div>
-                                <label className="block text-xs text-gray-400 mb-2">Bank Name</label>
+                                <label className="block text-xs text-fg-muted mb-2">Bank Name</label>
                                 <input
                                     type="text"
                                     value={formData.bankName}
                                     onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
                                     placeholder="e.g., HDFC Bank"
-                                    className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
+                                    className="w-full bg-well border border-line rounded-xl px-4 py-2.5 text-fg text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
                                     required
                                 />
                             </div>
                         )}
 
                         <div>
-                            <label className="block text-xs text-gray-400 mb-2">Description (optional)</label>
+                            <label className="block text-xs text-fg-muted mb-2">Description (optional)</label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 placeholder="e.g., Lab fee payment"
                                 rows={2}
-                                className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-2.5 text-gray-200 text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
+                                className="w-full bg-well border border-line rounded-xl px-4 py-2.5 text-fg text-sm outline-none focus:ring-1 focus:ring-blue-400/50"
                             />
                         </div>
 
                         {message && (
                             <div
                                 className={`rounded-xl border p-3 text-sm ${messageTone === "success"
-                                        ? "bg-green-400/10 border-green-400/20 text-green-300"
-                                        : "bg-red-500/10 border-red-500/20 text-red-300"
+                                        ? "bg-green-400/10 border-green-400/20 text-green-700 dark:text-green-300"
+                                        : "bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-300"
                                     }`}
                             >
                                 {messageTone === "success" && <Check size={16} className="inline mr-2" />}
@@ -327,7 +327,7 @@ export const OfflinePayments = ({ studentId, studentName, remainingFee, onPaymen
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-400 text-sm font-semibold hover:bg-blue-500/30 disabled:opacity-60"
+                                className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-700 dark:text-blue-400 text-sm font-semibold hover:bg-blue-500/30 disabled:opacity-60"
                             >
                                 {loading ? "Recording..." : "Record Payment"}
                             </button>

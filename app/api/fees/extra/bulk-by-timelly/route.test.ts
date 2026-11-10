@@ -141,13 +141,13 @@ describe("POST /api/fees/extra/bulk-by-timelly", () => {
     expect(json.failed).toBe(3);
     expect(json.created).toBe(0);
     expect(json.errors.map((e: { message: string }) => e.message)).toEqual([
-      "Timelly ID is empty",
+      "RS Solutions ID is empty",
       "Fee name is empty",
       "Amount must be a positive number",
     ]);
   });
 
-  it("reports an error when no student matches the Timelly ID", async () => {
+  it("reports an error when no student matches the RS Solutions ID", async () => {
     mockGetServerSession.mockResolvedValue(adminSession);
     mockResolveFeesSchoolId.mockResolvedValue("s1");
     const res = await POST(
@@ -158,7 +158,7 @@ describe("POST /api/fees/extra/bulk-by-timelly", () => {
     expect(json.errors[0].message).toMatch(/no student found/i);
   });
 
-  it("reports an error when the Timelly ID is ambiguous across multiple students", async () => {
+  it("reports an error when the RS Solutions ID is ambiguous across multiple students", async () => {
     mockGetServerSession.mockResolvedValue(adminSession);
     mockResolveFeesSchoolId.mockResolvedValue("s1");
     mockStudentFindMany.mockResolvedValue([

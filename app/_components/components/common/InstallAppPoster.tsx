@@ -22,7 +22,7 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
           overflow: "hidden",
           fontFamily: "Inter, system-ui, sans-serif",
           color: "#ffffff",
-          background: "linear-gradient(165deg, #28143F 0%, #1a0d28 35%, #2d1545 65%, #4a2038 100%)",
+          background: "linear-gradient(165deg, #1E3A5F 0%, #172B45 45%, #12233A 100%)",
         }}
       >
         {/* Decorative blobs */}
@@ -34,8 +34,8 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
             width: 280,
             height: 280,
             borderRadius: "50%",
-            background: "#5606ff",
-            opacity: 0.35,
+            background: "#38BDF8",
+            opacity: 0.18,
             filter: "blur(60px)",
           }}
         />
@@ -47,7 +47,7 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
             width: 260,
             height: 260,
             borderRadius: "50%",
-            background: "#fe8989",
+            background: "#D4AF37",
             opacity: 0.28,
             filter: "blur(55px)",
           }}
@@ -60,8 +60,8 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
             width: 320,
             height: 320,
             borderRadius: "50%",
-            background: "#5606ff",
-            opacity: 0.22,
+            background: "#38BDF8",
+            opacity: 0.12,
             filter: "blur(70px)",
           }}
         />
@@ -99,14 +99,14 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
               style={{
                 padding: 6,
                 borderRadius: 24,
-                background: "linear-gradient(135deg, rgba(163,230,53,0.4) 0%, rgba(163,230,53,0.1) 100%)",
-                border: "2px solid rgba(163,230,53,0.45)",
+                background: "linear-gradient(135deg, rgba(212, 175, 55, 0.4) 0%, rgba(212, 175, 55, 0.1) 100%)",
+                border: "2px solid rgba(212, 175, 55, 0.45)",
                 boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
               }}
             >
               <img
                 src="/pwa-512.png"
-                alt="Timelly"
+                alt="RS Solutions"
                 width={88}
                 height={88}
                 style={{
@@ -128,7 +128,7 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
                 textAlign: "center",
               }}
             >
-              Timelly
+              RS Solutions
             </h1>
             <p
               style={{
@@ -152,13 +152,13 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
               gap: 8,
               padding: "10px 24px",
               borderRadius: 999,
-              background: "#a3e635",
-              color: "#1a0d28",
+              background: "#D4AF37",
+              color: "#172B45",
               fontSize: 14,
               fontWeight: 800,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
-              boxShadow: "0 4px 20px rgba(163,230,53,0.45)",
+              boxShadow: "0 4px 20px rgba(212, 175, 55, 0.45)",
               marginBottom: 28,
             }}
           >
@@ -265,7 +265,7 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
                   style={{
                     fontSize: 11,
                     fontWeight: 700,
-                    color: "#a3e635",
+                    color: "#D4AF37",
                     marginBottom: 4,
                   }}
                 >
@@ -296,9 +296,9 @@ const InstallAppPoster = forwardRef<HTMLDivElement, InstallAppPosterProps>(
                   borderRadius: 999,
                   fontSize: 12,
                   fontWeight: 600,
-                  background: "rgba(163,230,53,0.15)",
-                  border: "1px solid rgba(163,230,53,0.35)",
-                  color: "#d9f99d",
+                  background: "rgba(212, 175, 55, 0.15)",
+                  border: "1px solid rgba(212, 175, 55, 0.35)",
+                  color: "#F5E6B3",
                 }}
               >
                 {role}

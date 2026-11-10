@@ -22,17 +22,17 @@ const CertificatesCard = () => {
   return (
     <div
       className="p-4 lg:p-6 
-                 bg-white/5 
-                 backdrop-blur-xl 
-                 border border-white/10 
+                 bg-elev-1 
+                 
+                 border border-line 
                  rounded-2xl 
-                 shadow-[0px_10px_20px_rgba(0,0,0,0.25)]"
+                 shadow-card"
     >
       <div className="flex flex-col lg:flex-row items-start gap-4">
 
         {/* Left Main Icon */}
-        <div className="p-3 bg-[#A3E635]/20 rounded-full border border-[#A3E635]/30 flex-shrink-0">
-          <AlertCircle className="w-5 h-5 lg:w-6 lg:h-6 text-[#A3E635]" />
+        <div className="p-3 bg-primary/20 rounded-full border border-primary/30 flex-shrink-0">
+          <AlertCircle className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
         </div>
 
         {/* Right Content */}
@@ -40,15 +40,15 @@ const CertificatesCard = () => {
 
           {/* Heading */}
           <div>
-            <h3 className="font-bold text-white text-sm lg:text-lg">
+            <h3 className="font-bold text-fg text-sm lg:text-lg">
               Important Information
             </h3>
             <span className="inline-block mt-1 px-3 py-1 
-                             bg-[#A3E635]/20 
-                             text-[#A3E635] 
+                             bg-primary/20 
+                             text-primary 
                              rounded-full 
                              text-xs font-semibold 
-                             border border-[#A3E635]/30">
+                             border border-primary/30">
               Read Carefully
             </span>
           </div>
@@ -61,22 +61,22 @@ const CertificatesCard = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white/5 
-                             backdrop-blur-md 
-                             border border-[#A3E635]/30 
+                  className="bg-elev-1 
+                             
+                             border border-primary/30 
                              rounded-2xl 
                              p-3 lg:p-4 
                              flex items-start gap-3"
                 >
-                  <div className="p-2 bg-white/10 rounded-full">
-                    <Icon className="w-4 h-4 text-[#A3E635]" />
+                  <div className="p-2 bg-elev-2 rounded-full">
+                    <Icon className="w-4 h-4 text-primary" />
                   </div>
 
                   <div>
-                    <div className="font-semibold text-gray-200 text-xs lg:text-sm">
+                    <div className="font-semibold text-fg text-xs lg:text-sm">
                       {item.title}
                     </div>
-                    <div className="text-xs text-gray-400">
+                    <div className="text-xs text-fg-muted">
                       {item.description}
                     </div>
                   </div>

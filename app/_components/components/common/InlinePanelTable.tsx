@@ -36,24 +36,24 @@ export default function InlinePanelTable<T>({
   };
 
   return (
-    <table className="w-full text-sm border-separate border-spacing-0">
-      <thead className="bg-white/5 border-b border-white/10">
+    <table className="w-full border-separate border-spacing-0 text-sm">
+      <thead className="bg-well">
         <tr>
           {columns.map((col, i) => (
             <th
               key={i}
               scope="col"
-              className={`px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider ${ALIGN_CLASS[col.align ?? "left"]}`}
+              className={`border-b border-line px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-fg-subtle ${ALIGN_CLASS[col.align ?? "left"]}`}
             >
               {col.header}
             </th>
           ))}
         </tr>
       </thead>
-      <tbody className="divide-y divide-white/10">
+      <tbody>
         {data.length === 0 && (
           <tr>
-            <td colSpan={columns.length} className="px-6 py-8 text-center text-white/60">
+            <td colSpan={columns.length} className="px-5 py-14 text-center text-sm text-fg-subtle">
               {emptyText}
             </td>
           </tr>
@@ -63,11 +63,11 @@ export default function InlinePanelTable<T>({
           const showPanel = renderPanel && activeRowId != null && key === activeRowId;
           return (
             <Fragment key={key}>
-              <tr className="hover:bg-white/5 transition-colors">
+              <tr className={`transition-colors ${showPanel ? "bg-primary/[0.04]" : "hover:bg-elev-2"}`}>
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className={`px-6 py-4 whitespace-nowrap ${ALIGN_CLASS[col.align ?? "left"]}`}
+                    className={`whitespace-nowrap border-b border-line-subtle px-5 py-3.5 ${ALIGN_CLASS[col.align ?? "left"]}`}
                   >
                     {col.render ? col.render(row, rowIndex) : null}
                   </td>
@@ -76,7 +76,7 @@ export default function InlinePanelTable<T>({
 
               {showPanel && (
                 <tr key={`${key}-${panelKey ?? "panel"}`}>
-                  <td colSpan={columns.length} className="p-0">
+                  <td colSpan={columns.length} className="border-b border-line bg-well p-0">
                     {renderPanel?.(row)}
                   </td>
                 </tr>

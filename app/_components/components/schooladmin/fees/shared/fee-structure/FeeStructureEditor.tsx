@@ -29,7 +29,7 @@ export function FeeStructureEditor({
   onDelete: () => void;
 }) {
   return (
-    <div className="border-t border-white/10 pt-4 space-y-4">
+    <div className="border-t border-line pt-4 space-y-4">
       <SelectInput
         label="Class"
         value={structureClassId}
@@ -53,7 +53,7 @@ export function FeeStructureEditor({
                 setComponents(n);
               }}
               placeholder="Component name"
-              className="flex-1 rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm"
+              className="h-10 flex-1 rounded-lg border px-3 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
             <input
               type="number"
@@ -63,12 +63,12 @@ export function FeeStructureEditor({
                 n[i] = { ...n[i], amount: Number(e.target.value) };
                 setComponents(n);
               }}
-              className="w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm sm:w-24"
+              className="h-10 w-full rounded-lg border px-3 sm:w-24 border-line-strong bg-surface text-sm text-fg placeholder:text-fg-faint transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
             />
             <button
               type="button"
               onClick={() => setComponents(components.filter((_, idx) => idx !== i))}
-              className="p-2 rounded-lg hover:bg-red-500/20 text-red-400"
+              className="p-2 rounded-lg hover:bg-red-500/20 text-red-700 dark:text-red-400"
               title="Remove component"
             >
               <Trash2 size={16} />
@@ -78,7 +78,7 @@ export function FeeStructureEditor({
         <button
           type="button"
           onClick={() => setComponents([...components, { name: "", amount: 0 }])}
-          className="text-sm text-emerald-400 hover:text-emerald-300"
+          className="text-sm text-emerald-700 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
         >
           + Add component
         </button>
@@ -92,7 +92,7 @@ export function FeeStructureEditor({
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 rounded-xl border border-white/20"
+          className="px-4 py-2 rounded-xl border border-line-strong"
         >
           Cancel
         </button>
@@ -101,7 +101,7 @@ export function FeeStructureEditor({
             type="button"
             onClick={onDelete}
             disabled={saving || deleting}
-            className="px-4 py-2 rounded-xl border border-red-500/50 text-red-400 hover:bg-red-500/10 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-xl border border-red-500/50 text-red-700 dark:text-red-400 hover:bg-red-500/10 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {deleting ? "Deleting..." : "Delete Structure"}
           </button>

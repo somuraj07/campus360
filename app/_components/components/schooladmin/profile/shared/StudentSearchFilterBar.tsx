@@ -40,8 +40,13 @@ export function StudentSearchFilterBar({
   studentSelectOptions: SelectOption[];
 }) {
   return (
-    <div className="bg-white/5 backdrop-blur-xl border-b border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-6 overflow-visible relative z-20 isolate min-w-0">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6 overflow-visible">
+    <div className="relative isolate z-20 min-w-0 overflow-visible rounded-2xl border border-line bg-elev-1">
+      <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
+        <h2 className="text-[15px] font-semibold text-fg">Find a student</h2>
+        <span className="text-xs text-fg-subtle">{students.length.toLocaleString("en-IN")} students</span>
+      </div>
+      <div className="p-5">
+      <div className="grid grid-cols-1 gap-4 overflow-visible sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <div className="relative z-20 min-w-0">
           <StudentSearchAutocomplete
             students={students}
@@ -55,7 +60,7 @@ export function StudentSearchFilterBar({
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-2 block">Filter by Status</label>
+          <label className="mb-1.5 block text-[13px] font-medium text-fg">Filter by Status</label>
           <SelectInput
             value={filterStatus}
             onChange={(v) => onFilterStatusChange(v as "all" | "active" | "inactive")}
@@ -64,7 +69,7 @@ export function StudentSearchFilterBar({
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-2 block">Filter by Class</label>
+          <label className="mb-1.5 block text-[13px] font-medium text-fg">Filter by Class</label>
           <SelectInput
             value={filterClass}
             onChange={onFilterClassChange}
@@ -73,7 +78,7 @@ export function StudentSearchFilterBar({
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-2 block">Filter by Section</label>
+          <label className="mb-1.5 block text-[13px] font-medium text-fg">Filter by Section</label>
           <SelectInput
             value={filterSection}
             onChange={onFilterSectionChange}
@@ -82,7 +87,7 @@ export function StudentSearchFilterBar({
           />
         </div>
         <div>
-          <label className="text-xs text-gray-500 mb-2 block">Students List</label>
+          <label className="mb-1.5 block text-[13px] font-medium text-fg">Students List</label>
           <SelectInput
             value={selectedId ?? ""}
             onChange={(value) => onSelectedIdChange(value || null)}
@@ -90,6 +95,7 @@ export function StudentSearchFilterBar({
             bgColor="black"
           />
         </div>
+      </div>
       </div>
     </div>
   );

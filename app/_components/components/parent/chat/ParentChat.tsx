@@ -1,5 +1,6 @@
 "use client";
 
+import { SaPageHeader } from "../../common/ui";
 import { useState, useEffect, useCallback } from "react";
 import { Search } from "lucide-react";
 import SearchInput from "../../common/SearchInput";
@@ -95,20 +96,21 @@ export default function TeacherParentChatTab() {
 
   return (
     <div
-      className="flex h-[calc(100dvh-7.25rem)] max-h-[calc(100dvh-7.25rem)] min-h-0 w-full max-w-full min-w-0 flex-col overflow-x-hidden bg-gradient-to-br sm:h-auto sm:max-h-none sm:min-h-[36rem] lg:min-h-0 sm:pb-20 lg:pb-6"
+      className="mx-auto flex h-[calc(100dvh-7.25rem)] max-h-[calc(100dvh-7.25rem)] min-h-0 w-full max-w-[1400px] min-w-0 flex-col gap-5 overflow-x-hidden sm:h-auto sm:max-h-none sm:min-h-[36rem] sm:pb-20 lg:min-h-0 lg:pb-6"
     >
+      <SaPageHeader eyebrow="Your child" title="Chat with Teachers" description="Message your child's teachers once they accept your request" />
       <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden sm:flex-row sm:gap-6">
 
         {/* ================= Sidebar ================= */}
         <div
-          className={`backdrop-blur-xl bg-white/5 border border-white/10 
+          className={`bg-elev-1 border border-line 
           rounded-xl sm:rounded-2xl flex min-h-0 flex-1 flex-col overflow-hidden
           ${activeChat ? "hidden lg:flex" : "flex"}
           w-full min-w-0 lg:w-96 lg:flex-none lg:min-h-[280px]`}
         >
 
           {/* Tabs */}
-          <div className="p-3 sm:p-4 flex flex-wrap gap-2 border-b border-white/10 shrink-0">
+          <div className="p-3 sm:p-4 flex flex-wrap gap-2 border-b border-line shrink-0">
             {(["all", "approved", "pending"] as const).map(
               (tab) => (
                 <button
@@ -117,8 +119,8 @@ export default function TeacherParentChatTab() {
                   className={`px-2.5 sm:px-4 py-2 sm:py-1.5 rounded-lg sm:rounded-full text-xs capitalize transition touch-manipulation shrink-0 min-h-[40px] sm:min-h-0
                     ${
                       activeTab === tab
-                        ? "bg-lime-400 text-black font-semibold"
-                        : "bg-white/10 text-gray-300 hover:bg-white/20 active:bg-white/25"
+                        ? "bg-primary text-on-primary font-semibold"
+                        : "border border-line bg-surface text-fg-muted hover:bg-elev-2"
                     }`}
                 >
                   {tab}
@@ -128,7 +130,7 @@ export default function TeacherParentChatTab() {
           </div>
 
           {/* Search */}
-          <div className="p-3 sm:p-4 border-b border-white/10 shrink-0">
+          <div className="p-3 sm:p-4 border-b border-line shrink-0">
             <SearchInput icon={Search} placeholder="Search conversations..." />
           </div>
 
@@ -137,7 +139,7 @@ export default function TeacherParentChatTab() {
             {loading ? (
               <ParentTimellyLoader preset="chat" compact bare className="py-8" />
             ) : filteredChats.length === 0 ? (
-              <div className="text-center text-gray-400 text-sm">
+              <div className="text-center text-fg-muted text-sm">
                 No conversations
               </div>
             ) : (
@@ -146,7 +148,7 @@ export default function TeacherParentChatTab() {
                   key={chat.id}
                   onClick={() => setActiveChatId(chat.id)}
                   className="flex w-full min-w-0 max-w-full gap-2 rounded-xl p-2.5 text-left touch-manipulation transition-all duration-200 sm:gap-3 sm:p-3
-                  bg-white/5 hover:bg-white/15 active:bg-white/20"
+                  bg-elev-1 hover:bg-elev-3 active:bg-elev-3"
                 >
                   <img
                     src={chat.avatar}
@@ -156,21 +158,21 @@ export default function TeacherParentChatTab() {
 
                   <div className="min-w-0 flex-1 overflow-hidden">
                     <div className="flex min-w-0 items-center gap-2">
-                      <p className="min-w-0 flex-1 truncate font-semibold text-sm text-white">
+                      <p className="min-w-0 flex-1 truncate font-semibold text-sm text-fg">
                         {chat.parent}
                       </p>
                       {chat.status === "pending" && (
-                        <span className="shrink-0 whitespace-nowrap rounded-full bg-yellow-500/20 px-2 py-0.5 text-[10px] text-yellow-400">
+                        <span className="shrink-0 whitespace-nowrap rounded-full bg-yellow-500/20 px-2 py-0.5 text-[10px] text-yellow-700 dark:text-yellow-400">
                           Pending
                         </span>
                       )}
                     </div>
 
-                    <p className="truncate text-xs text-lime-400">
+                    <p className="truncate text-xs text-primary">
                       Requested for {chat.student}
                     </p>
 
-                    <p className="line-clamp-2 break-words text-xs text-gray-400">
+                    <p className="line-clamp-2 break-words text-xs text-fg-muted">
                       {chat.lastMessage}
                     </p>
                   </div>
@@ -180,8 +182,8 @@ export default function TeacherParentChatTab() {
           </div>
 
           {/* Bottom Button */}
-          <div className="p-3 sm:p-4 border-t border-white/10 shrink-0">
-            <button onClick={() => setShowModal(true)} className="w-full bg-lime-400 text-black font-semibold py-3 sm:py-2 rounded-xl hover:bg-lime-300 active:bg-lime-200 transition touch-manipulation">
+          <div className="p-3 sm:p-4 border-t border-line shrink-0">
+            <button onClick={() => setShowModal(true)} className="w-full bg-primary text-on-primary font-semibold py-3 sm:py-2 rounded-xl hover:bg-primary-hover active:bg-primary-hover transition touch-manipulation">
               New Chat Request
             </button>
             
@@ -196,7 +198,7 @@ export default function TeacherParentChatTab() {
             )}
         {/* ================= Chat Window ================= */}
         <div
-          className={`flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl sm:rounded-2xl
+          className={`flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-line bg-elev-1 sm:rounded-2xl
           ${activeChat
             ? "flex min-h-[calc(100dvh-7.25rem)] max-h-[calc(100dvh-7.25rem)] sm:max-h-none sm:min-h-[300px]"
             : "hidden lg:flex"}`}
@@ -210,7 +212,7 @@ export default function TeacherParentChatTab() {
               variant="parent"
             />
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-400">
+            <div className="flex-1 flex items-center justify-center text-fg-muted">
               Select a conversation
             </div>
           )}

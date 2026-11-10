@@ -1,6 +1,7 @@
 "use client";
 
-import { Search, Calendar, FileText, Plus, GraduationCap } from "lucide-react";
+import { Search, Calendar, FileText, Plus } from "lucide-react";
+import { SaPageHeader, TextInput, Badge, btnClass } from "../../common/ui";
 
 function getCurrentAcademicYearStart(): number {
   const now = new Date();
@@ -59,78 +60,54 @@ export default function TeacherAuditHeader({
     onAcademicYearChange(nextYear);
   };
   return (
-    <div className="rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 overflow-hidden mb-8">
-      {/* Top row: Title + Search */}
-      <div className="p-6 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <h1 className="text-2xl md:text-[28px] font-bold text-white flex items-center gap-3">
-            <span className="text-[#b4ff39] flex items-center shrink-0">
-              <GraduationCap className="w-7 h-7 md:w-8 md:h-8" strokeWidth={2} />
-            </span>
-            <span>Teacher Audit & Appraisal</span>
-          </h1>
-          <p className="text-sm md:text-base text-white/60 mt-1.5 ml-10 md:ml-11">
-            Track performance, acknowledge achievements, and identify areas for improvement.
-          </p>
-        </div>
-        <div className="relative w-full md:w-72 shrink-0">
-          <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 w-4 h-4 md:w-5 md:h-5 pointer-events-none"
-            aria-hidden
-          />
-          <input
+    <div className="space-y-5">
+      <SaPageHeader
+        eyebrow="Staff"
+        title="Teacher Audit & Appraisal"
+        description="Track performance, acknowledge achievements, and identify areas for improvement."
+        actions={
+          <TextInput
+            icon={Search}
             type="search"
             value={searchValue}
             onChange={(e) => onSearchChange(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && onSearchSubmit?.()}
             placeholder={placeholder}
-            className="w-full rounded-xl pl-11 md:pl-12 pr-4 py-3 text-white text-sm placeholder:text-white/50 bg-black/20 border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#b4ff39]/50 focus:border-[#b4ff39]/30 transition"
             aria-label="Search teacher"
+            className="h-10 md:w-72"
           />
-        </div>
-      </div>
+        }
+      />
 
-      {/* Separator */}
-      <div className="h-px bg-white/10" />
-
-      {/* Bottom row: Academic Year + Records */}
-      <div className="px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 text-white/70 text-sm">
-            <Calendar className="w-4 h-4 text-[#b4ff39]" />
-            <span className="font-medium">Academic Year:</span>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {years.map((y) => (
+      <div className="flex flex-col gap-3 rounded-2xl border border-line bg-elev-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="mr-1 inline-flex items-center gap-2 text-[13px] font-medium text-fg-subtle">
+            <Calendar size={15} className="text-primary" />
+            Academic year
+          </span>
+          {years.map((y) => {
+            const active = academicYear === y.value;
+            return (
               <button
                 key={y.value}
                 type="button"
+                aria-pressed={active}
                 onClick={() => onAcademicYearChange(y.value)}
-                className={`
-                  px-4 py-2 rounded-xl text-sm font-medium transition-all
-                  ${academicYear === y.value
-                    ? "bg-[#b4ff39] text-black"
-                    : "bg-white/5 hover:bg-white/10 text-white/70 border border-white/10"
-                  }
-                `}
+                className={btnClass(active ? "primary" : "secondary", "sm")}
               >
                 {y.label}
               </button>
-            ))}
-            <button
-              type="button"
-              onClick={handleNewYear}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium bg-white/5 hover:bg-white/10 text-white/70 border border-white/10 transition-all"
-            >
-              <Plus className="w-4 h-4 text-[#b4ff39]" />
-              <span>New Year</span>
-            </button>
-          </div>
+            );
+          })}
+          <button type="button" onClick={handleNewYear} className={btnClass("ghost", "sm")}>
+            <Plus size={14} />
+            New Year
+          </button>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm shrink-0 w-fit">
-          <FileText className="w-4 h-4 text-white/50 shrink-0" />
-          <span>{recordCount} record{recordCount !== 1 ? "s" : ""}</span>
-        </div>
+        <Badge tone="navy">
+          <FileText size={13} />
+          {recordCount} record{recordCount !== 1 ? "s" : ""}
+        </Badge>
       </div>
     </div>
   );

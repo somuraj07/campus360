@@ -155,29 +155,29 @@ export default function NotificationPanel({ onClose, parentPortal, onSnapshot }:
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Overlay - glass */}
       <div
-        className="absolute inset-0 bg-black/30 backdrop-blur-md"
+        className="absolute inset-0 bg-overlay "
         onClick={onClose}
       />
 
       {/* Panel - glassmorphism, 60% width on mobile, full height */}
       <aside className="relative w-[60%] min-w-[280px] sm:w-[420px] h-full flex flex-col
-        bg-white/10 backdrop-blur-xl border-l border-white/20 shadow-2xl">
+        bg-elev-2 border-l border-line-strong shadow-card">
 
         {/* Header - glass */}
         <div className="flex items-center justify-between p-5
-          bg-white/5 backdrop-blur-sm border-b border-white/10">
+          bg-elev-1 border-b border-line">
           <div>
-            <h2 className="text-lg font-semibold text-white">Notifications</h2>
-            <p className="text-sm text-white/60 mt-0.5">
+            <h2 className="text-lg font-semibold text-fg">Notifications</h2>
+            <p className="text-sm text-fg-muted mt-0.5">
               {unreadCount > 0 ? `${unreadCount} unread` : "All caught up"}
             </p>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition"
+            className="p-2 rounded-lg bg-elev-1 hover:bg-elev-3 border border-line transition"
           >
-            <X className="w-5 h-5 text-white" />
+            <X className="w-5 h-5 text-fg" />
           </button>
         </div>
 
@@ -185,11 +185,11 @@ export default function NotificationPanel({ onClose, parentPortal, onSnapshot }:
         <div className="flex-1 overflow-y-auto px-4 space-y-3 py-4">
           {loading ? (
             <div className="flex items-center justify-center py-8">
-              <Loader2 className="w-5 h-5 animate-spin text-white/60" />
-              <span className="ml-2 text-sm text-white/60">Loading...</span>
+              <Loader2 className="w-5 h-5 animate-spin text-fg-muted" />
+              <span className="ml-2 text-sm text-fg-muted">Loading...</span>
             </div>
           ) : notifications.length === 0 ? (
-            <div className="py-8 text-center text-sm text-white/50">
+            <div className="py-8 text-center text-sm text-fg-subtle">
               No notifications yet.
             </div>
           ) : (
@@ -209,13 +209,13 @@ export default function NotificationPanel({ onClose, parentPortal, onSnapshot }:
         </div>
 
         {/* Mark All Read - bottom button */}
-        <div className="p-4 bg-white/5 backdrop-blur-sm border-t border-white/10">
+        <div className="p-4 bg-elev-1 border-t border-line">
           <button
             onClick={markAllRead}
             disabled={unreadCount === 0}
             className="w-full py-3 px-4 rounded-xl font-medium
-              bg-white/10 backdrop-blur-sm border border-white/20
-              text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed
+              bg-elev-2 border border-line-strong
+              text-fg hover:bg-elev-3 disabled:opacity-50 disabled:cursor-not-allowed
               transition-all"
           >
             Mark All Read
@@ -247,27 +247,27 @@ function NotificationItem({
     <button
       onClick={onClick}
       className={`w-full text-left rounded-xl p-4
-        bg-white/5 backdrop-blur-sm border border-white/10
-        hover:bg-white/10 transition ${
+        bg-elev-1 border border-line
+        hover:bg-elev-3 transition ${
         isRead ? "opacity-60" : ""
       }`}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-white font-medium">{title}</h3>
+        <h3 className="text-fg font-medium">{title}</h3>
         {priority && !isRead && (
-          <span className="text-xs text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
+          <span className="text-xs text-red-700 dark:text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
             New
           </span>
         )}
       </div>
 
-      <p className="text-[11px] text-blue-300 mt-1">{category}</p>
+      <p className="text-[11px] text-blue-700 dark:text-blue-300 mt-1">{category}</p>
 
-      <p className="text-sm text-gray-300 mt-1 line-clamp-2">
+      <p className="text-sm text-fg-muted mt-1 line-clamp-2">
         {description}
       </p>
 
-      <p className="text-xs text-gray-400 mt-2">
+      <p className="text-xs text-fg-muted mt-2">
         {time}
       </p>
     </button>

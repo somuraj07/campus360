@@ -22,33 +22,33 @@ export function ClassMobileCard({
   savingClassId: string | null;
 }) {
   return (
-    <div className="mb-3 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl shadow-lg">
+    <div className="mb-3 rounded-2xl border border-line bg-elev-1 p-4 shadow-card">
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-white font-semibold">{row.name}</div>
-          <div className="mt-2 inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
+          <div className="text-fg font-semibold">{row.name}</div>
+          <div className="mt-2 inline-flex items-center rounded-full border border-line bg-elev-1 px-3 py-1 text-xs text-fg">
             {row.section}
           </div>
         </div>
         <div className="text-right">
-          <div className="text-[11px] uppercase tracking-wide text-white/50">Students</div>
-          <div className="text-white font-semibold text-lg">{row.students}</div>
+          <div className="text-[11px] uppercase tracking-wide text-fg-subtle">Students</div>
+          <div className="text-fg font-semibold text-lg">{row.students}</div>
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-white/10 bg-black/20 px-3 py-2">
-        <div className="text-[11px] uppercase tracking-wide text-white/40">
+      <div className="mt-4 rounded-xl border border-line bg-well px-3 py-2">
+        <div className="text-[11px] uppercase tracking-wide text-fg-subtle">
           Class Teacher
         </div>
-        <div className="text-white font-medium">{row.teacher}</div>
+        <div className="text-fg font-medium">{row.teacher}</div>
       </div>
 
       {isEditing ? (
-        <div className="mt-4 border-t border-white/10 pt-3 space-y-3">
+        <div className="mt-4 border-t border-line pt-3 space-y-3">
           <button
             type="button"
             onClick={onCloseEdit}
-            className="w-full rounded-xl bg-lime-400/30 text-lime-200 border border-lime-400/40 py-2 text-sm font-semibold hover:bg-lime-400/35 transition cursor-pointer"
+            className="w-full rounded-xl bg-primary/30 text-primary border border-primary/40 py-2 text-sm font-semibold hover:bg-primary/35 transition cursor-pointer"
           >
             Close
           </button>
@@ -84,7 +84,7 @@ export function ClassMobileCard({
 
           <button
             type="button"
-            className="w-full rounded-xl bg-lime-400 text-black font-semibold py-2.5 hover:bg-lime-300 transition"
+            className="w-full rounded-xl bg-primary text-on-primary font-semibold py-2.5 hover:bg-primary-hover transition"
             onClick={onSave}
             disabled={savingClassId === row.id}
           >
@@ -95,7 +95,7 @@ export function ClassMobileCard({
         <button
           type="button"
           onClick={onStartEdit}
-          className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 py-2 text-sm font-semibold text-white/80 hover:bg-white/10 transition-colors cursor-pointer"
+          className="mt-3 w-full rounded-xl border border-line bg-elev-1 py-2 text-sm font-semibold text-fg hover:bg-elev-3 transition-colors cursor-pointer"
         >
           Edit
         </button>

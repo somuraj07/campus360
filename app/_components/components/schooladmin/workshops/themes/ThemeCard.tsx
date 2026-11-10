@@ -27,24 +27,24 @@ export default function ThemeCard({
       ? {
           border: "border-amber-400/70",
           hover: "hover:border-amber-400/60",
-          text: "text-amber-300",
-          hoverText: "group-hover:text-amber-300",
+          text: "text-amber-700 dark:text-amber-300",
+          hoverText: "group-hover:text-amber-700 dark:group-hover:text-amber-300",
           ring: "shadow-[0_0_0_1px_rgba(251,191,36,0.7)]",
         }
       : accentClassName === "spark"
       ? {
           border: "border-fuchsia-400/70",
           hover: "hover:border-fuchsia-400/60",
-          text: "text-fuchsia-300",
-          hoverText: "group-hover:text-fuchsia-300",
+          text: "text-fuchsia-700 dark:text-fuchsia-300",
+          hoverText: "group-hover:text-fuchsia-700 dark:group-hover:text-fuchsia-300",
           ring: "shadow-[0_0_0_1px_rgba(232,121,249,0.7)]",
         }
       : {
-          border: "border-lime-400/70",
-          hover: "hover:border-lime-400/60",
-          text: "text-lime-300",
-          hoverText: "group-hover:text-lime-300",
-          ring: "shadow-[0_0_0_1px_rgba(163,230,53,0.7)]",
+          border: "border-primary/70",
+          hover: "hover:border-primary/60",
+          text: "text-primary",
+          hoverText: "group-hover:text-primary",
+          ring: "",
         };
   return (
     <button
@@ -53,11 +53,11 @@ export default function ThemeCard({
       className={`group w-full rounded-2xl border text-left transition-all ${
         selected
           ? `${accent.border} ${accent.ring}`
-          : `border-white/10 ${accent.hover}`
-      } bg-white/5 hover:bg-white/10`}
+          : `border-line ${accent.hover}`
+      } bg-elev-1 hover:bg-elev-3`}
     >
       <div
-        className={`rounded-t-2xl border-b border-white/10 px-4 py-6 flex items-center justify-center text-white/40 ${previewClassName}`}
+        className={`rounded-t-2xl border-b border-line px-4 py-6 flex items-center justify-center text-fg-subtle ${previewClassName}`}
       >
         {preview}
       </div>
@@ -66,12 +66,12 @@ export default function ThemeCard({
           <div>
             <div
               className={`font-semibold ${
-                selected ? accent.text : "text-white"
+                selected ? accent.text : "text-fg"
               } ${accent.hoverText}`}
             >
               {title}
             </div>
-            <div className="text-xs text-white/50 mt-1">{description}</div>
+            <div className="text-xs text-fg-subtle mt-1">{description}</div>
           </div>
           {selected && <CheckCircle2 size={18} className={accent.text} />}
         </div>

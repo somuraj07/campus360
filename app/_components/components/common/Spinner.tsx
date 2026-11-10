@@ -15,9 +15,9 @@ export default function Spinner({ size = 28, className = "", label, color= `${PR
     <div className={`flex items-center justify-center gap-3 ${className}`} role="status" aria-live="polite">
       <div
         className="rounded-full border-4 border-t-transparent animate-spin"
-        style={{ width: s, height: s, borderColor: "rgba(255,255,255,0.15)", borderTopColor: `${color}` }}
+        style={{ width: s, height: s, borderColor: "var(--line)", borderTopColor: `${color}` }}
       />
-      {label && <span className="text-white/70 text-sm">{label}</span>}
+      {label && <span className="text-fg-muted text-sm">{label}</span>}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import SearchInput from "../../common/SearchInput";
 import SelectInput from "../../common/SelectInput";
 import SuccessPopups from "../../common/SuccessPopUps";
 import { getErrorMessage } from "@/lib/errors/errorInfo";
+import { btnClass } from "../../common/ui";
 
 interface AddClassPanelProps {
   onCancel: () => void;
@@ -90,13 +91,18 @@ export default function AddClassPanel({ onCancel, onSuccess }: AddClassPanelProp
   };
 
   return (
-    <div className="bg-[#0F172A]/50 rounded-2xl p-6 border border-white/10 animate-fadeIn shadow-inner">
-      <div className="flex items-center gap-2 text-white font-semibold mb-4">
-        <Plus size={18} className="text-lime-400" />
-        Add New Class
+    <section className="overflow-hidden rounded-2xl border border-line bg-elev-1 animate-fadeIn">
+      <div className="flex items-center gap-3 border-b border-line px-5 py-4">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <Plus size={16} />
+        </span>
+        <div>
+          <h2 className="text-[15px] font-semibold text-fg">Add New Class</h2>
+          <p className="text-xs text-fg-subtle">Create a class, optionally with a section and class teacher.</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 gap-5 p-5 md:grid-cols-2 xl:grid-cols-4">
         <SearchInput
           label="Class Name"
           placeholder="e.g. Class 10"
@@ -148,21 +154,17 @@ export default function AddClassPanel({ onCancel, onSuccess }: AddClassPanelProp
         />
       </div>
 
-      <div className="mt-4 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 cursor-pointer"
-        >
+      <div className="flex items-center justify-end gap-2 border-t border-line bg-elev-2 px-5 py-3.5">
+        <button type="button" onClick={onCancel} className={btnClass("secondary")}>
           Cancel
         </button>
         <button
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-3.5 py-2 text-xs font-semibold text-black hover:bg-lime-300 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+          className={btnClass("primary")}
         >
-          <Save size={14} />
+          <Save size={15} />
           {isSaving ? "Saving..." : "Save Class"}
         </button>
       </div>
@@ -175,6 +177,6 @@ export default function AddClassPanel({ onCancel, onSuccess }: AddClassPanelProp
           onSuccess?.();
         }}
       />
-    </div>
+    </section>
   );
 }

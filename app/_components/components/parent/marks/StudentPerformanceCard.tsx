@@ -38,11 +38,11 @@ export default function StudentPerformanceCard({
 }: StudentPerformanceCardProps) {
   return (
     <div className="space-y-4 relative z-10">
-      <div className="bg-white/[0.03] rounded-2xl p-5 border border-white/[0.05] overflow-hidden">
+      <div className="bg-elev-1 rounded-2xl p-5 border border-line-subtle overflow-hidden">
 
         {/* ================= PROFILE ================= */}
         <div>
-          <div className="w-full aspect-square rounded-2xl overflow-hidden mb-4 border border-white/[0.1] bg-white/5">
+          <div className="w-full aspect-square rounded-2xl overflow-hidden mb-4 border border-line bg-elev-1">
             <img
               src={imageUrl}
               alt={name}
@@ -57,15 +57,15 @@ export default function StudentPerformanceCard({
           </div>
 
           <div className="text-center mb-4">
-            <h4 className="font-bold text-white text-lg">{name}</h4>
-            <p className="text-sm text-gray-400">{grade}</p>
+            <h4 className="font-bold text-fg text-lg">{name}</h4>
+            <p className="text-sm text-fg-muted">{grade}</p>
           </div>
         </div>
 
         {/* ================= PERFORMANCE ================= */}
-        <div className="bg-white/[0.03] rounded-2xl p-5 border border-white/[0.05]">
-          <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <LucideChartColumn className="w-5 h-5 text-[#A3E635]" />
+        <div className="bg-elev-1 rounded-2xl p-5 border border-line-subtle">
+          <h4 className="font-bold text-fg mb-4 flex items-center gap-2">
+            <LucideChartColumn className="w-5 h-5 text-primary" />
             Performance Stats
           </h4>
 
@@ -73,22 +73,22 @@ export default function StudentPerformanceCard({
             <ProgressBar
               label="Your Score"
               value={score}
-              color="bg-[#A3E635]"
-              textColor="text-[#A3E635]"
+              color="bg-primary"
+              textColor="text-primary"
             />
 
             <ProgressBar
               label="Class Average"
               value={classAverage}
               color="bg-blue-400"
-              textColor="text-blue-400"
+              textColor="text-blue-700 dark:text-blue-400"
             />
 
             <ProgressBar
               label="Attendance"
               value={attendance}
               color="bg-yellow-400"
-              textColor="text-yellow-400"
+              textColor="text-yellow-700 dark:text-yellow-400"
             />
 
             {/* ================= STAT CARDS ================= */}
@@ -102,9 +102,8 @@ export default function StudentPerformanceCard({
                       key={index}
                       className="
                         rounded-2xl
-                        bg-gradient-to-br from-[#5B3C3C]/70 to-[#6E4A4A]/60
-                        backdrop-blur-xl
-                        border border-white/10
+                        bg-gradient-to-br from-elev-2/70 to-elev-3/60
+                                                border border-line
                         py-4 px-3
                         flex flex-col items-center justify-center
                         text-center
@@ -113,16 +112,16 @@ export default function StudentPerformanceCard({
                       "
                     >
                       {Icon && (
-                        <div className="mb-2 h-9 w-9 rounded-full bg-white/10 flex items-center justify-center">
-                          <Icon className="w-4 h-4 text-[#A3E635]" />
+                        <div className="mb-2 h-9 w-9 rounded-full bg-elev-2 flex items-center justify-center">
+                          <Icon className="w-4 h-4 text-primary" />
                         </div>
                       )}
 
-                      <h2 className="text-2xl font-bold text-white">
+                      <h2 className="text-2xl font-bold text-fg">
                         {item.value}
                       </h2>
 
-                      <p className="text-sm text-gray-300 mt-1">
+                      <p className="text-sm text-fg-muted mt-1">
                         {item.title}
                       </p>
                     </div>
@@ -135,9 +134,9 @@ export default function StudentPerformanceCard({
 
         {/* ================= GRADING SCALE ================= */}
         {gradingScale.length > 0 && (
-          <div className="bg-white/[0.03] rounded-2xl p-5 border border-white/[0.05] mt-4">
-            <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-              <LucideStar className="w-5 h-5 text-gray-300" />
+          <div className="bg-elev-1 rounded-2xl p-5 border border-line-subtle mt-4">
+            <h4 className="font-bold text-fg mb-3 flex items-center gap-2">
+              <LucideStar className="w-5 h-5 text-fg-muted" />
               Grading Scale
             </h4>
 
@@ -145,15 +144,15 @@ export default function StudentPerformanceCard({
               {gradingScale.map((gradeItem, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-2 bg-white/[0.03] rounded-lg border border-white/[0.05]"
+                  className="flex items-center justify-between p-2 bg-elev-1 rounded-lg border border-line-subtle"
                 >
-                  <span className="font-medium text-gray-400">
+                  <span className="font-medium text-fg-muted">
                     {gradeItem.label}
                   </span>
 
                   <span
                     className={`font-bold ${
-                      gradeItem.color || "text-[#A3E635]"
+                      gradeItem.color || "text-primary"
                     }`}
                   >
                     {gradeItem.range}

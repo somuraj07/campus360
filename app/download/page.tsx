@@ -9,40 +9,40 @@ export default function DownloadPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/80 p-8 text-center shadow-2xl backdrop-blur-md">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-surface p-8 text-center shadow-pop ">
         <img
           src="/pwa-192.png"
-          alt="Timelly"
-          className="mx-auto h-20 w-20 rounded-2xl border border-white/10 object-cover"
+          alt="RS Solutions"
+          className="mx-auto h-20 w-20 rounded-2xl border border-line object-cover"
           width={80}
           height={80}
         />
 
-        <h1 className="mt-5 text-2xl font-bold text-white">Install Timelly</h1>
-        <p className="mt-2 text-sm text-white/65 leading-relaxed">
-          Scan the QR code or open this page on your phone to add Timelly to your home screen.
+        <h1 className="mt-5 text-2xl font-bold text-fg">Install RS Solutions</h1>
+        <p className="mt-2 text-sm text-fg-muted leading-relaxed">
+          Scan the QR code or open this page on your phone to add RS Solutions to your home screen.
         </p>
 
         <div className="mt-8">
           {status === "checking" && (
-            <p className="text-sm text-white/70">Preparing install…</p>
+            <p className="text-sm text-fg-muted">Preparing install…</p>
           )}
 
           {status === "installing" && (
-            <p className="text-sm text-lime-300">Opening install prompt…</p>
+            <p className="text-sm text-primary">Opening install prompt…</p>
           )}
 
           {status === "installed" && (
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 rounded-xl bg-lime-500/15 px-4 py-3 text-sm font-medium text-lime-300">
+              <div className="inline-flex items-center gap-2 rounded-xl bg-primary/15 px-4 py-3 text-sm font-medium text-primary">
                 <CheckCircle2 className="h-5 w-5 shrink-0" aria-hidden />
-                Timelly is installed on this device
+                RS Solutions is installed on this device
               </div>
               <Link
                 href="/"
-                className="inline-flex w-full items-center justify-center rounded-xl bg-lime-500 px-4 py-3 text-sm font-semibold text-black hover:bg-lime-400 transition"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-on-primary hover:bg-primary-hover transition"
               >
-                Open Timelly
+                Open RS Solutions
               </Link>
             </div>
           )}
@@ -51,7 +51,7 @@ export default function DownloadPage() {
             <button
               type="button"
               onClick={() => void install()}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-lime-500 px-4 py-3 text-sm font-semibold text-black hover:bg-lime-400 transition"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-on-primary hover:bg-primary-hover transition"
             >
               <Download className="h-4 w-4" aria-hidden />
               Install app
@@ -59,12 +59,12 @@ export default function DownloadPage() {
           )}
 
           {status === "unavailable" && isIos && (
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-left">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white">
-                <Smartphone className="h-4 w-4 text-lime-400" aria-hidden />
+            <div className="rounded-xl border border-line bg-elev-1 p-4 text-left">
+              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-fg">
+                <Smartphone className="h-4 w-4 text-primary" aria-hidden />
                 Add to Home Screen
               </div>
-              <ol className="list-decimal space-y-1 pl-5 text-xs text-white/70">
+              <ol className="list-decimal space-y-1 pl-5 text-xs text-fg-muted">
                 <li>Tap the Share button in Safari</li>
                 <li>Choose &quot;Add to Home Screen&quot;</li>
                 <li>Tap Add</li>
@@ -73,14 +73,14 @@ export default function DownloadPage() {
           )}
 
           {status === "unavailable" && !isIos && (
-            <div className="space-y-3 text-sm text-white/70">
+            <div className="space-y-3 text-sm text-fg-muted">
               <p>
                 Open this page in Chrome on Android or use the browser menu and choose
                 &quot;Install app&quot; or &quot;Add to Home screen&quot;.
               </p>
               <Link
                 href="/"
-                className="inline-flex w-full items-center justify-center rounded-xl border border-white/15 px-4 py-3 font-semibold text-white/85 hover:bg-white/5 transition"
+                className="inline-flex w-full items-center justify-center rounded-xl border border-line px-4 py-3 font-semibold text-fg hover:bg-elev-2 transition"
               >
                 Continue in browser
               </Link>

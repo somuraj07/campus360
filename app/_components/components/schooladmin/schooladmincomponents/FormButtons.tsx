@@ -18,8 +18,8 @@ export default function FormButtons({
         type="submit"
         disabled={loading}
         whileHover={{ x: 4 }}
-        className="flex-1 px-6 py-3 rounded-xl bg-lime-400 text-black font-semibold
-          hover:bg-lime-300 disabled:opacity-50 disabled:cursor-not-allowed
+        className="flex-1 px-6 py-3 rounded-xl bg-primary text-on-primary font-semibold
+          hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed
           transition flex items-center justify-center gap-2"
       >
         {loading ? (
@@ -36,8 +36,8 @@ export default function FormButtons({
         onClick={onCancel}
         disabled={loading}
         whileHover={{ x: -4 }}
-        className="flex-1 px-6 py-3 rounded-xl bg-white/10 border border-white/20
-          text-white font-semibold hover:bg-white/15 disabled:opacity-50
+        className="flex-1 px-6 py-3 rounded-xl bg-elev-2 border border-line-strong
+          text-fg font-semibold hover:bg-elev-3 disabled:opacity-50
           transition"
       >
         Cancel

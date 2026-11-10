@@ -13,7 +13,7 @@ export function SchoolAdminPasswordCard({
   return (
     <div className={CARD_CLASS}>
       <div className={CARD_HEADER_CLASS}>
-        <CardTitle icon={<Lock className="text-lime-300" size={22} />} title="Security & Password" subtitle="Manage your password and security" />
+        <CardTitle icon={<Lock className="text-primary" size={22} />} title="Security & Password" subtitle="Manage your password and security" />
       </div>
       <div className={CARD_BODY_CLASS}>
         <Field label="Current Password">

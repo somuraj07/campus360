@@ -78,7 +78,7 @@ export default function PayButton({
       whileHover={loading ? {} : { scale: 1.05, y: -2 }}
       whileTap={loading ? {} : { scale: 0.95 }}
       onClick={payNow}
-      className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-teal-600 hover:to-emerald-500 disabled:from-emerald-600 disabled:to-teal-700 disabled:opacity-90 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg border border-emerald-400/30 transition-all duration-300"
+      className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-teal-600 hover:to-emerald-500 disabled:from-emerald-600 disabled:to-teal-700 disabled:opacity-90 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-card border border-emerald-400/30 transition-all duration-300"
     >
       {loading ? (
         <>

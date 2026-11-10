@@ -11,7 +11,7 @@ type ThemeProps = {
 export default function TimellyModernCard({ selected, onSelect }: ThemeProps) {
   return (
     <ThemeCard
-      title="Timelly Modern"
+      title="RS Solutions Modern"
       description="Clean, emerald green accents, sans-serif typography."
       selected={selected}
       onSelect={onSelect}

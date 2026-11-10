@@ -3,8 +3,8 @@ import Link from "next/link";
 import { SUPPORT_EMAIL, SUPPORT_HOURS } from "@/lib/support";
 
 export const metadata: Metadata = {
-  title: "Support | Timelly",
-  description: "How to get help with Timelly.",
+  title: "Support | RS Solutions",
+  description: "How to get help with RS Solutions.",
 };
 
 export default function SupportPage() {
@@ -13,7 +13,7 @@ export default function SupportPage() {
       <article className="mx-auto w-full max-w-2xl rounded-2xl bg-white p-8 text-zinc-800 shadow-2xl">
         <h1 className="text-3xl font-bold text-zinc-950">Support</h1>
         <p className="mt-3 text-sm leading-relaxed">
-          Need help with login, fees, attendance or anything else in Timelly? Contact us and
+          Need help with login, fees, attendance or anything else in RS Solutions? Contact us and
           include your school name, your role, and a screenshot if you can.
         </p>
         <dl className="mt-6 space-y-3 text-sm">

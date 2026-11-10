@@ -59,12 +59,12 @@ export function SchoolHyperPGCredentialsCard() {
   return (
     <div className={CARD_CLASS}>
       <div className={CARD_HEADER_CLASS}>
-        <CardTitle icon={<CreditCard className="text-lime-300" size={22} />} title="Payment (HyperPG)" subtitle="Each school has unique Merchant ID and API Key from the payments team" />
+        <CardTitle icon={<CreditCard className="text-primary" size={22} />} title="Payment (HyperPG)" subtitle="Each school has unique Merchant ID and API Key from the payments team" />
       </div>
       <div className={CARD_BODY_CLASS}>
         {loading ? (
-          <div className="flex items-center gap-2 text-white/60">
-            <div className="w-4 h-4 border-2 border-white/20 border-t-lime-400 rounded-full animate-spin" />
+          <div className="flex items-center gap-2 text-fg-muted">
+            <div className="w-4 h-4 border-2 border-line-strong border-t-primary rounded-full animate-spin" />
             Loading…
           </div>
         ) : (
@@ -76,7 +76,7 @@ export function SchoolHyperPGCredentialsCard() {
               <SearchInput value={hyperpgApiKey} onChange={setHyperpgApiKey} type="password" icon={Lock} variant="glass" className="mt-2" placeholder="API key from payments team" />
             </Field>
             {message && (
-              <p className={`mt-3 text-sm ${message.type === "success" ? "text-lime-400" : "text-red-400"}`}>
+              <p className={`mt-3 text-sm ${message.type === "success" ? "text-primary" : "text-red-700 dark:text-red-400"}`}>
                 {message.text}
               </p>
             )}
@@ -84,7 +84,7 @@ export function SchoolHyperPGCredentialsCard() {
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="mt-4 px-5 py-2.5 rounded-xl bg-lime-400/20 text-lime-400 border border-lime-400/30 font-medium hover:bg-lime-400/30 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-4 px-5 py-2.5 rounded-xl bg-primary/20 text-primary border border-primary/30 font-medium hover:bg-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? "Saving…" : "Save payment credentials"}
             </button>

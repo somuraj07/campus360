@@ -1,22 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import PageHeader from "../common/PageHeader";
-
-import { Users, School, GraduationCap } from "lucide-react";
-import { formatNumber as fmtNum } from "../../utils/format";
-import StatCard from "../common/statCard";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import {
+  School,
+  Users,
+  GraduationCap,
+  Gauge,
+  Plus,
+  UserCheck,
+  ArrowRight,
+  Receipt,
+  Trophy,
+  Settings2,
+  CreditCard,
+} from "lucide-react";
+import { formatNumber as fmtNum, formatAmount } from "../../utils/format";
 import { BirthdayCard } from "../common/BirthdayCard";
-import Spinner from "../common/Spinner";
-import { AVATAR_URL } from "../../constants/images";
 import {
   fetchSuperadminDashboard,
   type SuperadminDashboardData,
 } from "@/lib/api/superadminDashboard";
+import {
+  SaPage,
+  SaPageHeader,
+  KpiGrid,
+  KpiCard,
+  Panel,
+  InitialsAvatar,
+  ShareBar,
+  EmptyState,
+  LoadingBlock,
+  Alert,
+  btnClass,
+} from "./shared/ui";
 
 export type { SuperadminDashboardData };
 
+function greeting() {
+  const h = new Date().getHours();
+  return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+}
+
+const QUICK_LINKS = [
+  { href: "/superadmin?tab=addschool", label: "Add a school", desc: "Onboard a new institution", icon: Plus },
+  { href: "/superadmin?tab=addchairman", label: "Add a chairman", desc: "Create a chairman login", icon: UserCheck },
+  { href: "/superadmin?tab=subscriptions", label: "Subscriptions", desc: "Billing mode & access", icon: Settings2 },
+  { href: "/superadmin?tab=transactions", label: "Fees transactions", desc: "Turnover per school", icon: CreditCard },
+];
+
 export default function Dashboard() {
+  const { data: session } = useSession();
   const [data, setData] = useState<SuperadminDashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,136 +72,196 @@ export default function Dashboard() {
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  if (loading) {
-    return (
-      <main className="flex-1 overflow-y-auto px-3 sm:px-4">
-        <div className="py-4 sm:p-6 flex items-center justify-center min-h-[40vh]">
-          <Spinner />
-        </div>
-      </main>
-    );
-  }
-
-  if (error) {
-    return (
-      <main className="flex-1 overflow-y-auto px-3 sm:px-4">
-        <div className="py-4 sm:p-6 text-center text-red-400">{error}</div>
-      </main>
-    );
-  }
-
   const stats = data?.stats ?? { totalSchools: 0, totalStudents: 0, totalTeachers: 0 };
-  const schools = data?.schools ?? [];
+  const schools = useMemo(() => data?.schools ?? [], [data]);
   const feeTransactions = data?.feeTransactions ?? [];
+  const topSchools = useMemo(
+    () => [...schools].sort((a, b) => b.studentCount - a.studentCount).slice(0, 6),
+    [schools]
+  );
+  const maxStudents = topSchools[0]?.studentCount ?? 0;
+  const avgStudents = stats.totalSchools > 0 ? Math.round(stats.totalStudents / stats.totalSchools) : 0;
+  const ratio = stats.totalTeachers > 0 ? Math.round(stats.totalStudents / stats.totalTeachers) : 0;
+  const firstName = (session?.user?.name ?? "").split(" ")[0];
 
   return (
-    <main className="flex-1 overflow-y-auto">
-      <div className="bg-transparent min-h-screen space-y-6">
-        <PageHeader
-          title="Superadmin Dashboard"
-          subtitle="Manage everything from here"
-        />
+    <SaPage>
+      <SaPageHeader
+        eyebrow={new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
+        title={`${greeting()}${firstName ? `, ${firstName}` : ""}`}
+        description="Here's how every school on the platform is doing today."
+        actions={
+          <>
+            <Link href="/superadmin?tab=addchairman" className={btnClass("secondary")}>
+              <UserCheck size={16} />
+              Add chairman
+            </Link>
+            <Link href="/superadmin?tab=addschool" className={btnClass("primary")}>
+              <Plus size={16} />
+              Add school
+            </Link>
+          </>
+        }
+      />
 
-        <div className="flex flex-col lg:flex-row gap-[10px]">
-          <div className="flex flex-col gap-[10px] w-full lg:w-1/2">
-            <StatCard
-              title="Total Schools"
-              value={fmtNum(stats.totalSchools)}
-              icon={<School size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
-              footer="Active institutions"
-            />
-            <StatCard
-              title="Total Students"
-              value={fmtNum(stats.totalStudents)}
-              icon={<Users size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
-              footer="Across all schools"
-            />
-            <StatCard
-              title="Total Teachers"
+      {error && <Alert tone="error">{error}</Alert>}
+
+      {loading ? (
+        <Panel>
+          <LoadingBlock label="Loading dashboard…" />
+        </Panel>
+      ) : (
+        <>
+          <KpiGrid>
+            <KpiCard label="Total schools" value={fmtNum(stats.totalSchools)} icon={School} hint="Active institutions" />
+            <KpiCard label="Total students" value={fmtNum(stats.totalStudents)} icon={Users} tone="sky" hint="Across all schools" />
+            <KpiCard
+              label="Total teachers"
               value={fmtNum(stats.totalTeachers)}
-              icon={<GraduationCap size={22} className="sm:w-10 sm:h-10 text-lime-300" />}
-              footer="Across all schools"
+              icon={GraduationCap}
+              tone="gold"
+              hint={ratio ? `≈ ${ratio} students per teacher` : "Across all schools"}
             />
-            <StatCard title="Schools" className="w-full">
-              <div className="border border-white/10 rounded-xl overflow-hidden w-full">
-                <div className="grid grid-cols-3 gap-2 px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-white/80 text-center">
-                  <span>Sl. No</span>
-                  <span className="text-left">School</span>
-                  <span>Students</span>
-                </div>
-                {schools.length === 0 ? (
-                  <div className="px-4 py-6 text-sm text-white/60 text-center">No schools yet</div>
-                ) : (
-                  schools.slice(0, 8).map((s, i) => (
-                    <div key={s.id} className="grid grid-cols-3 gap-2 items-center px-3 sm:px-4 py-3 border-t border-white/10 text-xs sm:text-sm">
-                      <span className="text-white text-center">{i + 1}</span>
-                      <div className="flex items-center gap-2 min-w-0 text-left">
-                        <img
-                          src={s.photoUrl?.trim() ? s.photoUrl : AVATAR_URL}
-                          alt={`${s.name} profile`}
-                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-white/20 flex-shrink-0"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.src = AVATAR_URL;
-                          }}
-                        />
-                        <span className="text-white font-medium truncate">{s.name}</span>
+            <KpiCard label="Avg. school size" value={fmtNum(avgStudents)} icon={Gauge} tone="green" hint="Students per school" />
+          </KpiGrid>
+
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-5">
+            <Panel
+              className="xl:col-span-3"
+              icon={Trophy}
+              title="Top schools by students"
+              description="Largest institutions on the platform"
+              actions={
+                <Link href="/superadmin?tab=schools" className={btnClass("ghost", "sm")}>
+                  View all <ArrowRight size={14} />
+                </Link>
+              }
+              bodyClassName="p-0"
+            >
+              {topSchools.length === 0 ? (
+                <EmptyState
+                  icon={School}
+                  title="No schools yet"
+                  description="Schools you onboard will appear here."
+                  action={
+                    <Link href="/superadmin?tab=addschool" className={btnClass("primary", "sm")}>
+                      <Plus size={14} /> Add school
+                    </Link>
+                  }
+                />
+              ) : (
+                <ul className="divide-y divide-line-subtle">
+                  {topSchools.map((s, i) => (
+                    <li key={s.id} className="flex items-center gap-4 px-5 py-3.5">
+                      <span className="w-5 text-center text-xs font-semibold text-fg-faint tabular-nums">{i + 1}</span>
+                      <InitialsAvatar name={s.name} src={s.photoUrl} />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <p className="truncate text-sm font-semibold text-fg">{s.name}</p>
+                          <p className="shrink-0 text-sm font-semibold text-fg tabular-nums">
+                            {fmtNum(s.studentCount)}
+                            <span className="ml-1 text-xs font-normal text-fg-subtle">students</span>
+                          </p>
+                        </div>
+                        <div className="mt-2 flex items-center gap-3">
+                          <ShareBar value={s.studentCount} max={maxStudents} />
+                          <span className="hidden shrink-0 text-[11px] text-fg-subtle sm:block">
+                            {fmtNum(s.teacherCount)} teachers · {fmtNum(s.classCount)} classes
+                          </span>
+                        </div>
                       </div>
-                      <span className="text-white/80 text-center">{fmtNum(s.studentCount)}</span>
-                    </div>
-                  ))
-                )}
-              </div>
-            </StatCard>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Panel>
+
+            <Panel
+              className="xl:col-span-2"
+              icon={Receipt}
+              title="Recent fee transactions"
+              description="Latest payments across schools"
+              actions={
+                <Link href="/superadmin?tab=transactions" className={btnClass("ghost", "sm")}>
+                  View all <ArrowRight size={14} />
+                </Link>
+              }
+              bodyClassName="p-0"
+            >
+              {feeTransactions.length === 0 ? (
+                <EmptyState icon={Receipt} title="No transactions yet" description="Fee payments will show up here." />
+              ) : (
+                <ul className="divide-y divide-line-subtle">
+                  {feeTransactions.slice(0, 8).map((t) => (
+                    <li key={t.id} className="flex items-center justify-between gap-3 px-5 py-3">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-fg">{t.schoolName}</p>
+                        <p className="truncate text-xs text-fg-subtle">
+                          {t.studentName ? `${t.studentName} · ` : ""}
+                          {new Date(t.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-lg bg-emerald-500/10 px-2.5 py-1 text-sm font-semibold text-emerald-700 tabular-nums dark:text-emerald-300">
+                        +{formatAmount(t.amount)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Panel>
           </div>
 
-          <StatCard title="Fee Transactions" className="w-full max-w-md lg:max-w-none">
-            <div className="rounded-xl border border-white/10 overflow-hidden bg-white/5">
-              <div className="grid grid-cols-4 gap-2 px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-white/80 text-center">
-                <span>Sl. No</span>
-                <span className="text-left">School</span>
-                <span>Amount</span>
-                <span>Date</span>
-              </div>
-              {feeTransactions.length === 0 ? (
-                <div className="px-4 py-6 text-sm text-white/60 text-center">No transactions yet</div>
-              ) : (
-                feeTransactions.slice(0, 10).map((t) => (
-                  <div key={t.id} className="grid grid-cols-4 gap-2 items-center px-3 sm:px-4 py-3 border-t border-white/10 text-xs sm:text-sm">
-                    <span className="text-white text-center">{t.slNo}</span>
-                    <span className="text-white truncate text-left">{t.schoolName}</span>
-                    <span className="text-white text-center">₹{t.amount.toLocaleString()}</span>
-                    <span className="text-white/70 text-center">{new Date(t.createdAt).toLocaleDateString()}</span>
-                  </div>
-                ))
-              )}
-            </div>
-          </StatCard>
-        </div>
-
-        {schools.length > 0 && (
-          <BirthdayCard
-            schoolId={birthdaySchoolId || schools[0].id}
-            action={
-              <select
-                aria-label="School"
-                value={birthdaySchoolId || schools[0].id}
-                onChange={(e) => setBirthdaySchoolId(e.target.value)}
-                className="max-w-[12rem] rounded-lg border border-white/10 bg-white/10 px-2 py-1.5 text-xs text-white"
-              >
-                {schools.map((s) => (
-                  <option key={s.id} value={s.id} className="text-black">
-                    {s.name}
-                  </option>
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-5">
+            <Panel className="xl:col-span-2" title="Quick actions" description="Common platform tasks">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+                {QUICK_LINKS.map(({ href, label, desc, icon: Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="group flex items-center gap-3 rounded-xl border border-line p-3.5 transition hover:border-primary/40 hover:bg-elev-2"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Icon size={18} />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-fg">{label}</span>
+                      <span className="block truncate text-xs text-fg-subtle">{desc}</span>
+                    </span>
+                    <ArrowRight size={16} className="shrink-0 text-fg-faint transition group-hover:translate-x-0.5 group-hover:text-primary" />
+                  </Link>
                 ))}
-              </select>
-            }
-          />
-        )}
-      </div>
-    </main>
+              </div>
+            </Panel>
+
+            <div className="xl:col-span-3">
+              {schools.length > 0 ? (
+                <BirthdayCard
+                  schoolId={birthdaySchoolId || schools[0].id}
+                  action={
+                    <select
+                      aria-label="School"
+                      value={birthdaySchoolId || schools[0].id}
+                      onChange={(e) => setBirthdaySchoolId(e.target.value)}
+                      className="h-8 max-w-[13rem] rounded-lg border border-line-strong bg-surface px-2 text-xs text-fg"
+                    >
+                      {schools.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  }
+                />
+              ) : null}
+            </div>
+          </div>
+        </>
+      )}
+    </SaPage>
   );
 }

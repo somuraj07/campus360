@@ -51,21 +51,21 @@ export function EventDetailsSidebar({
 }) {
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
-        <div className="text-xs uppercase tracking-wide text-white/50">
+      <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
+        <div className="text-xs uppercase tracking-wide text-fg-subtle">
           Instructor
         </div>
       <div className="mt-3 flex items-center gap-3">
           <img
             src={instructorImage}
             alt={teacherName || "Instructor"}
-            className="h-12 w-12 rounded-full border border-white/10 object-cover"
+            className="h-12 w-12 rounded-full border border-line object-cover"
           />
           <div>
-            <div className="text-sm font-semibold text-white">
+            <div className="text-sm font-semibold text-fg">
               {teacherName || "Not assigned"}
             </div>
-            <div className="text-xs text-lime-300">
+            <div className="text-xs text-primary">
               {teacherEmail || "Instructor"}
             </div>
           </div>
@@ -73,8 +73,8 @@ export function EventDetailsSidebar({
       </div>
 
       {showEnrolledStudents && enrolledStudents.length > 0 && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
-          <div className="text-xs uppercase tracking-wide text-white/50 mb-3">
+        <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
+          <div className="text-xs uppercase tracking-wide text-fg-subtle mb-3">
             Enrolled Students ({enrolledStudents.length})
           </div>
           <div className="space-y-2 max-h-48 overflow-y-auto">
@@ -83,21 +83,21 @@ export function EventDetailsSidebar({
               return (
                 <div
                   key={s.registrationId}
-                  className="flex justify-between items-center py-2 border-b border-white/5 last:border-0"
+                  className="flex justify-between items-center py-2 border-b border-line-subtle last:border-0"
                 >
                   <div>
-                    <p className="text-sm font-medium text-white">
+                    <p className="text-sm font-medium text-fg">
                       {s.name || "—"}
                     </p>
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-fg-muted">
                       {s.class || s.email || "—"}
                     </p>
                   </div>
                   <span
                     className={`text-xs px-2 py-1 rounded ${
                       paid
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-amber-500/20 text-amber-400"
+                        ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-400"
+                        : "bg-amber-500/20 text-amber-700 dark:text-amber-400"
                     }`}
                   >
                     {paid ? "Paid" : "Pending"}
@@ -109,25 +109,25 @@ export function EventDetailsSidebar({
         </div>
       )}
 
-      <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
-        <div className="text-xs uppercase tracking-wide text-white/50">
+      <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
+        <div className="text-xs uppercase tracking-wide text-fg-subtle">
           Event Stats
         </div>
-        <div className="mt-3 space-y-3 text-sm text-white/70">
+        <div className="mt-3 space-y-3 text-sm text-fg-muted">
           <div className="flex items-center justify-between">
             <span>Total Seats</span>
-            <span className="text-white">
+            <span className="text-fg">
               {maxSeats != null ? maxSeats : "Unlimited"}
             </span>
           </div>
           <div className="flex items-center justify-between">
             <span>Enrolled</span>
-            <span className="text-lime-300">{enrolledCount}</span>
+            <span className="text-primary">{enrolledCount}</span>
           </div>
           {maxSeats != null && maxSeats > 0 && (
-            <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+            <div className="h-2 rounded-full bg-elev-2 overflow-hidden">
               <div
-                className="h-full rounded-full bg-lime-400 transition-all"
+                className="h-full rounded-full bg-primary transition-all"
                 style={{
                   width: `${Math.min(100, (enrolledCount / maxSeats) * 100)}%`,
                 }}
@@ -136,7 +136,7 @@ export function EventDetailsSidebar({
           )}
           <div className="flex items-center justify-between pt-1">
             <span>Fee</span>
-            <span className="text-white">
+            <span className="text-fg">
               {eventAmount > 0 ? `₹${eventAmount.toLocaleString("en-IN", { minimumFractionDigits: 2 })}` : "Free"}
             </span>
           </div>
@@ -144,39 +144,39 @@ export function EventDetailsSidebar({
       </div>
 
       {showEnrollAction && workshopCertificate && (
-        <div className="rounded-2xl border border-lime-400/20 bg-lime-400/5 px-4 py-3 sm:px-5 sm:py-4">
-          <div className="flex items-center gap-2 text-lime-400 font-semibold mb-2">
+        <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 sm:px-5 sm:py-4">
+          <div className="flex items-center gap-2 text-primary font-semibold mb-2">
             <Award size={18} />
             Your Certificate
           </div>
-          <p className="text-sm text-white/70 mb-3">{workshopCertificate.title}</p>
+          <p className="text-sm text-fg-muted mb-3">{workshopCertificate.title}</p>
           {workshopCertificate.certificateUrl ? (
             <a
               href={workshopCertificate.certificateUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-4 py-2.5 text-sm font-semibold text-black hover:bg-lime-300 transition"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary hover:bg-primary-hover transition"
             >
               <Download size={16} />
               Download Certificate
             </a>
           ) : (
-            <span className="text-sm text-white/50">Certificate is being prepared</span>
+            <span className="text-sm text-fg-subtle">Certificate is being prepared</span>
           )}
         </div>
       )}
 
       {showEnrollAction && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 sm:px-5 sm:py-4">
+        <div className="rounded-2xl border border-line bg-elev-1 px-4 py-3 sm:px-5 sm:py-4">
           {enrollError && (
-            <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-300">
+            <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-300">
               {enrollError}
             </div>
           )}
           {isRegistered ? (
             needsPayment ? (
               <div className="space-y-3">
-                <p className="text-sm text-white/70">Complete payment to confirm enrollment</p>
+                <p className="text-sm text-fg-muted">Complete payment to confirm enrollment</p>
                 <PayButton
                   amount={eventAmount}
                   returnPath="/parent?tab=workshops"
@@ -185,19 +185,19 @@ export function EventDetailsSidebar({
                 />
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-lime-400">
+              <div className="flex items-center gap-2 text-primary">
                 <CheckCircle size={18} />
                 <span className="text-sm font-medium">You are enrolled</span>
               </div>
             )
           ) : isFull ? (
-            <div className="text-sm text-white/60">Workshop is full</div>
+            <div className="text-sm text-fg-muted">Workshop is full</div>
           ) : (
             <button
               type="button"
               onClick={onEnroll}
               disabled={enrollLoading}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-lime-400 px-4 py-3 text-sm font-semibold text-black hover:bg-lime-300 transition disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-on-primary hover:bg-primary-hover transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {enrollLoading ? (
                 <>

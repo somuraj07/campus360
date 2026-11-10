@@ -324,12 +324,12 @@ export async function POST(req: Request) {
           existingName.toLowerCase() === normalizedStudentName.toLowerCase()
         ) {
           return NextResponse.json(
-            { message: "Student name and Timelly ID already exist" },
+            { message: "Student name and RS Solutions ID already exist" },
             { status: 400 }
           );
         }
         return NextResponse.json(
-          { message: "Timelly ID already exists" },
+          { message: "RS Solutions ID already exists" },
           { status: 400 }
         );
       }
@@ -392,7 +392,7 @@ export async function POST(req: Request) {
             select: { id: true },
           });
           if (existingAdmission) {
-            throw new Error("This Timelly ID is already used. Please enter a different Timelly ID.");
+            throw new Error("This RS Solutions ID is already used. Please enter a different RS Solutions ID.");
           }
         } else {
           let admissionNumberReady = false;

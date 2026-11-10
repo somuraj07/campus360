@@ -51,13 +51,10 @@ export default function BottomNavBar({
 
   return (
     <nav
-      className="
-        fixed bottom-0 inset-x-0 z-40 lg:hidden
-        bg-[#0b1220]/95 backdrop-blur-xl
-        border-t border-white/10
-      "
+      aria-label="Primary"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_-8px_rgba(23,43,69,0.12)] lg:hidden"
     >
-      <div className="flex items-end py-3 px-2">
+      <div className="flex items-stretch px-1.5 py-1.5">
         {displayedItems.map(item => {
           const Icon = item.icon;
           const isActive = item.tab === activeTab;
@@ -67,16 +64,18 @@ export default function BottomNavBar({
               type="button"
               key={item.label}
               onClick={() => item.href && router.push(item.href)}
-              className={`
-                flex flex-col items-center
-                gap-1
-                flex-1 min-w-0
-                px-1.5
-                transition-all
-                ${isActive ? "text-lime-400" : "text-white/60"}
-              `}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-1.5 py-1.5 transition ${
+                isActive ? "text-primary font-semibold" : "text-fg-subtle"
+              }`}
             >
-              <Icon size={20} />
+              <span
+                className={`flex h-7 w-12 items-center justify-center rounded-full transition ${
+                  isActive ? "bg-primary/10" : ""
+                }`}
+              >
+                <Icon size={19} />
+              </span>
               <span
                 className="
                   w-full
@@ -97,14 +96,11 @@ export default function BottomNavBar({
           <button
             type="button"
             onClick={onMoreClick}
-            className="
-              flex flex-col items-center
-              gap-1
-              flex-1 min-w-0
-              text-white/60
-            "
+            className="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-1.5 py-1.5 text-fg-subtle"
           >
-            <MoreHorizontal size={20} />
+            <span className="flex h-7 w-12 items-center justify-center">
+              <MoreHorizontal size={19} />
+            </span>
             <span className="w-full text-[10px] text-center leading-tight truncate">
               More
             </span>

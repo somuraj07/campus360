@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import PageHeader from "../common/PageHeader";
 import { CircleAlert, Clock, FileText, SquareCheck } from "lucide-react";
-import StatCard from "../common/statCard";
+import { SaPage, SaPageHeader, KpiGrid, KpiCard } from "../common/ui";
 import CertificatesTab from "./certificatesTab/CertificatesTab";
 import {
   loadCertificatesPage,
@@ -74,48 +73,21 @@ export default function SchoolAdminCertificatesTab() {
   const rejected = certificateRequests.filter((t) => t.status === "REJECTED").length;
 
   return (
-    <div className="max-w-7xl mx-auto py-4 space-y-6 text-gray-200">
-      <PageHeader
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Students"
         title="Certificate Requests"
-        subtitle="Manage and process student certificate applications."
+        description="Manage and process student certificate applications."
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <StatCard
-          title="Total Requests"
-          value={<span className="text-xl sm:text-2xl font-semibold">{total}</span>}
-          icon={
-            <FileText className="text-blue-400/20 w-12 h-12 sm:w-14 sm:h-14 lg:w-[70px] lg:h-[70px]" />
-          }
-          iconVariant="plain"
-        />
-        <StatCard
-          title="Pending"
-          value={<span className="text-xl sm:text-2xl font-semibold">{pending}</span>}
-          icon={
-            <Clock className="text-orange-400/20 w-12 h-12 sm:w-14 sm:h-14 lg:w-[70px] lg:h-[70px]" />
-          }
-          iconVariant="plain"
-        />
-        <StatCard
-          title="Approved"
-          value={<span className="text-xl sm:text-2xl font-semibold">{approved}</span>}
-          icon={
-            <SquareCheck className="text-lime-400/20 w-12 h-12 sm:w-14 sm:h-14 lg:w-[70px] lg:h-[70px]" />
-          }
-          iconVariant="plain"
-        />
-        <StatCard
-          title="Rejected"
-          value={<span className="text-xl sm:text-2xl font-semibold">{rejected}</span>}
-          icon={
-            <CircleAlert className="text-red-400/20 w-12 h-12 sm:w-14 sm:h-14 lg:w-[70px] lg:h-[70px]" />
-          }
-          iconVariant="plain"
-        />
-      </div>
+      <KpiGrid>
+        <KpiCard label="Total Requests" value={total} icon={FileText} hint="All time" />
+        <KpiCard label="Pending" value={pending} icon={Clock} tone="gold" hint="Awaiting a decision" />
+        <KpiCard label="Approved" value={approved} icon={SquareCheck} tone="green" hint="Issued or ready" />
+        <KpiCard label="Rejected" value={rejected} icon={CircleAlert} tone="red" hint="Declined" />
+      </KpiGrid>
 
-      <div className="mt-6 w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto">
         <CertificatesTab
           certificateRequests={certificateRequests}
           loading={loading}
@@ -131,6 +103,6 @@ export default function SchoolAdminCertificatesTab() {
           }}
         />
       </div>
-    </div>
+    </SaPage>
   );
 }

@@ -22,9 +22,8 @@ describe("LoginForm", () => {
     mockUseSearchParams.mockReturnValue(new URLSearchParams(""));
   });
 
-  it("renders logo, heading and form fields", () => {
+  it("renders heading and form fields (logo lives in AuthShell)", () => {
     render(<LoginForm />);
-    expect(screen.getByAltText("Timelly")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Welcome Back/i })).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/school email/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/••••••••/)).toBeInTheDocument();

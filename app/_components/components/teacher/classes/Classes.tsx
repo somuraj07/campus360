@@ -3,12 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRightLeft } from "lucide-react";
 import TimellyLoader from "../../common/TimellyLoader";
-import HeaderActionButton from "../../common/HeaderActionButton";
 import { useTeacherClasses } from "./hooks/useTeacherClasses";
 import { useClassMetrics } from "./hooks/useClassMetrics";
 import ClassCards from "./components/ClassCards";
 import StudentsSection from "./components/StudentsSection";
-import PageHeader from "../../common/PageHeader";
+import { SaPage, SaPageHeader, Alert, btnClass } from "../../common/ui";
 import AssignSectionPanel from "../../schooladmin/classes-panels/AssignSectionPanel";
 
 const getClassLabel = (name?: string | null, section?: string | null) =>
@@ -68,17 +67,21 @@ export default function TeacherClasses() {
   const _activeStudents = classStudents.length;
 
   return (
-    <div className="min-h-screen text-white sm:lg:space-y-6">
-      <PageHeader
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Teaching"
         title="My Classes"
-        subtitle="Manage your classes and view student information."
-        rightSlot={
-          <HeaderActionButton
-            icon={ArrowRightLeft}
-            label={showAssignSection ? "Hide Assign Section" : "Assign Section"}
-            primary={showAssignSection}
+        description="Manage your classes and view student information."
+        actions={
+          <button
+            type="button"
+            aria-pressed={showAssignSection}
             onClick={() => setShowAssignSection((prev) => !prev)}
-          />
+            className={btnClass(showAssignSection ? "primary" : "secondary")}
+          >
+            <ArrowRightLeft size={16} />
+            {showAssignSection ? "Hide Assign Section" : "Assign Section"}
+          </button>
         }
       />
 
@@ -94,19 +97,17 @@ export default function TeacherClasses() {
       {loading && classes.length === 0 ? (
         <TimellyLoader title="Loading classes" steps={["Classes", "Students", "Roster"]} />
       ) : error && classes.length === 0 ? (
-        <div className="rounded-3xl border border-red-500/30 bg-red-500/10 p-6 text-red-200">
-          {error}
-        </div>
+        <Alert tone="error">{error}</Alert>
       ) : (
         <>
           <section className="space-y-4">
             {/* <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-semibold">Classes</h3>
-                <p className="text-white/60 text-sm">Tap a class to view students</p>
+                <p className="text-fg-muted text-sm">Tap a class to view students</p>
               </div>
-              <div className="hidden sm:flex items-center gap-2 text-xs text-white/50">
-                <span className="w-2.5 h-2.5 rounded-full bg-lime-400" />
+              <div className="hidden sm:flex items-center gap-2 text-xs text-fg-subtle">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
                 Selected
               </div>
             </div> */}
@@ -132,15 +133,15 @@ export default function TeacherClasses() {
             }
           />
           {metrics.loading && (
-            <div className="text-sm text-white/60 flex items-center gap-2">
+            <div className="text-sm text-fg-muted flex items-center gap-2">
               <TimellyLoader compact bare title="Loading metrics" steps={["Attendance", "Marks"]} />
             </div>
           )}
           {metrics.error && (
-            <div className="text-sm text-red-200">{metrics.error}</div>
+            <div className="text-sm text-red-800 dark:text-red-200">{metrics.error}</div>
           )}
         </>
       )}
-    </div>
+    </SaPage>
   );
 }

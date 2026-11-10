@@ -1,8 +1,9 @@
 "use client";
 
-import { DollarSign, Percent, Wallet, AlertTriangle } from "lucide-react";
+import { AlertTriangle, CalendarClock, Hourglass, IndianRupee, Percent, Wallet } from "lucide-react";
 import type { FeeSummary } from "./types";
 import { formatRupee } from "@/lib/formatRupee";
+import { KpiCard } from "../../common/ui";
 
 interface FeeStatCardsProps {
   stats: FeeSummary | null;
@@ -18,60 +19,45 @@ export default function FeeStatCards({ stats }: FeeStatCardsProps) {
   const unplacedStudents = stats?.unplacedStudents ?? 0;
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-6 sm:gap-4">
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">
-          <DollarSign size={18} /> Current year total
-        </div>
-        <div className="break-words text-lg font-bold text-white sm:text-xl">
-          ₹{formatRupee(totalFee)}
-        </div>
-        <p className="mt-1 text-[11px] text-gray-500">Excludes previous-year pending</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">
-          <Percent size={18} /> Total discount
-        </div>
-        <div className="break-words text-lg font-bold text-violet-300 sm:text-xl">
-          ₹{formatRupee(totalDiscount)}
-        </div>
-        <p className="mt-1 text-[11px] text-gray-500">Sum of (base − final) per student</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">
-          <Wallet size={18} /> Total collected
-        </div>
-        <div className="break-words text-lg font-bold text-emerald-400 sm:text-xl">
-          ₹{formatRupee(collected)}
-        </div>
-        <p className="mt-1 text-[11px] text-gray-500">Recorded fee payments</p>
-        {unplaced > 0 ? (
-          <p className="mt-1 text-[11px] text-amber-300/90">
-            + ₹{formatRupee(unplaced)} paid on fees {unplacedStudents} student{unplacedStudents === 1 ? "" : "s"} no longer owe
-          </p>
-        ) : null}
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">Total due</div>
-        <div className="break-words text-lg font-bold text-amber-400 sm:text-xl">
-          ₹{formatRupee(due)}
-        </div>
-        <p className="mt-1 text-[11px] text-gray-500">Current-year outstanding</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">Previous year due</div>
-        <div className="break-words text-lg font-bold text-orange-300 sm:text-xl">
-          ₹{formatRupee(previousYearDue)}
-        </div>
-        <p className="mt-1 text-[11px] text-gray-500">Shown separately from total fees</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-        <div className="mb-1 flex items-center gap-2 text-sm text-gray-400">
-          <AlertTriangle size={18} /> Critical
-        </div>
-        <div className="text-lg font-bold text-red-400 sm:text-xl">{stats?.pending ?? 0}</div>
-        <p className="mt-1 text-[11px] text-gray-500">Students with balance due</p>
-      </div>
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <KpiCard
+        label="Current year total"
+        value={`₹${formatRupee(totalFee)}`}
+        icon={IndianRupee}
+        hint="Excludes previous-year pending"
+      />
+      <KpiCard
+        label="Total collected"
+        value={`₹${formatRupee(collected)}`}
+        icon={Wallet}
+        tone="green"
+        hint={
+          unplaced > 0 ? (
+            <span className="text-amber-700 dark:text-amber-300">
+              + ₹{formatRupee(unplaced)} paid on fees {unplacedStudents} student{unplacedStudents === 1 ? "" : "s"} no
+              longer owe
+            </span>
+          ) : (
+            "Recorded fee payments"
+          )
+        }
+      />
+      <KpiCard label="Total due" value={`₹${formatRupee(due)}`} icon={Hourglass} tone="gold" hint="Current-year outstanding" />
+      <KpiCard
+        label="Total discount"
+        value={`₹${formatRupee(totalDiscount)}`}
+        icon={Percent}
+        tone="sky"
+        hint="Sum of (base − final) per student"
+      />
+      <KpiCard
+        label="Previous year due"
+        value={`₹${formatRupee(previousYearDue)}`}
+        icon={CalendarClock}
+        tone="gold"
+        hint="Shown separately from total fees"
+      />
+      <KpiCard label="Critical" value={stats?.pending ?? 0} icon={AlertTriangle} tone="red" hint="Students with balance due" />
     </div>
   );
 }

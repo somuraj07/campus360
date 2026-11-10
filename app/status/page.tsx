@@ -50,7 +50,7 @@ export default function StatusPage() {
   return (
     <main className="min-h-screen px-4 py-10 sm:px-6">
       <article className="mx-auto w-full max-w-2xl rounded-2xl bg-white p-8 text-zinc-800 shadow-2xl">
-        <h1 className="text-3xl font-bold text-zinc-950">Timelly status</h1>
+        <h1 className="text-3xl font-bold text-zinc-950">RS Solutions status</h1>
         <p className="mt-4 flex items-center gap-2 text-lg font-semibold" aria-live="polite">
           <span className={`inline-block h-3 w-3 rounded-full ${color}`} />
           {label}

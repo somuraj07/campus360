@@ -40,7 +40,7 @@ export function EventBasicDetailsFields({
 }) {
   return (
     <div className="space-y-5">
-      <div className="text-xs font-bold text-white/50 uppercase tracking-wider">
+      <div className="text-xs font-bold text-fg-subtle uppercase tracking-wider">
         Basic Details
       </div>
 
@@ -52,22 +52,22 @@ export function EventBasicDetailsFields({
         variant="glass"
       />
 
-      <div className="text-xs font-bold text-white/50 uppercase tracking-wider mt-4">
+      <div className="text-xs font-bold text-fg-subtle uppercase tracking-wider mt-4">
         Target Audience
       </div>
       <div>
-        <label className="block text-xs sm:text-sm mb-1 text-white/70 flex items-center gap-1.5">
+        <label className="block text-xs sm:text-sm mb-1 text-fg-muted flex items-center gap-1.5">
           <GraduationCap size={14} /> Target Class (optional)
         </label>
-        <p className="text-xs text-white/50 mb-2">Restrict to a class, or select specific students below.</p>
+        <p className="text-xs text-fg-subtle mb-2">Restrict to a class, or select specific students below.</p>
         <select
           value={classId}
           onChange={(e) => setClassId(e.target.value)}
-          className="w-full rounded-xl bg-black/30 border border-white/20 text-sm text-white px-4 py-3 focus:outline-none focus:border-lime-400/60"
+          className="w-full rounded-xl bg-well border border-line-strong text-sm text-fg px-4 py-3 focus:outline-none focus:border-primary/60"
         >
-          <option value="" className="text-black">All classes (open to all)</option>
+          <option value="" className="text-on-primary">All classes (open to all)</option>
           {classes.map((c) => (
-            <option key={c.id} value={c.id} className="text-black">
+            <option key={c.id} value={c.id} className="text-on-primary">
               {c.name}{c.section ? ` - ${c.section}` : ""}
             </option>
           ))}
@@ -75,11 +75,11 @@ export function EventBasicDetailsFields({
       </div>
       {classStudents.length > 0 && (
         <div>
-          <label className="block text-xs sm:text-sm mb-1 text-white/70 flex items-center gap-1.5">
+          <label className="block text-xs sm:text-sm mb-1 text-fg-muted flex items-center gap-1.5">
             <Users size={14} /> Pre-register students (optional)
           </label>
-          <p className="text-xs text-white/50 mb-2">Select specific students to pre-register for this event.</p>
-          <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 rounded-xl bg-black/20 border border-white/10">
+          <p className="text-xs text-fg-subtle mb-2">Select specific students to pre-register for this event.</p>
+          <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 rounded-xl bg-well border border-line">
             {classStudents.map((s) => {
               const sel = studentIds.includes(s.id);
               return (
@@ -92,7 +92,7 @@ export function EventBasicDetailsFields({
                     )
                   }
                   className={`px-3 py-1.5 rounded-lg text-xs border transition-all ${
-                    sel ? "bg-lime-400/20 text-lime-400 border-lime-400/50" : "bg-white/5 text-gray-400 border-white/10"
+                    sel ? "bg-primary/20 text-primary border-primary/50" : "bg-elev-1 text-fg-muted border-line"
                   }`}
                 >
                   {s.user?.name ?? "Student"}
@@ -101,7 +101,7 @@ export function EventBasicDetailsFields({
             })}
           </div>
           {studentIds.length > 0 && (
-            <p className="text-xs text-lime-400/80 mt-1">{studentIds.length} student(s) selected</p>
+            <p className="text-xs text-primary mt-1">{studentIds.length} student(s) selected</p>
           )}
         </div>
       )}
@@ -124,7 +124,7 @@ export function EventBasicDetailsFields({
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm mb-1 text-white/70">
+        <label className="block text-xs sm:text-sm mb-1 text-fg-muted">
           Description
         </label>
         <textarea
@@ -132,12 +132,12 @@ export function EventBasicDetailsFields({
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Brief description of the event..."
           rows={4}
-          className="w-full rounded-xl bg-black/30 border border-white/20 text-sm text-white placeholder-white/40 px-4 py-3 focus:outline-none focus:ring-0 focus:border-lime-400/60 no-scrollbar"
+          className="w-full rounded-xl bg-well border border-line-strong text-sm text-fg placeholder:text-fg-faint px-4 py-3 focus:outline-none focus:ring-0 focus:border-primary/60 no-scrollbar"
         />
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm mb-1 text-white/70">
+        <label className="block text-xs sm:text-sm mb-1 text-fg-muted">
           Additional Info / Certificates
         </label>
         <textarea
@@ -145,7 +145,7 @@ export function EventBasicDetailsFields({
           onChange={(e) => setAdditionalInfo(e.target.value)}
           placeholder="Details about certificates, prerequisites, or special instructions..."
           rows={4}
-          className="w-full rounded-xl bg-black/30 border border-white/20 text-sm text-white placeholder-white/40 px-4 py-3 focus:outline-none focus:ring-0 focus:border-lime-400/60 no-scrollbar"
+          className="w-full rounded-xl bg-well border border-line-strong text-sm text-fg placeholder:text-fg-faint px-4 py-3 focus:outline-none focus:ring-0 focus:border-primary/60 no-scrollbar"
         />
       </div>
     </div>

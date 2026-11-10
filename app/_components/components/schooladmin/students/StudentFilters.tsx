@@ -46,8 +46,8 @@ export default function StudentFilters({
   exportPdfLoading = false,
 }: Props) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-5 space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
+    <div className="rounded-2xl border border-line bg-elev-1 p-4 md:p-5 space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-end">
         <SelectInput
           label="Class"
           value={selectedClass}
@@ -67,7 +67,7 @@ export default function StudentFilters({
 
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex w-full sm:w-auto overflow-x-auto">
-          <div className="flex bg-[#0F172A]/50 p-1 rounded-xl border border-white/10">
+          <div className="flex bg-surface p-1 rounded-xl border border-line">
             {STATUS_TABS.map((tab) => {
               const isActive = statusFilter === tab.value;
               return (
@@ -77,8 +77,8 @@ export default function StudentFilters({
                   onClick={() => onStatusFilterChange(tab.value)}
                   className={`whitespace-nowrap px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all ${
                     isActive
-                      ? "bg-lime-400 text-black shadow-lg"
-                      : "text-white/70 hover:text-white"
+                      ? "bg-primary text-on-primary shadow-card"
+                      : "text-fg-muted hover:text-fg"
                   }`}
                 >
                   {tab.label}
@@ -92,7 +92,7 @@ export default function StudentFilters({
           <button
             type="button"
             onClick={onToggleAddForm}
-            className="px-3 md:px-4 py-2 border rounded-xl font-medium transition-all shadow-[0_0_15px_rgba(163,230,53,0.15)] text-xs md:text-sm flex items-center justify-center gap-2 bg-lime-400/10 text-lime-400 border-lime-400/20 hover:bg-lime-400/20"
+            className="px-3 md:px-4 py-2 border rounded-xl font-medium transition-all text-xs md:text-sm flex items-center justify-center gap-2 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
           >
             {showAddForm ? (
               <>
@@ -108,7 +108,7 @@ export default function StudentFilters({
           <button
             type="button"
             onClick={onToggleUpload}
-            className="px-3 md:px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-gray-300"
+            className="px-3 md:px-4 py-2 bg-elev-1 hover:bg-elev-3 border border-line rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-fg-muted"
           >
             <Upload size={16} /> Upload CSV
           </button>
@@ -117,7 +117,7 @@ export default function StudentFilters({
             type="button"
             onClick={onDownloadExcel}
             disabled={exportExcelLoading}
-            className="px-3 md:px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 md:px-4 py-2 bg-elev-1 hover:bg-elev-3 border border-line rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-fg-muted disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download size={16} />
             {exportExcelLoading ? "Excel…" : "Excel"}
@@ -127,7 +127,7 @@ export default function StudentFilters({
             type="button"
             onClick={onDownloadPdf}
             disabled={exportPdfLoading}
-            className="px-3 md:px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 md:px-4 py-2 bg-elev-1 hover:bg-elev-3 border border-line rounded-xl font-medium transition-all text-xs md:text-sm flex items-center gap-2 text-fg-muted disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <FileText size={16} />
             {exportPdfLoading ? "PDF…" : "PDF"}

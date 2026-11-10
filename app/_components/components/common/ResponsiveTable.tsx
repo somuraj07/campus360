@@ -29,15 +29,15 @@ export default function ResponsiveTable({
   const colCount = headers.length;
 
   return (
-    <div className={`rounded-xl border border-white/10 overflow-hidden bg-white/5 ${className}`}>
+    <div className={`rounded-xl border border-line overflow-hidden bg-elev-1 ${className}`}>
       <div className="overflow-x-auto no-scrollbar">
         <table className="w-full min-w-[640px]">
           <thead>
-            <tr className="border-b border-white/10">
+            <tr className="border-b border-line">
               {headers.map((h) => (
                 <th
                   key={h.key}
-                  className={`text-left px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-white/80 whitespace-nowrap ${h.hideOnMobile ? "hidden sm:table-cell" : ""} ${h.className ?? ""}`}
+                  className={`text-left px-3 sm:px-4 py-3 text-xs sm:text-sm font-semibold text-fg whitespace-nowrap ${h.hideOnMobile ? "hidden sm:table-cell" : ""} ${h.className ?? ""}`}
                 >
                   {h.label}
                 </th>
@@ -49,7 +49,7 @@ export default function ResponsiveTable({
               <tr>
                 <td
                   colSpan={colCount}
-                  className="px-4 py-8 text-center text-sm text-white/60"
+                  className="px-4 py-8 text-center text-sm text-fg-muted"
                 >
                   {emptyMessage}
                 </td>
@@ -58,12 +58,12 @@ export default function ResponsiveTable({
               rows.map((row, idx) => (
                 <tr
                   key={idx}
-                  className="border-b border-white/10 hover:bg-white/5 transition"
+                  className="border-b border-line hover:bg-elev-2 transition"
                 >
                   {row.map((cell, cellIdx) => (
                     <td
                       key={cellIdx}
-                      className={`px-3 sm:px-4 py-3 text-xs sm:text-sm text-white/90 ${headers[cellIdx]?.hideOnMobile ? "hidden sm:table-cell" : ""}`}
+                      className={`px-3 sm:px-4 py-3 text-xs sm:text-sm text-fg ${headers[cellIdx]?.hideOnMobile ? "hidden sm:table-cell" : ""}`}
                     >
                       {cell}
                     </td>
@@ -75,7 +75,7 @@ export default function ResponsiveTable({
         </table>
       </div>
       {footer && (
-        <div className="px-3 sm:px-4 py-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm text-white/60">
+        <div className="px-3 sm:px-4 py-3 border-t border-line flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm text-fg-muted">
           {footer}
         </div>
       )}

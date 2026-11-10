@@ -21,7 +21,7 @@ export default function FormInput({
 }: FormInputProps) {
   return (
     <div>
-      <label className="block text-sm font-medium text-white mb-2">
+      <label className="block text-sm font-medium text-fg mb-2">
         {label} {required && "*"}
       </label>
       <input
@@ -29,13 +29,13 @@ export default function FormInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className={`w-full px-4 py-2 rounded-lg bg-white/10 border
-          text-white placeholder:text-white/40 outline-none
-          focus:bg-white/15 focus:border-lime-400/40 transition
-          ${error ? "border-red-400/50" : "border-white/20"}`}
+        className={`w-full px-4 py-2 rounded-lg bg-elev-2 border
+          text-fg placeholder:text-fg-subtle outline-none
+          focus:bg-elev-3 focus:border-primary/40 transition
+          ${error ? "border-red-400/50" : "border-line-strong"}`}
       />
       {helperText && (
-        <p className="text-xs text-white/60 mt-1">{helperText}</p>
+        <p className="text-xs text-fg-muted mt-1">{helperText}</p>
       )}
     </div>
   );

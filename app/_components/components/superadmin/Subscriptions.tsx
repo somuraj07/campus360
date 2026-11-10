@@ -1,12 +1,25 @@
 "use client";
 
-import { useMemo } from "react";
-import { CreditCard, Search } from "lucide-react";
-import PageHeader from "../common/PageHeader";
-import SearchInput from "../common/SearchInput";
-import TableLayout from "../common/TableLayout";
-import Spinner from "../common/Spinner";
-import { useSubscriptionsState, buildSubscriptionsColumns, SubscriptionMobileCard, EditSubscriptionModal } from "./shared/subscriptions";
+import { useMemo, useState } from "react";
+import { CreditCard, Pencil, School, ShieldCheck, ShieldOff, Users, Wallet } from "lucide-react";
+import { useSubscriptionsState, SubscriptionMobileCard, EditSubscriptionModal, ModeBadge, StatusPill } from "./shared/subscriptions";
+import {
+  SaPage,
+  SaPageHeader,
+  KpiGrid,
+  KpiCard,
+  Panel,
+  SearchBox,
+  Segmented,
+  DataTable,
+  Th,
+  Td,
+  InitialsAvatar,
+  EmptyState,
+  LoadingBlock,
+  Alert,
+  btnClass,
+} from "./shared/ui";
 
 export type BillingMode = "PARENT_SUBSCRIPTION" | "SCHOOL_PAID";
 
@@ -21,92 +34,143 @@ export interface SubscriptionRow {
   isActive: boolean;
 }
 
-export default function Subscriptions() {
-  const {
-    rows,
-    loading,
-    error,
-    search,
-    setSearch,
-    savingId,
-    editing,
-    setEditing,
-    handleModalSave,
-  } = useSubscriptionsState();
+type StatusFilter = "all" | "active" | "inactive";
 
-  const columns = useMemo(
-    () => buildSubscriptionsColumns({ onEdit: setEditing }),
-    [setEditing]
+export default function Subscriptions() {
+  const { rows, loading, error, search, setSearch, savingId, editing, setEditing, handleModalSave } =
+    useSubscriptionsState();
+  const [status, setStatus] = useState<StatusFilter>("all");
+
+  const counts = useMemo(
+    () => ({
+      active: rows.filter((r) => r.isActive).length,
+      inactive: rows.filter((r) => !r.isActive).length,
+      parent: rows.filter((r) => r.billingMode === "PARENT_SUBSCRIPTION").length,
+      school: rows.filter((r) => r.billingMode === "SCHOOL_PAID").length,
+    }),
+    [rows]
+  );
+
+  const visible = useMemo(
+    () => rows.filter((r) => (status === "all" ? true : status === "active" ? r.isActive : !r.isActive)),
+    [rows, status]
   );
 
   return (
-    <main className="flex-1 min-w-0 w-full max-w-[1600px] mx-auto flex flex-col">
-      <div className="w-full min-h-0 space-y-4 sm:space-y-6 px-0 sm:px-0">
-        <PageHeader
-          title="Subscriptions"
-          subtitle="SaaS mode, pricing, and activation per school"
-          className="rounded-2xl sm:rounded-3xl"
-          rightSlot={
-            <div className="w-full md:max-w-sm lg:max-w-md">
-              <SearchInput
-                value={search}
-                onChange={setSearch}
-                icon={Search}
-                iconPosition="right"
-                placeholder="Search by school name…"
-                variant="glass"
-              />
-            </div>
-          }
-        />
+    <SaPage>
+      <SaPageHeader eyebrow="Billing" title="Subscriptions" description="SaaS mode, pricing, and activation per school" />
 
-        {error && (
-          <div className="text-red-400 text-sm py-1 px-1" role="alert">
-            {error}
-          </div>
-        )}
+      {!loading && (
+        <KpiGrid>
+          <KpiCard label="Active schools" value={counts.active} icon={ShieldCheck} tone="green" hint="Full portal access" />
+          <KpiCard label="Deactivated" value={counts.inactive} icon={ShieldOff} tone="red" hint="Access locked" />
+          <KpiCard label="Parent subscription" value={counts.parent} icon={Users} tone="sky" hint="Parents pay yearly" />
+          <KpiCard label="School paid" value={counts.school} icon={Wallet} tone="gold" hint="Billed to the school" />
+        </KpiGrid>
+      )}
 
+      {error && <Alert tone="error">{error}</Alert>}
+
+      <Panel
+        title="Schools"
+        description={loading ? undefined : `${visible.length} shown`}
+        actions={
+          <>
+            <Segmented<StatusFilter>
+              value={status}
+              onChange={setStatus}
+              options={[
+                { value: "all", label: "All" },
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "Deactivated" },
+              ]}
+            />
+            <SearchBox value={search} onChange={setSearch} placeholder="Search by school name…" className="w-full sm:w-64" />
+          </>
+        }
+        bodyClassName="p-0"
+      >
         {loading ? (
-          <div className="flex justify-center py-16">
-            <Spinner />
-          </div>
+          <LoadingBlock label="Loading subscriptions…" />
+        ) : visible.length === 0 ? (
+          <EmptyState icon={School} title="No schools match your search." />
         ) : (
           <>
-            {/* Mobile & tablet: cards */}
-            <div className="lg:hidden space-y-3">
-              {rows.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-white/3 px-4 py-12 text-center text-sm text-white/50">
-                  No schools match your search.
-                </div>
-              ) : (
-                rows.map((r) => (
-                  <SubscriptionMobileCard key={r.id} row={r} onEdit={setEditing} />
-                ))
-              )}
-            </div>
-
-            {/* Desktop: wide table */}
             <div className="hidden lg:block">
-              <TableLayout
-                columns={columns}
-                data={rows}
-                emptyText="No schools match your search."
-                rowKey={(row) => row.id}
-                tableClassName="table-auto w-full min-w-[960px]"
-                tdClassName="whitespace-normal align-middle"
-              />
+              <DataTable
+                minWidth={940}
+                head={
+                  <tr>
+                    <Th>School</Th>
+                    <Th>Mode</Th>
+                    <Th align="right">Amount (₹ / year)</Th>
+                    <Th align="right">Trial</Th>
+                    <Th>Created</Th>
+                    <Th>Status</Th>
+                    <Th align="right">
+                      <span className="sr-only">Actions</span>
+                    </Th>
+                  </tr>
+                }
+              >
+                {visible.map((r) => (
+                  <tr key={r.id} className="hover:bg-elev-2">
+                    <Td>
+                      <div className="flex items-center gap-3">
+                        <InitialsAvatar name={r.name} size="sm" />
+                        <div className="min-w-0">
+                          <p className="truncate font-semibold text-fg">{r.name}</p>
+                          <p className="truncate text-xs text-fg-subtle">{r.location || "—"}</p>
+                        </div>
+                      </div>
+                    </Td>
+                    <Td>
+                      <ModeBadge mode={r.billingMode} />
+                    </Td>
+                    <Td align="right" className="font-medium text-fg tabular-nums">
+                      {r.billingMode === "PARENT_SUBSCRIPTION" ? (
+                        typeof r.parentSubscriptionAmount === "number" ? (
+                          `₹${r.parentSubscriptionAmount.toLocaleString("en-IN")}`
+                        ) : (
+                          <span className="text-fg-faint">—</span>
+                        )
+                      ) : (
+                        <span className="text-xs font-normal text-fg-subtle">Included</span>
+                      )}
+                    </Td>
+                    <Td align="right" className="text-fg-muted tabular-nums">
+                      {r.billingMode === "PARENT_SUBSCRIPTION" ? `${r.parentSubscriptionTrialDays ?? 0}d` : "—"}
+                    </Td>
+                    <Td className="text-fg-muted">{new Date(r.createdAt).toLocaleDateString("en-IN")}</Td>
+                    <Td>
+                      <StatusPill active={r.isActive} />
+                    </Td>
+                    <Td align="right">
+                      <button type="button" onClick={() => setEditing(r)} className={btnClass("secondary", "sm")}>
+                        <Pencil size={13} />
+                        Edit
+                      </button>
+                    </Td>
+                  </tr>
+                ))}
+              </DataTable>
+            </div>
+            <div className="space-y-3 p-4 lg:hidden">
+              {visible.map((r) => (
+                <SubscriptionMobileCard key={r.id} row={r} onEdit={setEditing} />
+              ))}
             </div>
           </>
         )}
+      </Panel>
 
-        <div className="mt-2 sm:mt-4 text-xs text-white/40 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 rounded-xl border border-white/5 bg-white/2 px-3 py-3 sm:px-4">
-          <CreditCard className="w-4 h-4 shrink-0 text-white/35 mt-0.5" aria-hidden />
-          <p className="leading-relaxed">
-            Deactivating a school locks access for its admins, teachers, and parents. They will see a
-            Timelly notice to contact support when trying to use the portal.
-          </p>
-        </div>
-      </div>
+      <Alert tone="info">
+        <span className="flex items-start gap-2">
+          <CreditCard size={16} className="mt-0.5 shrink-0" />
+          Deactivating a school locks access for its admins, teachers, and parents. They will see a RS Solutions notice
+          to contact support when trying to use the portal.
+        </span>
+      </Alert>
 
       {editing && (
         <EditSubscriptionModal
@@ -117,6 +181,6 @@ export default function Subscriptions() {
           onSave={() => void handleModalSave()}
         />
       )}
-    </main>
+    </SaPage>
   );
 }

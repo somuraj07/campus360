@@ -4,7 +4,7 @@ export type SchoolAdminSchoolContext =
   | { schoolId: string }
   | { error: string; status: 400 | 403 };
 
-/** School id for school-admin dashboard APIs (checks Timelly active flag). */
+/** School id for school-admin dashboard APIs (checks RS Solutions active flag). */
 export async function resolveSchoolAdminSchoolId(session: {
   user: { id: string; schoolId?: string | null };
 }): Promise<SchoolAdminSchoolContext> {
@@ -20,7 +20,7 @@ export async function resolveSchoolAdminSchoolId(session: {
     }
     if (adminSchool.isActive === false) {
       return {
-        error: "Your school's Timelly access is deactivated. Please contact Timelly support.",
+        error: "Your school's RS Solutions access is deactivated. Please contact RS Solutions support.",
         status: 403,
       };
     }
@@ -36,7 +36,7 @@ export async function resolveSchoolAdminSchoolId(session: {
   }
   if (school.isActive === false) {
     return {
-      error: "Your school's Timelly access is deactivated. Please contact Timelly support.",
+      error: "Your school's RS Solutions access is deactivated. Please contact RS Solutions support.",
       status: 403,
     };
   }

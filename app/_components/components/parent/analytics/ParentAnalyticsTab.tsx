@@ -128,9 +128,9 @@ export default function ParentAnalyticsTab() {
 
   if (error || !data) {
     return (
-      <div className="flex items-center justify-center min-h-[400px] text-white">
+      <div className="flex items-center justify-center min-h-[400px] text-fg">
         <div className="text-center">
-          <p className="text-red-400 mb-4">{error || "Failed to load analytics"}</p>
+          <p className="text-red-700 dark:text-red-400 mb-4">{error || "Failed to load analytics"}</p>
           <button
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -221,7 +221,7 @@ export default function ParentAnalyticsTab() {
     .slice(0, 2);
 
   return (
-    <div className="space-y-6 text-white">
+    <div className="space-y-6 text-fg">
       {/* Header */}
       <AnalyticsHeader />
 

@@ -39,16 +39,16 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
     } = useCircularFormState({ onClose, onSuccess });
 
     return (
-        <div className="bg-[#0F172A] border border-lime-400/30 rounded-2xl p-6 shadow-2xl relative overflow-hidden animate-fadeIn">
-            <div className="absolute top-0 left-0 w-1 h-full bg-lime-400"></div>
+        <div className="bg-surface border border-primary/30 rounded-2xl p-6 shadow-card relative overflow-hidden animate-fadeIn">
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
             {/* header */}
             <div className="flex justify-between items-center mb-6 pl-2">
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-xl font-bold text-fg flex items-center gap-2">
                     <Plus size={20} className="inline mr-2" /> New Circular
                 </h2>
                 <button
                     onClick={onClose}
-                    className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-white"
+                    className="p-2 hover:bg-elev-2 rounded-lg text-fg-muted hover:text-fg"
                 >
                     <X size={20} />
                 </button>
@@ -59,43 +59,43 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                 {/* reference + date */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-xs font-medium text-gray-400 mb-1.5">Reference Number</label>
+                        <label className="block text-xs font-medium text-fg-muted mb-1.5">Reference Number</label>
                         <input
                             placeholder="Reference Number"
                             value={form.referenceNumber}
                             onChange={(e) =>
                                 setForm({ ...form, referenceNumber: e.target.value })
                             }
-                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50"
+                            className="w-full bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50"
                         />
                     </div>
                     <div>
-                        <label htmlFor="date" className="block text-xs font-medium text-gray-400 mb-1.5">Date</label>
+                        <label htmlFor="date" className="block text-xs font-medium text-fg-muted mb-1.5">Date</label>
                         <input
                             type="date"
                             value={form.date}
                             onChange={(e) =>
                                 setForm({ ...form, date: e.target.value })
                             }
-                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50"
+                            className="w-full bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50"
                         />
                     </div>
                     {/* subject */}
                     <div className="w-full md:col-span-2    ">
-                        <label htmlFor="" className="block text-xs font-medium text-gray-400 mb-1.5">Subject / Title *</label>
+                        <label htmlFor="" className="block text-xs font-medium text-fg-muted mb-1.5">Subject / Title *</label>
                         <input
                             type="text"
                             value={form.subject}
                             onChange={(e) =>
                                 setForm({ ...form, subject: e.target.value })
                             }
-                            className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50"
+                            className="w-full bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50"
                         />
                     </div>
                 </div>
                 {/* content */}
                 <div>
-                    <label htmlFor="content" className="block text-xs font-medium text-gray-400 mb-1.5">Content *</label>
+                    <label htmlFor="content" className="block text-xs font-medium text-fg-muted mb-1.5">Content *</label>
                     <textarea
                         required
                         rows={5}
@@ -104,11 +104,11 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                         onChange={(e) =>
                             setForm({ ...form, content: e.target.value })
                         }
-                        className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50"
+                        className="w-full bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50"
                     />
                 </div>
                 <div>
-                    <label htmlFor="" className="block text-xs font-medium text-gray-400 mb-2">Attachments</label>
+                    <label htmlFor="" className="block text-xs font-medium text-fg-muted mb-2">Attachments</label>
                     <div className="flex flex-wrap gap-3 mb-3">
                         <input
                             ref={fileInputRef}
@@ -122,32 +122,32 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
                             disabled={attachmentUploading}
-                            className="px-3 py-2 bg-white/5 border border-dashed border-white/20 rounded-lg text-sm text-gray-400 hover:text-white hover:border-lime-400/50 hover:bg-lime-400/5 transition-all flex items-center gap-2 disabled:opacity-60"
+                            className="px-3 py-2 bg-elev-1 border border-dashed border-line-strong rounded-lg text-sm text-fg-muted hover:text-fg hover:border-primary/50 hover:bg-primary/5 transition-all flex items-center gap-2 disabled:opacity-60"
                         >
                             {attachmentUploading ? "Uploading…" : "Attach Document"}
                         </button>
                         {form.attachments.map((url, i) => (
                             <span
                                 key={url}
-                                className="px-3 py-2 bg-lime-400/10 border border-lime-400/30 rounded-lg text-xs text-lime-400 flex items-center gap-2"
+                                className="px-3 py-2 bg-primary/10 border border-primary/30 rounded-lg text-xs text-primary flex items-center gap-2"
                             >
                                 <a href={url} target="_blank" rel="noopener noreferrer" className="truncate max-w-[120px]">
                                     Attachment {i + 1}
                                 </a>
-                                <button type="button" onClick={() => removeAttachment(i)} className="text-red-400 hover:text-red-300">×</button>
+                                <button type="button" onClick={() => removeAttachment(i)} className="text-red-700 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300">×</button>
                             </span>
                         ))}
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label htmlFor="" className="block text-xs font-medium text-gray-400 mb-1.5">Issued by</label>
-                        <input type="text" value={form.issuedBy} onChange={(e) => setForm({ ...form, issuedBy: e.target.value })} className="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50" />
+                        <label htmlFor="" className="block text-xs font-medium text-fg-muted mb-1.5">Issued by</label>
+                        <input type="text" value={form.issuedBy} onChange={(e) => setForm({ ...form, issuedBy: e.target.value })} className="w-full bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50" />
                     </div>
                     <div>
-                        <label className="block text-xs font-medium text-gray-400 mb-1.5">Importance</label>
+                        <label className="block text-xs font-medium text-fg-muted mb-1.5">Importance</label>
                         {/* importance */}
-                        <div className="flex bg-black/20 rounded-xl p-1 border border-white/10">
+                        <div className="flex bg-well rounded-xl p-1 border border-line">
                             {IMPORTANCE_LEVELS.map(({ label, activeClass }) => {
                                 const isActive = selected === label;
 
@@ -162,7 +162,7 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                                         className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all
           ${isActive
                                                 ? activeClass
-                                                : "text-gray-400 hover:text-gray-200"
+                                                : "text-fg-muted hover:text-fg"
                                             }`}
                                     >
                                         {label}
@@ -178,20 +178,20 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
 
                 {/* target class - class-wise circular */}
                 <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2 flex items-center gap-1.5">
+                    <label className="block text-xs font-medium text-fg-muted mb-2 flex items-center gap-1.5">
                         <GraduationCap size={14} /> Target Class (optional)
                     </label>
-                    <p className="text-xs text-white/50 mb-2">
+                    <p className="text-xs text-fg-subtle mb-2">
                         Leave empty for school-wide. Select a class to target students, parents, or teachers of that class only.
                     </p>
                     <select
                         value={form.classId}
                         onChange={(e) => setForm({ ...form, classId: e.target.value })}
-                        className="w-full max-w-xs bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-lime-400/50"
+                        className="w-full max-w-xs bg-well border border-line rounded-xl px-4 py-3 text-fg focus:outline-none focus:border-primary/50"
                     >
-                        <option value="" className="bg-gray-900 text-white">All classes (school-wide)</option>
+                        <option value="" className="bg-surface text-fg">All classes (school-wide)</option>
                         {classes.map((c) => (
-                            <option key={c.id} value={c.id} className="bg-gray-900 text-white">
+                            <option key={c.id} value={c.id} className="bg-surface text-fg">
                                 {c.name}{c.section ? ` - ${c.section}` : ""}
                             </option>
                         ))}
@@ -200,10 +200,10 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
 
                 {/* recipients */}
                 <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label className="block text-xs font-medium text-fg-muted mb-2">
                         Recipients
                     </label>
-                    <p className="text-xs text-white/50 mb-2">
+                    <p className="text-xs text-fg-subtle mb-2">
                         Choose who receives this circular. If classes are selected above, students/parents/teachers apply to those classes only.
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -217,12 +217,12 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                                     className={`
                                         px-3 py-1.5 rounded-lg text-xs font-medium border
                                         transition-all flex items-center gap-1.5
-                                        ${isSelected ? "bg-lime-400/20 text-lime-400 border-lime-400/50" : "bg-white/5 text-gray-400 border-white/10 hover:border-white/20"}
+                                        ${isSelected ? "bg-primary/20 text-primary border-primary/50" : "bg-elev-1 text-fg-muted border-line hover:border-line-strong"}
                                     `}
                                 >
                                     {isSelected && (
-                                        <span className="w-3.5 h-3.5 rounded-full bg-lime-400 flex items-center justify-center">
-                                            <Check size={10} className="text-black" />
+                                        <span className="w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+                                            <Check size={10} className="text-on-primary" />
                                         </span>
                                     )}
                                     {r.label}
@@ -238,9 +238,9 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
 
                 <div className="flex flex-wrap gap-6">
                     {/* Publish Now */}
-                    <label className="flex items-center gap-3 cursor-pointer text-sm text-gray-300">
+                    <label className="flex items-center gap-3 cursor-pointer text-sm text-fg-muted">
                         {form.publishStatus === PUBLISH_STATUS.PUBLISHED ? (
-                            <CircleCheckBig className="w-5 h-5 text-green-500" />
+                            <CircleCheckBig className="w-5 h-5 text-green-600 dark:text-green-500" />
                         ) : (
                             <input
                                 type="radio"
@@ -260,9 +260,9 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                     </label>
 
                     {/* Save as Draft */}
-                    <label className="flex items-center gap-3 cursor-pointer text-sm text-gray-300">
+                    <label className="flex items-center gap-3 cursor-pointer text-sm text-fg-muted">
                         {form.publishStatus === PUBLISH_STATUS.DRAFT ? (
-                            <Clock className="w-5 h-5 text-yellow-400" />
+                            <Clock className="w-5 h-5 text-yellow-700 dark:text-yellow-400" />
                         ) : (
                             <input
                                 type="radio"
@@ -285,17 +285,17 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
 
 
                 {error && (
-                    <div className="rounded-xl bg-red-500/20 border border-red-500/30 px-4 py-3 text-red-300 text-sm">
+                    <div className="rounded-xl bg-red-500/20 border border-red-500/30 px-4 py-3 text-red-700 dark:text-red-300 text-sm">
                         {error}
                     </div>
                 )}
 
                 {/* actions */}
-                <div className="flex gap-3 justify-end pt-4 border-t border-white/10">
+                <div className="flex gap-3 justify-end pt-4 border-t border-line">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-6 py-2.5 rounded-xl border border-white/10 text-gray-400 font-medium hover:bg-white/5 transition-all"
+                        className="px-6 py-2.5 rounded-xl border border-line text-fg-muted font-medium hover:bg-elev-2 transition-all"
                     >
                         Cancel
                     </button>
@@ -304,7 +304,7 @@ export default function CircularForm({ onClose, onSuccess }: Props) {
                         type="submit"
                         disabled={submitting}
                         whileTap={{ scale: submitting ? 1 : 0.97 }}
-                        className="px-6 py-2.5 bg-lime-400 hover:bg-lime-500 text-black font-bold rounded-xl shadow-lg shadow-lime-400/20 transition-all flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold rounded-xl shadow-card  transition-all flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         <Save size={18} className="inline" />
                         {submitting ? "Creating…" : "Create Circular"}

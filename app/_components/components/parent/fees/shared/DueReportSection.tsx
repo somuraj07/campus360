@@ -37,33 +37,33 @@ export function DueReportSection() {
   return (
     <section className="glass-card rounded-2xl p-4 sm:p-6 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
-        <h3 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
-          <ClipboardList className="w-5 h-5 text-lime-400 shrink-0" />
+        <h3 className="text-base sm:text-lg font-semibold text-fg flex items-center gap-2">
+          <ClipboardList className="w-5 h-5 text-primary shrink-0" />
           Fee due report
         </h3>
         {report && (
-          <span className="text-xs sm:text-sm text-gray-400">
-            Amount to pay: <span className="text-white font-semibold">{formatRupee(report.totals.due)}</span>
+          <span className="text-xs sm:text-sm text-fg-muted">
+            Amount to pay: <span className="text-fg font-semibold">{formatRupee(report.totals.due)}</span>
           </span>
         )}
       </div>
 
       {loading ? (
         <div className="space-y-2 animate-pulse" aria-label="Loading fee due report">
-          <div className="h-9 rounded-lg bg-white/5" />
-          <div className="h-9 rounded-lg bg-white/5" />
-          <div className="h-9 rounded-lg bg-white/5" />
+          <div className="h-9 rounded-lg bg-elev-1" />
+          <div className="h-9 rounded-lg bg-elev-1" />
+          <div className="h-9 rounded-lg bg-elev-1" />
         </div>
       ) : error || !report ? (
-        <p className="text-sm text-amber-400">{error}</p>
+        <p className="text-sm text-amber-700 dark:text-amber-400">{error}</p>
       ) : report.heads.length === 0 ? (
-        <p className="text-sm text-gray-500 py-4 text-center">No fees assigned yet.</p>
+        <p className="text-sm text-fg-subtle py-4 text-center">No fees assigned yet.</p>
       ) : (
         <>
-          <div className="rounded-xl border border-white/10 overflow-x-auto">
+          <div className="rounded-xl border border-line overflow-x-auto">
             <table className="w-full text-xs sm:text-sm min-w-[420px]">
               <thead>
-                <tr className="bg-white/5 text-xs uppercase tracking-wider text-gray-400">
+                <tr className="bg-elev-1 text-xs uppercase tracking-wider text-fg-muted">
                   <th className="px-3 sm:px-4 py-3 font-medium text-left">Fee head</th>
                   <th className="px-3 sm:px-4 py-3 font-medium text-right">Fee</th>
                   <th className="px-3 sm:px-4 py-3 font-medium text-right">Concession</th>
@@ -71,24 +71,24 @@ export function DueReportSection() {
                   <th className="px-3 sm:px-4 py-3 font-medium text-right">Due</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-line-subtle">
                 {report.heads.map((h) => (
                   <tr key={h.key}>
-                    <td className="px-3 sm:px-4 py-3 text-gray-200">{h.label}</td>
-                    <td className="px-3 sm:px-4 py-3 text-right text-white">{formatRupee(h.fee)}</td>
-                    <td className="px-3 sm:px-4 py-3 text-right text-gray-300">{formatRupee(h.concession)}</td>
-                    <td className="px-3 sm:px-4 py-3 text-right text-emerald-400">{formatRupee(h.paid)}</td>
-                    <td className="px-3 sm:px-4 py-3 text-right text-white font-medium">{formatRupee(h.due)}</td>
+                    <td className="px-3 sm:px-4 py-3 text-fg">{h.label}</td>
+                    <td className="px-3 sm:px-4 py-3 text-right text-fg">{formatRupee(h.fee)}</td>
+                    <td className="px-3 sm:px-4 py-3 text-right text-fg-muted">{formatRupee(h.concession)}</td>
+                    <td className="px-3 sm:px-4 py-3 text-right text-emerald-700 dark:text-emerald-400">{formatRupee(h.paid)}</td>
+                    <td className="px-3 sm:px-4 py-3 text-right text-fg font-medium">{formatRupee(h.due)}</td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
-                <tr className="bg-white/5 font-semibold">
-                  <td className="px-3 sm:px-4 py-3 text-white">Total</td>
-                  <td className="px-3 sm:px-4 py-3 text-right text-white">{formatRupee(report.totals.fee)}</td>
-                  <td className="px-3 sm:px-4 py-3 text-right text-gray-300">{formatRupee(report.totals.discount)}</td>
-                  <td className="px-3 sm:px-4 py-3 text-right text-emerald-400">{formatRupee(report.totals.paid)}</td>
-                  <td className="px-3 sm:px-4 py-3 text-right text-lime-300">{formatRupee(report.totals.due)}</td>
+                <tr className="bg-elev-1 font-semibold">
+                  <td className="px-3 sm:px-4 py-3 text-fg">Total</td>
+                  <td className="px-3 sm:px-4 py-3 text-right text-fg">{formatRupee(report.totals.fee)}</td>
+                  <td className="px-3 sm:px-4 py-3 text-right text-fg-muted">{formatRupee(report.totals.discount)}</td>
+                  <td className="px-3 sm:px-4 py-3 text-right text-emerald-700 dark:text-emerald-400">{formatRupee(report.totals.paid)}</td>
+                  <td className="px-3 sm:px-4 py-3 text-right text-primary">{formatRupee(report.totals.due)}</td>
                 </tr>
               </tfoot>
             </table>
@@ -96,12 +96,12 @@ export function DueReportSection() {
 
           {report.previousYear && (
             <div className="rounded-xl border border-amber-400/30 bg-amber-500/10 p-3 sm:p-4 text-xs sm:text-sm">
-              <p className="font-semibold text-amber-300">Previous year dues (not included in the total above)</p>
-              <p className="text-gray-300 mt-1">
+              <p className="font-semibold text-amber-700 dark:text-amber-300">Previous year dues (not included in the total above)</p>
+              <p className="text-fg-muted mt-1">
                 Fee {formatRupee(report.previousYear.fee)}
                 {report.previousYear.concession > 0 && <> · Concession {formatRupee(report.previousYear.concession)}</>}
                 {" · "}Paid {formatRupee(report.previousYear.paid)} ·{" "}
-                <span className="text-white font-semibold">Due {formatRupee(report.previousYear.due)}</span>
+                <span className="text-fg font-semibold">Due {formatRupee(report.previousYear.due)}</span>
               </p>
             </div>
           )}

@@ -3,6 +3,7 @@
 import { useState, lazy, Suspense } from "react";
 import { BookOpen, ClipboardList, Download } from "lucide-react";
 import ExamsPage from "../../schooladmin/exams/exams";
+import { SaPage, SaPageHeader, Segmented, LoadingBlock } from "../../common/ui";
 
 const TeacherReportCard = lazy(() => import("../marks/ReportCard"));
 const SchoolAdminDownloadReports = lazy(
@@ -23,57 +24,53 @@ const TABS: Array<{ id: SubTab; label: string; short: string; icon: typeof BookO
 export default function TeacherExamsHub() {
   const [subTab, setSubTab] = useState<SubTab>("exams");
 
-  return (
-    <div className="min-h-screen text-white">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
-        <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar pb-0.5 -mx-1 px-1">
-          {TABS.map(({ id, label, short, icon: Icon }) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setSubTab(id)}
-              className={`shrink-0 px-3.5 sm:px-5 py-2.5 rounded-xl flex items-center gap-2 text-sm font-medium transition ${
-                subTab === id
-                  ? "bg-lime-400/20 text-lime-400 border border-lime-400/40 shadow-md"
-                  : "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10"
-              }`}
-            >
-              <Icon size={15} className="shrink-0" />
-              <span className="sm:hidden">{short}</span>
-              <span className="hidden sm:inline">{label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+  const tabs = (
+    <Segmented
+      className="max-w-full overflow-x-auto"
+      value={subTab}
+      onChange={setSubTab}
+      options={TABS.map(({ id, label, icon: Icon }) => ({
+        value: id,
+        label: (
+          <span className="inline-flex items-center gap-1.5">
+            <Icon size={14} /> {label}
+          </span>
+        ),
+      }))}
+    />
+  );
 
-      {subTab === "exams" ? (
+  if (subTab === "exams") {
+    return (
+      <div className="space-y-5">
+        <div className="mx-auto w-full max-w-[1400px]">{tabs}</div>
         <ExamsPage />
-      ) : subTab === "report-card" ? (
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-8 space-y-6">
-          <Suspense
-            fallback={
-              <div className="flex justify-center py-16">
-                <div className="w-10 h-10 border-2 border-lime-500/30 border-t-lime-500 rounded-full animate-spin" />
-              </div>
-            }
-          >
+      </div>
+    );
+  }
+
+  return (
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Academics"
+        title={subTab === "report-card" ? "Report Card" : "Download Reports"}
+        description={
+          subTab === "report-card"
+            ? "View student report cards and download class PDFs"
+            : "Download marks reports for classes as Excel or PDF"
+        }
+        actions={tabs}
+      />
+      <Suspense fallback={<LoadingBlock />}>
+        {subTab === "report-card" ? (
+          <div className="space-y-6">
             <DownloadClassPdf />
             <TeacherReportCard scope="school" />
-          </Suspense>
-        </div>
-      ) : (
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-8">
-          <Suspense
-            fallback={
-              <div className="flex justify-center py-16">
-                <div className="w-10 h-10 border-2 border-lime-500/30 border-t-lime-500 rounded-full animate-spin" />
-              </div>
-            }
-          >
-            <SchoolAdminDownloadReports />
-          </Suspense>
-        </div>
-      )}
-    </div>
+          </div>
+        ) : (
+          <SchoolAdminDownloadReports />
+        )}
+      </Suspense>
+    </SaPage>
   );
 }

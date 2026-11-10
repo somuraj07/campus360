@@ -1,7 +1,7 @@
 "use client";
 
 import { Download } from "lucide-react";
-import PageHeader from "../common/PageHeader";
+import { SaPage, SaPageHeader, btnClass } from "../common/ui";
 import AppointTeacher from "./teachersTab/AppointTeacher";
 import TeachersList from "./teachersTab/TeachersList";
 import EditTeacher from "./teachersTab/EditTeacher";
@@ -44,22 +44,21 @@ const SchoolAdminTeacherTab = () => {
   } = useTeachersTabState();
 
   return (
-    <div className="w-full max-w-screen-2xl mx-auto space-y-4 sm:space-y-6 min-w-0 overflow-x-hidden px-2 sm:px-0 pb-20 lg:pb-0">
-
-      <PageHeader
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Staff"
         title="Teachers"
-        subtitle={
+        description={
           teachersRevalidating
             ? "Overview of teaching staff — updating…"
             : "Overview of teaching staff, attendance, and assignments"
         }
-        transparent
-        rightSlot={
+        actions={
           <button
             type="button"
             onClick={() => void downloadReportAsPdf()}
             disabled={pdfLoading || teachers.length === 0}
-            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-xl text-sm font-medium transition-all text-gray-300 disabled:opacity-50"
+            className={btnClass("secondary")}
           >
             <Download size={16} /> {pdfLoading ? "Generating…" : "Download PDF"}
           </button>
@@ -91,8 +90,7 @@ const SchoolAdminTeacherTab = () => {
       />
 
       {/* Main Table & Mobile Card Section */}
-      <div className="grid gap-10
-      ">
+      <div className="grid gap-6">
       <div className="w-full min-w-0 overflow-hidden">
         <TeachersList
           teachersLoading={teachersLoading && teachers.length === 0}
@@ -136,7 +134,7 @@ const SchoolAdminTeacherTab = () => {
         />
       </div>
       </div>
-    </div>
+    </SaPage>
   );
 };
 export default SchoolAdminTeacherTab;

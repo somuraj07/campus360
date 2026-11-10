@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, GraduationCap, Search, ShieldCheck, Users } from "lucide-react";
 import type { LoginAuditCategory, LoginAuditPage } from "@/lib/school/loginAudit";
 import LoginAuditEarlier from "./LoginAuditEarlier";
+import { SaPage, SaPageHeader, Segmented, Panel, Alert, EmptyState, LoadingBlock, btnClass } from "../common/ui";
 
 const CATEGORY_LABEL: Record<LoginAuditCategory, string> = {
   TEACHER: "Teacher",
@@ -12,9 +13,9 @@ const CATEGORY_LABEL: Record<LoginAuditCategory, string> = {
 };
 
 const CATEGORY_BADGE: Record<LoginAuditCategory, string> = {
-  TEACHER: "bg-sky-400/15 text-sky-300",
-  PARENT_STUDENT: "bg-lime-400/15 text-lime-300",
-  STAFF: "bg-amber-400/15 text-amber-300",
+  TEACHER: "bg-sky-400/15 text-sky-700 dark:text-sky-300",
+  PARENT_STUDENT: "bg-primary/15 text-primary",
+  STAFF: "bg-amber-400/15 text-amber-700 dark:text-amber-300",
 };
 
 const PAGE_SIZE = 50;
@@ -56,7 +57,7 @@ const QUICK_RANGES: Array<{ key: QuickRange; label: string }> = [
 ];
 
 const inputClass =
-  "w-full bg-black/30 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-lime-400/50 [color-scheme:dark]";
+  "h-10 w-full rounded-lg border border-line-strong bg-surface px-3 text-sm text-fg placeholder:text-fg-faint focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10";
 
 type View = "RECENT" | "EARLIER";
 
@@ -69,25 +70,15 @@ const VIEWS: Array<{ key: View; label: string }> = [
 export default function LoginAuditTab() {
   const [view, setView] = useState<View>("RECENT");
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="inline-flex p-1 rounded-xl bg-white/5 border border-white/10" role="tablist">
-        {VIEWS.map(({ key, label }) => (
-          <button
-            key={key}
-            type="button"
-            role="tab"
-            aria-selected={view === key}
-            onClick={() => setView(key)}
-            className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
-              view === key ? "bg-lime-400/15 text-lime-300" : "text-gray-400 hover:text-gray-200"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Security"
+        title="Login Audit"
+        description="Who signed in to your school's portals, and when."
+        actions={<Segmented value={view} onChange={setView} options={VIEWS.map(({ key, label }) => ({ value: key, label }))} />}
+      />
       {view === "RECENT" ? <RecentSignIns /> : <LoginAuditEarlier />}
-    </div>
+    </SaPage>
   );
 }
 
@@ -169,16 +160,16 @@ function RecentSignIns() {
 
   const cards = useMemo(
     () => [
-      { key: "TEACHER" as const, label: "Teachers", icon: GraduationCap, tone: "text-sky-300 bg-sky-400/15" },
-      { key: "PARENT_STUDENT" as const, label: "Parents / Students", icon: Users, tone: "text-lime-300 bg-lime-400/15" },
-      { key: "STAFF" as const, label: "Admin / Chairman", icon: ShieldCheck, tone: "text-amber-300 bg-amber-400/15" },
+      { key: "TEACHER" as const, label: "Teachers", icon: GraduationCap, tone: "text-sky-700 dark:text-sky-300 bg-sky-400/15" },
+      { key: "PARENT_STUDENT" as const, label: "Parents / Students", icon: Users, tone: "text-primary bg-primary/15" },
+      { key: "STAFF" as const, label: "Admin / Chairman", icon: ShieldCheck, tone: "text-amber-700 dark:text-amber-300 bg-amber-400/15" },
     ],
     []
   );
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {cards.map(({ key, label, icon: Icon, tone }) => {
           const s = data?.summary[key];
           const active = category === key;
@@ -187,19 +178,20 @@ function RecentSignIns() {
               key={key}
               type="button"
               onClick={() => setCategory(active ? "ALL" : key)}
-              className={`text-left bg-white/5 backdrop-blur-xl border rounded-2xl p-4 sm:p-5 transition-colors ${
-                active ? "border-lime-400/50" : "border-white/10 hover:border-white/20"
+              aria-pressed={active}
+              className={`rounded-2xl border bg-elev-1 p-5 text-left transition-colors ${
+                active ? "border-primary ring-4 ring-primary/10" : "border-line hover:border-line-strong"
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${tone}`}>
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tone}`}>
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs text-gray-400 font-medium">{label}</p>
-                  <p className="text-xl font-bold text-white">
+                  <p className="text-[13px] font-medium text-fg-subtle">{label}</p>
+                  <p className="mt-0.5 text-2xl font-semibold tracking-tight text-fg tabular-nums">
                     {s ? s.people : "–"}
-                    <span className="text-xs font-medium text-gray-500 ml-1.5">
+                    <span className="text-xs font-medium text-fg-subtle ml-1.5">
                       {s ? `${s.people === 1 ? "person" : "people"} · ${s.logins} sign-in${s.logins === 1 ? "" : "s"}` : ""}
                     </span>
                   </p>
@@ -210,12 +202,12 @@ function RecentSignIns() {
         })}
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6">
+      <div className="rounded-2xl border border-line bg-elev-1 p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           <label className="block lg:col-span-2">
-            <span className="text-xs text-gray-400 font-medium">Search</span>
+            <span className="text-[13px] font-medium text-fg">Search</span>
             <div className="relative mt-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-fg-subtle pointer-events-none" />
               <input
                 type="search"
                 value={search}
@@ -226,7 +218,7 @@ function RecentSignIns() {
             </div>
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">Who</span>
+            <span className="text-[13px] font-medium text-fg">Who</span>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as typeof category)}
@@ -239,11 +231,11 @@ function RecentSignIns() {
             </select>
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">From</span>
+            <span className="text-[13px] font-medium text-fg">From</span>
             <input type="date" value={from} max={to} onChange={(e) => e.target.value && setFrom(e.target.value)} className={`${inputClass} mt-1`} />
           </label>
           <label className="block">
-            <span className="text-xs text-gray-400 font-medium">To</span>
+            <span className="text-[13px] font-medium text-fg">To</span>
             <input type="date" value={to} min={from} onChange={(e) => e.target.value && setTo(e.target.value)} className={`${inputClass} mt-1`} />
           </label>
           <div className="sm:col-span-2 lg:col-span-3 flex flex-wrap items-end gap-2">
@@ -254,11 +246,7 @@ function RecentSignIns() {
                 onClick={() => applyQuickRange(key)}
                 disabled={key === "ALL" && !data}
                 aria-pressed={activeRange === key}
-                className={`px-3 py-2 rounded-xl text-xs font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
-                  activeRange === key
-                    ? "border-lime-400/50 bg-lime-400/10 text-lime-300"
-                    : "border-white/10 bg-black/30 text-gray-300 hover:border-white/20"
-                }`}
+                className={btnClass(activeRange === key ? "primary" : "secondary", "sm")}
               >
                 {label}
               </button>
@@ -266,7 +254,7 @@ function RecentSignIns() {
           </div>
           {showClassFilter && (
             <label className="block sm:col-span-2 lg:col-span-2">
-              <span className="text-xs text-gray-400 font-medium">Class (parents / students)</span>
+              <span className="text-[13px] font-medium text-fg">Class (parents / students)</span>
               <select value={classId} onChange={(e) => setClassId(e.target.value)} className={`${inputClass} mt-1`}>
                 <option value="">All classes</option>
                 {data?.classes.map((c) => (
@@ -278,12 +266,12 @@ function RecentSignIns() {
             </label>
           )}
         </div>
-        <p className="text-xs text-gray-500 mt-3">
+        <p className="text-xs text-fg-subtle mt-3">
           Parents and students use the same login, so their sign-ins are listed together under the student.
           The counts above cover the selected dates.
         </p>
         {data && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-fg-subtle mt-1">
             {recordingSince
               ? `Sign-ins are recorded from ${dayFormat.format(new Date(recordingSince))}; parent logins from before then are under Earlier parent logins.`
               : "Sign-in recording has just started, so nothing has been recorded yet; parent logins from before then are under Earlier parent logins."}
@@ -291,71 +279,73 @@ function RecentSignIns() {
         )}
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+      <Panel
+        title="Sign-ins"
+        description={data ? `${data.total} sign-in${data.total === 1 ? "" : "s"} in this range` : undefined}
+        bodyClassName="p-0"
+      >
         {error ? (
-          <p className="p-6 text-sm text-red-300/80">{error}</p>
-        ) : !data ? (
-          <div className="p-6 space-y-3 animate-pulse" aria-label="Loading login audit">
-            <div className="h-10 rounded-xl bg-white/5" />
-            <div className="h-10 rounded-xl bg-white/5" />
-            <div className="h-10 rounded-xl bg-white/5" />
+          <div className="p-5">
+            <Alert tone="error">{error}</Alert>
           </div>
+        ) : !data ? (
+          <LoadingBlock label="Loading login audit…" />
         ) : data.entries.length === 0 ? (
-          <p className="p-6 text-sm text-gray-500">No sign-ins match these filters.</p>
+          <EmptyState title="No sign-ins match these filters" description="Try a wider date range or a different group." />
         ) : (
           <div className={loading ? "opacity-60 transition-opacity" : "transition-opacity"}>
             <table className="hidden md:table w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-gray-400 border-b border-white/10">
-                  <th className="px-5 py-3 font-medium">Signed in</th>
-                  <th className="px-5 py-3 font-medium">Name</th>
-                  <th className="px-5 py-3 font-medium">Who</th>
-                  <th className="px-5 py-3 font-medium">Details</th>
-                  <th className="px-5 py-3 font-medium">Device</th>
+              <thead className="border-b border-line bg-well text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
+                <tr className="text-left">
+                  <th className="px-5 py-3">Signed in</th>
+                  <th className="px-5 py-3">Name</th>
+                  <th className="px-5 py-3">Who</th>
+                  <th className="px-5 py-3">Details</th>
+                  <th className="px-5 py-3">Device</th>
                 </tr>
               </thead>
               <tbody>
                 {data.entries.map((e) => (
-                  <tr key={e.id} className="border-b border-white/5 last:border-0 align-top">
-                    <td className="px-5 py-3 text-gray-300 whitespace-nowrap">{timeFormat.format(new Date(e.at))}</td>
+                  <tr key={e.id} className="border-b border-line-subtle align-top transition-colors last:border-0 hover:bg-elev-2">
+                    <td className="px-5 py-3 text-fg-muted whitespace-nowrap">{timeFormat.format(new Date(e.at))}</td>
                     <td className="px-5 py-3">
-                      <p className="font-semibold text-gray-100">{e.name}</p>
-                      {e.fatherName && <p className="text-xs text-gray-500 mt-0.5">Father: {e.fatherName}</p>}
+                      <p className="font-semibold text-fg">{e.name}</p>
+                      {e.fatherName && <p className="text-xs text-fg-subtle mt-0.5">Father: {e.fatherName}</p>}
                     </td>
                     <td className="px-5 py-3">
                       {e.category && (
-                        <span className={`text-[11px] font-bold px-2.5 py-1 rounded-lg whitespace-nowrap ${CATEGORY_BADGE[e.category]}`}>
+                        <span className={`whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${CATEGORY_BADGE[e.category]}`}>
                           {e.role === "CHAIRMAN" ? "Chairman" : CATEGORY_LABEL[e.category]}
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-3 text-gray-400">
+                    <td className="px-5 py-3 text-fg-muted">
                       {e.admissionNumber ? `${e.className ?? "No class"} • ${e.admissionNumber}` : e.email ?? "–"}
                     </td>
-                    <td className="px-5 py-3 text-gray-400">
+                    <td className="px-5 py-3 text-fg-muted">
                       <p>{e.device}</p>
-                      {e.ipAddress && <p className="text-xs text-gray-600 mt-0.5">IP {e.ipAddress}</p>}
+                      {e.ipAddress && <p className="text-xs text-fg-faint mt-0.5">IP {e.ipAddress}</p>}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <ul className="md:hidden divide-y divide-white/5">
+            <ul className="md:hidden divide-y divide-line-subtle">
               {data.entries.map((e) => (
                 <li key={e.id} className="p-4 space-y-1">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="font-semibold text-gray-100 text-sm min-w-0 break-words">{e.name}</p>
+                    <p className="font-semibold text-fg text-sm min-w-0 break-words">{e.name}</p>
                     {e.category && (
-                      <span className={`text-[10px] font-bold px-2 py-1 rounded-lg flex-shrink-0 ${CATEGORY_BADGE[e.category]}`}>
+                      <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${CATEGORY_BADGE[e.category]}`}>
                         {e.role === "CHAIRMAN" ? "Chairman" : CATEGORY_LABEL[e.category]}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-400 break-words">
+                  <p className="text-xs text-fg-muted break-words">
                     {e.admissionNumber ? `${e.className ?? "No class"} • ${e.admissionNumber}` : e.email ?? "–"}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-fg-subtle">
                     {timeFormat.format(new Date(e.at))} · {e.device}
                   </p>
                 </li>
@@ -365,7 +355,7 @@ function RecentSignIns() {
         )}
 
         {data && data.total > 0 && (
-          <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-white/10 text-xs text-gray-400">
+          <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-line text-xs text-fg-muted">
             <span>
               {firstRow}–{lastRow} of {data.total}
             </span>
@@ -374,7 +364,7 @@ function RecentSignIns() {
                 type="button"
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1 || loading}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                className={btnClass("secondary", "sm")}
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -386,7 +376,7 @@ function RecentSignIns() {
                 type="button"
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages || loading}
-                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                className={btnClass("secondary", "sm")}
                 aria-label="Next page"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -394,7 +384,7 @@ function RecentSignIns() {
             </div>
           </div>
         )}
-      </div>
+      </Panel>
     </div>
   );
 }

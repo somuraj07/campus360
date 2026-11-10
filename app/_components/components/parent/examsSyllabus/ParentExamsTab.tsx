@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { BookOpen, Calendar, CheckCircle2 } from "lucide-react";
+import { Badge, KpiCard } from "../../common/ui";
+import { CalendarClock, Hourglass } from "lucide-react";
 import PageHeader from "../../common/PageHeader";
 import ParentTimellyLoader from "../ParentTimellyLoader";
 import { fetchExamTerms } from "@/lib/api/examTerms";
@@ -110,33 +112,23 @@ export default function ParentExamsTab() {
   }
 
   return (
-    <div className="min-h-screen text-white max-w-7xl mx-auto md:p-0">
+    <div className="mx-auto w-full max-w-[1400px] pb-10 text-fg">
       <PageHeader
-        title={
-          <div className="flex items-center gap-3">
-            <span>Exams & Syllabus</span>
-            <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase ${isTermCompleted ? 'bg-white/20 text-white' : 'bg-[#B4F42A] text-black'}`}>
-              {isTermCompleted ? 'Completed' : 'Active Term'}
-            </span>
-          </div>
-        }
-        subtitle={`Viewing details for ${selectedTermName}`}
-        rightSlot={
-          <div className="flex gap-2 md:gap-6">
-            <div className="text-right md:text-center border-r border-white/10 pr-6 text-white/40">
-              <p className="text-xs">Next Exam</p>
-              <p className="text-sm font-bold text-white">
-                {nextExamDate ? nextExamDate.toLocaleDateString("en-US", { month: "short", day: "numeric" }) : "--"}
-              </p>
-            </div>
-            <div className="text-right md:text-center">
-              <p className="text-xs">Days Left</p>
-              <p className="text-sm font-bold text-[#B4F42A]">{daysLeft}</p>
-            </div>
-          </div>
-        }
-        className="somu border-none !bg-white/5 mb-6"
+        eyebrow="Your child"
+        title="Exams & Syllabus"
+        subtitle={selectedTermName ? `Viewing details for ${selectedTermName}` : "Exam schedule and syllabus progress"}
+        rightSlot={<Badge tone={isTermCompleted ? "navy" : "green"} dot>{isTermCompleted ? "Term completed" : "Active term"}</Badge>}
       />
+
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <KpiCard
+          label="Next Exam"
+          value={nextExamDate ? nextExamDate.toLocaleDateString("en-IN", { month: "short", day: "numeric" }) : "--"}
+          icon={CalendarClock}
+          hint={selectedTermName || "No term selected"}
+        />
+        <KpiCard label="Days Left" value={daysLeft} icon={Hourglass} tone="gold" hint="Until the next exam" />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-3 space-y-4">
@@ -150,12 +142,12 @@ export default function ParentExamsTab() {
                   setShowAllSchedules(false);
                 }}
                 className={`p-2 pl-4 rounded-2xl text-left transition-all border ${selectedTermName === term.name
-                  ? " border-[#B4F42A]/50 bg-white/10 ring-1 ring-[#B4F42A]/20"
-                  : "border-white/5 bg-white/5 hover:bg-white/10"
+                  ? " border-primary/50 bg-elev-2 ring-1 ring-primary/20"
+                  : "border-line-subtle bg-elev-1 hover:bg-elev-3"
                   }`}
               >
                 <p className="font-bold text-[12px] capitalize">{term.name} Examination</p>
-                <span className={`text-[10px] font-bold uppercase tracking-wider ${term.status === 'UPCOMING' ? 'text-[#B4F42A]' : 'text-white/40'
+                <span className={`text-[10px] font-bold uppercase tracking-wider ${term.status === 'UPCOMING' ? 'text-primary' : 'text-fg-subtle'
                   }`}>
                   {term.status}
                 </span>
@@ -163,29 +155,29 @@ export default function ParentExamsTab() {
             ))}
           </div>
 
-          <div className="somu rounded-3xl p-5 border-none">
-            <h3 className="font-bold mb-4 flex items-center gap-2 text-white/80">
-              <Calendar size={16} className="text-[#B4F42A]" /> Schedule
+          <div className="somu rounded-2xl p-5 border-none">
+            <h3 className="font-bold mb-4 flex items-center gap-2 text-fg">
+              <Calendar size={16} className="text-primary" /> Schedule
             </h3>
             <div className="space-y-3">
               {(showAllSchedules ? activeSchedules : activeSchedules.slice(0, 2)).map((exam) => (
-                <div key={exam.id} className="bg-white/5 p-4 rounded-2xl flex items-center gap-4 border border-white/5">
-                  <div className="text-center border-r border-white/10 pr-3">
+                <div key={exam.id} className="bg-elev-1 p-4 rounded-2xl flex items-center gap-4 border border-line-subtle">
+                  <div className="text-center border-r border-line pr-3">
                     <p className="text-lg font-bold leading-tight">{new Date(exam.examDate).getDate()}</p>
-                    <p className="text-[9px] text-white/40 uppercase">
+                    <p className="text-[9px] text-fg-subtle uppercase">
                       {new Date(exam.examDate).toLocaleString('default', { month: 'short' })}
                     </p>
                   </div>
                   <div>
                     <p className="font-bold capitalize text-sm">{exam.subject}</p>
-                    <p className="text-[10px] text-white/40">{exam.startTime}</p>
+                    <p className="text-[10px] text-fg-subtle">{exam.startTime}</p>
                   </div>
                 </div>
               ))}
               {activeSchedules.length > 2 && (
                 <button
                   onClick={() => setShowAllSchedules(!showAllSchedules)}
-                  className="w-full text-center text-[#B4F42A] text-xs font-bold pt-1 hover:underline transition-all"
+                  className="w-full text-center text-primary text-xs font-bold pt-1 hover:underline transition-all"
                 >
                   {showAllSchedules ? "Show less" : "View all"}
                 </button>
@@ -196,19 +188,19 @@ export default function ParentExamsTab() {
 
         <div className="lg:col-span-9 space-y-6">
           {isTermCompleted ? (
-            <div className="somu rounded-3xl p-12 border-none flex flex-col items-center justify-center text-center">
-              <div className="bg-white/5 p-6 rounded-full mb-4">
-                <CheckCircle2 size={48} className="text-[#B4F42A]" />
+            <div className="somu rounded-2xl p-12 border-none flex flex-col items-center justify-center text-center">
+              <div className="bg-elev-1 p-6 rounded-full mb-4">
+                <CheckCircle2 size={48} className="text-primary" />
               </div>
               <h2 className="text-2xl font-bold mb-2">Examination Completed</h2>
-              <p className="text-white/40 max-w-xs">All syllabus and exams for {selectedTermName} have been concluded.</p>
+              <p className="text-fg-subtle max-w-xs">All syllabus and exams for {selectedTermName} have been concluded.</p>
             </div>
           ) : (
             <>
               <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
                 <button
                   onClick={() => setSelectedSubject("all")}
-                  className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${selectedSubject === "all" ? "bg-[#B4F42A] text-black" : "somu border-none"
+                  className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${selectedSubject === "all" ? "bg-primary text-on-primary" : "somu border-none"
                     }`}
                 >
                   All Subjects
@@ -217,7 +209,7 @@ export default function ParentExamsTab() {
                   <button
                     key={sub}
                     onClick={() => setSelectedSubject(sub)}
-                    className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all capitalize ${selectedSubject === sub ? "bg-[#B4F42A] text-black" : "somu border-none"
+                    className={`px-5 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all capitalize ${selectedSubject === sub ? "bg-primary text-on-primary" : "somu border-none"
                       }`}
                   >
                     {sub}
@@ -236,17 +228,17 @@ export default function ParentExamsTab() {
                   : syllabusItem.completedPercent;
 
                 return (
-                  <div key={subName} className="somu rounded-3xl p-6 md:p-8 border-none mb-6">
+                  <div key={subName} className="somu rounded-2xl p-6 md:p-8 border-none mb-6">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
                       <div className="flex items-center gap-4">
-                        <div className="bg-white/10 p-3 rounded-2xl">
-                          <BookOpen className="text-[#B4F42A]" size={24} />
+                        <div className="bg-elev-2 p-3 rounded-2xl">
+                          <BookOpen className="text-primary" size={24} />
                         </div>
                         <div>
                           <h2 className="text-xl font-bold capitalize">{subName}</h2>
                           {activeTermData[0]?.class?.teacher?.name ? (
-                            <div className="flex items-center gap-2 text-white/40 text-xs">
-                              <span className="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+                            <div className="flex items-center gap-2 text-fg-subtle text-xs">
+                              <span className="w-1.5 h-1.5 rounded-full bg-elev-3"></span>
                               <span>{activeTermData[0].class.teacher.name}</span>
                             </div>
                           ) : null}
@@ -255,31 +247,31 @@ export default function ParentExamsTab() {
 
                       <div className="w-full md:w-auto">
                         <div className="flex justify-between md:justify-end items-center gap-3 mb-2">
-                          <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest">Completion</span>
+                          <span className="text-[10px] text-fg-subtle uppercase font-bold tracking-widest">Completion</span>
                           <span className="text-lg font-bold">{calculatedProgress}%</span>
                         </div>
-                        <div className="w-full md:w-40 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                          <div className="bg-[#B4F42A] h-full rounded-full transition-all duration-500" style={{ width: `${calculatedProgress}%` }} />
+                        <div className="w-full md:w-40 h-1.5 bg-elev-2 rounded-full overflow-hidden">
+                          <div className="bg-primary h-full rounded-full transition-all duration-500" style={{ width: `${calculatedProgress}%` }} />
                         </div>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {syllabusItem.units.map((unit) => (
-                        <div key={unit.id} className="bg-white/5 p-4 rounded-2xl flex justify-between items-center border border-white/5">
+                        <div key={unit.id} className="bg-elev-1 p-4 rounded-2xl flex justify-between items-center border border-line-subtle">
                           <div className="flex items-center gap-3">
-                            <div className={`w-2 h-2 rounded-full ${unit.completedPercent === 100 ? 'bg-[#B4F42A]' : 'bg-blue-400'}`} />
-                            <span className="text-sm font-medium text-white/90">{unit.unitName}</span>
+                            <div className={`w-2 h-2 rounded-full ${unit.completedPercent === 100 ? 'bg-primary' : 'bg-blue-400'}`} />
+                            <span className="text-sm font-medium text-fg">{unit.unitName}</span>
                           </div>
                           {unit.completedPercent === 100 ? (
-                            <div className="flex items-center gap-1.5 bg-[#B4F42A]/10 px-3 py-1 rounded-lg border border-[#B4F42A]/20">
-                              <CheckCircle2 size={12} className="text-[#B4F42A]" />
-                              <span className="text-[10px] font-bold text-[#B4F42A] uppercase">Done</span>
+                            <div className="flex items-center gap-1.5 bg-primary/10 px-3 py-1 rounded-lg border border-primary/20">
+                              <CheckCircle2 size={12} className="text-primary" />
+                              <span className="text-[10px] font-bold text-primary uppercase">Done</span>
                             </div>
                           ) : (
                             <div className="flex items-center gap-3">
-                              <span className="text-[10px] font-bold text-white/30 uppercase">{unit.completedPercent}%</span>
-                              <div className="w-10 h-1 bg-white/10 rounded-full overflow-hidden">
+                              <span className="text-[10px] font-bold text-fg-faint uppercase">{unit.completedPercent}%</span>
+                              <div className="w-10 h-1 bg-elev-2 rounded-full overflow-hidden">
                                 <div className="bg-blue-400 h-full" style={{ width: `${unit.completedPercent}%` }} />
                               </div>
                             </div>

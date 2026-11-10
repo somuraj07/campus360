@@ -15,7 +15,7 @@ export function ReportCardStudentHeader({
   onPrint: () => void;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-lime-400/5 via-white/5 to-emerald-400/5 backdrop-blur-xl p-5">
+    <div className="relative overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-primary/5 via-white/5 to-emerald-400/5 p-5">
       {displaySchoolLogo ? (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <img
@@ -25,29 +25,29 @@ export function ReportCardStudentHeader({
           />
         </div>
       ) : null}
-      <div className="relative z-10 flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+      <div className="relative z-10 flex items-center justify-between gap-3 mb-4 pb-3 border-b border-line">
         <div className="flex items-center gap-3 min-w-0">
           {displaySchoolLogo ? (
             <img
               src={displaySchoolLogo}
               alt={`${reportData.school.name} logo`}
-              className="w-11 h-11 rounded-full object-cover border border-white/15 shrink-0"
+              className="w-11 h-11 rounded-full object-cover border border-line shrink-0"
             />
           ) : (
-            <div className="w-11 h-11 rounded-full border border-white/15 text-[10px] font-semibold text-white/70 grid place-items-center shrink-0">
+            <div className="w-11 h-11 rounded-full border border-line text-[10px] font-semibold text-fg-muted grid place-items-center shrink-0">
               LOGO
             </div>
           )}
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-white truncate">
+            <p className="text-sm font-semibold text-fg truncate">
               {reportData.school.name || "School"}
             </p>
-            <p className="text-[11px] text-white/45 truncate">
+            <p className="text-[11px] text-fg-subtle truncate">
               {reportData.school.address || "-"}
             </p>
           </div>
         </div>
-        <span className="text-[11px] uppercase tracking-wider text-white/40">
+        <span className="text-[11px] uppercase tracking-wider text-fg-subtle">
           Academic Performance Report
         </span>
       </div>
@@ -59,22 +59,22 @@ export function ReportCardStudentHeader({
             className="w-14 h-14 rounded-full flex-shrink-0"
           />
           <div>
-            <h2 className="text-lg font-bold text-white">
+            <h2 className="text-lg font-bold text-fg">
               {reportData.student.name}
             </h2>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/50 mt-0.5">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-fg-subtle mt-0.5">
               <span>{reportData.student.class}</span>
-              <span className="w-1 h-1 rounded-full bg-white/30" />
+              <span className="w-1 h-1 rounded-full bg-elev-3" />
               <span>{reportData.student.admissionNumber}</span>
               {reportData.student.rollNo && (
                 <>
-                  <span className="w-1 h-1 rounded-full bg-white/30" />
+                  <span className="w-1 h-1 rounded-full bg-elev-3" />
                   <span>Roll: {reportData.student.rollNo}</span>
                 </>
               )}
             </div>
             {reportData.student.fatherName && (
-              <p className="text-xs text-white/40 mt-0.5">
+              <p className="text-xs text-fg-subtle mt-0.5">
                 Father: {reportData.student.fatherName}
               </p>
             )}
@@ -84,7 +84,7 @@ export function ReportCardStudentHeader({
           <button
             onClick={onDownloadPdf}
             disabled={pdfLoading}
-            className="px-4 py-2 rounded-xl bg-lime-400/10 text-lime-400 border border-lime-400/20 text-sm font-medium flex items-center gap-2 hover:bg-lime-400/20 transition disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-primary/10 text-primary border border-primary/20 text-sm font-medium flex items-center gap-2 hover:bg-primary/20 transition disabled:opacity-50"
           >
             <Download size={14} />
             {pdfLoading ? "Generating…" : "Download PDF"}
@@ -92,7 +92,7 @@ export function ReportCardStudentHeader({
           <button
             onClick={onPrint}
             disabled={pdfLoading}
-            className="px-4 py-2 rounded-xl bg-white/5 text-white/70 border border-white/10 text-sm font-medium flex items-center gap-2 hover:bg-white/10 transition disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-elev-1 text-fg-muted border border-line text-sm font-medium flex items-center gap-2 hover:bg-elev-3 transition disabled:opacity-50"
           >
             <Printer size={14} />
             Print

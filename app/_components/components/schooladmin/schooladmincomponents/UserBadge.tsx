@@ -13,16 +13,16 @@ export default function UserBadge({ name, email, imageUrl }: UserBadgeProps) {
         <img
           src={imageUrl}
           alt={name}
-          className="w-10 h-10 rounded-full object-cover border-2 border-white/10"
+          className="w-10 h-10 rounded-full object-cover border-2 border-line"
         />
       ) : (
-        <div className="w-10 h-10 rounded-full bg-lime-400/20 flex items-center justify-center text-lime-400 font-bold text-sm flex-shrink-0">
+        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
           {name?.charAt(0).toUpperCase()}
         </div>
       )}
       <div className="min-w-0">
-        <div className="text-sm font-medium text-gray-200">{name}</div>
-        <div className="text-xs text-gray-500">{email}</div>
+        <div className="text-sm font-medium text-fg">{name}</div>
+        <div className="text-xs text-fg-subtle">{email}</div>
       </div>
     </div>
   );

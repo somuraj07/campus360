@@ -11,10 +11,10 @@ export default function StatCard({ icon, value, label }: StatCardProps) {
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-gray-600 text-sm">{label}</p>
+          <p className="text-fg-faint text-sm">{label}</p>
           <p className="text-2xl font-bold mt-2">{value}</p>
         </div>
-        <div className="text-blue-500">{icon}</div>
+        <div className="text-blue-600 dark:text-blue-500">{icon}</div>
       </div>
     </div>
   );

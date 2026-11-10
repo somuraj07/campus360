@@ -12,10 +12,10 @@ export default function ConfirmDeleteModal({
   onConfirm,
 }: Props) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0f1724] p-6 text-white shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay px-4">
+      <div className="w-full max-w-md rounded-2xl border border-line bg-surface p-6 text-fg shadow-pop">
         <h3 className="text-lg font-semibold">Delete Student</h3>
-        <p className="mt-2 text-sm text-white/60">
+        <p className="mt-2 text-sm text-fg-muted">
           Are you sure you want to delete {studentName}? This action cannot be
           undone.
         </p>
@@ -23,7 +23,7 @@ export default function ConfirmDeleteModal({
         <div className="mt-6 flex items-center justify-end gap-3">
           <button
             onClick={onCancel}
-            className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/70 hover:bg-white/10"
+            className="rounded-xl border border-line bg-elev-1 px-4 py-2 text-sm font-semibold text-fg-muted hover:bg-elev-3"
           >
             Cancel
           </button>

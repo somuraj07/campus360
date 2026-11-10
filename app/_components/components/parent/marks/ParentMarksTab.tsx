@@ -233,35 +233,32 @@ export default function ParentMarksTab() {
 
   if (loading) {
     return (
-      <div className="p-6 lg:p-10 min-h-screen text-white flex items-center justify-center">
+      <div className="p-6 lg:p-10 min-h-screen text-fg flex items-center justify-center">
         <ParentTimellyLoader preset="marks" className="w-full max-w-2xl" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen text-white px-3 sm:px-0 pb-6 overflow-x-hidden">
+    <div className="mx-auto w-full max-w-[1400px] space-y-5 pb-10 text-fg sm:space-y-6">
 
       {/* HEADER */}
-      <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">
-              Academic Performance
-            </h1>
-            <p className="text-white/60">
-              Track {studentName}'s marks and grades
-            </p>
+      <div>
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="min-w-0">
+            <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-fg">Your child</p>
+            <h1 className="text-2xl font-semibold tracking-tight text-fg sm:text-[28px]">Academic Performance</h1>
+            <p className="mt-1.5 text-sm text-fg-subtle">Track {studentName}&apos;s marks and grades</p>
           </div>
           <div className="flex items-center gap-2">
             <select
               value={examTypeFilter}
               onChange={(e) => setExamTypeFilter(e.target.value)}
-              className="h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm outline-none focus:border-lime-400/40 appearance-none cursor-pointer"
-              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center", paddingRight: "28px" }}
+              className="h-10 cursor-pointer appearance-none rounded-lg border border-line-strong bg-surface px-3 text-sm text-fg outline-none focus:border-primary focus:ring-4 focus:ring-primary/10"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='var(--fg-subtle)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center", paddingRight: "28px" }}
             >
               {examTypeOptions.map((opt) => (
-                <option key={opt} value={opt} className="bg-[#0f0f0f]">
+                <option key={opt} value={opt} className="bg-surface">
                   {opt === "ALL" ? "All Exams" : opt}
                 </option>
               ))}
@@ -269,7 +266,7 @@ export default function ParentMarksTab() {
             <button
               onClick={handleDownloadReport}
               disabled={generatingPdf}
-              className="flex items-center justify-center gap-2 px-4 py-2 h-10 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors font-medium text-sm border border-white/10 disabled:opacity-50 whitespace-nowrap"
+              className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-line-strong bg-surface px-4 text-sm font-semibold text-fg transition-colors hover:bg-elev-2 disabled:opacity-55"
             >
               {generatingPdf ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -286,57 +283,57 @@ export default function ParentMarksTab() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
 
         {/* Overall Score */}
-        <div className="relative rounded-2xl border border-white/10 p-6 backdrop-blur-xl hover:border-lime-400/30 transition">
+        <div className="relative rounded-2xl border border-line p-6 hover:border-primary/30 transition">
           <div className="flex justify-between items-start">
-            <div className="p-3 bg-white/5 rounded-xl">
-              <TrendingUp className="w-5 h-5 text-lime-400" />
+            <div className="p-3 bg-elev-1 rounded-xl">
+              <TrendingUp className="w-5 h-5 text-primary" />
             </div>
-            <span className="px-3 py-1 text-xs rounded-lg bg-lime-400/10 text-lime-400 border border-lime-400/20 font-semibold">
+            <span className="px-3 py-1 text-xs rounded-lg bg-primary/10 text-primary border border-primary/20 font-semibold">
               {stats.gradeLabel}
             </span>
           </div>
           <div className="mt-6">
-            <p className="text-sm text-white/60 mb-1">Overall Score</p>
+            <p className="text-sm text-fg-muted mb-1">Overall Score</p>
             <h2 className="text-3xl font-bold">{stats.overallScore}%</h2>
-            <p className="text-sm text-white/50 mt-1">
+            <p className="text-sm text-fg-subtle mt-1">
               {stats.totalMarks > 0 ? "Based on all subjects" : "No marks available"}
             </p>
           </div>
         </div>
 
         {/* Current Grade */}
-        <div className="relative rounded-2xl border border-white/10  p-6 backdrop-blur-xl hover:border-lime-400/30 transition">
+        <div className="relative rounded-2xl border border-line  p-6 hover:border-primary/30 transition">
           <div className="flex justify-between items-start">
-            <div className="p-3 bg-white/5 rounded-xl">
-              <Award className="w-5 h-5 text-lime-400" />
+            <div className="p-3 bg-elev-1 rounded-xl">
+              <Award className="w-5 h-5 text-primary" />
             </div>
-            <span className="px-3 py-1 text-xs rounded-lg bg-lime-400/10 text-lime-400 border border-lime-400/20 font-semibold">
+            <span className="px-3 py-1 text-xs rounded-lg bg-primary/10 text-primary border border-primary/20 font-semibold">
               Pass
             </span>
           </div>
           <div className="mt-6">
-            <p className="text-sm text-white/60 mb-1">Current Grade</p>
+            <p className="text-sm text-fg-muted mb-1">Current Grade</p>
             <h2 className="text-3xl font-bold">{stats.overallGrade}</h2>
-            <p className="text-sm text-white/50 mt-1">
+            <p className="text-sm text-fg-subtle mt-1">
               Overall performance
             </p>
           </div>
         </div>
 
         {/* Total Marks */}
-        <div className="relative rounded-2xl border border-white/10  p-6 backdrop-blur-xl hover:border-lime-400/30 transition">
+        <div className="relative rounded-2xl border border-line  p-6 hover:border-primary/30 transition">
           <div className="flex justify-between items-start">
-            <div className="p-3 bg-white/5 rounded-xl">
-              <Target className="w-5 h-5 text-lime-400" />
+            <div className="p-3 bg-elev-1 rounded-xl">
+              <Target className="w-5 h-5 text-primary" />
             </div>
-            <span className="px-3 py-1 text-xs rounded-lg bg-white/5 text-gray-400 border border-white/10 font-semibold">
+            <span className="px-3 py-1 text-xs rounded-lg bg-elev-1 text-fg-muted border border-line font-semibold">
               Progress
             </span>
           </div>
           <div className="mt-6">
-            <p className="text-sm text-white/60 mb-1">Total Marks</p>
+            <p className="text-sm text-fg-muted mb-1">Total Marks</p>
             <h2 className="text-3xl font-bold">{stats.totalMarks}/{stats.totalMaxMarks}</h2>
-            <p className="text-sm text-white/50 mt-1">
+            <p className="text-sm text-fg-subtle mt-1">
               Score obtained
             </p>
           </div>

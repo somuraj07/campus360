@@ -66,18 +66,18 @@ export default function HomeworkCard({
   const status = getStatus();
   const statusColor =
     status === 'Pending'
-      ? 'border-orange-400 text-orange-300'
+      ? 'border-orange-400 text-orange-700 dark:text-orange-300'
       : status === 'Submitted'
-      ? 'border-lime-400 text-lime-300'
-      : 'border-red-400 text-red-300';
+      ? 'border-primary text-primary'
+      : 'border-red-400 text-red-700 dark:text-red-300';
 
   return (
     <div className="somu rounded-2xl p-6">
       <div className="flex justify-between items-center">
         <div>
-          <p className="text-sm text-lime-300">{homework.subject}</p>
+          <p className="text-sm text-primary">{homework.subject}</p>
           <h3 className="text-lg font-semibold">{homework.title}</h3>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-fg-muted">
             {homework.teacher.name} • Due: {formatDate(homework.dueDate)}
           </p>
         </div>
@@ -97,20 +97,20 @@ export default function HomeworkCard({
       </div>
 
       {isOpen && (
-        <div className="mt-6 space-y-4 border-t border-white/20 pt-4">
-          <p className="text-sm text-white/70">
+        <div className="mt-6 space-y-4 border-t border-line-strong pt-4">
+          <p className="text-sm text-fg-muted">
             {homework.description}
           </p>
 
           {homework.submission?.fileUrl && (
-            <div className="text-sm text-white/70">
+            <div className="text-sm text-fg-muted">
               <p>Submitted on: {formatDate(homework.submission.submittedAt)}</p>
               {homework.submission.fileUrl && (
                 <a
                   href={homework.submission.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lime-300 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   View submitted file
                 </a>
@@ -122,7 +122,7 @@ export default function HomeworkCard({
             <button
               onClick={() => onUpload(homework.id)}
               disabled={isUploading}
-              className="w-full flex justify-center items-center gap-2 py-3 rounded-xl border border-lime-400 text-lime-300 hover:bg-lime-400/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center items-center gap-2 py-3 rounded-xl border border-primary text-primary hover:bg-primary/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Upload size={18} />
               {isUploading ? 'Uploading...' : 'Upload Submission'}

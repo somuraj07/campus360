@@ -6,7 +6,7 @@ import SearchInput from "../../common/SearchInput";
 import CircularNoticeCard from "../../common/CircularNoticeCard";
 import { ParentCircular } from "./types";
 
-const ACCENT_COLORS = ["bg-red-500", "bg-yellow-400", "bg-blue-500", "bg-lime-400"];
+const ACCENT_COLORS = ["bg-red-500", "bg-yellow-400", "bg-blue-500", "bg-primary"];
 const IMPORTANCE_FILTERS = ["all", "high", "medium", "low"] as const;
 
 type ImportanceFilter = (typeof IMPORTANCE_FILTERS)[number];
@@ -56,10 +56,10 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
     <section className="space-y-4 sm:space-y-5">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div className="flex items-start gap-2 sm:gap-3">
-          <span className="w-1 sm:w-1.5 h-8 sm:h-12 rounded-full bg-lime-400 mt-1 flex-shrink-0" />
+          <span className="w-1 sm:w-1.5 h-8 sm:h-12 rounded-full bg-primary mt-1 flex-shrink-0" />
           <div className="min-w-0">
-            <h3 className="text-base sm:text-xl font-bold text-white flex items-center gap-2">Circulars & Notices</h3>
-            <p className="text-xs sm:text-sm text-gray-400 mt-0.5 sm:mt-1 hidden sm:block">Create and manage school-wide circulars</p>
+            <h3 className="text-base sm:text-xl font-bold text-fg flex items-center gap-2">Circulars & Notices</h3>
+            <p className="text-xs sm:text-sm text-fg-muted mt-0.5 sm:mt-1 hidden sm:block">Create and manage school-wide circulars</p>
           </div>
         </div>
 
@@ -90,8 +90,8 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
                   onClick={() => setImportance(filter)}
                   className={`h-[38px] sm:h-[42px] px-3 sm:px-4 border rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap flex-shrink-0 ${
                     active
-                      ? "bg-lime-400/10 text-lime-300 border-lime-400/40"
-                      : "bg-white/5 text-white/60 border-white/15 hover:bg-white/10"
+                      ? "bg-primary/10 text-primary border-primary/40"
+                      : "bg-elev-1 text-fg-muted border-line hover:bg-elev-3"
                   }`}
                 >
                   {label}
@@ -103,7 +103,7 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-white/70">
+        <div className="rounded-2xl border border-line bg-elev-1 p-6 text-fg-muted">
           No circulars found for the selected filters.
         </div>
       ) : (
@@ -125,7 +125,7 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
           </div>
 
           {filtered.length > pageSize && (
-            <div className="flex flex-wrap items-center justify-between gap-3 px-2 text-white/70">
+            <div className="flex flex-wrap items-center justify-between gap-3 px-2 text-fg-muted">
               <div className="text-xs">
                 Showing {Math.min(startIndex + 1, filtered.length)}-
                 {Math.min(endIndex, filtered.length)} of {filtered.length}
@@ -135,7 +135,7 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
                   type="button"
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={safePage === 1}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10"
+                  className="px-3 py-1.5 rounded-lg border border-line bg-elev-1 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-elev-3"
                 >
                   Prev
                 </button>
@@ -146,7 +146,7 @@ export default function ParentHomeCircularsSection({ circulars }: Props) {
                   type="button"
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={safePage === totalPages}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10"
+                  className="px-3 py-1.5 rounded-lg border border-line bg-elev-1 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-elev-3"
                 >
                   Next
                 </button>

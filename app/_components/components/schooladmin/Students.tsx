@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
-import DataTable from "../common/TableLayout";
-import SearchInput from "../common/SearchInput";
-import StudentFilters from "./students/StudentFilters";
+import { Download, FileText, Filter, Plus, Upload, UserCheck, UserX, Users, X } from "lucide-react";
 import UploadCsvPanel from "./students/UploadCsvPanel";
 import AddStudentForm from "./students/AddStudentForm";
 import StudentDetailsModal from "./students/StudentDetailsModal";
@@ -13,9 +10,22 @@ import DeleteConfirmation from "../common/DeleteConfirmation";
 import { buildStudentColumns } from "./students/studentColumns";
 import useStudentPage from "./students/useStudentPage";
 import { getAge, toStudentForm } from "./students/utils";
-import { ClassItem } from "./students/types";
+import { ClassItem, type StudentStatusFilter } from "./students/types";
+import {
+  SaPage,
+  SaPageHeader,
+  KpiGrid,
+  KpiCard,
+  Panel,
+  Segmented,
+  SearchBox,
+  SelectInput as KitSelect,
+  ColumnsTable,
+  TablePager,
+  EmptyState,
+  btnClass,
+} from "../common/ui";
 import SuccessPopups from "../common/SuccessPopUps";
-import StudentsHeader from "./students/StudentsHeader";
 import TimellyLoader from "../common/TimellyLoader";
 
 type Props = {
@@ -55,105 +65,167 @@ export default function StudentsManagementPage({ classes, reload }: Props) {
     page.statusFilter === "All"
       ? `All Students (${page.filteredStudents.length})`
       : `${page.statusFilter} Students (${page.filteredStudents.length})`;
-  const studentSearch = (
-    <SearchInput
-      placeholder="Search students..."
-      value={page.searchQuery}
-      onChange={page.setSearchQuery}
-      icon={Search}
-      variant="glass"
-    />
-  );
+
+
+  const total = page.totalCount ?? (page.activeCount ?? 0) + (page.inactiveCount ?? 0);
+  const fmt = (n: number | null | undefined) => (n == null ? "—" : n.toLocaleString("en-IN"));
 
   return (
-    <main className="mx-auto w-full max-w-none xl:max-w-7xl space-y-6 md:space-y-8 text-white pb-12 px-0">
-      <StudentsHeader
-        activeCount={page.activeCount}
-        inactiveCount={page.inactiveCount}
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Academics"
+        title="Students"
+        description="Manage records, active/inactive status, and exports"
+        actions={
+          <>
+            <button type="button" onClick={page.handleDownloadExcel} disabled={page.exportingDetails} className={btnClass("secondary")}>
+              <Download size={16} />
+              {page.exportingDetails ? "Excel…" : "Excel"}
+            </button>
+            <button type="button" onClick={page.handleDownloadPdf} disabled={page.exportingPdf} className={btnClass("secondary")}>
+              <FileText size={16} />
+              {page.exportingPdf ? "PDF…" : "PDF"}
+            </button>
+            <button
+              type="button"
+              onClick={() => page.setShowUploadPanel((prev) => !prev)}
+              className={page.showUploadPanel ? btnClass("primary") : btnClass("secondary")}
+              aria-pressed={page.showUploadPanel}
+            >
+              <Upload size={16} />
+              Upload CSV
+            </button>
+            <button type="button" onClick={() => page.setShowAddForm((prev) => !prev)} className={btnClass("primary")}>
+              {page.showAddForm ? <X size={16} /> : <Plus size={16} />}
+              {page.showAddForm ? "Close Form" : "Add Student"}
+            </button>
+          </>
+        }
       />
-      <div className="mx-auto w-full max-w-none xl:max-w-7xl space-y-4 md:space-y-6 text-gray-200 pb-12">
-        <StudentFilters
-          classOptions={page.filterClassOptions}
-          sectionOptions={page.filterSectionOptions}
-          selectedClass={page.selectedClass}
-          onClassChange={page.setSelectedClass}
-          selectedSection={page.selectedSection}
-          onSectionChange={page.setSelectedSection}
-          statusFilter={page.statusFilter}
-          onStatusFilterChange={page.setStatusFilter}
-          showAddForm={page.showAddForm}
-          onToggleAddForm={() => page.setShowAddForm((prev) => !prev)}
-          onToggleUpload={() => page.setShowUploadPanel((prev) => !prev)}
-          onDownloadExcel={page.handleDownloadExcel}
-          onDownloadPdf={page.handleDownloadPdf}
-          exportExcelLoading={page.exportingDetails}
-          exportPdfLoading={page.exportingPdf}
+
+      <KpiGrid>
+        <KpiCard label="Total Students" value={fmt(total)} icon={Users} hint="Active and inactive" />
+        <KpiCard label="Active" value={fmt(page.activeCount)} icon={UserCheck} tone="green" hint="Can access the portal" />
+        <KpiCard label="Inactive" value={fmt(page.inactiveCount)} icon={UserX} tone="red" hint="No portal access" />
+        <KpiCard
+          label="Showing"
+          value={page.filteredStudents.length.toLocaleString("en-IN")}
+          icon={Filter}
+          tone="gold"
+          hint={page.selectedClass ? `Class ${page.selectedClass}${page.selectedSection ? ` ${page.selectedSection}` : ""}` : "In current filter"}
         />
+      </KpiGrid>
 
-        {page.showUploadPanel && (
-          <UploadCsvPanel
-            uploadFile={page.uploadFile}
-            onFileChange={page.setUploadFile}
-            uploading={page.uploading}
-            onCancel={() => page.setShowUploadPanel(false)}
-            onUpload={page.handleUpload}
-          />
-        )}
+      {page.showUploadPanel && (
+        <UploadCsvPanel
+          uploadFile={page.uploadFile}
+          onFileChange={page.setUploadFile}
+          uploading={page.uploading}
+          onCancel={() => page.setShowUploadPanel(false)}
+          onUpload={page.handleUpload}
+        />
+      )}
 
-        {page.editStudent && (
-          <AddStudentForm
-            form={page.editForm}
-            errors={page.editErrors}
-            classOptions={page.formClassOptions}
-            sectionOptions={page.formSectionOptions}
-            classesLoading={page.classesLoading}
-            ageLabel={getAge(page.editForm.dob)}
-            saving={page.editSaving}
-            title={`Edit Student: ${page.editStudent.user?.name || page.editStudent.name || "Student"}`}
-            subtitle="Update all available student fields"
-            submitLabel="Save Changes"
-            editMode
-            onFieldChange={page.handleEditChange}
-            onCancel={page.closeEdit}
-            onReset={() => page.setEditForm(toStudentForm(page.editStudent!))}
-            onSave={page.handleEditSave}
-          />
-        )}
+      {page.editStudent && (
+        <AddStudentForm
+          form={page.editForm}
+          errors={page.editErrors}
+          classOptions={page.formClassOptions}
+          sectionOptions={page.formSectionOptions}
+          classesLoading={page.classesLoading}
+          ageLabel={getAge(page.editForm.dob)}
+          saving={page.editSaving}
+          title={`Edit Student: ${page.editStudent.user?.name || page.editStudent.name || "Student"}`}
+          subtitle="Update all available student fields"
+          submitLabel="Save Changes"
+          editMode
+          onFieldChange={page.handleEditChange}
+          onCancel={page.closeEdit}
+          onReset={() => page.setEditForm(toStudentForm(page.editStudent!))}
+          onSave={page.handleEditSave}
+        />
+      )}
 
-        {page.showAddForm && (
-          <AddStudentForm
-            form={page.form}
-            errors={page.errors}
-            classOptions={page.formClassOptions}
-            sectionOptions={page.formSectionOptions}
-            classesLoading={page.classesLoading}
-            ageLabel={getAge(page.form.dob)}
-            saving={page.saving}
-            onFieldChange={page.handleFormChange}
-            onCancel={() => page.setShowAddForm(false)}
-            onReset={page.handleResetForm}
-            onSave={page.handleSaveStudent}
-          />
-        )}
+      {page.showAddForm && (
+        <AddStudentForm
+          form={page.form}
+          errors={page.errors}
+          classOptions={page.formClassOptions}
+          sectionOptions={page.formSectionOptions}
+          classesLoading={page.classesLoading}
+          ageLabel={getAge(page.form.dob)}
+          saving={page.saving}
+          onFieldChange={page.handleFormChange}
+          onCancel={() => page.setShowAddForm(false)}
+          onReset={page.handleResetForm}
+          onSave={page.handleSaveStudent}
+        />
+      )}
 
-        <div className="md:hidden space-y-3">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="text-base font-semibold text-white">{tableTitle}</div>
-              <div className="w-full sm:min-w-[240px]">{studentSearch}</div>
-            </div>
-          </div>
-
-          {page.tableLoading && pagedStudents.length === 0 ? (
-            <TimellyLoader
-              compact
-              title="Loading students"
-              steps={["Roster", "Filters", "Ready"]}
+      <Panel bodyClassName="p-0">
+        {/* Toolbar */}
+        <div className="flex flex-col gap-3 border-b border-line px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="mr-1 text-[15px] font-semibold text-fg">{tableTitle}</h2>
+            <Segmented<StudentStatusFilter>
+              value={page.statusFilter}
+              onChange={page.setStatusFilter}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "All", label: "All" },
+              ]}
             />
+          </div>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 xl:flex xl:items-center">
+            <KitSelect
+              aria-label="Class"
+              value={page.selectedClass}
+              onChange={(e) => page.setSelectedClass(e.target.value)}
+              className="h-10 xl:w-44"
+            >
+              {page.filterClassOptions.map((o) => (
+                <option key={`${o.value}-${o.label}`} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </KitSelect>
+            <KitSelect
+              aria-label="Section"
+              value={page.selectedSection}
+              onChange={(e) => page.setSelectedSection(e.target.value)}
+              className="h-10 xl:w-40"
+            >
+              {page.filterSectionOptions.map((o) => (
+                <option key={`${o.value}-${o.label}`} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </KitSelect>
+            <SearchBox
+              value={page.searchQuery}
+              onChange={page.setSearchQuery}
+              placeholder="Search students..."
+              className="xl:w-64"
+            />
+          </div>
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden md:block">
+          {page.tableLoading && pagedStudents.length === 0 ? (
+            <TimellyLoader compact bare title="Loading students" steps={["Roster", "Filters", "Ready"]} />
+          ) : (
+            <ColumnsTable columns={columns} data={pagedStudents} rowKey={(r) => r.id} emptyText="No students found" minWidth={980} />
+          )}
+        </div>
+
+        {/* Mobile */}
+        <div className="space-y-3 p-4 md:hidden">
+          {page.tableLoading && pagedStudents.length === 0 ? (
+            <TimellyLoader compact bare title="Loading students" steps={["Roster", "Filters", "Ready"]} />
           ) : pagedStudents.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-white/60">
-              No students found
-            </div>
+            <EmptyState icon={Users} title="No students found" />
           ) : (
             pagedStudents.map((student, index) => (
               <StudentMobileCard
@@ -166,57 +238,16 @@ export default function StudentsManagementPage({ classes, reload }: Props) {
               />
             ))
           )}
-
-          {totalPages > 1 && !page.tableLoading && (
-            <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-              <span className="text-xs text-white/60">
-                Page {safePage} of {totalPages}
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setTablePage(Math.max(1, safePage - 1))}
-                  disabled={safePage <= 1}
-                  className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setTablePage(Math.min(totalPages, safePage + 1))}
-                  disabled={safePage >= totalPages}
-                  className="rounded-full px-4 py-2 text-xs font-semibold border border-white/10 bg-white/5 text-white/70 hover:bg-white/10 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          )}
         </div>
 
-        <div className="hidden md:block">
-          <DataTable
-            columns={columns}
-            data={pagedStudents}
-            loading={page.tableLoading}
-            emptyText="No students found"
-            tableTitle={tableTitle}
-            headerRight={studentSearch}
-            tableSubtitle={
-              page.selectedClass
-                ? `Class ${page.selectedClass}${page.selectedSection ? ` ${page.selectedSection}` : ""}`
-                : undefined
-            }
-            showMobile={false}
-            scrollableWide
-            pagination={{
-              page: safePage,
-              totalPages,
-              onChange: setTablePage,
-            }}
-          />
-        </div>
-      </div>
+        <TablePager
+          page={safePage}
+          totalPages={totalPages}
+          total={page.filteredStudents.length}
+          pageSize={pageSize}
+          onChange={setTablePage}
+        />
+      </Panel>
 
       {page.viewStudent && (
         <StudentDetailsModal
@@ -249,6 +280,6 @@ export default function StudentsManagementPage({ classes, reload }: Props) {
         description="The student has been added and assigned to the class."
         onClose={() => page.setShowSuccess(false)}
       />
-    </main>
+    </SaPage>
   );
 }

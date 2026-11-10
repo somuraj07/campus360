@@ -20,17 +20,17 @@ export function AttendanceCalendarSection({
   onSelectDate: (key: string) => void;
 }) {
   return (
-    <section className="rounded-3xl border border-white/10 bg-white/[0.06] backdrop-blur-xl overflow-hidden">
+    <section className="rounded-2xl border border-line bg-elev-1 overflow-hidden">
       <div className="flex items-center justify-between gap-3 sm:px-8 sm:py-5
-      px-4 py-3 border-b border-white/[0.05] bg-white/[0.02]">
-        <h2 className="text-xl font-bold text-white">{formatMonthLabel(monthCursor)}</h2>
+      px-4 py-3 border-b border-line-subtle bg-elev-1">
+        <h2 className="text-xl font-bold text-fg">{formatMonthLabel(monthCursor)}</h2>
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
             aria-label="Previous month"
             onClick={() => setMonthCursor((prev) => addMonths(prev, -1))}
-            className="p-2 rounded-lg bg-white/[0.05] border
-            border-white/[0.1] hover:bg-white/[0.1] hover:text-white text-white/70 transition-all"
+            className="p-2 rounded-lg bg-elev-1 border
+            border-line hover:bg-elev-3 hover:text-fg text-fg-muted transition-all"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -38,8 +38,8 @@ export function AttendanceCalendarSection({
             type="button"
             aria-label="Next month"
             onClick={() => setMonthCursor((prev) => addMonths(prev, 1))}
-            className="p-2 rounded-lg bg-white/[0.05] border border-white/[0.1]
-             hover:bg-white/[0.1] hover:text-white text-white/70 transition-all0"
+            className="p-2 rounded-lg bg-elev-1 border border-line
+             hover:bg-elev-3 hover:text-fg text-fg-muted transition-all0"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -51,15 +51,15 @@ export function AttendanceCalendarSection({
           {LEGEND_STATUSES.map((status) => (
             <div key={status} className="flex items-center gap-2">
               <span className={`h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-md ${STATUS_META[status].dotClass}`} />
-              <span className="text-xs text-white/70 font-medium">{STATUS_META[status].label}</span>
+              <span className="text-xs text-fg-muted font-medium">{STATUS_META[status].label}</span>
             </div>
           ))}
         </div>
 
-        <div className="mt-4 border-t border-white/10 pt-4 sm:mt-6 sm:pt-6">
-          <div className="grid grid-cols-7 gap-1.5 sm:gap-3 text-center text-[11px] sm:text-sm font-bold tracking-wide text-white/45">
+        <div className="mt-4 border-t border-line pt-4 sm:mt-6 sm:pt-6">
+          <div className="grid grid-cols-7 gap-1.5 sm:gap-3 text-center text-[11px] sm:text-sm font-bold tracking-wide text-fg-subtle">
             {WEEK_DAYS.map((day) => (
-              <div key={day} className="text-center font-bold text-white/50 text-xs uppercase tracking-wider py-2">
+              <div key={day} className="text-center font-bold text-fg-subtle text-xs uppercase tracking-wider py-2">
                 {day}
               </div>
             ))}
@@ -73,7 +73,7 @@ export function AttendanceCalendarSection({
 
               const bg = STATUS_META[cell.status].cardBg;
               const text = cell.isSelected
-                ? "text-black"
+                ? "text-on-primary"
                 : STATUS_META[cell.status].textClass;
 
               return (
@@ -88,9 +88,9 @@ export function AttendanceCalendarSection({
                     bg,
                     cell.isCurrentMonth ? "hover:brightness-110" : "cursor-default pointer-events-none",
                     cell.isSelected
-                      ? "!border-white/90 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.7)]"
+                      ? "!border-line-strong shadow-[inset_0_0_0_2px_var(--primary)]"
                       : "",
-                    cell.isToday && !cell.isSelected ? "ring-1 ring-white/35" : "",
+                    cell.isToday && !cell.isSelected ? "ring-1 ring-line-strong" : "",
                   ].join(" ")}
                 >
                   <span className={text}>{cell.day}</span>

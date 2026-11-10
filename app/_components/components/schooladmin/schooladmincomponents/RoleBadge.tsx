@@ -11,28 +11,28 @@ const ROLE_CONFIG: Record<
   SCHOOLADMIN: {
     label: "Admin",
     bg: "bg-purple-400/10",
-    text: "text-purple-400",
+    text: "text-purple-700 dark:text-purple-400",
     border: "border-purple-400/30",
   },
 
   TEACHER: {
     label: "Teacher",
     bg: "bg-indigo-500/15",
-    text: "text-indigo-400",
+    text: "text-indigo-700 dark:text-indigo-400",
     border: "border-indigo-400/40",
   },
 
   STUDENT: {
     label: "Student",
     bg: "bg-emerald-400/15",
-    text: "text-emerald-400",
+    text: "text-emerald-700 dark:text-emerald-400",
     border: "border-emerald-400/40",
   },
 
   PARENT: {
     label: "Parent",
     bg: "bg-orange-400/15",
-    text: "text-orange-400",
+    text: "text-orange-700 dark:text-orange-400",
     border: "border-orange-400/40",
   },
 };
@@ -41,9 +41,9 @@ export default function RoleBadge({ role }: RoleBadgeProps) {
   const config =
     ROLE_CONFIG[role] || {
       label: role,
-      bg: "bg-white/10",
-      text: "text-white/80",
-      border: "border-white/20",
+      bg: "bg-elev-2",
+      text: "text-fg",
+      border: "border-line-strong",
     };
 
   return (

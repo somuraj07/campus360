@@ -58,7 +58,7 @@ export function EventScheduleMediaFields({
 }) {
   return (
     <div className="space-y-5">
-      <div className="text-xs font-bold text-white/50 uppercase tracking-wider">
+      <div className="text-xs font-bold text-fg-subtle uppercase tracking-wider">
         Schedule & Media
       </div>
 
@@ -109,7 +109,7 @@ export function EventScheduleMediaFields({
           placeholder="Select mode"
         />
         <div>
-          <label className="block text-xs sm:text-sm mb-1 text-white/70">
+          <label className="block text-xs sm:text-sm mb-1 text-fg-muted">
             Max Seats (optional)
           </label>
           <input
@@ -118,13 +118,13 @@ export function EventScheduleMediaFields({
             placeholder="Unlimited if empty"
             value={maxSeats}
             onChange={(e) => setMaxSeats(e.target.value.replace(/\D/g, ""))}
-            className="w-full rounded-xl bg-black/30 border border-white/20 text-sm text-white placeholder-white/40 px-4 py-3 focus:outline-none focus:ring-0 focus:border-lime-400/60"
+            className="w-full rounded-xl bg-well border border-line-strong text-sm text-fg placeholder:text-fg-faint px-4 py-3 focus:outline-none focus:ring-0 focus:border-primary/60"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm mb-2 text-white/70">
+        <label className="block text-xs sm:text-sm mb-2 text-fg-muted">
           Event Media
         </label>
         <input
@@ -156,7 +156,7 @@ export function EventScheduleMediaFields({
         />
         <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {photoDataUrl ? (
-            <div className="relative h-32 sm:h-36 rounded-2xl border border-white/10 bg-black/20 overflow-hidden">
+            <div className="relative h-32 sm:h-36 rounded-2xl border border-line bg-well overflow-hidden">
               <img
                 src={photoDataUrl}
                 alt="Event"
@@ -168,7 +168,7 @@ export function EventScheduleMediaFields({
                   setPhotoFile(null);
                   setPhotoDataUrl(null);
                 }}
-                className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs text-white/80 hover:text-white transition cursor-pointer"
+                className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-xs text-fg hover:text-fg transition cursor-pointer"
               >
                 <Trash2 size={12} />
                 Remove
@@ -180,7 +180,7 @@ export function EventScheduleMediaFields({
             type="button"
             disabled={photoUploading}
             onClick={() => fileInputRef.current?.click()}
-            className="h-32 sm:h-36 rounded-2xl border border-dashed border-white/30 bg-black/20 text-white/50 flex flex-col items-center justify-center gap-2 hover:border-lime-400/60 hover:text-white/70 transition cursor-pointer disabled:opacity-60"
+            className="h-32 sm:h-36 rounded-2xl border border-dashed border-line-strong bg-well text-fg-subtle flex flex-col items-center justify-center gap-2 hover:border-primary/60 hover:text-fg-muted transition cursor-pointer disabled:opacity-60"
           >
             {photoUploading ? (
               <Loader2 size={22} className="animate-spin" />
@@ -195,7 +195,7 @@ export function EventScheduleMediaFields({
       </div>
 
       {error ? (
-        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
           {error}
         </div>
       ) : null}
@@ -204,7 +204,7 @@ export function EventScheduleMediaFields({
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-xl px-5 py-2.5 border border-white/20 bg-white/5 text-white/70 hover:text-white hover:border-white/40 hover:bg-white/10 transition cursor-pointer text-sm"
+          className="rounded-xl px-5 py-2.5 border border-line-strong bg-elev-1 text-fg-muted hover:text-fg hover:border-line-strong hover:bg-elev-3 transition cursor-pointer text-sm"
         >
           Cancel
         </button>
@@ -212,7 +212,7 @@ export function EventScheduleMediaFields({
           type="button"
           onClick={onPublish}
           disabled={submitting}
-          className="inline-flex items-center gap-2 rounded-xl bg-lime-400 px-6 py-2.5 text-sm font-semibold text-black shadow-lg shadow-lime-400/30 hover:bg-lime-300 transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-sm font-semibold text-on-primary shadow-card  hover:bg-primary-hover transition cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
           <Save size={16} />
           {submitting

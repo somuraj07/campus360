@@ -34,18 +34,18 @@ export default function HomeworkFilters({
   ];
 
   return (
-    <section className="rounded-2xl p-6 lg:p-7 space-y-6 bg-white/5 backdrop-blur border border-white/10">
+    <section className="rounded-2xl p-6 lg:p-7 space-y-6 bg-elev-1 border border-line">
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold">Filter Homework</h3>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-fg-muted">
             Find assignments quickly
           </p>
         </div>
 
-        <span className="self-start sm:self-auto rounded-full border border-lime-400/30 px-4 py-2 text-sm text-lime-300">
+        <span className="self-start sm:self-auto rounded-full border border-primary/30 px-4 py-2 text-sm text-primary">
           {filteredCount} Results
         </span>
       </div>
@@ -55,8 +55,8 @@ export default function HomeworkFilters({
 
         {/* Subject Filter */}
         <div className="lg:col-span-2">
-          <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
-            <BookOpen className="w-4 h-4 text-lime-400" />
+          <label className="block text-sm font-semibold text-fg-muted mb-2 flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-primary" />
             Select Subject
           </label>
 
@@ -64,12 +64,12 @@ export default function HomeworkFilters({
             value={subject}
             onChange={(e) => onSubjectChange(e.target.value)}
             className="w-full rounded-xl px-4 py-3 
-               somu text-white 
-               border border-white/20 
-               outline-none focus:border-lime-400 
+               somu text-fg 
+               border border-line-strong 
+               outline-none focus:border-primary 
                transition appearance-none"
           >
-            <option value="All Subjects" className="bg-gray-900 text-white">
+            <option value="All Subjects" className="bg-surface text-fg">
               All Subjects
             </option>
 
@@ -77,7 +77,7 @@ export default function HomeworkFilters({
               <option
                 key={subj}
                 value={subj}
-                className="bg-gray-900 text-white"
+                className="bg-surface text-fg"
               >
                 {subj}
               </option>
@@ -86,8 +86,8 @@ export default function HomeworkFilters({
         </div>
         {/* Status Filter */}
         <div className="lg:col-span-3">
-          <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
-            <Funnel className="w-4 h-4 text-lime-400" />
+          <label className="block text-sm font-semibold text-fg-muted mb-2 flex items-center gap-2">
+            <Funnel className="w-4 h-4 text-primary" />
             Filter by Status
           </label>
 
@@ -101,8 +101,8 @@ export default function HomeworkFilters({
                   onClick={() => onStatusChange(label)}
                   className={`flex flex-col items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-sm font-medium transition-all border somu
                     ${isActive
-                      ? "bg-lime-400/10  border-lime-400 text-lime-300 shadow-[0_0_15px_rgba(163,230,53,0.15)]"
-                      : "border-white/20 text-gray-300 hover:border-white/40 hover:bg-white/5"
+                      ? "bg-primary/10  border-primary text-primary "
+                      : "border-line-strong text-fg-muted hover:border-line-strong hover:bg-elev-2"
                     }`}
                 >
                   <Icon className="w-4 h-4" />

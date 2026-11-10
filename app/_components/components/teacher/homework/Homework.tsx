@@ -11,6 +11,7 @@ import HomeworkFilterBar from "./HomeworkFilterBar";
 import HomeworkList from "./HomeworkList";
 import HomeworkSubmissionsView from "./HomeworkSubmissionsView";
 import TimellyLoader from "../../common/TimellyLoader";
+import { SaPage, SaPageHeader, Alert, btnClass } from "../../common/ui";
 
 export default function TeacherHomeworkTab() {
   const router = useRouter();
@@ -103,54 +104,46 @@ export default function TeacherHomeworkTab() {
 
   if (view === "submissions" && homeworkId) {
     return (
-      <div className="min-h-screen w-full overflow-x-hidden p-4 md:p-6 lg:p-10 text-white">
-        <div className="max-w-7xl mx-auto">
-          <HomeworkSubmissionsView homeworkId={homeworkId} onBack={handleBackFromSubmissions} />
-        </div>
-      </div>
+      <SaPage>
+        <HomeworkSubmissionsView homeworkId={homeworkId} onBack={handleBackFromSubmissions} />
+      </SaPage>
     );
   }
 
   if ((status === "loading" || loading) && homeworks.length === 0) {
     return (
-      <div className="min-h-screen w-full overflow-x-hidden p-4 md:p-6 lg:p-10 text-white">
-        <div className="max-w-7xl mx-auto">
-          <TimellyLoader title="Loading homework" steps={["Assignments", "Classes", "Submissions"]} />
-        </div>
-      </div>
+      <SaPage>
+        <TimellyLoader title="Loading homework" steps={["Assignments", "Classes", "Submissions"]} />
+      </SaPage>
     );
   }
 
   if (!session) {
     return (
-      <div className="min-h-screen w-full overflow-x-hidden p-4 md:p-6 lg:p-10 text-white">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-white/80">Unauthorized</p>
-        </div>
-      </div>
+      <SaPage>
+        <Alert tone="error">Unauthorized</Alert>
+      </SaPage>
     );
   }
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden p-4 md:p-6 lg:p-10 text-white">
-      <div className="max-w-7xl mx-auto">
-        {/* HEADER */}
-        <div className="rounded-2xl p-4 md:p-6 flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <div className="text-center sm:text-left">
-            <h2 className="text-xl md:text-2xl font-semibold">Homework Management</h2>
-            <p className="text-white/60 text-sm">Assign and track student homework</p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowForm((s) => !s)}
-            className="w-full sm:w-auto px-6 py-3 rounded-full bg-lime-400 text-black font-semibold flex items-center justify-center gap-2 transition-transform active:scale-95"
-          >
-            {showForm ? <X size={20} /> : <Plus size={20} />}
-            <span className="text-sm md:text-base">
+    <SaPage>
+        <SaPageHeader
+          eyebrow="Teaching"
+          title="Homework Management"
+          description="Assign and track student homework"
+          actions={
+            <button
+              type="button"
+              onClick={() => setShowForm((s) => !s)}
+              aria-expanded={showForm}
+              className={btnClass(showForm ? "secondary" : "primary")}
+            >
+              {showForm ? <X size={16} /> : <Plus size={16} />}
               {showForm ? "Cancel" : "Create New Assignment"}
-            </span>
-          </button>
-        </div>
+            </button>
+          }
+        />
 
         {/* CREATE / EDIT FORM */}
         {showForm && (
@@ -188,7 +181,6 @@ export default function TeacherHomeworkTab() {
           onDelete={handleDelete}
           onViewSubmissions={handleViewSubmissions}
         />
-      </div>
 
       <style jsx>{`
         .no-scrollbar::-webkit-scrollbar {
@@ -199,6 +191,6 @@ export default function TeacherHomeworkTab() {
           scrollbar-width: none;
         }
       `}</style>
-    </div>
+    </SaPage>
   );
 }

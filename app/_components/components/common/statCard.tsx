@@ -33,25 +33,24 @@ export default function StatCard({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
       className={`
         relative overflow-hidden
         rounded-2xl
         p-4 sm:p-5
-        transition-all duration-300
+        transition-colors duration-200
         border
         group
         ${
           isCentered
-            ? `bg-gradient-to-br  border-white/10 text-white`
-            : `bg-white/5 backdrop-blur-xl border-white/10`
+            ? `bg-primary border-transparent text-on-primary`
+            : `bg-elev-1 border-line`
         }
         ${className}
       `}
     >
       {/* ================= OPTIONAL BIG BACKGROUND ICON ================= */}
       {showBgIcon && icon && !isCentered && (
-        <div className="absolute right-6 top-1/2 -translate-y-1/2 scale-[2.6] text-white/15 pointer-events-none z-0">
+        <div className="absolute right-6 top-1/2 -translate-y-1/2 scale-[2.6] text-fg-faint pointer-events-none z-0">
           {icon}
         </div>
       )}
@@ -68,13 +67,13 @@ export default function StatCard({
         {isCentered ? (
           <>
             {icon && (
-              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+              <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center">
                 {icon}
               </div>
             )}
 
             {value && (
-              <h2 className="text-3xl md:text-4xl font-bold tracking-wide">
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight tabular-nums">
                 {value}
               </h2>
             )}
@@ -86,7 +85,7 @@ export default function StatCard({
             )}
 
             {subtitle && (
-              <p className="text-sm text-lime-300 font-medium">
+              <p className="text-sm text-accent font-medium">
                 {subtitle}
               </p>
             )}
@@ -98,22 +97,22 @@ export default function StatCard({
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     {icon && (
-                      <div className="w-10 h-10 rounded-xl bg-black/20 backdrop-blur flex items-center justify-center">
-                        <div className="scale-[0.45] saturate-150 brightness-110">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                        <div className="scale-[0.45]">
                           {icon}
                         </div>
                       </div>
                     )}
 
                     {title && (
-                      <p className="text-white/70 text-sm font-medium">
+                      <p className="text-fg-subtle text-[13px] font-medium uppercase tracking-wide">
                         {title}
                       </p>
                     )}
                   </div>
 
                   {value && (
-                    <h2 className="text-4xl font-bold text-white">
+                    <h2 className="text-3xl font-semibold tracking-tight text-fg tabular-nums">
                       {value}
                     </h2>
                   )}
@@ -124,7 +123,7 @@ export default function StatCard({
             {children}
 
             {footer && (
-              <div className="mt-4 text-sm text-white/60">
+              <div className="mt-4 text-sm text-fg-muted">
                 {footer}
               </div>
             )}

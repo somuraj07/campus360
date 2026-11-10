@@ -21,7 +21,7 @@ export default function EventSelectField({
 }: EventSelectFieldProps) {
   return (
     <div className={`space-y-2 ${className ?? ""}`.trim()}>
-      <label className="text-sm text-white/70">{label}</label>
+      <label className="text-sm text-fg-muted">{label}</label>
 
       <div className="relative">
         <select
@@ -30,21 +30,21 @@ export default function EventSelectField({
           onChange={onChange}
           className={`
             w-full
-            bg-black/30
+            bg-well
             border
-            border-white/20
-            disabled:bg-white/10
+            border-line-strong
+            disabled:bg-elev-2
             disabled:cursor-not-allowed
             rounded-xl
             px-4 py-3
             pr-10
             text-sm
-            text-white
+            text-fg
             focus:outline-none
             focus:ring-0
-            focus:border-lime-400/60
+            focus:border-primary/60
             appearance-none
-            ${value === "" ? "text-white/40" : "text-white"}
+            ${value === "" ? "text-fg-subtle" : "text-fg"}
           `}
         >
           <option value="">{placeholder}</option>
@@ -56,7 +56,7 @@ export default function EventSelectField({
           ))}
         </select>
 
-        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/60">
+        <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-fg-muted">
           ▾
         </span>
       </div>

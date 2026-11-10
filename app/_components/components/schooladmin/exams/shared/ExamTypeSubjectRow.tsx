@@ -48,7 +48,7 @@ export function ExamTypeSubjectRow({
   };
 
   return (
-    <div className="rounded-xl bg-black/25 px-3 py-2.5 space-y-2">
+    <div className="rounded-xl bg-well px-3 py-2.5 space-y-2">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         {isEditing ? (
           <div className="flex min-w-0 flex-1 items-center gap-1">
@@ -63,34 +63,34 @@ export function ExamTypeSubjectRow({
                 }
                 if (e.key === "Escape") stopEditing();
               }}
-              className="min-w-0 flex-1 px-2 py-1.5 rounded-lg bg-black/40 border border-[#B4F42A]/40 text-white text-xs outline-none uppercase"
+              className="min-w-0 flex-1 px-2 py-1.5 rounded-lg bg-well border border-primary/40 text-fg text-xs outline-none uppercase"
             />
             <button
               type="button"
               disabled={subjectSaving}
               onClick={() => editing.onRenameSubject(subjectKey)}
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-[#B4F42A]/20 disabled:opacity-50"
+              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-primary/20 disabled:opacity-50"
               title="Save name"
             >
-              <Check className="w-3.5 h-3.5 text-[#B4F42A]" />
+              <Check className="w-3.5 h-3.5 text-primary" />
             </button>
             <button
               type="button"
               disabled={subjectSaving}
               onClick={stopEditing}
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-white/10 disabled:opacity-50"
+              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-elev-3 disabled:opacity-50"
               title="Cancel"
             >
-              <X className="w-3.5 h-3.5 text-white/60" />
+              <X className="w-3.5 h-3.5 text-fg-muted" />
             </button>
           </div>
         ) : (
-          <span className="min-w-0 break-words text-xs font-bold text-white sm:min-w-32">{subjectKey}</span>
+          <span className="min-w-0 break-words text-xs font-bold text-fg sm:min-w-32">{subjectKey}</span>
         )}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-white/40">Max</span>
+          <span className="text-[10px] text-fg-subtle">Max</span>
           {parts.length > 0 ? (
-            <span className="text-xs font-bold text-[#B4F42A]">{partSum}</span>
+            <span className="text-xs font-bold text-primary">{partSum}</span>
           ) : (
             <input
               value={maxValue}
@@ -98,7 +98,7 @@ export function ExamTypeSubjectRow({
               placeholder="Max marks"
               inputMode="decimal"
               disabled={saving}
-              className="w-24 sm:w-20 px-2 py-2 sm:py-1.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none focus:border-[#B4F42A]/50 disabled:opacity-60"
+              className="w-24 sm:w-20 px-2 py-2 sm:py-1.5 rounded-xl bg-well border border-line text-fg text-xs outline-none focus:border-primary/50 disabled:opacity-60"
             />
           )}
         </div>
@@ -112,11 +112,11 @@ export function ExamTypeSubjectRow({
                 editing.onEditingSubjectChange(subjectKey);
                 editing.onEditingSubjectValueChange(subjectKey);
               }}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-white/10 disabled:opacity-50"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-elev-3 disabled:opacity-50"
               title="Edit subject"
               aria-label={`Edit ${subjectKey}`}
             >
-              <Pencil className="w-3.5 h-3.5 text-white/70" />
+              <Pencil className="w-3.5 h-3.5 text-fg-muted" />
             </button>
             <button
               type="button"
@@ -126,7 +126,7 @@ export function ExamTypeSubjectRow({
               title="Remove from this exam type only"
               aria-label={`Remove ${subjectKey} from ${examTypeName}`}
             >
-              <Trash2 className="w-3.5 h-3.5 text-red-400" />
+              <Trash2 className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
             </button>
           </div>
         )}
@@ -139,7 +139,7 @@ export function ExamTypeSubjectRow({
               onPartsChange((prev) => prev.map((r, i) => (i === idx ? { ...r, name: e.target.value } : r)))
             }
             placeholder="e.g. Written, Viva"
-            className="min-w-0 flex-1 px-3 py-2 sm:py-1.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none focus:border-[#B4F42A]/50"
+            className="min-w-0 flex-1 px-3 py-2 sm:py-1.5 rounded-xl bg-well border border-line text-fg text-xs outline-none focus:border-primary/50"
           />
           <input
             value={row.maxMarks}
@@ -152,7 +152,7 @@ export function ExamTypeSubjectRow({
             }
             placeholder="Marks"
             inputMode="decimal"
-            className="w-16 shrink-0 px-2 py-2 sm:py-1.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none focus:border-[#B4F42A]/50"
+            className="w-16 shrink-0 px-2 py-2 sm:py-1.5 rounded-xl bg-well border border-line text-fg text-xs outline-none focus:border-primary/50"
           />
           <button
             type="button"
@@ -160,7 +160,7 @@ export function ExamTypeSubjectRow({
             className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full hover:bg-red-500/20"
             aria-label="Remove part"
           >
-            <Trash2 className="w-3.5 h-3.5 text-red-400" />
+            <Trash2 className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
           </button>
         </div>
       ))}
@@ -168,7 +168,7 @@ export function ExamTypeSubjectRow({
         <button
           type="button"
           onClick={() => onPartsChange((prev) => [...prev, { name: "", maxMarks: "" }])}
-          className="min-h-10 px-2.5 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-bold text-white/80 inline-flex items-center justify-center gap-1 sm:min-h-0 sm:w-auto sm:py-1.5"
+          className="min-h-10 px-2.5 py-2 rounded-xl bg-elev-1 border border-line text-[10px] font-bold text-fg inline-flex items-center justify-center gap-1 sm:min-h-0 sm:w-auto sm:py-1.5"
         >
           <Plus size={12} /> Written / Viva
         </button>
@@ -176,7 +176,7 @@ export function ExamTypeSubjectRow({
           type="button"
           disabled={saving}
           onClick={onSave}
-          className="min-h-10 px-2.5 py-2 rounded-xl bg-[#B4F42A]/20 text-[#B4F42A] border border-[#B4F42A]/30 text-[10px] font-bold disabled:opacity-50 sm:min-h-0 sm:w-auto sm:py-1.5"
+          className="min-h-10 px-2.5 py-2 rounded-xl bg-primary/20 text-primary border border-primary/30 text-[10px] font-bold disabled:opacity-50 sm:min-h-0 sm:w-auto sm:py-1.5"
         >
           {saving ? "Saving..." : "Save"}
         </button>

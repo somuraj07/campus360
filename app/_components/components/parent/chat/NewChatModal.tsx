@@ -80,15 +80,15 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="w-full max-w-lg bg-[#0f1b2d] rounded-2xl border border-white/10 shadow-2xl">
+    <div className="fixed inset-0 bg-overlay flex items-center justify-center z-50 p-4">
+      <div className="w-full max-w-lg bg-elev-2 rounded-2xl border border-line shadow-card">
 
         {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b border-white/10">
-          <h2 className="text-lg font-semibold text-white">
+        <div className="flex justify-between items-center p-6 border-b border-line">
+          <h2 className="text-lg font-semibold text-fg">
             New Chat Request
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition">
+          <button onClick={onClose} className="text-fg-muted hover:text-fg transition">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -98,13 +98,13 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
 
           {/* Recipient – real teachers */}
           <div>
-            <label className="text-xs text-gray-400 block mb-2">
+            <label className="text-xs text-fg-muted block mb-2">
               SELECT RECIPIENT
             </label>
             {loadingTeachers ? (
               <ParentTimellyLoader preset="chat" compact bare className="py-4" />
             ) : teacherError ? (
-              <p className="text-red-400 text-sm py-2">{teacherError}</p>
+              <p className="text-red-700 dark:text-red-400 text-sm py-2">{teacherError}</p>
             ) : (
              <SelectInput
   value={selectedTeacherId}
@@ -124,7 +124,7 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
 
           {/* Topic */}
           <div>
-            <label className="text-xs text-gray-400 block mb-2">
+            <label className="text-xs text-fg-muted block mb-2">
               TOPIC
             </label>
             <SelectInput
@@ -142,28 +142,28 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
 
           {/* Message */}
           <div>
-            <label className="text-xs text-gray-400 block mb-2">
+            <label className="text-xs text-fg-muted block mb-2">
               MESSAGE
             </label>
             <textarea
               placeholder="Type your message here..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-white h-32 resize-none focus:border-lime-400/50 outline-none placeholder:text-white/40"
+              className="w-full bg-elev-2 border border-line rounded-xl px-4 py-3 text-fg h-32 resize-none focus:border-primary/50 outline-none placeholder:text-fg-subtle"
             />
           </div>
 
           {submitError && (
-            <p className="text-red-400 text-sm">{submitError}</p>
+            <p className="text-red-700 dark:text-red-400 text-sm">{submitError}</p>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex justify-between p-6 border-t border-white/10">
+        <div className="flex justify-between p-6 border-t border-line">
           <button
             type="button"
             onClick={onClose}
-            className="bg-white/10 text-gray-300 px-6 py-2 rounded-xl hover:bg-white/15 transition"
+            className="bg-elev-2 text-fg-muted px-6 py-2 rounded-xl hover:bg-elev-3 transition"
           >
             Cancel
           </button>
@@ -171,7 +171,7 @@ export default function NewChatModal({ onClose, onSuccess }: Props) {
             type="button"
             onClick={handleSubmit}
             disabled={submitting || loadingTeachers || teachers.length === 0}
-            className="bg-lime-400 text-black font-semibold px-6 py-2 rounded-xl hover:bg-lime-300 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-primary text-on-primary font-semibold px-6 py-2 rounded-xl hover:bg-primary-hover transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? "Sending…" : "Send Request"}
           </button>

@@ -34,8 +34,8 @@ export default function SectionHeaderWithSearch({
   return (
     <div className={`flex flex-col md:flex-row md:items-center md:justify-between gap-4 ${className}`}>
       <div>
-        <h3 className="text-xl font-semibold text-white">{title}</h3>
-        {subtitle && <p className="text-sm text-white/60">{subtitle}</p>}
+        <h3 className="text-xl font-semibold text-fg">{title}</h3>
+        {subtitle && <p className="text-sm text-fg-muted">{subtitle}</p>}
       </div>
 
       <div className="flex items-center gap-3">

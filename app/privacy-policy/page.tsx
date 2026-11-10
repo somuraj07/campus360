@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Timelly",
+  title: "Privacy Policy | RS Solutions",
   description:
-    "How Timelly collects, uses, and shares personal information for the school management app at app.timelly.in.",
+    "How RS Solutions collects, uses, and shares personal information for the school management app at app.timelly.in.",
   robots: { index: true, follow: true },
 };
 
@@ -18,13 +18,13 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center gap-3">
             <img
               src="/pwa-192.png"
-              alt="Timelly"
+              alt="RS Solutions"
               width={48}
               height={48}
               className="h-12 w-12 rounded-xl"
             />
             <div>
-              <p className="text-sm font-semibold text-zinc-500">Timelly</p>
+              <p className="text-sm font-semibold text-zinc-500">RS Solutions</p>
               <p className="text-xs text-zinc-400">app.timelly.in</p>
             </div>
           </div>
@@ -33,8 +33,8 @@ export default function PrivacyPolicyPage() {
           </h1>
           <p className="mt-2 text-sm text-zinc-500">Last updated: {LAST_UPDATED}</p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-600">
-            This policy explains how Timelly (&quot;we&quot;, &quot;us&quot;) handles personal
-            information when you use the Timelly school management app and website at{" "}
+            This policy explains how RS Solutions (&quot;we&quot;, &quot;us&quot;) handles personal
+            information when you use the RS Solutions school management app and website at{" "}
             <a
               href="https://app.timelly.in"
               className="font-medium text-violet-700 underline underline-offset-2"
@@ -42,14 +42,14 @@ export default function PrivacyPolicyPage() {
               https://app.timelly.in
             </a>
             , including the Android app published on Google Play. It applies to parents,
-            students, teachers, and school staff who use Timelly.
+            students, teachers, and school staff who use RS Solutions.
           </p>
         </header>
 
         <div className="space-y-8 px-6 py-8 text-sm leading-relaxed sm:px-10">
           <Section title="1. Who this policy is for">
             <p>
-              Timelly is school management software. Schools use it to run admissions,
+              RS Solutions is school management software. Schools use it to run admissions,
               attendance, academics, fees, communication, and related administration.
               Accounts are created by a school. We do not offer a public sign-up for
               the general public, and we do not show third-party advertising.
@@ -163,13 +163,13 @@ export default function PrivacyPolicyPage() {
             <p>
               Schools may be located in India. Our service providers may process data
               on servers outside your state. We share only what is needed to run
-              Timelly.
+              RS Solutions.
             </p>
           </Section>
 
           <Section title="5. Children">
             <p>
-              Timelly is used by schools. Some accounts and records belong to
+              RS Solutions is used by schools. Some accounts and records belong to
               students who are children. A school creates those accounts and enters
               student information. Children are not asked to create a public account
               on their own.
@@ -178,7 +178,7 @@ export default function PrivacyPolicyPage() {
               We do not knowingly use children&apos;s information for advertising, and
               we do not sell it. Parents and guardians should contact the school to
               review, correct, or ask for deletion of a student&apos;s information.
-              The school can update or remove records in Timelly, or ask us to help.
+              The school can update or remove records in RS Solutions, or ask us to help.
             </p>
             <p>
               Because students are children, we ask the parent or guardian to confirm
@@ -191,7 +191,7 @@ export default function PrivacyPolicyPage() {
           <Section title="6. How long we keep information">
             <p>
               We keep school and student records for as long as the school uses
-              Timelly and as needed for fee receipts, academic history, and legal
+              RS Solutions and as needed for fee receipts, academic history, and legal
               duties. Specific periods:
             </p>
             <ul>
@@ -211,7 +211,7 @@ export default function PrivacyPolicyPage() {
             <p>
               Passwords are stored in hashed form. Access to portals is limited by
               role. Online payments are handled by the payment provider, not by
-              storing card details in Timelly. No method of transmission or storage
+              storing card details in RS Solutions. No method of transmission or storage
               is completely secure. Schools should give access only to staff who need
               it and should keep login details private.
             </p>
@@ -246,7 +246,7 @@ export default function PrivacyPolicyPage() {
               <Link href="/privacy-policy" className="font-medium text-violet-700 underline underline-offset-2">
                 https://app.timelly.in/privacy-policy
               </Link>{" "}
-              and update the date at the top. Continued use of Timelly after the
+              and update the date at the top. Continued use of RS Solutions after the
               update means the revised policy applies.
             </p>
           </Section>
@@ -257,7 +257,7 @@ export default function PrivacyPolicyPage() {
               personal information:
             </p>
             <p>
-              Timelly
+              RS Solutions
               <br />
               Email:{" "}
               <a

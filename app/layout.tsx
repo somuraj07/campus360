@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import { headers } from "next/headers";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { AuthProvider } from "@/app/_components/context/AuthContext";
+import { ThemeProvider, THEME_INIT_SCRIPT } from "@/app/_components/context/ThemeContext";
 import { GlobalBackground } from "./_components/components/common/GlobalBackground";
 import PwaRegister from "./_components/components/common/PwaRegister";
 import InstallAppBanner from "./_components/components/common/InstallAppBanner";
@@ -21,14 +23,14 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Timelly - School ERP & Management Software",
+  title: "RS Solutions - School ERP & Management Software",
   description:
-    "Timelly is a powerful School ERP and management software for handling student data, attendance tracking,staff management, and real-time notifications. Perfect solution for modern schools and institutions.",
-  applicationName: "Timelly",
+    "RS Solutions is a powerful School ERP and management software for handling student data, attendance tracking,staff management, and real-time notifications. Perfect solution for modern schools and institutions.",
+  applicationName: "RS Solutions",
   appleWebApp: {
     capable: true,
-    title: "Timelly",
-    statusBarStyle: "black-translucent",
+    title: "RS Solutions",
+    statusBarStyle: "default",
   },
   formatDetection: {
     telephone: false,
@@ -44,18 +46,25 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#28143F",
+  themeColor: "#1e3a5f",
   width: "device-width",
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // The CSP only allows inline scripts carrying this request's nonce (see lib/security/csp.ts).
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
+      <head>
+        {/* Sets data-theme before first paint so there is no light/dark flash. */}
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject attributes on <body> before hydration. */}
       <body
         suppressHydrationWarning
@@ -63,13 +72,15 @@ export default function RootLayout({
           ${inter.variable}
           ${GeistSans.variable}
           ${GeistMono.variable}
-          antialiased
+          antialiased bg-canvas text-fg
         `}
       >
-        <GlobalBackground />
-        <PwaRegister />
-        <AuthProvider>{children}</AuthProvider>
-        <InstallAppBanner />
+        <ThemeProvider>
+          <GlobalBackground />
+          <PwaRegister />
+          <AuthProvider>{children}</AuthProvider>
+          <InstallAppBanner />
+        </ThemeProvider>
       </body>
     </html>
   );

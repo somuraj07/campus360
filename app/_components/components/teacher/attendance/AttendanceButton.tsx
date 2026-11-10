@@ -24,17 +24,17 @@ interface AttendanceButtonProps {
 
 const VARIANT_CLASSES: Record<AttendanceButtonVariant, string> = {
   neutral:
-    "bg-white/10 border-white/0 text-white/80 hover:bg-white/20 hover:border-white/20",
+    "bg-elev-2 border-line-subtle text-fg hover:bg-elev-3 hover:border-line-strong",
   primary:
-    "bg-lime-400/10 border-lime-400/30 text-lime-300 hover:bg-lime-400/20 hover:border-lime-400/50",
+    "bg-primary/10 border-primary/30 text-primary hover:bg-primary/20 hover:border-primary/50",
   success:
-    "bg-lime-400 text-black border-lime-300 hover:bg-lime-300",
+    "bg-primary text-on-primary border-primary hover:bg-primary-hover",
   danger:
     "bg-red-500 text-white border-red-400 hover:bg-red-400",
   warning:
     "bg-amber-400 text-black border-amber-300 hover:bg-amber-300",
   ghost:
-    "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20",
+    "bg-elev-1 border-line text-fg-muted hover:bg-elev-3 hover:border-line-strong",
 };
 
 const SIZE_CLASSES = {
@@ -63,10 +63,10 @@ export default function AttendanceButton({
         "font-semibold transition-all duration-200",
         "select-none",
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
-        disabled ? "" : "hover:shadow-[0_0_14px_rgba(255,255,255,0.12)] hover:brightness-110",
+        disabled ? "" : " hover:brightness-110",
         SIZE_CLASSES[size],
         VARIANT_CLASSES[variant],
-        active ? "shadow-[0_0_16px_rgba(255,255,255,0.2)]" : "",
+        active ? "" : "",
         className,
       ].join(" ")}
     >

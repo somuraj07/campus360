@@ -1,4 +1,4 @@
-const glass = "bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)]";
+const glass = "bg-elev-1 border border-line shadow-card";
 
 export default function BestQualities() {
   const q = [
@@ -9,13 +9,13 @@ export default function BestQualities() {
   ];
 
   return (
-    <div className={`${glass} rounded-3xl p-5`}>
+    <div className={`${glass} rounded-2xl p-5`}>
       <h3 className="font-semibold mb-4">Best Qualities</h3>
       <div className="grid grid-cols-2 gap-3">
         {q.map((x) => (
-          <div key={x.l} className="bg-white/10 rounded-xl p-4 text-center">
-            <div className="text-xl font-bold text-lime-400">{x.v}</div>
-            <div className="text-xs text-white/50">{x.l}</div>
+          <div key={x.l} className="bg-elev-2 rounded-xl p-4 text-center">
+            <div className="text-xl font-bold text-primary">{x.v}</div>
+            <div className="text-xs text-fg-subtle">{x.l}</div>
           </div>
         ))}
       </div>

@@ -13,7 +13,7 @@ export function LeaveHistorySection({
 }) {
   return (
     <div className="max-w-6xl mx-auto">
-      <h3 className="text-xl font-bold text-white px-4 md:px-0 mb-6">My Leave History</h3>
+      <h3 className="text-xl font-bold text-fg px-4 md:px-0 mb-6">My Leave History</h3>
 
       {/* MOBILE VIEW: Vertical Cards */}
       <div className="md:hidden max-w-6xl mx-auto space-y-4 ">
@@ -26,15 +26,15 @@ export function LeaveHistorySection({
           return (
             <div
               key={leave.id}
-              className="border border-white/10 rounded-[1.2rem] p-4 backdrop-blur-lg bg-white/[0.02] shadow-2xl space-y-4"
+              className="border border-line rounded-[1.2rem] p-4 bg-elev-1 shadow-card space-y-4"
             >
               {/* Header */}
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">
+                  <p className="text-[10px] uppercase tracking-widest text-fg-faint font-bold">
                     Leave Type
                   </p>
-                  <p className="text-[#b4f03d] font-bold text-sm">
+                  <p className="text-primary font-bold text-sm">
                     {leaveTypeLabel(leave.leaveType)}
                   </p>
                 </div>
@@ -57,26 +57,26 @@ export function LeaveHistorySection({
 
               {/* Date Info */}
               <div className="flex flex-wrap gap-3">
-                <div className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-                  <Calendar size={14} className="text-[#b4f03d]" />
-                  <span className="text-xs text-white/80">
+                <div className="flex items-center gap-2 bg-elev-1 px-3 py-2 rounded-xl border border-line">
+                  <Calendar size={14} className="text-primary" />
+                  <span className="text-xs text-fg">
                     {formatDate(leave.fromDate)} – {formatDate(leave.toDate)}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10">
-                  <span className="text-xs font-bold text-white">
+                <div className="flex items-center gap-2 bg-elev-1 px-3 py-2 rounded-xl border border-line">
+                  <span className="text-xs font-bold text-fg">
                     {days} {days > 1 ? "Days" : "Day"}
                   </span>
                 </div>
               </div>
 
               {/* Reason */}
-              <div className="bg-black/20 rounded-xl px-4 py-3 border border-white/[0.05]">
-                <p className="text-[11px] uppercase tracking-widest text-white/30 font-bold mb-1">
+              <div className="bg-well rounded-xl px-4 py-3 border border-line-subtle">
+                <p className="text-[11px] uppercase tracking-widest text-fg-faint font-bold mb-1">
                   Reason
                 </p>
-                <p className="text-sm text-white/70 leading-relaxed">
+                <p className="text-sm text-fg-muted leading-relaxed">
                   {leave.reason || "—"}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export function LeaveHistorySection({
                 <div className="flex gap-3 pt-2">
                   <button
                     onClick={() => onEdit(leave)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 py-2.5 rounded-xl text-xs font-bold transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 bg-elev-1 hover:bg-elev-3 border border-line py-2.5 rounded-xl text-xs font-bold transition-all"
                   >
                     <Edit3 size={14} />
                     Edit
@@ -94,7 +94,7 @@ export function LeaveHistorySection({
 
                   <button
                     onClick={() => onCancel(leave.id)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 py-2.5 rounded-xl text-xs font-bold text-red-400 transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 py-2.5 rounded-xl text-xs font-bold text-red-700 dark:text-red-400 transition-all"
                   >
                     <X size={14} />
                     Cancel
@@ -107,10 +107,10 @@ export function LeaveHistorySection({
       </div>
 
       {/* DESKTOP VIEW: Table */}
-      <div className="hidden md:block border border-white/10 rounded-[1.5rem] overflow-hidden bg-white/[0.02]">
+      <div className="hidden md:block border border-line rounded-2xl overflow-hidden bg-elev-1">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/10 text-white/30 text-[11px] uppercase tracking-[0.2em] bg-white/5">
+            <tr className="border-b border-line text-fg-faint text-[11px] uppercase tracking-[0.2em] bg-elev-1">
               <th className="px-4 py-4 font-bold">Type</th>
               <th className="px-4 py-4 font-bold">Dates</th>
               <th className="px-4 py-4 font-bold text-center">Days</th>
@@ -119,13 +119,13 @@ export function LeaveHistorySection({
               <th className="px-4 py-4 font-bold text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-line-subtle">
             {myLeaves.map((leave) => {
               const days = Math.ceil((new Date(leave.toDate).getTime() - new Date(leave.fromDate).getTime()) / (1000 * 60 * 60 * 24)) + 1;
               return (
-                <tr key={leave.id} className="group hover:bg-white/[0.02] transition-colors">
+                <tr key={leave.id} className="group hover:bg-elev-2 transition-colors">
                   <td className="px-4 py-5 font-bold text-sm">{leaveTypeLabel(leave.leaveType)}</td>
-                  <td className="px-4 py-5 text-white/60 text-sm">{leave.fromDate.split("T")[0]} - {leave.toDate.split("T")[0]}</td>
+                  <td className="px-4 py-5 text-fg-muted text-sm">{leave.fromDate.split("T")[0]} - {leave.toDate.split("T")[0]}</td>
                   <td className="px-4 py-5 text-center font-bold text-sm">{days}</td>
                   <td className="px-6 py-5 text-center">
                     <span
@@ -144,15 +144,15 @@ export function LeaveHistorySection({
                     </span>
                   </td>
                   <td className="px-6 py-5 max-w-[200px]">
-                    <div className=" text-sm text-white/80">{leave.reason}</div>
-                    <div className="text-[12px] text-white/30 mt-1">{leave.remarks || ""}</div>
+                    <div className=" text-sm text-fg">{leave.reason}</div>
+                    <div className="text-[12px] text-fg-faint mt-1">{leave.remarks || ""}</div>
                   </td>
                   <td className="px-4 py-5">
                     <div className="flex justify-end gap-3">
                       {leave.status === "PENDING" && (
                         <>
-                          <button onClick={() => onEdit(leave)} className="p-2 text-white/40 hover:text-[#b4f03d] transition-all"><Edit3 size={18} /></button>
-                          <button onClick={() => onCancel(leave.id)} className="p-2 text-white/40 hover:text-red-400 transition-all"><XCircle size={18} /></button>
+                          <button onClick={() => onEdit(leave)} className="p-2 text-fg-subtle hover:text-primary transition-all"><Edit3 size={18} /></button>
+                          <button onClick={() => onCancel(leave.id)} className="p-2 text-fg-subtle hover:text-red-700 dark:hover:text-red-400 transition-all"><XCircle size={18} /></button>
                         </>
                       )}
                     </div>

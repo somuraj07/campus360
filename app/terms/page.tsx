@@ -3,8 +3,8 @@ import Link from "next/link";
 import { SUPPORT_EMAIL } from "@/lib/support";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Timelly",
-  description: "The terms that govern use of the Timelly school management app at app.timelly.in.",
+  title: "Terms of Service | RS Solutions",
+  description: "The terms that govern use of the RS Solutions school management app at app.timelly.in.",
   robots: { index: true, follow: true },
 };
 
@@ -18,7 +18,7 @@ export default function TermsPage() {
           <h1 className="text-3xl font-bold tracking-tight text-zinc-950">Terms of Service</h1>
           <p className="mt-2 text-sm text-zinc-500">Last updated: {LAST_UPDATED}</p>
           <p className="mt-4 text-sm leading-relaxed text-zinc-600">
-            These terms govern use of Timelly (&quot;we&quot;, &quot;us&quot;), the school management service at{" "}
+            These terms govern use of RS Solutions (&quot;we&quot;, &quot;us&quot;), the school management service at{" "}
             <a href="https://app.timelly.in" className="font-medium text-violet-700 underline underline-offset-2">
               https://app.timelly.in
             </a>
@@ -28,7 +28,7 @@ export default function TermsPage() {
         <div className="space-y-8 px-6 py-8 text-sm leading-relaxed text-zinc-700 sm:px-10">
           <Section title="1. Who the service is for">
             <p>
-              Timelly is provided to schools (&quot;School&quot;) and to the staff, parents and students the School
+              RS Solutions is provided to schools (&quot;School&quot;) and to the staff, parents and students the School
               authorises. The School is responsible for the accuracy of the data it enters and for deciding who
               receives an account.
             </p>

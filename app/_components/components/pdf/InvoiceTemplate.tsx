@@ -48,7 +48,7 @@ const InvoiceTemplate = forwardRef<HTMLDivElement, InvoiceTemplateProps>(
               </div>
               <div>
                 <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: "#1e293b" }}>
-                  Timelly School
+                  RS Solutions School
                 </h1>
                 <p className="text-sm font-medium" style={{ color: "#64748b" }}>
                   Excellence in Education

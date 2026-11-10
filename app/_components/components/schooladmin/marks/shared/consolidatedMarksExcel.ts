@@ -7,7 +7,7 @@ export async function generateConsolidatedMarksExcel(
 ) {
   const ExcelJS = await import("exceljs");
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = "Timelly";
+  workbook.creator = "RS Solutions";
   const usedNames = new Set<string>();
 
   const schoolName = data.school?.name ?? "School";

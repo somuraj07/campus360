@@ -37,7 +37,7 @@ export const generateFeeReceipt = (data: ReceiptData) => {
     // Set default font
     doc.setFont("helvetica");
 
-    // Header - Timelly Branding
+    // Header - RS Solutions Branding
     doc.setFillColor(34, 197, 94); // Lime green
     doc.rect(0, 0, pageWidth, 25, "F");
 
@@ -47,16 +47,16 @@ export const generateFeeReceipt = (data: ReceiptData) => {
     doc.setFont("helvetica", "bold");
     doc.text(data.schoolName, margin, 12);
 
-    // Subtitle + Powered by Timelly
+    // Subtitle + Powered by RS Solutions
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("Fee Receipt • Powered by Timelly", margin, 18);
+    doc.text("Fee Receipt • Powered by RS Solutions", margin, 18);
 
-    // Brand area on right (Timelly word-mark)
+    // Brand area on right (RS Solutions word-mark)
     doc.setTextColor(230, 255, 230);
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.text("Timelly", pageWidth - margin - 26, 15);
+    doc.text("RS Solutions", pageWidth - margin, 15, { align: "right" });
 
     // Reset text color
     doc.setTextColor(0, 0, 0);
@@ -213,7 +213,7 @@ export const generateFeeReceipt = (data: ReceiptData) => {
         doc.setTextColor(100, 100, 100);
         doc.setFontSize(8);
         doc.text(
-            `Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by Timelly • Confidential`,
+            `Generated on ${new Date().toLocaleDateString("en-IN")} • Powered by RS Solutions • Confidential`,
             pageWidth / 2,
             yPosition,
             { align: "center" }

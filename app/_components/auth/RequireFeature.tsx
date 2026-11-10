@@ -160,16 +160,16 @@ export default function RequireFeature({ requiredFeature, children }: RequireFea
   if (isAuthorized === false) {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
-        <div className="max-w-lg w-full bg-white/5 p-6 rounded-2xl border border-white/10 text-center">
-          <h3 className="text-lg font-semibold text-white mb-2">Access Denied</h3>
-          <p className="text-sm text-white/60 mb-4">You don't have permission to view this section.</p>
+        <div className="max-w-lg w-full bg-elev-1 p-6 rounded-2xl border border-line text-center">
+          <h3 className="text-lg font-semibold text-fg mb-2">Access Denied</h3>
+          <p className="text-sm text-fg-muted mb-4">You don't have permission to view this section.</p>
           <div className="flex justify-center">
             <button
               onClick={() => {
                 // Navigate back to dashboard tab within the same portal
                 router.push("?tab=dashboard");
               }}
-              className="px-4 py-2 rounded-lg bg-lime-400 text-black font-semibold"
+              className="px-4 py-2 rounded-lg bg-primary text-on-primary font-semibold"
             >
               Go to Dashboard
             </button>

@@ -1,17 +1,15 @@
 "use client";
 
-import PageHeader from "../common/PageHeader";
 
 import {
-  AlertTriangle,
   ArrowRightLeft,
   BookOpen,
-  ChevronDown,
   Download,
+  GraduationCap,
+  Layers,
   Plus,
-  User,
+  UserCheck,
   Users,
-  Search,
 } from "lucide-react";
 
 import AddClassPanel from "./classes-panels/AddClassPanel";
@@ -21,11 +19,20 @@ import UploadCsvPanel from "./classes-panels/UploadCsvPanel";
 import ClassDetailsPanel from "./classes-panels/ClassDetailsPanel";
 import EditClassPanel from "./classes-panels/EditClassPanel";
 import DeleteClassPanel from "./classes-panels/DeleteClassPanel";
-import SearchInput from "../common/SearchInput";
 import InlinePanelTable from "../common/InlinePanelTable";
 import TimellyLoader from "../common/TimellyLoader";
-import StatCard from "./StatCard";
 import { useClassesState, ClassMobileCard } from "./shared/classes";
+import {
+  SaPage,
+  SaPageHeader,
+  KpiGrid,
+  KpiCard,
+  Panel,
+  SearchBox,
+  EmptyState,
+  TablePager,
+  btnClass,
+} from "../common/ui";
 
 export default function SchoolAdminClassesTab() {
   const {
@@ -59,270 +66,155 @@ export default function SchoolAdminClassesTab() {
     tableColumns,
     handleReportClick,
     saveClassChanges,
-    renderButton,
   } = useClassesState();
 
+  const toggleAction = (a: "class" | "section" | "assign") => setActiveAction(activeAction === a ? "none" : a);
+  const actionClass = (a: "class" | "section" | "assign", primary = false) =>
+    activeAction === a ? btnClass("primary") : btnClass(primary ? "primary" : "secondary");
+
   return (
-    <div className=" pb-24 lg:pb-6">
-      <div className="w-full space-y-6 text-gray-200">
-        {/* ================= HEADER ================= */}
-        <PageHeader
-          title="Classes Management"
-          subtitle="Manage all classes, sections, and class teachers"
-          className="bg-white/5 backdrop-blur-xl rounded-2xl p-5 sm:p-6 border border-white/10 shadow-lg flex flex-col xl:flex-row xl:items-center justify-between gap-4"
-          rightSlot={
-            <div className="w-full xl:w-auto">
-              <div className="flex flex-wrap gap-2 sm:gap-3 xl:justify-end">
-                {renderButton(
-                  "class",
-                  Plus,
-                  "Add Class",
-                  () => setActiveAction("class"),
-                  true
-                )}
+    <SaPage>
+      <SaPageHeader
+        eyebrow="Academics"
+        title="Classes Management"
+        description="Manage all classes, sections, and class teachers"
+        actions={
+          <>
+            <button type="button" onClick={handleReportClick} disabled={isReportDownloading} className={btnClass("secondary")}>
+              <Download size={16} />
+              {isReportDownloading ? "Downloading..." : "Report"}
+            </button>
+            <button type="button" onClick={() => toggleAction("assign")} className={actionClass("assign")} aria-pressed={activeAction === "assign"}>
+              <ArrowRightLeft size={16} />
+              Assign Section
+            </button>
+            <button type="button" onClick={() => toggleAction("section")} className={actionClass("section")} aria-pressed={activeAction === "section"}>
+              <Layers size={16} />
+              Add Section
+            </button>
+            <button type="button" onClick={() => toggleAction("class")} className={actionClass("class", true)} aria-pressed={activeAction === "class"}>
+              <Plus size={16} />
+              Add Class
+            </button>
+          </>
+        }
+      />
 
-                {renderButton(
-                  "section",
-                  ChevronDown,
-                  "Add Section",
-                  () => setActiveAction("section")
-                )}
-
-                {renderButton(
-                  "assign",
-                  ArrowRightLeft,
-                  "Assign Section",
-                  () => setActiveAction("assign")
-                )}
-
-                {/* {renderButton(
-                  "csv",
-                  Upload,
-                  "Upload CSV",
-                  () => setActiveAction("csv")
-                )} */}
-
-                {renderButton(
-                  "report",
-                  Download,
-                  isReportDownloading ? "Downloading..." : "Report",
-                  handleReportClick,
-                  false,
-                  isReportDownloading
-                )}
-              </div>
-            </div>
-          }
+      {activeAction === "class" && (
+        <AddClassPanel
+          onCancel={() => setActiveAction("none")}
+          onSuccess={() => {
+            setActiveAction("none");
+            refreshAfterMutation();
+          }}
         />
+      )}
+      {activeAction === "section" && (
+        <AddSectionPanel
+          onCancel={() => setActiveAction("none")}
+          onSuccess={() => {
+            setActiveAction("none");
+            refreshAfterMutation();
+          }}
+        />
+      )}
+      {activeAction === "assign" && (
+        <AssignSectionPanel onCancel={() => setActiveAction("none")} onSuccess={() => refreshAfterMutation()} />
+      )}
+      {activeAction === "csv" && <UploadCsvPanel onCancel={() => setActiveAction("none")} onSuccess={refreshAfterMutation} />}
 
-        {activeAction === "class" && (
-          <AddClassPanel
-            onCancel={() => setActiveAction("none")}
-            onSuccess={() => {
-              setActiveAction("none");
-              refreshAfterMutation();
-            }}
-          />
-        )}
-        {activeAction === "section" && (
-          <AddSectionPanel
-            onCancel={() => setActiveAction("none")}
-            onSuccess={() => {
-              setActiveAction("none");
-              refreshAfterMutation();
-            }}
-          />
-        )}
-        {activeAction === "assign" && (
-          <AssignSectionPanel
-            onCancel={() => setActiveAction("none")}
-            onSuccess={() => {
-              refreshAfterMutation();
-            }}
-          />
-        )}
-        {activeAction === "csv" && (
-          <UploadCsvPanel
-            onCancel={() => setActiveAction("none")}
-            onSuccess={refreshAfterMutation}
-          />
-        )}
+      {isLoading ? (
+        <TimellyLoader compact title="Loading classes" steps={["Class list", "Student totals", "Teachers"]} />
+      ) : (
+        <KpiGrid>
+          <KpiCard label="Total Classes" value={totalClasses} icon={BookOpen} hint="Across all grades" />
+          <KpiCard label="Total Students" value={totalStudents.toLocaleString("en-IN")} icon={Users} tone="sky" hint="Enrolled in classes" />
+          <KpiCard label="Avg Size" value={avgSize} icon={GraduationCap} tone="gold" hint="Students per class" />
+          <KpiCard label="Teachers" value={totalTeachers} icon={UserCheck} tone="green" hint="On staff" />
+        </KpiGrid>
+      )}
 
-        {isLoading ? (
-          <TimellyLoader
-            compact
-            title="Loading classes"
-            steps={["Class list", "Student totals", "Teachers"]}
-          />
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <StatCard
-              icon={<BookOpen size={18} />}
-              iconClassName="text-green-400"
-              label="Total Classes"
-              value={String(totalClasses)}
-            />
-            <StatCard
-              icon={<Users size={18} />}
-              iconClassName="text-violet-400"
-              label="Total Students"
-              value={String(totalStudents)}
-            />
-            <StatCard
-              icon={<AlertTriangle size={18} />}
-              iconClassName="text-orange-400"
-              label="Avg Size"
-              value={String(avgSize)}
-            />
-            <StatCard
-              icon={<User size={18} />}
-              iconClassName="text-blue-400"
-              label="Teachers"
-              value={String(totalTeachers)}
-            />
-          </div>
-        )}
-
-        <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 p-4 border-b border-white/10">
-            <div className="text-lg font-semibold text-white">All Classes</div>
-            <div className="w-full md:w-[260px]">
-              <SearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search classes..."
-                icon={Search}
-                variant="glass"
-              />
-            </div>
-          </div>
-
-          <div className="px-4 pb-4 lg:px-0 lg:pb-0 md:px-0 md:pb-0">
-            {/* Desktop table with inline panels */}
-            <div className="hidden lg:block">
-              <InlinePanelTable
-                columns={tableColumns}
-                data={pagedRows}
-                emptyText="No classes found"
-                activeRowId={activeRowId}
-                panelKey={panelMode}
-                renderPanel={(row) => {
-                  if (panelMode === "view") {
-                    return <ClassDetailsPanel row={row} onClose={closePanel} />;
-                  }
-                  if (panelMode === "edit") {
-                    return (
-                      <EditClassPanel
-                        row={row}
-                        onClose={closePanel}
-                        onSuccess={refreshAfterMutation}
-                      />
-                    );
-                  }
-                  if (panelMode === "delete") {
-                    return (
-                      <DeleteClassPanel
-                        row={row}
-                        onCancel={closePanel}
-                        onConfirm={() => {
-                          closePanel();
-                          refreshAfterMutation();
-                        }}
-                      />
-                    );
-                  }
-                  return null;
-                }}
-              />
-            </div>
-
-            {/* Mobile/tablet cards */}
-            <div className="lg:hidden space-y-4">
-              {filteredRows.length === 0 && !isLoading && (
-                <div className="text-center py-10 text-white/60">
-                  {loadError ?? "No classes found"}
-                </div>
-              )}
-              {isLoading && (
-                <div className="text-center py-10 text-white/60">
-                  <TimellyLoader
-                    compact
-                    bare
-                    title="Loading classes"
-                    steps={["Classes", "Sections", "Teachers"]}
-                  />
-                </div>
-              )}
-              {pagedRows.map((row) => (
-                <ClassMobileCard
-                  key={row.id}
-                  row={row}
-                  isEditing={activeRowId === row.id && panelMode === "edit"}
-                  mobileEdit={mobileEdit}
-                  onMobileEditChange={setMobileEdit}
-                  onStartEdit={() => {
-                    setActiveRowId(row.id);
-                    setPanelMode("edit");
-                    setMobileEdit({
-                      className: row.name,
-                      section: row.section.replace("Section ", ""),
-                    });
-                  }}
-                  onCloseEdit={closePanel}
-                  onSave={async () => {
-                    const className = mobileEdit?.className ?? row.name;
-                    const section =
-                      mobileEdit?.section ?? row.section.replace("Section ", "");
-                    const normalizedSection =
-                      section === "—" || section === "â€”" ? "" : section;
-                    const ok = await saveClassChanges({
-                      id: row.id,
-                      name: className,
-                      section: normalizedSection,
-                    });
-                    if (ok) {
+      <Panel
+        title="All Classes"
+        description={isLoading ? undefined : `${filteredRows.length} class${filteredRows.length === 1 ? "" : "es"}`}
+        actions={<SearchBox value={search} onChange={setSearch} placeholder="Search classes..." className="w-full sm:w-72" />}
+        bodyClassName="p-0"
+      >
+        {/* Desktop table with inline panels */}
+        <div className="hidden overflow-x-auto lg:block">
+          <InlinePanelTable
+            columns={tableColumns}
+            data={pagedRows}
+            emptyText={loadError ?? "No classes found"}
+            activeRowId={activeRowId}
+            panelKey={panelMode}
+            renderPanel={(row) => {
+              if (panelMode === "view") return <ClassDetailsPanel row={row} onClose={closePanel} />;
+              if (panelMode === "edit") return <EditClassPanel row={row} onClose={closePanel} onSuccess={refreshAfterMutation} />;
+              if (panelMode === "delete") {
+                return (
+                  <DeleteClassPanel
+                    row={row}
+                    onCancel={closePanel}
+                    onConfirm={() => {
                       closePanel();
                       refreshAfterMutation();
-                    }
-                  }}
-                  savingClassId={savingClassId}
-                />
-              ))}
-            </div>
-
-            {filteredRows.length > 0 && (
-              <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-white/10 text-white/70">
-                <div className="text-xs">
-                  Showing {Math.min(startIndex + 1, filteredRows.length)}-
-                  {Math.min(endIndex, filteredRows.length)} of {filteredRows.length}
-                </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    disabled={safePage === 1}
-                    className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10 cursor-pointer"
-                  >
-                    Prev
-                  </button>
-                  <div className="text-xs">
-                    Page {safePage} of {totalPages}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    disabled={safePage === totalPages}
-                    className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10 cursor-pointer"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
+                    }}
+                  />
+                );
+              }
+              return null;
+            }}
+          />
         </div>
-      </div>
 
-    </div>
+        {/* Mobile/tablet cards */}
+        <div className="space-y-3 p-4 lg:hidden">
+          {filteredRows.length === 0 && !isLoading && <EmptyState icon={BookOpen} title={loadError ?? "No classes found"} />}
+          {isLoading && <TimellyLoader compact bare title="Loading classes" steps={["Classes", "Sections", "Teachers"]} />}
+          {pagedRows.map((row) => (
+            <ClassMobileCard
+              key={row.id}
+              row={row}
+              isEditing={activeRowId === row.id && panelMode === "edit"}
+              mobileEdit={mobileEdit}
+              onMobileEditChange={setMobileEdit}
+              onStartEdit={() => {
+                setActiveRowId(row.id);
+                setPanelMode("edit");
+                setMobileEdit({
+                  className: row.name,
+                  section: row.section.replace("Section ", ""),
+                });
+              }}
+              onCloseEdit={closePanel}
+              onSave={async () => {
+                const className = mobileEdit?.className ?? row.name;
+                const section = mobileEdit?.section ?? row.section.replace("Section ", "");
+                const normalizedSection = section === "—" || section === "â€”" ? "" : section;
+                const ok = await saveClassChanges({
+                  id: row.id,
+                  name: className,
+                  section: normalizedSection,
+                });
+                if (ok) {
+                  closePanel();
+                  refreshAfterMutation();
+                }
+              }}
+              savingClassId={savingClassId}
+            />
+          ))}
+        </div>
+
+        <TablePager
+          page={safePage}
+          totalPages={totalPages}
+          total={filteredRows.length}
+          pageSize={Math.max(1, endIndex - startIndex)}
+          onChange={(p) => setCurrentPage(p)}
+        />
+      </Panel>
+    </SaPage>
   );
 }

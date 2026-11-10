@@ -8,7 +8,7 @@ import {
   Download,
   Save,
 } from "lucide-react";
-import PageHeader from "../../common/PageHeader";
+import { SaPage, SaPageHeader } from "../../common/ui";
 import TimellyLoader from "../../common/TimellyLoader";
 import SearchInput from "../../common/SearchInput";
 import SelectInput from "../../common/SelectInput";
@@ -47,11 +47,8 @@ export default function TeacherAttendanceTab() {
   const { columns } = useAttendanceColumns({ setStudents });
 
   return (
-    <div className="min-h-screen text-white px-3 sm:px-6 lg:px-8 py-4 space-y-4 sm:space-y-6 pb-20 sm:pb-6 overflow-x-hidden">
-      <PageHeader
-        title="Attendance Management"
-        subtitle="Mark and manage student attendance"
-      />
+    <SaPage>
+      <SaPageHeader eyebrow="Teaching" title="Attendance Management" description="Mark and manage student attendance" />
 
       {loadingClasses && classOptions.length === 0 && (
         <TimellyLoader title="Loading classes" steps={["Classes", "Students", "Attendance"]} />
@@ -59,7 +56,7 @@ export default function TeacherAttendanceTab() {
 
       <AttendanceStatCards stats={stats} />
 
-      <section className="rounded-xl sm:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-4 sm:p-6 space-y-4 sm:space-y-6">
+      <section className="space-y-5 rounded-2xl border border-line bg-elev-1 p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.1fr] gap-3 sm:gap-4 items-end">
           <SelectInput
             label="Select Class"
@@ -94,7 +91,7 @@ export default function TeacherAttendanceTab() {
               leftIcon={
                 <CircleDot
                   size={16}
-                  className={liveMode ? "text-black/80" : "text-white/60"}
+                  className={liveMode ? "text-on-primary" : "text-fg-muted"}
                 />
               }
               onClick={() => setLiveMode((prev) => !prev)}
@@ -104,7 +101,7 @@ export default function TeacherAttendanceTab() {
           </div>
         </div>
 
-        <div className="h-px bg-white/10" />
+        <div className="h-px bg-elev-2" />
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <AttendanceButton
@@ -139,10 +136,10 @@ export default function TeacherAttendanceTab() {
         </div>
       </section>
 
-      <section className="rounded-xl sm:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden">
+      <section className="rounded-xl sm:rounded-2xl border border-line bg-elev-1 overflow-hidden">
         <div className="p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-white">Mark Attendance</h3>
-          <p className="text-sm text-white/60 mt-1">
+          <h3 className="text-lg sm:text-xl font-semibold text-fg">Mark Attendance</h3>
+          <p className="text-sm text-fg-muted mt-1">
             {selectedClassLabel || "No class selected"} -{" "}
             {formatLongDate(selectedDate)}
           </p>
@@ -154,23 +151,23 @@ export default function TeacherAttendanceTab() {
 
         <AttendanceMobileList students={students} setStudents={setStudents} />
 
-        <div className="hidden md:flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-white/10 px-6 py-4">
+        <div className="hidden md:flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-line px-6 py-4">
           <div className="flex flex-wrap gap-6 text-sm">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-white/50">Present</p>
-              <p className="text-lg font-semibold text-lime-300">{stats.present}</p>
+              <p className="text-[10px] uppercase tracking-wider text-fg-subtle">Present</p>
+              <p className="text-lg font-semibold text-primary">{stats.present}</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-white/50">Absent</p>
-              <p className="text-lg font-semibold text-red-400">{stats.absent}</p>
+              <p className="text-[10px] uppercase tracking-wider text-fg-subtle">Absent</p>
+              <p className="text-lg font-semibold text-red-700 dark:text-red-400">{stats.absent}</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-white/50">Late</p>
-              <p className="text-lg font-semibold text-amber-300">{stats.late}</p>
+              <p className="text-[10px] uppercase tracking-wider text-fg-subtle">Late</p>
+              <p className="text-lg font-semibold text-amber-700 dark:text-amber-300">{stats.late}</p>
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-white/50">Rate</p>
-              <p className="text-lg font-semibold text-white">{stats.rate}%</p>
+              <p className="text-[10px] uppercase tracking-wider text-fg-subtle">Rate</p>
+              <p className="text-lg font-semibold text-fg">{stats.rate}%</p>
             </div>
           </div>
 
@@ -184,19 +181,19 @@ export default function TeacherAttendanceTab() {
           </AttendanceButton>
         </div>
 
-        <div className="md:hidden border-t border-white/10 px-4 py-4 space-y-4">
+        <div className="md:hidden border-t border-line px-4 py-4 space-y-4">
           <div className="grid grid-cols-3 gap-3 text-sm">
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center">
-              <p className="text-[10px] uppercase tracking-wider text-lime-300/70">Present</p>
-              <p className="text-lg font-semibold text-lime-300">{stats.present}</p>
+            <div className="rounded-xl border border-line bg-elev-1 px-3 py-2 text-center">
+              <p className="text-[10px] uppercase tracking-wider text-primary">Present</p>
+              <p className="text-lg font-semibold text-primary">{stats.present}</p>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center">
-              <p className="text-[10px] uppercase tracking-wider text-red-300/70">Absent</p>
-              <p className="text-lg font-semibold text-red-400">{stats.absent}</p>
+            <div className="rounded-xl border border-line bg-elev-1 px-3 py-2 text-center">
+              <p className="text-[10px] uppercase tracking-wider text-red-700 dark:text-red-300">Absent</p>
+              <p className="text-lg font-semibold text-red-700 dark:text-red-400">{stats.absent}</p>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-center">
-              <p className="text-[10px] uppercase tracking-wider text-amber-300/70">Late</p>
-              <p className="text-lg font-semibold text-amber-300">{stats.late}</p>
+            <div className="rounded-xl border border-line bg-elev-1 px-3 py-2 text-center">
+              <p className="text-[10px] uppercase tracking-wider text-amber-700 dark:text-amber-300">Late</p>
+              <p className="text-lg font-semibold text-amber-700 dark:text-amber-300">{stats.late}</p>
             </div>
           </div>
 
@@ -217,6 +214,6 @@ export default function TeacherAttendanceTab() {
         description="Attendance saved for the selected class."
         onClose={() => setShowSuccess(false)}
       />
-    </div>
+    </SaPage>
   );
 }

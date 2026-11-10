@@ -29,7 +29,7 @@ export function buildFeesBackupEmailContent(input: FeesBackupEmailTemplateInput)
       : `Fees backup – ${count} schools – ${dateLabel}`;
 
   const text = [
-    "Timelly ERP – Fees Backup",
+    "RS Solutions ERP – Fees Backup",
     "",
     `Hello,`,
     "",
@@ -42,7 +42,7 @@ export function buildFeesBackupEmailContent(input: FeesBackupEmailTemplateInput)
     "Attachments:",
     ...input.filenames.map((f) => ` - ${f}`),
     "",
-    "This is an automated message from Timelly Super Admin.",
+    "This is an automated message from RS Solutions Super Admin.",
     "Do not reply to this email.",
   ].join("\n");
 
@@ -70,7 +70,7 @@ export function buildFeesBackupEmailContent(input: FeesBackupEmailTemplateInput)
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e5e7eb;">
           <tr>
             <td style="background:#0f172a;padding:22px 24px;">
-              <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#94a3b8;font-weight:600;">Timelly ERP</div>
+              <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#94a3b8;font-weight:600;">RS Solutions ERP</div>
               <div style="margin-top:6px;font-size:20px;font-weight:700;color:#f8fafc;">Fees Backup Report</div>
             </td>
           </tr>
@@ -111,7 +111,7 @@ export function buildFeesBackupEmailContent(input: FeesBackupEmailTemplateInput)
           </tr>
           <tr>
             <td style="padding:14px 24px 20px;border-top:1px solid #e2e8f0;background:#fafafa;">
-              <div style="font-size:12px;color:#94a3b8;">© Timelly · Automated notification · Do not reply</div>
+              <div style="font-size:12px;color:#94a3b8;">© RS Solutions · Automated notification · Do not reply</div>
             </td>
           </tr>
         </table>

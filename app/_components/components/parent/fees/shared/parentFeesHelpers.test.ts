@@ -60,28 +60,28 @@ describe("formatRupee", () => {
 
 describe("headStatus", () => {
   it("returns N/A when the head has no total", () => {
-    expect(headStatus(0, 0)).toEqual({ label: "N/A", className: "bg-white/10 text-gray-400" });
-    expect(headStatus(0, -5)).toEqual({ label: "N/A", className: "bg-white/10 text-gray-400" });
+    expect(headStatus(0, 0)).toEqual({ label: "N/A", className: "bg-elev-2 text-fg-muted" });
+    expect(headStatus(0, -5)).toEqual({ label: "N/A", className: "bg-elev-2 text-fg-muted" });
   });
 
   it("returns Paid when nothing is due", () => {
     expect(headStatus(0, 1000)).toEqual({
       label: "Paid",
-      className: "bg-emerald-500/20 text-emerald-400",
+      className: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-400",
     });
   });
 
   it("returns Partial when some but not all is due", () => {
     expect(headStatus(400, 1000)).toEqual({
       label: "Partial",
-      className: "bg-amber-500/20 text-amber-400",
+      className: "bg-amber-500/20 text-amber-700 dark:text-amber-400",
     });
   });
 
   it("returns Due when the full amount is outstanding", () => {
     expect(headStatus(1000, 1000)).toEqual({
       label: "Due",
-      className: "bg-red-500/20 text-red-400",
+      className: "bg-red-500/20 text-red-700 dark:text-red-400",
     });
   });
 });

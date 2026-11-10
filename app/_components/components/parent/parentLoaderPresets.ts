@@ -1,4 +1,4 @@
-/** Per-tab copy for the Timelly loader on parent portal pages. */
+/** Per-tab copy for the RS Solutions loader on parent portal pages. */
 export const PARENT_LOADER_PRESETS = {
   dashboard: {
     title: "Curating your home",

@@ -33,7 +33,7 @@ export default function SectionHeader({ title }: { title: string }) {
   return (
     <button
       onClick={handleClick}
-      className="text-base sm:text-lg md:text-xl font-bold text-gray-100 m-1 hover:text-white transition cursor-pointer text-left truncate"
+      className="m-0.5 max-w-full cursor-pointer truncate text-left text-base font-semibold tracking-tight text-fg transition hover:text-primary sm:text-lg"
       title="Click to go to dashboard"
     >
       {title}

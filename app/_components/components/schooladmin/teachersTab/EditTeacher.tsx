@@ -82,17 +82,17 @@ const EditTeacher = ({ teacher, onClose, onSave }: Props) => {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-black/70 backdrop-blur-md"
+        className="absolute inset-0 bg-overlay "
       />
 
       {/* Modal */}
-      <div className="relative z-10 max-w-6xl max-h-[92vh] rounded-3xl bg-gradient-to-br from-[#0B1B34] to-[#0F172A] border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.6)] flex flex-col overflow-hidden">
+      <div className="relative z-10 max-w-6xl max-h-[92vh] rounded-3xl bg-gradient-to-br from-elev-2 to-elev-2 border border-line shadow-card flex flex-col overflow-hidden">
 
         {/* Header */}
-        <div className="px-8 py-6 border-b border-white/10 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white">Edit Teacher</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-white/5">
-            <X className="w-5 h-5 text-gray-400" />
+        <div className="px-8 py-6 border-b border-line flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-fg">Edit Teacher</h2>
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-elev-2">
+            <X className="w-5 h-5 text-fg-muted" />
           </button>
         </div>
 
@@ -137,10 +137,10 @@ const EditTeacher = ({ teacher, onClose, onSave }: Props) => {
         </div>
 
         {/* Footer */}
-        <div className="px-8 py-6 border-t border-white/10 flex justify-end gap-4 bg-[#0F172A]">
+        <div className="px-8 py-6 border-t border-line flex justify-end gap-4 bg-surface">
           <button
             onClick={onClose}
-            className="px-6 py-3 rounded-2xl bg-white/5 text-gray-300"
+            className="px-6 py-3 rounded-2xl bg-elev-1 text-fg-muted"
           >
             Cancel
           </button>
@@ -148,7 +148,7 @@ const EditTeacher = ({ teacher, onClose, onSave }: Props) => {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-8 py-3 rounded-2xl bg-lime-400 text-black font-semibold disabled:opacity-60"
+            className="px-8 py-3 rounded-2xl bg-primary text-on-primary font-semibold disabled:opacity-60"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
@@ -174,12 +174,12 @@ const Input = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <div>
-    <label className="text-sm text-gray-400">{label}</label>
+    <label className="text-sm text-fg-muted">{label}</label>
     <input
       name={name}
       value={value}
       onChange={onChange}
-      className="mt-2 w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3 text-white"
+      className="mt-2 w-full bg-elev-1 border border-line rounded-2xl px-5 py-3 text-fg"
     />
   </div>
 );

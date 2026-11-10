@@ -11,7 +11,7 @@ export default function StudentCredentialsPanel() {
   const page = useStudentCredentialsPage();
 
   return (
-    <div className="mt-0 rounded-xl border border-white/10 bg-white/10 p-3 backdrop-blur-md sm:rounded-2xl sm:p-5 md:p-6">
+    <div className="mt-0 rounded-xl border border-line bg-elev-2 p-3 sm:rounded-2xl sm:p-5 md:p-6">
       <StudentCredentialsHeader
         revalidating={page.revalidating}
         initialLoading={page.initialLoading}
@@ -23,7 +23,7 @@ export default function StudentCredentialsPanel() {
       />
 
       {page.truncated ? (
-        <p className="mb-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-100 sm:text-sm">
+        <p className="mb-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-100 sm:text-sm">
           Only the first 5,000 students are shown. Pick a class or section to see the rest.
         </p>
       ) : null}

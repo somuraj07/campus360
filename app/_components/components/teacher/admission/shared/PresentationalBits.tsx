@@ -11,11 +11,11 @@ export function Select({
 }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-white/70 mb-1.5">{label}</label>
+      <label className="mb-1.5 block text-[13px] font-medium text-fg">{label}</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-lime-400/50 text-gray-400"
+        className="h-11 w-full cursor-pointer rounded-lg border border-line-strong bg-surface px-3.5 text-sm text-fg transition hover:border-fg-faint focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -28,5 +28,5 @@ export function Select({
 }
 
 export function SectionTitle({ title }: { title: string }) {
-  return <div className="text-sm font-semibold text-white/90">{title}</div>;
+  return <div className="text-[15px] font-semibold text-fg">{title}</div>;
 }
